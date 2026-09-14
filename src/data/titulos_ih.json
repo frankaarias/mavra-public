@@ -1,0 +1,52 @@
+{
+ "_nota": "Estado VIVO en Amazon, leido de la cuenta el 2026-08-03. El Item Highlight se escribe por SP-API como el atributo \"title_differentiation\" (max 125) y SOLO se muestra si el titulo tiene MENOS de 75 caracteres: por eso los tres estan en 72-73 y no en 75. Cada highlight esta medido contra el MKL curado (correcciones de Frank aplicadas), contando keywords enteras dentro del campo.",
+ "SWD": {
+  "asin": "B0GGJG2WFR",
+  "titulo": "MAVRA Gothic Wall Decor Set of 3, Carved Black Skulls for Goth Room Decor",
+  "titulo_len": 73,
+  "ih": "Gothic Home Decor With Real Depth. Horror Decor, Witch Decor, Whimsigoth. Screws or Permanent Tape. Never Seasonal.",
+  "ih_len": 115,
+  "cubre": [
+   "gothic home decor (8.940)",
+   "horror decor (6.023)",
+   "witch decor (4.561)",
+   "gothic home (659)"
+  ],
+  "vivo_hoy": "MAVRA Skull Wall Decor",
+  "ih_cobertura": "4 kws / 20.183 medido contra el MKL curado (263 kws)"
+ },
+ "CND": {
+  "asin": "B0GGJN8FKK",
+  "titulo": "MAVRA Gothic Skull Candle Set, Sculpted Black Skulls for Goth Home Decor",
+  "titulo_len": 72,
+  "ih": "Gothic Decor Dyed to the Core. Witchy Home Decor and Spell Candles in One. Ghost Candles for Spooky Home Decor.",
+  "ih_len": 111,
+  "cubre": [
+   "gothic decor (22.073)",
+   "witchy home decor (10.203)",
+   "spell candles (5.141)",
+   "spooky home decor (4.561)",
+   "ghost candles (4.291)"
+  ],
+  "vivo_hoy": "MAVRA Skull Candle Set",
+  "ih_cobertura": "5 kws / 46.269 medido contra el MKL curado (404 kws)"
+ },
+ "LMP": {
+  "asin": "B0GGJMDB32",
+  "titulo": "MAVRA Gothic Skull Lamp, Skeleton Desk Lamps, Goth Room Decor for Bedroom",
+  "titulo_len": 73,
+  "ih": "Spooky Night Light for a Witchy Home or Dark Academia Office. Three veils change how the dark falls. Touch dimmer, E26 bulb.",
+  "ih_len": 124,
+  "cubre": [
+   "goth (27.651, exact)",
+   "gothic decor (22.073, broad)",
+   "gothic (8.925, exact)",
+   "goth decor (4.588, exact)",
+   "gothic lamp (4.143, broad)",
+   "skull decor (4.136, broad)"
+  ],
+  "vivo_hoy": "MAVRA Skull Lamp",
+  "ih_propuesto": "Gothic Decor That Casts the Dark. Witchy Home Decor, Gothic Lamp and Skull Decor in One. Touch dimmer, E26 bulb.",
+  "ih_cobertura": "el VIVO da 0 kws / 0. El propuesto: 4 kws / 40.555. \"cool lamps\" (7.831) y \"unique lamps\" (5.721) descartadas por Frank: volumen alto pero poco relevantes, y menos en lanzamiento."
+ }
+}

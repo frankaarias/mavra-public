@@ -1,0 +1,1315 @@
+{
+ "SWD": {
+  "producto": "3 Skulls Wall Decor",
+  "asin": "B0GGJG2WFR",
+  "veredicto": "Lanzar",
+  "lider_share": 73.7,
+  "campaigns": [
+   {
+    "id": "SWD-skw-viva",
+    "estado": "viva",
+    "seg": {
+     "prod": "SWD",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Skull Wall Decor",
+     "clase": "Product",
+     "match": "Exact",
+     "tos": 75,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJG2WFR",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.59,
+    "bidActual": 2.0,
+    "budget": 20,
+    "nota": "Ya está corriendo en Amazon. El cambio propuesto es bajar el bid y subir el top-of-search.",
+    "keywords": [
+     {
+      "kw": "skull wall decor",
+      "sv": 590,
+      "bid": 0.42,
+      "td": 6,
+      "n": 8,
+      "compra": 1.7,
+      "motivo": "KW CVR 0.17% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 1.0
+     }
+    ]
+   },
+   {
+    "id": "SWD-skw-spooky-wall-decor",
+    "estado": "nueva",
+    "seg": {
+     "prod": "SWD",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Spooky Wall Decor",
+     "clase": "Product",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJG2WFR",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.75,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "spooky wall decor",
+      "sv": 602,
+      "bid": 0.58,
+      "td": 1,
+      "n": 5,
+      "compra": 15.0,
+      "motivo": "KW CVR 1.50% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 1.0
+     }
+    ]
+   },
+   {
+    "id": "SWD-skw-macabre-decor",
+    "estado": "nueva",
+    "seg": {
+     "prod": "SWD",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Macabre Decor",
+     "clase": "Product",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJG2WFR",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.7,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "macabre decor",
+      "sv": 617,
+      "bid": 0.54,
+      "td": 0,
+      "n": 3,
+      "compra": 9.7,
+      "motivo": "KW CVR 0.97% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 1.0
+     }
+    ]
+   },
+   {
+    "id": "SWD-skw-skull-decor-for-home",
+    "estado": "nueva",
+    "seg": {
+     "prod": "SWD",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Skull Decor For Home",
+     "clase": "Product",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJG2WFR",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.65,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "skull decor for home",
+      "sv": 988,
+      "bid": 0.5,
+      "td": 0,
+      "n": 3,
+      "compra": 9.1,
+      "motivo": "KW CVR 0.91% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 1.0
+     }
+    ]
+   },
+   {
+    "id": "SWD-skw-witchy-office-decor",
+    "estado": "nueva",
+    "seg": {
+     "prod": "SWD",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Witchy Office Decor",
+     "clase": "Product",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJG2WFR",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.64,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "witchy office decor",
+      "sv": 740,
+      "bid": 0.49,
+      "td": 0,
+      "n": 3,
+      "compra": 8.1,
+      "motivo": "KW CVR 0.81% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 1.0
+     }
+    ]
+   },
+   {
+    "id": "SWD-skw-goth-room",
+    "estado": "nueva",
+    "seg": {
+     "prod": "SWD",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Goth Room",
+     "clase": "Category",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJG2WFR",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.72,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "goth room",
+      "sv": 304,
+      "bid": null,
+      "td": 1,
+      "n": 5,
+      "compra": 6.6,
+      "motivo": "KW CVR 0.66% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 0.85
+     }
+    ]
+   },
+   {
+    "id": "SWD-broad",
+    "estado": "nueva",
+    "seg": {
+     "prod": "SWD",
+     "tipo": "SP",
+     "estructura": "DISC",
+     "target": "Aesthetic",
+     "clase": "Category",
+     "match": "Broad",
+     "tos": 0,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJG2WFR",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.41,
+    "budget": 8,
+    "nota": "Motor de cosecha: su producto es el reporte de search terms, no el ACOS.",
+    "keywords": [
+     {
+      "kw": "grunge room decor",
+      "sv": 6028,
+      "bid": 0.51,
+      "td": 2,
+      "n": 4,
+      "compra": 3.2,
+      "motivo": "KW CVR 0.32% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 0.4
+     },
+     {
+      "kw": "horror decor",
+      "sv": 6023,
+      "bid": 0.53,
+      "td": 4,
+      "n": 3,
+      "compra": 8.0,
+      "motivo": "KW CVR 0.80% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 0.38
+     },
+     {
+      "kw": "gothic wall art",
+      "sv": 2549,
+      "bid": 0.46,
+      "td": 4,
+      "n": 5,
+      "compra": 0.8,
+      "motivo": "KW CVR 0.08% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 0.7
+     },
+     {
+      "kw": "alt room decor",
+      "sv": 2549,
+      "bid": 0.49,
+      "td": 1,
+      "n": 4,
+      "compra": 1.6,
+      "motivo": "KW CVR 0.16% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 0.4
+     },
+     {
+      "kw": "emo room decor",
+      "sv": 2239,
+      "bid": 0.42,
+      "td": 2,
+      "n": 4,
+      "compra": 2.2,
+      "motivo": "KW CVR 0.22% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 0.4
+     },
+     {
+      "kw": "grunge decor",
+      "sv": 1261,
+      "bid": 0.5,
+      "td": 1,
+      "n": 4,
+      "compra": 0.8,
+      "motivo": "KW CVR 0.08% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 0.38
+     },
+     {
+      "kw": "room decor grunge",
+      "sv": 1072,
+      "bid": 0.53,
+      "td": 0,
+      "n": 4,
+      "compra": 0.9,
+      "motivo": "KW CVR 0.09% · mediana del nicho 0.18%",
+      "veredicto": "ATACAR",
+      "fit": 0.4
+     }
+    ]
+   },
+   {
+    "id": "SWD-auto",
+    "estado": "nueva",
+    "seg": {
+     "prod": "SWD",
+     "tipo": "SP",
+     "estructura": "AUTO",
+     "target": "Discovery",
+     "clase": "Auto",
+     "match": "Auto",
+     "tos": 0,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJG2WFR",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.41,
+    "budget": 8,
+    "nota": "Los 4 grupos: close match, loose match, complements, substitutes.",
+    "keywords": []
+   },
+   {
+    "id": "SWD-asin",
+    "estado": "nueva",
+    "seg": {
+     "prod": "SWD",
+     "tipo": "SP",
+     "estructura": "PT",
+     "target": "Conquest",
+     "clase": "Competitor",
+     "match": "Product",
+     "tos": 0,
+     "ros": 0,
+     "pp": 50,
+     "asin": "B0GGJG2WFR",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.7,
+    "budget": 15,
+    "nota": "Donde la falta de reseñas pesa menos: el comprador ya eligió la categoría.",
+    "targets": [
+     {
+      "asin": "B0DZ1Y9LSJ",
+      "kws_p1": 52,
+      "share": 73.7,
+      "strength": "naranja"
+     },
+     {
+      "asin": "B0CGV1HJ1L",
+      "kws_p1": 47,
+      "share": 53.0,
+      "strength": "amarillo"
+     },
+     {
+      "asin": "B096H6H344",
+      "kws_p1": 13,
+      "share": 7.9,
+      "strength": "verde"
+     },
+     {
+      "asin": "B0DKNGQT33",
+      "kws_p1": 7,
+      "share": 5.7,
+      "strength": "verde"
+     },
+     {
+      "asin": "B0D3XG33X3",
+      "kws_p1": 6,
+      "share": 4.9,
+      "strength": "verde"
+     },
+     {
+      "asin": "B0C7KS3JZ6",
+      "kws_p1": 8,
+      "share": 4.8,
+      "strength": "verde"
+     }
+    ],
+    "keywords": []
+   },
+   {
+    "id": "SWD-sbv",
+    "estado": "propuesta",
+    "seg": {
+     "prod": "SWD",
+     "tipo": "SBv",
+     "estructura": "PDP",
+     "target": "Conquest",
+     "clase": "Competitor",
+     "match": "Product",
+     "tos": 0,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJG2WFR",
+     "sufijo": "AGTA"
+    },
+    "bid": null,
+    "budget": null,
+    "nota": "Bloqueada hasta que exista el video. Es la jugada que el brain marca para lanzar sin reseñas.",
+    "keywords": []
+   }
+  ],
+  "banco": [
+   {
+    "kw": "gothic decor",
+    "sv": 22073,
+    "bid": 0.34,
+    "td": 4,
+    "n": 4,
+    "compra": 5.9,
+    "motivo": "KW CVR 0.59% · mediana del nicho 0.18%",
+    "veredicto": "ATACAR",
+    "fit": 1.0
+   },
+   {
+    "kw": "gothic home decor",
+    "sv": 8940,
+    "bid": 0.36,
+    "td": 4,
+    "n": 6,
+    "compra": 3.9,
+    "motivo": "KW CVR 0.39% · mediana del nicho 0.18%",
+    "veredicto": "ATACAR",
+    "fit": 1.0
+   },
+   {
+    "kw": "gothic wall decor",
+    "sv": 4804,
+    "bid": 0.43,
+    "td": 6,
+    "n": 5,
+    "compra": 8.3,
+    "motivo": "KW CVR 0.83% · mediana del nicho 0.18%",
+    "veredicto": "ATACAR",
+    "fit": 1.0
+   },
+   {
+    "kw": "goth decor",
+    "sv": 4588,
+    "bid": 0.42,
+    "td": 1,
+    "n": 5,
+    "compra": 7.2,
+    "motivo": "KW CVR 0.72% · mediana del nicho 0.18%",
+    "veredicto": "ATACAR",
+    "fit": 1.0
+   },
+   {
+    "kw": "witch decor",
+    "sv": 4561,
+    "bid": 0.42,
+    "td": 0,
+    "n": 3,
+    "compra": 4.8,
+    "motivo": "KW CVR 0.48% · mediana del nicho 0.18%",
+    "veredicto": "ATACAR",
+    "fit": 1.0
+   },
+   {
+    "kw": "witchy decor",
+    "sv": 4281,
+    "bid": 0.46,
+    "td": 3,
+    "n": 3,
+    "compra": 3.0,
+    "motivo": "KW CVR 0.30% · mediana del nicho 0.18%",
+    "veredicto": "ATACAR",
+    "fit": 1.0
+   },
+   {
+    "kw": "skull decor",
+    "sv": 4136,
+    "bid": 0.45,
+    "td": 6,
+    "n": 3,
+    "compra": 8.0,
+    "motivo": "KW CVR 0.80% · mediana del nicho 0.18%",
+    "veredicto": "ATACAR",
+    "fit": 1.0
+   },
+   {
+    "kw": "whimsigoth decor",
+    "sv": 3726,
+    "bid": 0.39,
+    "td": 1,
+    "n": 3,
+    "compra": 4.3,
+    "motivo": "KW CVR 0.43% · mediana del nicho 0.18%",
+    "veredicto": "ATACAR",
+    "fit": 1.0
+   }
+  ]
+ },
+ "CND": {
+  "producto": "Skull Candle Set",
+  "asin": "B0GGJN8FKK",
+  "veredicto": "Riesgoso",
+  "lider_share": 84.4,
+  "campaigns": [
+   {
+    "id": "CND-skw-viva",
+    "estado": "viva",
+    "seg": {
+     "prod": "CND",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Skull Candle",
+     "clase": "Product",
+     "match": "Exact",
+     "tos": 75,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJN8FKK",
+     "sufijo": "AGTA"
+    },
+    "bid": 1.29,
+    "bidActual": 2.0,
+    "budget": 20,
+    "nota": "Ya está corriendo en Amazon. El cambio propuesto es bajar el bid y subir el top-of-search.",
+    "keywords": [
+     {
+      "kw": "skull candle",
+      "sv": 907,
+      "bid": 0.92,
+      "td": 11,
+      "n": 9,
+      "compra": 12.1,
+      "motivo": "KW CVR 1.21% · mediana del nicho 0.57%",
+      "veredicto": "ATACAR",
+      "fit": 0.95
+     }
+    ]
+   },
+   {
+    "id": "CND-skw-macabre-decor",
+    "estado": "nueva",
+    "seg": {
+     "prod": "CND",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Macabre Decor",
+     "clase": "Category",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJN8FKK",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.7,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "macabre decor",
+      "sv": 617,
+      "bid": 0.54,
+      "td": 0,
+      "n": 3,
+      "compra": 9.7,
+      "motivo": "KW CVR 0.97% · mediana del nicho 0.57%",
+      "veredicto": "ATACAR",
+      "fit": 0.85
+     }
+    ]
+   },
+   {
+    "id": "CND-skw-skull-decor-for-home",
+    "estado": "nueva",
+    "seg": {
+     "prod": "CND",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Skull Decor For Home",
+     "clase": "Product",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJN8FKK",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.65,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "skull decor for home",
+      "sv": 988,
+      "bid": 0.5,
+      "td": 0,
+      "n": 3,
+      "compra": 9.1,
+      "motivo": "KW CVR 0.91% · mediana del nicho 0.57%",
+      "veredicto": "ATACAR",
+      "fit": 1.0
+     }
+    ]
+   },
+   {
+    "id": "CND-skw-witch-candles-for-spells",
+    "estado": "nueva",
+    "seg": {
+     "prod": "CND",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Witch Candles For Spells",
+     "clase": "Category",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJN8FKK",
+     "sufijo": "AGTA"
+    },
+    "bid": 1.14,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "witch candles for spells",
+      "sv": 536,
+      "bid": 0.88,
+      "td": 1,
+      "n": 5,
+      "compra": 7.5,
+      "motivo": "KW CVR 0.75% · mediana del nicho 0.57%",
+      "veredicto": "ATACAR",
+      "fit": 0.8
+     }
+    ]
+   },
+   {
+    "id": "CND-broad",
+    "estado": "nueva",
+    "seg": {
+     "prod": "CND",
+     "tipo": "SP",
+     "estructura": "DISC",
+     "target": "Aesthetic",
+     "clase": "Category",
+     "match": "Broad",
+     "tos": 0,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJN8FKK",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.38,
+    "budget": 8,
+    "nota": "Motor de cosecha: su producto es el reporte de search terms, no el ACOS.",
+    "keywords": [
+     {
+      "kw": "horror decor",
+      "sv": 6023,
+      "bid": 0.53,
+      "td": 4,
+      "n": 3,
+      "compra": 8.0,
+      "motivo": "KW CVR 0.80% · mediana del nicho 0.57%",
+      "veredicto": "ATACAR",
+      "fit": 0.3
+     },
+     {
+      "kw": "spell candles",
+      "sv": 5141,
+      "bid": 0.82,
+      "td": 14,
+      "n": 3,
+      "compra": 34.4,
+      "motivo": "KW CVR 3.44% · mediana del nicho 0.57%",
+      "veredicto": "ATACAR",
+      "fit": 0.33
+     },
+     {
+      "kw": "witch candles",
+      "sv": 1259,
+      "bid": 0.86,
+      "td": 1,
+      "n": 7,
+      "compra": 23.0,
+      "motivo": "KW CVR 2.30% · mediana del nicho 0.57%",
+      "veredicto": "ATACAR",
+      "fit": 0.65
+     }
+    ]
+   },
+   {
+    "id": "CND-auto",
+    "estado": "nueva",
+    "seg": {
+     "prod": "CND",
+     "tipo": "SP",
+     "estructura": "AUTO",
+     "target": "Discovery",
+     "clase": "Auto",
+     "match": "Auto",
+     "tos": 0,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJN8FKK",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.38,
+    "budget": 8,
+    "nota": "Los 4 grupos: close match, loose match, complements, substitutes.",
+    "keywords": []
+   },
+   {
+    "id": "CND-asin",
+    "estado": "nueva",
+    "seg": {
+     "prod": "CND",
+     "tipo": "SP",
+     "estructura": "PT",
+     "target": "Conquest",
+     "clase": "Competitor",
+     "match": "Product",
+     "tos": 0,
+     "ros": 0,
+     "pp": 50,
+     "asin": "B0GGJN8FKK",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.65,
+    "budget": 15,
+    "nota": "Donde la falta de reseñas pesa menos: el comprador ya eligió la categoría.",
+    "targets": [
+     {
+      "asin": "B0GFPBVVLQ",
+      "kws_p1": 25,
+      "share": 84.4,
+      "strength": "rojo"
+     },
+     {
+      "asin": "B0FDW8LHLD",
+      "kws_p1": 7,
+      "share": 28.2,
+      "strength": "verde"
+     },
+     {
+      "asin": "B0B1HK9DZ5",
+      "kws_p1": 5,
+      "share": 11.9,
+      "strength": "verde"
+     },
+     {
+      "asin": "B0F4R442R7",
+      "kws_p1": 5,
+      "share": 4.6,
+      "strength": "verde"
+     },
+     {
+      "asin": "B08818QPL5",
+      "kws_p1": 4,
+      "share": 3.9,
+      "strength": "verde"
+     },
+     {
+      "asin": "B0B5LVZ1S1",
+      "kws_p1": 4,
+      "share": 3.7,
+      "strength": "verde"
+     }
+    ],
+    "keywords": []
+   },
+   {
+    "id": "CND-sbv",
+    "estado": "propuesta",
+    "seg": {
+     "prod": "CND",
+     "tipo": "SBv",
+     "estructura": "PDP",
+     "target": "Conquest",
+     "clase": "Competitor",
+     "match": "Product",
+     "tos": 0,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJN8FKK",
+     "sufijo": "AGTA"
+    },
+    "bid": null,
+    "budget": null,
+    "nota": "Bloqueada hasta que exista el video. Es la jugada que el brain marca para lanzar sin reseñas.",
+    "keywords": []
+   }
+  ],
+  "banco": [
+   {
+    "kw": "gothic home decor",
+    "sv": 8940,
+    "bid": 0.36,
+    "td": 4,
+    "n": 3,
+    "compra": 3.9,
+    "motivo": "KW CVR 0.39% · mediana del nicho 0.57%",
+    "veredicto": "ATACAR",
+    "fit": 0.9
+   },
+   {
+    "kw": "goth decor",
+    "sv": 4588,
+    "bid": 0.42,
+    "td": 2,
+    "n": 4,
+    "compra": 7.2,
+    "motivo": "KW CVR 0.72% · mediana del nicho 0.57%",
+    "veredicto": "ATACAR",
+    "fit": 0.85
+   },
+   {
+    "kw": "skull decor",
+    "sv": 4136,
+    "bid": 0.45,
+    "td": 6,
+    "n": 3,
+    "compra": 8.0,
+    "motivo": "KW CVR 0.80% · mediana del nicho 0.57%",
+    "veredicto": "ATACAR",
+    "fit": 1.0
+   }
+  ]
+ },
+ "LMP": {
+  "producto": "Skull Lamp",
+  "asin": "B0GGJMDB32",
+  "veredicto": "Riesgoso",
+  "lider_share": 48.1,
+  "campaigns": [
+   {
+    "id": "LMP-skw-viva",
+    "estado": "viva",
+    "seg": {
+     "prod": "LMP",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Skull Lamp",
+     "clase": "Product",
+     "match": "Exact",
+     "tos": 75,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJMDB32",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.67,
+    "bidActual": 2.0,
+    "budget": 20,
+    "nota": "Ya está corriendo en Amazon. El cambio propuesto es bajar el bid y subir el top-of-search.",
+    "keywords": [
+     {
+      "kw": "skull lamp",
+      "sv": 1615,
+      "bid": 0.48,
+      "td": 4,
+      "n": 9,
+      "compra": 2.5,
+      "motivo": "KW CVR 0.25% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.95
+     }
+    ]
+   },
+   {
+    "id": "LMP-skw-goth-gift",
+    "estado": "nueva",
+    "seg": {
+     "prod": "LMP",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Goth Gift",
+     "clase": "Category",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJMDB32",
+     "sufijo": "AGTA"
+    },
+    "bid": 1.13,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "goth gift",
+      "sv": 462,
+      "bid": 0.87,
+      "td": 0,
+      "n": 3,
+      "compra": 10.8,
+      "motivo": "KW CVR 1.08% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.85
+     }
+    ]
+   },
+   {
+    "id": "LMP-skw-macabre-decor",
+    "estado": "nueva",
+    "seg": {
+     "prod": "LMP",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Macabre Decor",
+     "clase": "Category",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJMDB32",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.7,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "macabre decor",
+      "sv": 617,
+      "bid": 0.54,
+      "td": 0,
+      "n": 3,
+      "compra": 9.7,
+      "motivo": "KW CVR 0.97% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.85
+     }
+    ]
+   },
+   {
+    "id": "LMP-skw-spooky-desk-decor",
+    "estado": "nueva",
+    "seg": {
+     "prod": "LMP",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Spooky Desk Decor",
+     "clase": "Category",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJMDB32",
+     "sufijo": "AGTA"
+    },
+    "bid": 1.07,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "spooky desk decor",
+      "sv": 514,
+      "bid": 0.82,
+      "td": 1,
+      "n": 3,
+      "compra": 9.7,
+      "motivo": "KW CVR 0.97% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.8
+     }
+    ]
+   },
+   {
+    "id": "LMP-skw-skull-decor-for-home",
+    "estado": "nueva",
+    "seg": {
+     "prod": "LMP",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Skull Decor For Home",
+     "clase": "Product",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJMDB32",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.65,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "skull decor for home",
+      "sv": 988,
+      "bid": 0.5,
+      "td": 0,
+      "n": 4,
+      "compra": 9.1,
+      "motivo": "KW CVR 0.91% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 1.0
+     }
+    ]
+   },
+   {
+    "id": "LMP-skw-goth-room",
+    "estado": "nueva",
+    "seg": {
+     "prod": "LMP",
+     "tipo": "SP",
+     "estructura": "SKW",
+     "target": "Goth Room",
+     "clase": "Category",
+     "match": "Exact",
+     "tos": 50,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJMDB32",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.72,
+    "budget": 10,
+    "keywords": [
+     {
+      "kw": "goth room",
+      "sv": 304,
+      "bid": null,
+      "td": 1,
+      "n": 4,
+      "compra": 6.6,
+      "motivo": "KW CVR 0.66% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.85
+     }
+    ]
+   },
+   {
+    "id": "LMP-broad",
+    "estado": "nueva",
+    "seg": {
+     "prod": "LMP",
+     "tipo": "SP",
+     "estructura": "DISC",
+     "target": "Aesthetic",
+     "clase": "Category",
+     "match": "Broad",
+     "tos": 0,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJMDB32",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.61,
+    "budget": 8,
+    "nota": "Motor de cosecha: su producto es el reporte de search terms, no el ACOS.",
+    "keywords": [
+     {
+      "kw": "goth",
+      "sv": 27651,
+      "bid": 0.7,
+      "td": 18,
+      "n": 3,
+      "compra": 3.2,
+      "motivo": "KW CVR 0.32% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.75
+     },
+     {
+      "kw": "gothic",
+      "sv": 8925,
+      "bid": 0.6,
+      "td": 25,
+      "n": 3,
+      "compra": 2.7,
+      "motivo": "KW CVR 0.27% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.75
+     },
+     {
+      "kw": "cool lamps",
+      "sv": 7831,
+      "bid": 0.74,
+      "td": 0,
+      "n": 3,
+      "compra": 1.7,
+      "motivo": "KW CVR 0.17% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.33
+     },
+     {
+      "kw": "unique lamps",
+      "sv": 5721,
+      "bid": 0.62,
+      "td": 0,
+      "n": 4,
+      "compra": 3.7,
+      "motivo": "KW CVR 0.37% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.33
+     },
+     {
+      "kw": "witch lamp",
+      "sv": 5718,
+      "bid": 0.75,
+      "td": 8,
+      "n": 4,
+      "compra": 4.2,
+      "motivo": "KW CVR 0.42% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.65
+     },
+     {
+      "kw": "cool lamp",
+      "sv": 4787,
+      "bid": 0.67,
+      "td": 0,
+      "n": 4,
+      "compra": 6.9,
+      "motivo": "KW CVR 0.69% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.33
+     },
+     {
+      "kw": "feather lamp",
+      "sv": 4286,
+      "bid": 0.59,
+      "td": 13,
+      "n": 3,
+      "compra": 3.3,
+      "motivo": "KW CVR 0.33% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.33
+     },
+     {
+      "kw": "funky lamp",
+      "sv": 4148,
+      "bid": 0.61,
+      "td": 1,
+      "n": 3,
+      "compra": 1.0,
+      "motivo": "KW CVR 0.10% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.33
+     },
+     {
+      "kw": "gothic lamp",
+      "sv": 4143,
+      "bid": 0.55,
+      "td": 0,
+      "n": 9,
+      "compra": 4.3,
+      "motivo": "KW CVR 0.43% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.65
+     },
+     {
+      "kw": "unique lamp",
+      "sv": 2197,
+      "bid": 0.56,
+      "td": 0,
+      "n": 4,
+      "compra": 3.2,
+      "motivo": "KW CVR 0.32% · mediana del nicho 0.23%",
+      "veredicto": "ATACAR",
+      "fit": 0.33
+     }
+    ]
+   },
+   {
+    "id": "LMP-auto",
+    "estado": "nueva",
+    "seg": {
+     "prod": "LMP",
+     "tipo": "SP",
+     "estructura": "AUTO",
+     "target": "Discovery",
+     "clase": "Auto",
+     "match": "Auto",
+     "tos": 0,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJMDB32",
+     "sufijo": "AGTA"
+    },
+    "bid": 0.61,
+    "budget": 8,
+    "nota": "Los 4 grupos: close match, loose match, complements, substitutes.",
+    "keywords": []
+   },
+   {
+    "id": "LMP-asin",
+    "estado": "nueva",
+    "seg": {
+     "prod": "LMP",
+     "tipo": "SP",
+     "estructura": "PT",
+     "target": "Conquest",
+     "clase": "Competitor",
+     "match": "Product",
+     "tos": 0,
+     "ros": 0,
+     "pp": 50,
+     "asin": "B0GGJMDB32",
+     "sufijo": "AGTA"
+    },
+    "bid": 1.04,
+    "budget": 15,
+    "nota": "Donde la falta de reseñas pesa menos: el comprador ya eligió la categoría.",
+    "targets": [
+     {
+      "asin": "B0GFPBVVLQ",
+      "kws_p1": 60,
+      "share": 48.1,
+      "strength": "amarillo"
+     },
+     {
+      "asin": "B0C3714GZ7",
+      "kws_p1": 52,
+      "share": 14.0,
+      "strength": "verde"
+     },
+     {
+      "asin": "B0C9PV8KTG",
+      "kws_p1": 63,
+      "share": 12.9,
+      "strength": "verde"
+     },
+     {
+      "asin": "B0D7VNL8Q6",
+      "kws_p1": 23,
+      "share": 4.3,
+      "strength": "verde"
+     },
+     {
+      "asin": "B0DC46RDNC",
+      "kws_p1": 10,
+      "share": 1.6,
+      "strength": "verde"
+     },
+     {
+      "asin": "B0GWCBWBS3",
+      "kws_p1": 9,
+      "share": 1.4,
+      "strength": "verde"
+     }
+    ],
+    "keywords": []
+   },
+   {
+    "id": "LMP-sbv",
+    "estado": "propuesta",
+    "seg": {
+     "prod": "LMP",
+     "tipo": "SBv",
+     "estructura": "PDP",
+     "target": "Conquest",
+     "clase": "Competitor",
+     "match": "Product",
+     "tos": 0,
+     "ros": 0,
+     "pp": 0,
+     "asin": "B0GGJMDB32",
+     "sufijo": "AGTA"
+    },
+    "bid": null,
+    "budget": null,
+    "nota": "Bloqueada hasta que exista el video. Es la jugada que el brain marca para lanzar sin reseñas.",
+    "keywords": []
+   }
+  ],
+  "banco": [
+   {
+    "kw": "gothic decor",
+    "sv": 22073,
+    "bid": 0.34,
+    "td": 5,
+    "n": 4,
+    "compra": 5.9,
+    "motivo": "KW CVR 0.59% · mediana del nicho 0.23%",
+    "veredicto": "ATACAR",
+    "fit": 0.85
+   },
+   {
+    "kw": "witchy home decor",
+    "sv": 10203,
+    "bid": 0.5,
+    "td": 5,
+    "n": 3,
+    "compra": 6.4,
+    "motivo": "KW CVR 0.64% · mediana del nicho 0.23%",
+    "veredicto": "ATACAR",
+    "fit": 0.9
+   },
+   {
+    "kw": "gothic home decor",
+    "sv": 8940,
+    "bid": 0.36,
+    "td": 4,
+    "n": 5,
+    "compra": 3.9,
+    "motivo": "KW CVR 0.39% · mediana del nicho 0.23%",
+    "veredicto": "ATACAR",
+    "fit": 0.9
+   },
+   {
+    "kw": "goth decor",
+    "sv": 4588,
+    "bid": 0.42,
+    "td": 2,
+    "n": 4,
+    "compra": 7.2,
+    "motivo": "KW CVR 0.72% · mediana del nicho 0.23%",
+    "veredicto": "ATACAR",
+    "fit": 0.85
+   },
+   {
+    "kw": "skull decor",
+    "sv": 4136,
+    "bid": 0.45,
+    "td": 5,
+    "n": 3,
+    "compra": 8.0,
+    "motivo": "KW CVR 0.80% · mediana del nicho 0.23%",
+    "veredicto": "ATACAR",
+    "fit": 1.0
+   }
+  ]
+ }
+}

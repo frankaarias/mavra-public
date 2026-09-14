@@ -1,0 +1,2065 @@
+import { Fragment, useMemo, useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react'
+import { Ayuda as TooltipRadix, Menu as MenuRadix, ProveedorAyuda } from '../components/ui/Flotantes'
+import { traerCorrecciones, guardarCorrecciones } from '../lib/correcciones'
+import { Boton, Buscador, Iconos } from '../components/ui/BarraHerramientas'
+import lmp from '../data/lmp_mkl_v3.json'
+import cnd from '../data/cnd_mkl_v3.json'
+import swd from '../data/swd_mkl_v3.json'
+import lmpUkl from '../data/lmp_ukl.json'
+import cndUkl from '../data/cnd_ukl.json'
+import swdUkl from '../data/swd_ukl.json'
+// El copy vivo de cada producto (título de 75, viñetas, backend, Item Highlight) y
+// la lectura de "dónde está usada esta keyword" al estilo DataDive.
+import LISTING_COPY from '../data/listing_copy.json'
+// Ficha de cada competidor por ASIN (foto, marca, título, precio, reseñas, rating).
+// El reverse-ASIN solo devuelve el ASIN y los ranks: esto lo completa.
+import COMP_INFO from '../data/competidores_info.json'
+import { USAGE_FIELDS, usageValor, USAGE_COLOR, USAGE_HUECO, USAGE_AYUDA, SIN_CAMPO, NO_ESTA } from '../lib/listingUsage'
+
+// Los tres MKL de MAVRA. LMP sale del export de Cerebro (matriz completa por ASIN);
+// CND y SWD se reconstruyeron con el MCP de H10, una llamada por competidor, para
+// tener el rank individual y poder calcular la relevancy de página 1 igual que DataDive.
+const DATASETS = { LMP: lmp, CND: cnd, SWD: swd }
+// La UKL es OTRA fuente, no otro bucket: el MKL sale del reverse ASIN (el mundo de
+// tus competidores) y la UKL sale de Magnet por roots (la demanda del nicho). Por
+// eso vive en su propio archivo y en su propia tabla, al lado del MKL.
+const UKL = { LMP: lmpUkl, CND: cndUkl, SWD: swdUkl }
+
+// MKL v3 — las tablas de DataDive con SUS umbrales exactos + Roots + Normalizer +
+// Competidores + Overview.
+// Relevancy % = competidores en PÁGINA 1 (top 45) ÷ total.
+// MKL: relevancy ≥30% y SV ≥450 · Outliers: SV ≥2.000 y relevancy <30% · Residue: el resto
+// que alguien rankea · Negatives: mismatch de producto (nuestro, DD no lo hace).
+// Descartadas: nadie rankea ni en el top 101 — no es un bucket, es ruido: va al pie.
+// La UKL es otra FUENTE (Magnet por roots) pero se comporta como un bucket más:
+// Frank la quiere con todo lo que tienen las otras tablas — mover keywords de ahí
+// al MKL, filtrar, seleccionar. Tenerla como tabla aparte la dejaba heredando la
+// mitad de las funciones; como bucket las hereda todas y sin código especial.
+// El orden es el del embudo, no el del dive: primero el universo del nicho, y de
+// ahí se baja a lo que ya se pelea, lo que sobra y lo que se descarta.
+// (Frank, 2026-07-31)
+const BUCKETS = ['UKL', 'MKL', 'Outliers', 'Residue', 'Negatives']
+// El veredicto del nicho es un INFORME, el MKL es una HERRAMIENTA: no comparten
+// pantalla. El veredicto vive en su propia pestaña y la tabla usa todo el alto.
+const TOOLS = ['Veredicto', 'Roots', 'Normalizer', 'Competidores']
+// Los umbrales son los mismos en los tres (son los de DataDive), así que los textos
+// de ayuda se arman una sola vez.
+const S = lmp.meta.settings
+
+const TAB_DESC = {
+  MKL: `Keywords obtenidas de los competidores seleccionados, filtradas por las que comparten al menos ${S.min_comp} de ellos en la primera página, con un volumen mínimo de ${S.min_sv} búsquedas al mes.`,
+  Outliers: `Keywords con ${S.outlier_min_sv.toLocaleString('en-US')} búsquedas mensuales o más que menos de ${S.outlier_max_comp} de los competidores tienen en la primera página.`,
+  Residue: 'Keywords que algún competidor rankea pero que no llegan al mínimo de competidores compartidos ni al volumen de un outlier.',
+  Negatives: 'Keywords que comparten vocabulario con el nicho pero describen otro producto.',
+  Descartadas: `Keywords donde ninguno de los competidores aparece ni en el top ${S.max_rank}.`,
+  UKL: 'El universo del nicho, no el mundo de tus competidores. El MKL sale del reverse ASIN, así que solo puede devolver términos donde alguno de ellos ya rankea; esta lista sale de Magnet por roots y trae lo que se busca en el nicho aunque ninguno esté ahí. Por eso la columna de relevancy va en rayita: la ausencia es el dato. Cada keyword lleva dos etiquetas independientes — cuándo se puede atacar y para qué sirve.',
+  Veredicto: 'La lectura del nicho antes de entrar: si conviene, por qué, y por dónde. Es la decisión que se toma una vez; el resto de las pestañas es el trabajo de todos los días.',
+  Roots: 'Las palabras que se repiten a lo largo del núcleo. La frecuencia dice en cuántas keywords aparece cada una; el volumen broad, cuánto tráfico mueve la familia entera. Cada root es una campaña de PPC, y se ataca de a uno por vez. Marca uno o varios para ver sus keywords al lado.',
+  Normalizer: 'El núcleo sin plurales ni conjunciones, agrupado por forma. Sirve para una cosa concreta: detectar cuándo estás diciendo lo mismo de tres maneras distintas. En PPC esas tres variantes compiten entre sí y te suben el costo por clic. Las campañas no se arman desde acá: se arman por root.',
+  Competidores: 'Quién es quién en el nicho, medido contra la mediana. Cobertura, share y fuerza se recalculan con los buckets actuales: si mueves keywords, estos números se mueven. Precio, reseñas, edad y actividad de venta salen de Keepa — dato observado, no estimado.',
+}
+
+const INFO = {
+  use_T: `Título — ${USAGE_AYUDA}`,
+  use_B: `Viñetas — ${USAGE_AYUDA}`,
+  use_D: `Descripción — ${USAGE_AYUDA}`,
+  use_GK: `Generic Keywords, los search terms del backend — ${USAGE_AYUDA}`,
+  use_IH: `Item Highlight, el campo de 125 caracteres que Amazon muestra bajo el título cuando el título baja de 75 — ${USAGE_AYUDA}`,
+  kw: 'Keyword — el término tal como lo escribe el comprador en Amazon. · Helium 10',
+  root: 'Root — la raíz que agrupa la familia de la keyword: goth y gothic caen en la misma. Sirve para no armar tres campañas de lo mismo. · cálculo AGTA',
+  vol: 'Vol — búsquedas mensuales del término. · Helium 10',
+  sales: 'Vtas — unidades que el mercado vende por ese término. Es la demanda que efectivamente se convierte en compra. · Helium 10',
+  rel: `Relevancy % — qué proporción de tus competidores está en página 1 de ese término. · cálculo AGTA`,
+  // Había dos claves `p1` en este objeto: la segunda pisaba a la primera, así que
+  // el texto corto ("Es la base del Relevancy") no se mostró nunca. Se conserva la
+  // que se venía viendo y se le suma esa frase, que era lo único que aportaba.
+  p1: `P1 — cuántos de tus ${DATASETS.LMP.meta.n_comp} competidores están en la primera página de ese término (puesto ${S.p1_rank} o mejor). Es la base del Relevancy. Es un conteo y no un porcentaje a propósito: si mañana agregas o quitas competidores del dive, el umbral que elegiste sigue siendo el mismo. Desde ${S.min_comp} entra al núcleo. · cálculo AGTA sobre ranks de Helium 10`,
+  fit: 'Fit — qué tan de TU producto es la keyword. No es lo mismo que Relevancy: relevancy mide cuánto la dominan tus competidores, fit mide si te sirve a ti. · cálculo AGTA',
+  idn: 'IDN — demanda capturable: volumen × fit. Ordena por lo que te puedes llevar, no por lo que se busca. · cálculo AGTA',
+  td: 'TD — cuántos del top usan la keyword en el TÍTULO. Bajo = título libre, más fácil de ganar. · Helium 10',
+  cp: 'CP — cuántos productos compiten por ese término. · Helium 10',
+  tier: 'Tier — qué tan tuya es la keyword. CORE: nombra tu producto, la forma y el tipo. SECONDARY: es del tipo de producto pero no exactamente el tuyo. LONG-TAIL: el resto. El volumen ordena, no decide. · cálculo AGTA',
+  prio: 'Prio — P1, P2 o P3 por demanda capturable. Es el orden en que se atacan en el lanzamiento. · cálculo AGTA',
+  match: 'Match sugerido para PPC. Si la keyword ya es específica va exact; si encabeza una familia grande, phrase; si es la cabecera con volumen, broad. · cálculo AGTA',
+  cuando: 'Cuándo se puede atacar, solo para las de la UKL. AHORA: el producto la satisface y el hueco está abierto (title density baja). DESPUES: la satisface pero el hueco está cerrado, o es estacional y no es el posicionamiento. NO: no se puja. · cálculo AGTA',
+  para: 'Para qué sirve, solo para las de la UKL. VENDER: este producto puede satisfacer esa búsqueda. TARGET: la satisface un hermano — no se puja, se targetea su página. CATALOGO: es decoración del nicho que MAVRA no fabrica con ninguno de los tres SKU; no se puja hoy, se lee como demanda para el próximo producto. AUDIENCIA: dice quién es el cliente, no qué comprar — ropa, joyería, cosplay. · cálculo AGTA',
+  serp: 'SERP — flags de la página de resultados: SBV = Sponsored Brand Video · AC = Amazon’s Choice · SP = Sponsored Product. Se puede filtrar escribiendo SBV, AC o SP.',
+  root_root: 'Root — palabra o frase que se repite en el núcleo. Si aparece en una sola keyword no es un root. Cada root es una campaña de PPC, y se ataca de a uno por vez. · cálculo AGTA',
+  root_frec: 'Frecuencia — en cuántas keywords del MKL de ahora aparece este root. Se recalcula cuando mueves keywords entre buckets.',
+  root_sv: 'Volumen broad — suma del SV de todas las keywords del MKL que contienen el root. Es el techo de tráfico de la familia, no lo que vas a captar.',
+  root_kws: 'Las keywords del MKL que contienen alguno de los roots tildados. Sumar roots amplía la cobertura.',
+  norm_kw: 'Forma normalizada — la keyword sin plurales ni conjunciones. Las que quedan iguales se agrupan en una sola fila.',
+  norm_sv: 'SV — suma del volumen de todas las keywords que colapsaron en esta forma. Es la demanda real de la idea, no la de una sola manera de escribirla.',
+  norm_n: 'Variantes — cuántas keywords del MKL colapsaron en esta forma. Si dice 3, hay 3 maneras de escribir lo mismo que en PPC te compiten entre sí y te suben el CPC: va una sola.',
+  comp_metrica: 'Cada fila es una métrica del competidor. Clic en el nombre de la fila para ordenar las columnas por esa métrica.',
+  comp_med: 'Mediana del nicho — la mitad de los competidores está por encima de este valor y la otra mitad por debajo. Es la vara para leer si un número es alto o bajo acá adentro.',
+  // Las tres señales. Ninguna herramienta del mercado las trae: dicen si la
+  // keyword se compra, si es de temporada y si ahí cobran lo que cobras tú.
+  compra_mil: 'KW CVR — qué porcentaje de las búsquedas de ese término termina en compra. Es del MERCADO, no tuyo: una keyword puede convertir mal y tu ficha estar perfecta. Sale de dividir las ventas del término por su volumen. Se lee contra la mediana del nicho. · cálculo AGTA sobre datos de Helium 10',
+  trend: 'Tendencia — cómo se mueve el volumen. Arriba de +80% es una keyword de TEMPORADA: si tu producto es de año redondo, ese volumen no es tuyo aunque sea enorme.',
+  price_fit: 'Precio — precio POR UNIDAD mediano de los que rankean ahí ÷ el precio que tengas escrito arriba. Debajo de 60% ahí compran mucho más barato (otro comprador); arriba de 160% cobran más que tú y podrías subir.',
+  veredicto: 'Eval — las señales en una palabra, con el nombre del KPI que la disparó. ATACAR: precio y conversión en rango. PRECIO SUPERIOR / PRECIO INFERIOR: el precio promedio de quienes rankean el término está por encima o por debajo del tuyo. CVR BAJO: el KW CVR está muy por debajo de la mediana del nicho. ESTACIONAL: el volumen se dispara en una época. Pasa el mouse sobre el valor para ver el número.',
+}
+
+// `tipo` decide cómo se filtra la columna: las de opciones cerradas (tier, prio,
+// match, veredicto) se marcan de una lista, no se escriben a mano; las numéricas
+// aceptan >100 / <50 / 100-500; el resto es texto que contiene.
+const COLS = [
+  // Grupo 1 — de qué término estamos hablando
+  { k: 'kw', origen: 'h10', grupo: 'Término', label: 'Keyword', align: 'left', tipo: 'texto' },
+  { k: 'root', origen: 'agta', grupo: 'Término', label: 'Root', align: 'left', tipo: 'texto' },
+  // Grupo 2 — cuánta demanda hay y de qué clase
+  { k: 'vol', origen: 'h10', grupo: 'Demanda', label: 'Vol', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
+  { k: 'sales', origen: 'h10', grupo: 'Demanda', label: 'Vtas', align: 'right', tipo: 'num' },
+  { k: 'compra_mil', origen: 'agta', necesitaH10: true, grupo: 'Demanda', label: 'KW CVR', align: 'right', tipo: 'num', fmt: (v) => (v == null ? '—' : `${(v / 10).toFixed(2)}%`) },
+  // Grupo 3 — quién la está peleando
+  // Conteo, no porcentaje: con % el umbral se mueve solo al agregar o quitar
+  // competidores del dive. Es como lo hace DataDive. (2026-07-30)
+  { k: 'p1', origen: 'agta', necesitaH10: true, grupo: 'Competencia', label: 'Relev.', align: 'right', tipo: 'num' },
+  { k: 'td', origen: 'h10', grupo: 'Competencia', label: 'TD', align: 'right', tipo: 'num' },
+  { k: 'cp', origen: 'h10', grupo: 'Competencia', label: 'CP', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
+  // La puja sugerida ya venía en el XLSX de Cerebro y no la leíamos. Es el dato
+  // con el que se arman las campañas: sin esto la puja de cada término se pone
+  // a ojo. (2026-07-31)
+  { k: 'bid', origen: 'h10', grupo: 'Competencia', label: 'Puja', align: 'right', tipo: 'num', fmt: (v) => (v == null ? '—' : `$${Number(v).toFixed(2)}`) },
+  // Grupo 4 — qué tan tuya es
+  { k: 'fit', origen: 'agta', grupo: 'Tu producto', label: 'Fit', align: 'right', tipo: 'num', fmt: (v) => Math.round((v || 0) * 100) },
+  { k: 'idn', origen: 'agta', necesitaH10: true, grupo: 'Tu producto', label: 'IDN', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
+  { k: 'price_fit', origen: 'agta', grupo: 'Tu producto', label: 'Precio', align: 'right', tipo: 'num', fmt: (v) => (v == null ? '—' : `${Math.round(v * 100)}%`) },
+  // Grupo 5 — qué hacer con ella
+  { k: 'veredicto', origen: 'agta', necesitaH10: true, grupo: 'Qué hacer', label: 'Eval', align: 'center', tipo: 'opciones' },
+  { k: 'tier', origen: 'agta', grupo: 'Qué hacer', label: 'Tier', align: 'center', tipo: 'opciones' },
+  { k: 'prio', origen: 'agta', grupo: 'Qué hacer', label: 'Prio', align: 'center', tipo: 'opciones' },
+  { k: 'match', origen: 'agta', grupo: 'Qué hacer', label: 'Match recomendado', align: 'center', tipo: 'opciones' },
+  // Las dos etiquetas propias de la UKL. Se venían calculando desde el día uno y
+  // no se mostraban en ningún lado: la tabla traía las 324 filas sin decir qué
+  // hacer con ninguna. Van acá para que filtren y ordenen como cualquier otra.
+  { k: 'cuando', origen: 'agta', grupo: 'Qué hacer', label: 'Cuándo', align: 'center', tipo: 'opciones' },
+  { k: 'para', origen: 'agta', grupo: 'Qué hacer', label: 'Para qué', align: 'center', tipo: 'opciones' },
+  // Grupo 6 — dónde está usada hoy dentro del listing. Mismos cinco campos que
+  // muestra DataDive, medidos contra el copy real del producto. (2026-07-31)
+  ...USAGE_FIELDS.map((f) => ({
+    k: `use_${f.key}`,
+    origen: 'agta',
+    grupo: 'Uso en el listing',
+    label: f.key,
+    align: 'center',
+    tipo: 'opciones',
+  })),
+]
+
+/**
+ * El circulito de "uso en el listing". Relleno = match directo, hueco = el match
+ * es por plural, gris = no está, punteado = ese campo todavía no está escrito.
+ */
+function UsoDot({ valor, campo }) {
+  const color = USAGE_COLOR[valor]
+  const hueco = USAGE_HUECO.has(valor)
+  const sinCampo = valor === SIN_CAMPO
+  return (
+    <span
+      title={`${campo} — ${valor === NO_ESTA ? 'la keyword no está en este campo'
+        : sinCampo ? 'todavía no está escrito, no hay nada que medir' : valor}`}
+      style={{
+        display: 'inline-block', width: 10, height: 10, borderRadius: '50%',
+        background: color && !hueco ? color : 'transparent',
+        border: sinCampo
+          ? '1px dashed rgba(148,163,184,0.35)'
+          : `1px solid ${color || 'rgba(148,163,184,0.28)'}`,
+        boxShadow: !color && !sinCampo ? 'inset 0 0 0 10px rgba(148,163,184,0.18)' : undefined,
+        verticalAlign: 'middle',
+      }}
+    />
+  )
+}
+
+// Color del veredicto por keyword. ENTRA es lo unico verde: el resto son avisos
+// de por que esa keyword, aunque tenga volumen, no es tuya.
+const VEREDICTO_COLOR = {
+  ATACAR: '#4ade80',
+  'PRECIO SUPERIOR': '#60a5fa',
+  ESTACIONAL: '#fbbf24',
+  'CVR BAJO': '#fb923c',
+  'SIN VENTAS': '#94a3b8',
+  'PRECIO INFERIOR': '#f87171',
+}
+
+const VER_COLOR = { Lanzar: '#4ade80', Riesgoso: '#fbbf24', Evitar: '#f87171' }
+const STRENGTH_COLOR = { 'Muy fuerte': '#f87171', Fuerte: '#fb923c', Media: '#fbbf24', 'Débil': '#4ade80' }
+const STRENGTH_ORD = { 'Muy fuerte': 4, Fuerte: 3, Media: 2, 'Débil': 1 }
+// Columnas de texto: el primer clic en el sorter las ordena A→Z; las numéricas
+// arrancan de mayor a menor, que es como uno las quiere leer.
+const COLS_TEXTO = new Set(['kw', 'root', 'tier', 'prio', 'match', 'serp', 'brand', 'asin', 'categoria', 'veredicto'])
+const miles = (n) => (n == null ? '—' : Number(n).toLocaleString('en-US'))
+const rootBg = (w) => (w >= 4 ? 'rgba(74,222,128,0.22)' : w >= 2 ? 'rgba(74,222,128,0.10)' : 'transparent')
+// Tope de roots que muestra DataDive. Con un MKL chico nunca se toca; está para
+// que un MKL de miles de keywords no escupa una lista imposible de leer.
+const TOPE_ROOTS = 120
+const serpTexto = (k) => [k.sbv ? 'SBV' : '', k.choice ? 'AC' : '', k.sp ? 'SP' : ''].filter(Boolean).join(' ')
+
+/**
+ * Filtro por columna, como el de DataDive. El filtro habla el idioma del dato:
+ *   lista      -> ['exact','phrase'] : los valores tildados (columnas de opciones)
+ *   texto      -> contiene
+ *   >100 <50   -> comparación
+ *   100-500    -> rango
+ *   =5         -> exacto
+ */
+function matchFilter(value, expr) {
+  // Columnas de opciones cerradas: llega la lista de valores tildados. Lista
+  // vacía = sin filtro, igual que un input en blanco.
+  if (Array.isArray(expr)) return expr.length === 0 || expr.includes(String(value ?? ''))
+  // Filtro de palabras armado con la UI: dos listas y un modo. Frank: "dame una
+  // forma de filtrar por palabras que no sea aprendiéndome comandos". La coma,
+  // el más y el guion siguen funcionando para quien los sepa —abajo—, pero ya
+  // no hace falta saberlos: el popover arma este objeto solo.
+  if (expr && typeof expr === 'object' && (expr.incluye || expr.excluye)) {
+    const t = String(value ?? '').toLowerCase()
+    const inc = expr.incluye || []
+    const exc = expr.excluye || []
+    if (exc.some((s) => t.includes(s))) return false
+    if (inc.length === 0) return true
+    return expr.modo === 'todas' ? inc.every((s) => t.includes(s)) : inc.some((s) => t.includes(s))
+  }
+  // Rango {min, max} — la forma que manda el filtro numérico nuevo. Nada que
+  // adivinar de sintaxis: dos números y listo.
+  if (expr && typeof expr === 'object') {
+    if (expr.min === undefined && expr.max === undefined) return true
+    const n = typeof value === 'number' ? value : parseFloat(String(value ?? '').replace(/[^\d.-]/g, ''))
+    if (Number.isNaN(n)) return false
+    if (expr.min !== undefined && n < expr.min) return false
+    if (expr.max !== undefined && n > expr.max) return false
+    return true
+  }
+  const q = (expr || '').trim()
+  if (!q) return true
+  const num = typeof value === 'number' ? value : parseFloat(String(value ?? '').replace(/[^\d.-]/g, ''))
+  const m = q.match(/^([<>]=?|=)\s*(-?[\d.]+)$/)
+  if (m && !Number.isNaN(num)) {
+    const n = parseFloat(m[2])
+    switch (m[1]) {
+      case '>': return num > n
+      case '>=': return num >= n
+      case '<': return num < n
+      case '<=': return num <= n
+      default: return num === n
+    }
+  }
+  const range = q.match(/^(-?[\d.]+)\s*-\s*(-?[\d.]+)$/)
+  if (range && !Number.isNaN(num)) return num >= parseFloat(range[1]) && num <= parseFloat(range[2])
+  // Un número pelado en una columna numérica es "de acá para arriba", no una
+  // coincidencia de texto. Nadie escribe ">300": escribe 300 y espera ver lo que
+  // llega a 300. Antes esto caía al includes() de abajo y "22073".includes("300")
+  // es false, así que la tabla se vaciaba entera con un filtro perfectamente
+  // razonable. Para el valor exacto queda "=300". (Frank, 2026-07-30)
+  const pelado = q.match(/^(-?[\d.]+)$/)
+  if (pelado && typeof value === 'number') return value >= parseFloat(pelado[1])
+  // Tres operadores, que es lo que hace falta para limpiar una master sin pasar
+  // tres veces por la misma columna:
+  //   coma  → o      `goth, decor`        las que digan goth O decor
+  //   más   → y      `goth + decor`       las que digan goth Y decor
+  //   guion → saca   `-witch`             fuera las que digan witch
+  // Se combinan: `goth + decor, skull + lamp, -witch` son dos grupos unidos por
+  // O, cada uno exigiendo sus dos palabras, y witch afuera de todo.
+  // El guion solo cuenta al PRINCIPIO del término, para no romper `t-shirt`.
+  // (Frank, 2026-07-30)
+  const texto = String(value ?? '').toLowerCase()
+  const fuera = []
+  const grupos = []
+  q.toLowerCase().split(',').map((s) => s.trim()).filter(Boolean).forEach((parte) => {
+    if (parte.startsWith('-')) {
+      const s = parte.slice(1).trim()
+      if (s) fuera.push(s)
+      return
+    }
+    const y = parte.split('+').map((s) => s.trim()).filter(Boolean)
+    if (y.length) grupos.push(y)
+  })
+  if (fuera.some((s) => texto.includes(s))) return false
+  if (grupos.length === 0) return true
+  return grupos.some((g) => g.every((s) => texto.includes(s)))
+}
+
+/**
+ * Ordena por la columna elegida. `get` existe porque no todo dato vive plano en la
+ * fila: el rank de un competidor cuelga de r.ranks[ASIN]. Sin key no toca el orden,
+ * así cada tabla puede arrancar mostrando el orden en que vino la data.
+ */
+function sortRows(rows, sort, get) {
+  if (!sort || !sort.key) return rows
+  const val = get || ((r, k) => r[k])
+  const m = sort.dir === 'asc' ? 1 : -1
+  return [...rows].sort((a, b) => {
+    const va = val(a, sort.key)
+    const vb = val(b, sort.key)
+    if (typeof va === 'string' || typeof vb === 'string') return m * String(va ?? '').localeCompare(String(vb ?? ''))
+    return m * ((va ?? 0) - (vb ?? 0))
+  })
+}
+
+// Valor de una celda de la tabla de keywords para FILTRAR. Los ranks por competidor
+// viven anidados y cambian según se miren orgánicos o patrocinados.
+/**
+ * Columnas cuyo valor guardado NO es el que se ve: se guardan 0-1 y se muestran
+ * como porcentaje. El filtro tiene que comparar contra lo que el usuario ve —si
+ * escribe "desde 50" está pensando en el 50 de la pantalla, no en 0,5— y hasta
+ * ahora comparaba contra el crudo, así que "≥ 50" no devolvía NADA.
+ * (Frank, 2026-07-31)
+ */
+const COMO_PORCENTAJE = new Set(['fit', 'price_fit'])
+
+function valorCol(k, key, rankMode) {
+  if (key === 'serp') return serpTexto(k)
+  if (key.startsWith('rank:')) {
+    const asin = key.slice(5)
+    const r = rankMode === 'sponsored' ? (k.sranks || {})[asin] : k.ranks[asin]
+    return r == null ? '' : r
+  }
+  if (COMO_PORCENTAJE.has(key)) {
+    return k[key] == null ? null : Math.round(k[key] * 100)
+  }
+  // KW CVR se muestra como porcentaje con dos decimales sobre una base de 1.000.
+  if (key === 'compra_mil') return k[key] == null ? null : k[key] / 10
+  return k[key]
+}
+
+// Mismo valor pero para ORDENAR: el que no rankea tiene que caer al fondo, no
+// adelante, así que vale peor que el peor puesto posible.
+function ordenCol(k, key, rankMode) {
+  if (key === 'serp') return (k.sbv ? 1 : 0) + (k.choice ? 1 : 0) + (k.sp ? 1 : 0)
+  if (key.startsWith('rank:')) {
+    const v = valorCol(k, key, rankMode)
+    return v === '' ? S.max_rank + 1 : v
+  }
+  return k[key]
+}
+
+/**
+ * Agrupa columnas CONSECUTIVAS de la misma familia para la fila de grupos del
+ * header. Si el usuario mueve una columna y parte una familia, salen dos tramos
+ * con el mismo nombre — que es la verdad de lo que está viendo.
+ */
+function tramosDeGrupo(cols) {
+  const out = []
+  cols.forEach((c) => {
+    const g = c.grupo || ''
+    const ult = out[out.length - 1]
+    if (ult && ult.grupo === g) ult.n += 1
+    else out.push({ grupo: g, n: 1 })
+  })
+  return out
+}
+
+// Mediana clásica: con impares es el del medio, con pares el promedio de los dos.
+function mediana(xs) {
+  const v = xs.filter((n) => n != null).sort((a, b) => a - b)
+  if (!v.length) return null
+  const m = Math.floor(v.length / 2)
+  const r = v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2
+  return Math.round(r * 10) / 10
+}
+
+// La fuerza es una lectura del share, no un dato aparte: por eso se recalcula con
+// el MKL de ahora. Los cortes están calibrados contra el snapshot del JSON —
+// con la asignación original devuelven exactamente las etiquetas que traía.
+const fuerza = (share) => (share >= 75 ? 'Muy fuerte' : share >= 50 ? 'Fuerte' : share >= 35 ? 'Media' : 'Débil')
+
+// Filas del panel de competidores: qué se muestra, de dónde sale y cómo se ordena.
+const COMP_ROWS = [
+  { k: 'imagen', label: 'Producto', med: null, foto: true, info: 'La foto principal del listing (Keepa). Ver contra quién competís es la mitad del análisis: el precio y las reseñas no te dicen si el producto se parece al tuyo.' },
+  { k: 'brand', label: 'Marca', med: null, fmt: (v) => v, info: 'Marca dueña del ASIN, según Keepa.' },
+  { k: 'titulo', label: 'Título', med: null, fmt: (v) => v || '—', info: 'El título del listing en Amazon. Sirve para leer cómo se posiciona: qué keyword pone adelante y qué promete.' },
+  { k: 'asin', label: 'ASIN', med: null, fmt: (v) => v, info: 'El identificador del producto en Amazon.' },
+  { k: 'strength', label: 'Fuerza', med: null, badge: true, sortVal: (c) => STRENGTH_ORD[c.strength] || 0, info: 'Lectura rápida del share: Muy fuerte ≥75% · Fuerte ≥50% · Media ≥35% · Débil abajo de eso. Se recalcula con los buckets de ahora.' },
+  { k: 'share', label: 'SV en P1 (share of voice)', med: 'share', fmt: (v) => `${v}%`, bar: true, info: 'Del volumen total del MKL de ahora, qué porcentaje cubre este competidor desde página 1. Es la métrica de dominio del nicho.' },
+  { k: 'kws_p1', label: 'Keywords en P1', med: 'kws_p1', fmt: (v) => miles(v), info: `Cuántas keywords del MKL actual tiene en página 1 (rank ≤${S.p1_rank}).` },
+  { k: 'kws_p1_pct', label: '% de keywords en P1', med: 'kws_p1_pct', fmt: (v) => (v == null ? '—' : `${v}%`), info: 'Esas keywords sobre el total del MKL de ahora. Un competidor puede tener pocas keywords y mucho volumen: este número separa amplitud de peso.' },
+  { k: 'sv_p1', label: 'Volumen en P1', med: 'sv_p1', fmt: (v) => miles(v), info: 'Suma del SV de esas keywords en página 1.' },
+  { k: 'outlier_kws', label: 'Keywords de Outliers', med: null, fmt: (v) => miles(v), info: 'Cuántas keywords del bucket Outliers tiene en página 1. Si es 0, no está peleando lo uncontested.' },
+  { k: 'outlier_sv', label: 'Volumen de Outliers', med: null, fmt: (v) => miles(v), info: 'Volumen que el competidor ya cubre dentro del bucket Outliers de ahora. Si es 0, ese hueco sigue libre.' },
+  { k: 'precio', label: 'Precio', med: 'precio', fmt: (v) => (v == null ? '—' : `$${v}`), info: 'Precio de venta actual (Keepa). No depende del MKL.' },
+  { k: 'piezas', label: 'Piezas del pack', med: 'piezas', fmt: (v) => (v == null ? '—' : v), info: 'Cuántas unidades trae (Keepa). Sin esto, un set de 4 parece caro al lado de una pieza suelta.' },
+  { k: 'precio_unidad', label: 'Precio por unidad', med: 'precio_unidad', fmt: (v) => (v == null ? '—' : `$${v}`), info: 'Precio ÷ piezas. Es el único precio comparable entre productos: es el que usa el price-fit de las keywords.' },
+  { k: 'rating', label: 'Rating', med: 'rating', fmt: (v) => (v == null ? '—' : v), info: 'Promedio de estrellas (Keepa).' },
+  { k: 'reviews', label: 'Reseñas', med: 'reviews', fmt: (v) => miles(v), info: 'Cantidad de reseñas acumuladas (Keepa). Es la barrera de entrada más dura del nicho.' },
+  { k: 'edad', label: 'Edad del listing', med: null, fmt: (v) => v || '—', sortVal: (c) => c.edad_meses, info: 'Hace cuánto existe el listing (Keepa). Un “+” al final significa que Keepa no tiene la fecha de alta y ese número es el piso: el listing es de ESA fecha o más viejo. Se ordena por meses.' },
+  { k: 'ventas30', label: 'Actividad de venta 30d', med: 'ventas30', fmt: (v) => miles(v), info: 'Veces que le cayó el BSR en 30 días (evento de venta observado). NO son unidades vendidas.' },
+  { k: 'ingresos30', label: 'Actividad × precio 30d', med: 'ingresos30', fmt: (v) => (v == null ? '—' : `$${miles(v)}`), info: 'Actividad de venta × precio. Sirve para ordenar competidores por peso económico, no para leerlo como facturación: hereda la advertencia de la fila de arriba.' },
+  { k: 'variaciones', label: 'Variaciones', med: 'variaciones', fmt: (v) => miles(v), info: 'Cuántas variaciones tiene el listing (color, tamaño). Más variaciones = más reseñas compartidas.' },
+  { k: 'categoria', label: 'Categoría', med: null, fmt: (v) => v || '—', info: 'Categoría principal del producto (Keepa).' },
+]
+
+/**
+ * El "?" en círculo. Reemplaza al title= del navegador por dos motivos: el nativo
+ * no aparece si llegás a la columna con el teclado, y no se ve que exista ayuda
+ * hasta que pasas el mouse por encima.
+ */
+/**
+ * El "?" de los encabezados. El panel lo dibuja Radix en un portal colgado del
+ * body: fuera del `th` sticky, y por eso ya no puede quedar tapado por la fila
+ * de filtros — que fue el bug que costó tres vueltas el 2026-07-30.
+ */
+function Ayuda({ texto }) {
+  if (!texto) return null
+  return (
+    <TooltipRadix texto={texto}>
+      <button
+        type="button"
+        className="rsch-ayuda"
+        aria-label={`Ayuda: ${texto}`}
+        // Vive dentro de headers que ordenan al hacer clic: cortamos la propagación
+        // para que pedir ayuda no reordene la tabla por atrás.
+        onClick={(e) => e.stopPropagation()}
+      >
+        <span aria-hidden="true">?</span>
+      </button>
+    </TooltipRadix>
+  )
+}
+
+/**
+ * Header con las tres cosas que va toda tabla de AGTA: nombre, ayuda y sorter.
+ * Si recibe `mover`, además se puede arrastrar para reordenar la columna — cada
+ * uno mira el MKL en el orden que le sirve.
+ */
+// `align` llega desde la definición de la columna y manda sobre las CELDAS, no
+// sobre el encabezado: el header va SIEMPRE centrado aunque la columna sea de
+// texto a la izquierda o numérica a la derecha. (Regla de Frank, 2026-07-31)
+function Th({ label, ayuda, align, orden, sort, onSort, style, className = '', origen, mover, arrastrando, setArrastrando }) {
+  const ordenable = Boolean(orden && onSort)
+  const activo = ordenable && sort && sort.key === orden
+  const movible = Boolean(mover && orden)
+  const [encima, setEncima] = useState(false)
+  // Sin `title` nativo en el <th>: al pasar el mouse por el "?" salían DOS
+  // tooltips a la vez y el del navegador se montaba encima del nuestro,
+  // tapándole el título. El origen ya se ve por el color de fondo (amarillo
+  // AGTA / azul Helium 10) y va escrito al final de cada ayuda.
+  return (
+    <th
+      scope="col"
+      className={`mkl-th${ordenable ? ' mkl-sortth' : ''}${activo ? ' active' : ''}${className ? ` ${className}` : ''}`
+        + `${movible && arrastrando === orden ? ' rsch-dragging' : ''}${encima ? ' rsch-dropzone' : ''}`}
+      style={{ textAlign: 'center', ...style }}
+      data-origen={origen}
+      onClick={ordenable ? () => onSort(orden) : undefined}
+      aria-sort={activo ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}
+      draggable={movible || undefined}
+      onDragStart={movible ? (e) => { setArrastrando(orden); e.dataTransfer.effectAllowed = 'move' } : undefined}
+      onDragEnd={movible ? () => { setArrastrando(null); setEncima(false) } : undefined}
+      onDragOver={movible ? (e) => { e.preventDefault(); if (arrastrando && arrastrando !== orden) setEncima(true) } : undefined}
+      onDragLeave={movible ? () => setEncima(false) : undefined}
+      onDrop={movible ? (e) => { e.preventDefault(); setEncima(false); if (arrastrando && arrastrando !== orden) mover(arrastrando, orden) } : undefined}
+    >
+      {label}
+
+      <Ayuda texto={ayuda} />
+      {ordenable && (
+        <span className={`mkl-sortcaret${activo ? '' : ' dim'}`} aria-hidden="true">
+          {activo ? (sort.dir === 'desc' ? '▾' : '▴') : '⇅'}
+        </span>
+      )}
+    </th>
+  )
+}
+
+/**
+ * Celda de la fila de filtros. El control depende del TIPO de dato: una columna
+ * de valores cerrados (Match, Tier, Prio, Veredicto) se tilda de una lista —
+ * "solo exact", o "exact + phrase" — en vez de escribir el texto a mano y no
+ * saber si existe. Las numéricas siguen aceptando >100 / <50 / 100-500.
+ */
+function FiltroTh({ campo, etiqueta, valor, onChange, numerico, opciones, corte }) {
+  return (
+    <th className={`mkl-th${corte ? ' mkl-corte' : ''}`} style={{ padding: '3px 5px' }}>
+      {opciones ? (
+        <FiltroOpciones campo={campo} etiqueta={etiqueta} valor={valor} onChange={onChange} opciones={opciones} />
+      ) : numerico ? (
+        <FiltroNumerico campo={campo} etiqueta={etiqueta} valor={valor} onChange={onChange} />
+      ) : (
+        <FiltroPalabras campo={campo} etiqueta={etiqueta} valor={valor} onChange={onChange} />
+      )}
+    </th>
+  )
+}
+
+/** El filtro de Excel: los valores que EXISTEN en esta columna, para tildar. */
+function FiltroOpciones({ campo, etiqueta, valor, onChange, opciones }) {
+  const sel = Array.isArray(valor) ? valor : []
+  const alternar = (v) => onChange(campo, sel.includes(v) ? sel.filter((x) => x !== v) : [...sel, v])
+  const texto = sel.length === 0 ? 'Todos' : sel.length === 1 ? sel[0] : `${sel.length} valores`
+  return (
+    <MenuRadix boton={<>{texto} <span aria-hidden="true">▾</span></>} etiqueta={`Filtrar por ${etiqueta}`} activo={sel.length > 0}>
+      {opciones.map((o) => (
+        <label key={o} className="rsch-opts-item">
+          <input type="checkbox" checked={sel.includes(o)} onChange={() => alternar(o)} />
+          {o || '(vacío)'}
+        </label>
+      ))}
+      {sel.length > 0 && (
+        <button type="button" className="rsch-opts-todos" onClick={() => onChange(campo, [])}>Ver todos</button>
+      )}
+    </MenuRadix>
+  )
+}
+
+/**
+ * Filtro de columna numérica. Antes era una caja de texto con una sintaxis que
+ * había que adivinar —`>300`, `<10`, `5-20`— y Frank tenía razón en que eso de
+ * UX no tiene nada: el usuario escribe `300`, no ve nada y no sabe por qué.
+ *
+ * Ahora es un desplegable con **desde** y **hasta**, que es como se piensa un
+ * rango. El botón muestra el filtro puesto, así se ve de un vistazo cuál columna
+ * está filtrando sin abrir nada.
+ *
+ * NO dice hasta cuánto llega la columna (Frank lo sacó, 2026-07-30): además de
+ * sobrar, el número engañaba — se calculaba sobre TODAS las keywords y no sobre
+ * el bucket que estás mirando, así que en el MKL decía "de 0 a 403.035" cuando
+ * ahí el mínimo es 300.
+ */
+/**
+ * Filtro de palabras SIN comandos. Frank: *"dame una forma de filtrar por
+ * palabras que no sea aprendiéndome comandos"*. Tenía razón: la coma, el más y
+ * el guion resolvían el problema pero se los tenía que aprender de memoria, y
+ * un filtro que hay que estudiar no es un filtro, es una consola.
+ *
+ * Se escribe la palabra y se aprieta Enter: aparece como etiqueta. Un clic en
+ * la etiqueta la pasa de "que la tenga" a "que NO la tenga" y al revés. Y arriba
+ * se elige si con una palabra alcanza o si tienen que estar todas. Eso cubre lo
+ * mismo que la sintaxis, y no hay nada que recordar.
+ */
+function FiltroPalabras({ campo, etiqueta, valor, onChange }) {
+  const [escrito, setEscrito] = useState('')
+  const v = (valor && typeof valor === 'object' && !Array.isArray(valor)) ? valor : {}
+  const inc = v.incluye || []
+  const exc = v.excluye || []
+  const modo = v.modo || 'alguna'
+  const emitir = (n) => {
+    const limpio = { modo: n.modo, incluye: n.incluye.filter(Boolean), excluye: n.excluye.filter(Boolean) }
+    onChange(campo, (limpio.incluye.length || limpio.excluye.length) ? limpio : undefined)
+  }
+  const agregar = () => {
+    const s = escrito.trim().toLowerCase()
+    if (!s || inc.includes(s) || exc.includes(s)) { setEscrito(''); return }
+    emitir({ modo, incluye: [...inc, s], excluye: exc })
+    setEscrito('')
+  }
+  const alternar = (s) => inc.includes(s)
+    ? emitir({ modo, incluye: inc.filter((x) => x !== s), excluye: [...exc, s] })
+    : emitir({ modo, incluye: [...inc, s], excluye: exc.filter((x) => x !== s) })
+  const borrar = (s) => emitir({ modo, incluye: inc.filter((x) => x !== s), excluye: exc.filter((x) => x !== s) })
+
+  const total = inc.length + exc.length
+  const boton = total === 0 ? 'Todas'
+    : total === 1 ? (inc[0] || `Sin ${exc[0]}`)
+    : `${total} palabras`
+
+  /** Una palabra puesta. Se clickea para invertirla; la × solo aparece encima. */
+  const Etiqueta = ({ s, saca }) => (
+    <span
+      className={`group inline-flex items-center gap-[0.15rem] border py-[0.05rem] pl-[0.35rem] pr-[0.15rem] text-[0.66rem] leading-[1.5] normal-case tracking-normal
+        ${saca ? 'border-copper/30 bg-transparent text-fg/40' : 'border-copper-bright/45 bg-copper-bright/10 text-fg/90'}`}
+    >
+      <button
+        type="button"
+        onClick={() => alternar(s)}
+        className={`bg-transparent p-0 text-inherit ${saca ? 'line-through' : ''}`}
+        title={saca ? 'Ahora las saca. Clic para volver a pedirla.' : 'Ahora la pide. Clic para sacarla.'}
+      >
+        {s}
+      </button>
+      <button
+        type="button"
+        onClick={() => borrar(s)}
+        aria-label={`Quitar ${s}`}
+        className="flex h-[13px] w-[13px] items-center justify-center bg-transparent p-0 text-[0.7rem] leading-none text-copper/0 transition-colors group-hover:text-copper hover:!text-fg"
+      >
+        &times;
+      </button>
+    </span>
+  )
+
+  const Grupo = ({ titulo, palabras, saca }) => (
+    <div className="mt-[0.55rem]">
+      <p className="m-0 mb-[0.3rem] text-[0.52rem] uppercase tracking-[0.1em] text-copper/70">{titulo}</p>
+      <div className="flex flex-wrap gap-[0.25rem]">
+        {palabras.map((s) => <Etiqueta key={s} s={s} saca={saca} />)}
+      </div>
+    </div>
+  )
+
+  return (
+    <MenuRadix boton={<>{boton} <span aria-hidden="true">&#9662;</span></>} etiqueta={`Filtrar por ${etiqueta}`} activo={total > 0} ancho="min-w-[212px]">
+      {/* Escribir y Enter. El signo + a la derecha está para que se entienda que
+          suma una más y no reemplaza a la anterior. */}
+      <div className="flex items-center border border-copper/40 bg-bg/60 focus-within:border-copper-bright/80">
+        <input
+          value={escrito}
+          onChange={(e) => setEscrito(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); agregar() } }}
+          onBlur={agregar}
+          placeholder="Escribe una palabra"
+          className="min-w-0 flex-1 border-0 bg-transparent px-[0.4rem] py-[0.28rem] font-sans text-[0.72rem] normal-case leading-[1.4] tracking-normal text-fg outline-none"
+        />
+        <button
+          type="button"
+          onClick={agregar}
+          aria-label="Agregar palabra"
+          title="Agregar (o Enter)"
+          className="bg-transparent px-[0.35rem] py-0 text-[0.8rem] leading-none text-copper hover:text-fg"
+        >
+          +
+        </button>
+      </div>
+
+      {inc.length > 1 && (
+        <div className="mt-[0.45rem] flex overflow-hidden border border-copper/30 text-[0.6rem] normal-case tracking-normal">
+          {[['alguna', 'Cualquiera'], ['todas', 'Todas']].map(([k, rot]) => (
+            <button
+              key={k}
+              type="button"
+              onClick={() => emitir({ modo: k, incluye: inc, excluye: exc })}
+              title={k === 'alguna' ? 'Basta con que tenga una de las palabras' : 'Tiene que tenerlas todas'}
+              className={`flex-1 px-[0.3rem] py-[0.18rem] ${modo === k ? 'bg-copper-bright/20 text-fg' : 'bg-transparent text-fg/45 hover:text-fg/75'}`}
+            >
+              {rot}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {inc.length > 0 && <Grupo titulo="Que tengan" palabras={inc} />}
+      {exc.length > 0 && <Grupo titulo="Que no tengan" palabras={exc} saca />}
+
+      {total > 0 && (
+        <div className="mt-[0.55rem] flex justify-end border-t border-copper/20 pt-[0.4rem]">
+          <button
+            type="button"
+            className="bg-transparent p-0 text-[0.6rem] normal-case tracking-normal text-fg/45 underline-offset-2 hover:text-fg hover:underline"
+            onClick={() => onChange(campo, undefined)}
+          >
+            Quitar filtro
+          </button>
+        </div>
+      )}
+    </MenuRadix>
+  )
+}
+
+function FiltroNumerico({ campo, etiqueta, valor, onChange }) {
+  const v = (valor && typeof valor === 'object') ? valor : {}
+  const set = (k) => (e) => {
+    const x = e.target.value
+    const n = { ...v, [k]: x === '' ? undefined : Number(x) }
+    if (n.min === undefined && n.max === undefined) onChange(campo, undefined)
+    else onChange(campo, n)
+  }
+  const puesto = v.min !== undefined || v.max !== undefined
+  const texto = v.min !== undefined && v.max !== undefined ? `${miles(v.min)}–${miles(v.max)}`
+    : v.min !== undefined ? `≥ ${miles(v.min)}`
+    : v.max !== undefined ? `≤ ${miles(v.max)}`
+    : 'Todos'
+  return (
+    <MenuRadix boton={<>{texto} <span aria-hidden="true">▾</span></>} etiqueta={`Filtrar por ${etiqueta}`} activo={puesto}>
+      <div className="flex gap-[0.45rem]">
+        {[['min', 'Desde', 'Mín'], ['max', 'Hasta', 'Máx']].map(([k, rot, ph]) => (
+          <label key={k} className="flex flex-1 flex-col gap-[0.18rem] text-micro uppercase tracking-[0.08em] text-copper/85">
+            <span>{rot}</span>
+            <input
+              type="number"
+              inputMode="numeric"
+              value={v[k] ?? ''}
+              onChange={set(k)}
+              placeholder={ph}
+              className="w-full border border-copper/45 bg-bg/60 px-[0.4rem] py-[0.28rem] font-sans text-[0.74rem] normal-case tracking-normal text-fg tabular-nums outline-none focus:border-copper-bright/90"
+            />
+          </label>
+        ))}
+      </div>
+      {puesto && (
+        <button type="button" className="rsch-opts-todos" onClick={() => onChange(campo, undefined)}>Ver todos</button>
+      )}
+    </MenuRadix>
+  )
+}
+
+/**
+ * Menú para esconder columnas. La primera columna de cada tabla no entra: es la
+ * que identifica la fila y sin ella la tabla no se lee.
+ */
+function MenuColumnas({ etiqueta = 'Columnas', fija, opciones, ocultas, setOcultas }) {
+  const alternar = (k) => setOcultas((s) => {
+    const n = new Set(s)
+    if (n.has(k)) n.delete(k)
+    else n.add(k)
+    return n
+  })
+  const visibles = opciones.filter((o) => !ocultas.has(o.k)).length
+  return (
+    <MenuRadix
+      etiqueta={etiqueta}
+      activo={visibles < opciones.length}
+      ancho="min-w-[220px]"
+      boton={<>{etiqueta} {visibles + 1}/{opciones.length + 1} <span aria-hidden="true">&#9662;</span></>}
+    >
+      <p className="rsch-cols-fija">{fija} &middot; siempre visible</p>
+      {opciones.map((o, i) => (
+        <Fragment key={o.k}>
+          {o.grupo && o.grupo !== (opciones[i - 1] || {}).grupo && <span className="rsch-cols-sep">{o.grupo}</span>}
+          <label className="rsch-cols-item">
+            <input type="checkbox" checked={!ocultas.has(o.k)} onChange={() => alternar(o.k)} />
+            {o.label}
+          </label>
+        </Fragment>
+      ))}
+      <div className="rsch-cols-acts">
+        <button type="button" className="rsch-bulk-clear" onClick={() => setOcultas(new Set())}>Mostrar todas</button>
+        <button type="button" className="rsch-bulk-clear" onClick={() => setOcultas(new Set(opciones.map((o) => o.k)))}>Ocultar todas</button>
+      </div>
+    </MenuRadix>
+  )
+}
+
+/** Sorter compartido: primer clic ordena, segundo clic sobre lo mismo invierte. */
+function useSorter(inicial) {
+  const [sort, setSort] = useState(inicial)
+  const onSort = (key) => setSort((s) => (s.key === key
+    ? { key, dir: s.dir === 'desc' ? 'asc' : 'desc' }
+    : { key, dir: COLS_TEXTO.has(key) ? 'asc' : 'desc' }))
+  // setSort sale afuera para poder volver al orden en que vino la data.
+  return [sort, onSort, setSort]
+}
+
+// Selector de producto: cada MKL es un dive independiente, así que al cambiar de
+// producto se remonta el panel entero (key={prod}) y los buckets arrancan limpios.
+export default function Research() {
+  const [prod, setProd] = useState('LMP')
+  return (
+    <>
+      <div className="rsch-prodbar" style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '10px 0' }}>
+        <span style={{ opacity: 0.6, fontSize: 12 }}>Producto:</span>
+        {Object.keys(DATASETS).map((p) => (
+          <button
+            key={p}
+            onClick={() => setProd(p)}
+            // `is-active` no existía en el CSS —la clase es `active`— así que el
+            // selector NUNCA se veía marcado. Frank trabajó 678 correcciones en
+            // CND creyendo que estaba en LMP. Un typo de una palabra.
+            // (2026-07-31)
+            className={p === prod ? 'rsch-tab active' : 'rsch-tab'}
+            title={DATASETS[p].meta.product}
+          >
+            {p}
+          </button>
+        ))}
+        <span className="ml-[0.4rem] text-[0.78rem] font-semibold text-fg">
+          {DATASETS[prod].meta.product}
+        </span>
+        <span style={{ opacity: 0.45, fontSize: 12 }}>· {DATASETS[prod].meta.n_comp} competidores</span>
+      </div>
+      <ResearchPanel key={prod} prod={prod} data={DATASETS[prod]} ukl={UKL[prod]} />
+    </>
+  )
+}
+
+/**
+ * Lo que el usuario mueve a mano se GUARDA. Sin esto, corregir la master y
+ * recargar la página borraba el trabajo entero — y corregirla a mano es
+ * justamente para lo que existe esta tabla.
+ *
+ * Se guarda **por keyword, no por índice**: los JSON se regeneran seguido y el
+ * orden cambia de una corrida a otra. Guardando `assign[i]` las correcciones
+ * caerían sobre keywords distintas después de cada regeneración, que es peor
+ * que no guardar nada — el error sería silencioso.
+ *
+ * Solo se persiste el TRABAJO (movimientos de bucket, orden y visibilidad de
+ * columnas, precio, modo de rank). Los filtros y la selección no: son de
+ * momento, y encontrarse la tabla filtrada al abrirla se lee como que faltan
+ * datos.
+ */
+/**
+ * El fit de una keyword de la UKL, con el mismo criterio que usa el motor en
+ * `dashboard_dataset.py`. Se replica acá —y no se toma del JSON— porque la UKL
+ * viene de otra fuente (Magnet) y nunca pasó por ese motor.
+ *
+ * Si algún día cambia el criterio, cambia en los dos lados. Vale la pena la
+ * duplicación: la alternativa era dejar la columna vacía, que es peor.
+ */
+const FIT_AEST = /(goth|gothic|skull|skeleton|raven|crow|witch|witchy|witchcraft|wicca|occult|bat|spooky|halloween|dark academia|whimsigoth|whimsygoth|macabre|pirate|horror|grunge|emo|alternative|morbid|creepy|eerie|haunted|ghost|spell|ritual|cauldron|coffin|grim|reaper|voodoo|santa muerte|dia de los muertos|vela|velas|craneo|calavera|esqueleto)/i
+const FIT_BUY = /(for|home|bedroom|room|desk|office|nightstand|bedside|table|gift|decor|set)/i
+const FIT_ANYPROD = /(lamp|lamps|light|lights|lantern|sconce|bulb|candle|candles|tealight|votive|wax|taper|warmer|mirror|rug|curtain|pillow|blanket|tapestry|poster|print|canvas|painting|art|sign|sticker|decal|mural|banner|clock|shelf|hook|garland|wreath|figurine|statue|sculpture|bust|vase|bowl|plate|mug|cup|tumbler|jar|box|coaster|tray|frame|plaque|doormat|towel|bedding|holder|stand|jewelry|ring|necklace|costume|shirt|hoodie|dress|hat|mask|bag|keychain|magnet|book|toy|plush|diffuser|incense|soap|planter|pot|table|chair|desk|bed|nightstand|wallpaper)/i
+
+function fitDe(kw, meta) {
+  const prod = meta?.settings?.prod ? new RegExp(meta.settings.prod, 'i') : null
+  const self = meta?.settings?.self ? new RegExp(meta.settings.self, 'i') : null
+  let f = 0.5
+  const diceProducto = prod ? prod.test(kw) : false
+  if (diceProducto) f += 0.15
+  if (self && self.test(kw)) f += 0.30
+  if (FIT_AEST.test(kw) && !FIT_ANYPROD.test(kw)) f += 0.25
+  if (FIT_BUY.test(kw)) f += 0.10
+  if (kw.split(' ').length >= 3) f += 0.05
+  f = Math.min(f, 1)
+  if (!FIT_AEST.test(kw)) f = f * 0.5
+  return Math.round(f * 100) / 100
+}
+
+const LS_CLAVE = (prod) => `mavra_research_${prod}`
+
+function leerGuardado(prod) {
+  try {
+    const raw = localStorage.getItem(LS_CLAVE(prod))
+    return raw ? JSON.parse(raw) : {}
+  } catch {
+    return {}
+  }
+}
+
+function ResearchPanel({ prod, data: dataRaw, ukl }) {
+  const guardado = useMemo(() => leerGuardado(prod), [prod])
+  /**
+   * Las keywords de la UKL entran al mismo array que las del reverse-ASIN, con
+   * `bucket: 'UKL'`. Los campos que dependen de los competidores van en null y
+   * no en cero: en la UKL ningún competidor la tiene, y un cero ahí se leería
+   * como "medido y da cero" en vez de "no aplica".
+   */
+  const data = useMemo(() => {
+    const ya = new Set(dataRaw.kws.map((k) => k.kw_lower))
+    const extra = (ukl?.kws || []).filter((k) => !ya.has(k.kw_lower)).map((k) => ({
+      ...k,
+      norm: k.kw_lower, root: 'universo', sales: 0,
+      // El fit SI se calcula: depende de la keyword y del producto, no de los
+      // competidores. Lo había metido en la misma bolsa que rel/IDN/tier por
+      // descuido y quedaba vacío para las 324. (Frank lo cazó, 2026-07-31)
+      n: 0, p1: 0, rel: null, fit: fitDe(k.kw, dataRaw.meta), idn: null,
+      seasonal: false, mism: false, propio: false,
+      sbv: 0, choice: 0, sp: 0,
+      ranks: {}, bucket: 'UKL', tier: null, prio: null, match: null,
+      fuente: 'ukl',
+    }))
+    return { ...dataRaw, kws: [...dataRaw.kws, ...extra] }
+  }, [dataRaw, ukl])
+
+  // Uso en el listing: se calcula una vez por keyword contra el copy del producto
+  // activo, y viaja en la fila como use_T / use_B / … para que ordene y filtre
+  // igual que cualquier otra columna.
+  const usos = useMemo(() => {
+    const copy = LISTING_COPY[prod] || {}
+    const cache = new Map()
+    return (kw) => {
+      if (!cache.has(kw)) {
+        const v = {}
+        USAGE_FIELDS.forEach((f) => { v[`use_${f.key}`] = usageValor(kw, copy[f.key]) })
+        cache.set(kw, v)
+      }
+      return cache.get(kw)
+    }
+  }, [prod])
+  const [assign, setAssign] = useState(() =>
+    data.kws.map((k) => guardado.buckets?.[k.kw_lower] ?? k.bucket))
+  const [tab, setTab] = useState('MKL')
+  const [q, setQ] = useState('')
+  const [negOn, setNegOn] = useState(false)
+  const [sel, setSel] = useState(() => new Set())
+  const [showComp, setShowComp] = useState(() => guardado.showComp ?? true)
+  const [rootSel, setRootSel] = useState(() => new Set())
+  const [rootMode, setRootMode] = useState('norm')
+  // Un sorter y un juego de filtros por tabla. Viven en el componente, así que
+  // cambiar de tab y volver no borra lo que el usuario configuró.
+  const [sort, onSort] = useSorter({ key: 'idn', dir: 'desc' })
+  const [rootSort, onRootSort] = useSorter({ key: null, dir: 'desc' })
+  const [rkSort, onRkSort] = useSorter({ key: 'vol', dir: 'desc' })
+  const [normSort, onNormSort] = useSorter({ key: null, dir: 'desc' })
+  const [compSort, onCompSort, setCompSort] = useSorter({ key: null, dir: 'desc' })
+  const [colF, setColF] = useState({})        // filtros de la tabla de keywords
+  const [rootF, setRootF] = useState({})      // filtros de Roots (izquierda)
+  const [rkF, setRkF] = useState({})          // filtros de las keywords del root (derecha)
+  const [normF, setNormF] = useState({})      // filtros del Normalizer
+  const [compQ, setCompQ] = useState('')      // filtro de competidores por marca/ASIN
+  // Columnas escondidas por tabla. Mismo motivo que arriba: sobreviven al cambio de tab.
+  const [kwHid, setKwHid] = useState(() => new Set(guardado.kwHid || []))
+  const [rootHid, setRootHid] = useState(() => new Set())
+  const [rkHid, setRkHid] = useState(() => new Set())
+  const [normHid, setNormHid] = useState(() => new Set())
+  const [compHid, setCompHid] = useState(() => new Set())
+  // Toggle Organic / Sponsored, como el de DataDive. El SR sale del MCP de H10
+  // (sponsored_rank por ASIN) — no de scrapear el SERP.
+  const [rankMode, setRankMode] = useState(() => guardado.rankMode || 'organic')
+  // Orden de las columnas de la tabla de keywords. Arranca en null = el orden en
+  // que están definidas; se llena la primera vez que alguien arrastra una.
+  const [kwOrden, setKwOrden] = useState(() => guardado.kwOrden ?? null)
+  const [arrastrando, setArrastrando] = useState(null)
+  // Apagar Helium 10 deja a la vista SOLO lo que agrega AGTA. Keyword y Vol
+  // nunca se van: sin ellas la tabla no se puede leer.
+  const [verH10, setVerH10] = useState(() => guardado.verH10 ?? true)
+  // Las keywords de marca ajena. Como en DataDive, NO se sacan del bucket: se
+  // marcan y se pueden apagar en la tabla que estés mirando. (2026-07-31)
+  const [verMarcas, setVerMarcas] = useState(() => guardado.verMarcas ?? true)
+  const [verLeyenda, setVerLeyenda] = useState(false)
+  /**
+   * A qué precio pensás vender. El price-fit y medio veredicto dependen de esto,
+   * y un MKL no siempre tiene un precio cerrado: se corre para investigar un
+   * nicho, para lanzar o para sostener un producto que ya vende. Por eso el
+   * precio es un dato editable y no una constante del código — y si se deja
+   * vacío, los veredictos que dependen del precio no se muestran.
+   */
+  const [miPrecio, setMiPrecio] = useState(() => {
+    if (guardado.miPrecio !== undefined) return guardado.miPrecio
+    const m = data.meta?.senales
+    return m?.precio_unitario_propio ?? m?.mi_precio ?? ''
+  })
+  const ov = data.overview
+
+  const counts = useMemo(() => {
+    const c = { MKL: 0, Outliers: 0, Residue: 0, Negatives: 0, Trash: 0 }
+    assign.forEach((b) => { c[b] = (c[b] || 0) + 1 })
+    return c
+  }, [assign])
+
+  /**
+   * Competidores en vivo. La cobertura de un competidor no es un dato fijo: depende
+   * de qué keywords están hoy en cada bucket. Si se mueven keywords con el
+   * multi-move, share, cobertura y fuerza se recalculan acá. Lo de Keepa (precio,
+   * rating, reseñas, edad, variaciones, categoría) no se toca: describe al
+   * producto, no al MKL.
+   */
+  const comps = useMemo(() => {
+    const mkl = []
+    const outl = []
+    data.kws.forEach((k, i) => {
+      if (assign[i] === 'MKL') mkl.push(k)
+      else if (assign[i] === 'Outliers') outl.push(k)
+    })
+    const svMkl = mkl.reduce((s, k) => s + k.vol, 0)
+    return data.competitors.map((c) => {
+      const enP1 = mkl.filter((k) => (k.ranks[c.asin] || Infinity) <= S.p1_rank)
+      const outP1 = outl.filter((k) => (k.ranks[c.asin] || Infinity) <= S.p1_rank)
+      const svP1 = enP1.reduce((s, k) => s + k.vol, 0)
+      const share = svMkl ? Math.round((svP1 / svMkl) * 1000) / 10 : 0
+      // La ficha del competidor (foto, marca, título, precio, reseñas) NO viene del
+      // reverse-ASIN: ese solo trae ASIN y ranks. Se completa por ASIN desde Helium 10.
+      // Lo que ya venga cargado manda; esto solo llena los huecos.
+      const info = COMP_INFO[c.asin] || {}
+      return {
+        ...c,
+        imagen: c.imagen || info.img || null,
+        brand: c.brand && c.brand !== c.asin ? c.brand : (info.brand || c.asin),
+        titulo: c.titulo || info.title || null,
+        precio: c.precio ?? (info.price != null ? Math.round(info.price) / 100 : null),
+        rating: c.rating ?? (info.rating || null),
+        reviews: c.reviews ?? (info.reviews ?? null),
+        kws_p1: enP1.length,
+        kws_p1_pct: mkl.length ? Math.round((enP1.length / mkl.length) * 1000) / 10 : 0,
+        sv_p1: svP1,
+        share,
+        outlier_kws: outP1.length,
+        outlier_sv: outP1.reduce((s, k) => s + k.vol, 0),
+        strength: fuerza(share),
+      }
+    })
+  }, [assign])
+
+  // La mediana del nicho se mueve con los competidores en lo que sale del MKL.
+  // Lo de Keepa queda como vino: el precio mediano del nicho no cambia porque
+  // alguien reordene keywords.
+  const med = useMemo(() => ({
+    ...(data.niche_median || {}),
+    kws_p1: mediana(comps.map((c) => c.kws_p1)),
+    sv_p1: mediana(comps.map((c) => c.sv_p1)),
+    share: mediana(comps.map((c) => c.share)),
+  }), [comps])
+
+  const isTable = BUCKETS.includes(tab) || tab === 'Trash'
+  // Root ya NO se saca sola en el MKL. Que una columna apareciera y desapareciera
+  // al cambiar de pestaña era el motivo de que la tabla saltara: cambiaba la
+  // cantidad de columnas y se recalculaba todo el ancho. Si molesta se esconde
+  // desde el menú de columnas, como cualquier otra — que es lo que Frank pidió.
+  // (2026-07-30)
+  const baseCols = COLS
+  // El orden que eligió el usuario manda; las columnas que no estén en su lista
+  // (porque cambió de bucket y apareció Root) caen al final, no desaparecen.
+  const colsOrdenadas = useMemo(() => {
+    if (!kwOrden) return baseCols
+    const pos = new Map(kwOrden.map((k, i) => [k, i]))
+    return [...baseCols].sort((a, b) => (pos.has(a.k) ? pos.get(a.k) : 999) - (pos.has(b.k) ? pos.get(b.k) : 999))
+  }, [baseCols, kwOrden])
+  // Sin Helium 10 las columnas NO desaparecen: se muestran tapadas. Esconderlas
+  // ocultaría justo lo que hay que ver — cuánto del análisis depende de tener la
+  // herramienta conectada.
+  const visCols = colsOrdenadas.filter((c) => c.k === 'kw' || !kwHid.has(c.k))
+  // Ancho fijo por columna. Sin esto el navegador lo reparte según el contenido:
+  // basta una keyword más larga en otra pestaña para que TODAS las columnas se
+  // corran y la tabla parezca otra. Con estos anchos, cambiar de pestaña o
+  // esconder una columna no mueve nada de lugar.
+  const anchoDe = (c) => (c.k === 'kw' ? 250 : c.k === 'root' ? 108 : c.k === 'match' ? 150
+    : c.k === 'veredicto' ? 112 : c.tipo === 'opciones' ? 86 : 78)
+  // `table-layout: fixed` solo respeta el colgroup si la tabla tiene un ancho
+  // declarado. Con `width: auto` el navegador vuelve al reparto automático y el
+  // colgroup queda de adorno — que fue lo que pasó en el primer intento.
+  const anchoTabla = 30 + visCols.reduce((s, c) => s + anchoDe(c), 0)
+    + (!kwHid.has('serp') ? 76 : 0) + (showComp ? comps.filter((c) => !kwHid.has(c.asin)).length * 66 : 0)
+  // Tapar todo lo que NO existe sin Helium 10: sus datos crudos y también los
+  // cálculos de AGTA que se alimentan de ellos (compras x 1.000 sale de dividir
+  // dos columnas suyas; relevancy y P1 salen de su reverse-ASIN).
+  const tapada = (c) => !verH10 && c.k !== 'kw' && (c.origen === 'h10' || c.necesitaH10)
+  /** Suelta la columna arrastrada justo antes de aquella sobre la que cayó. */
+  const moverCol = (desde, hasta) => setKwOrden(() => {
+    const actual = (kwOrden || baseCols.map((c) => c.k)).filter((k) => k !== desde)
+    const i = actual.indexOf(hasta)
+    actual.splice(i < 0 ? actual.length : i, 0, desde)
+    return actual
+  })
+  /**
+   * El veredicto, recalculado contra el precio de referencia de ahora. El JSON
+   * trae el price-fit medido contra un precio base; acá se reescala al que el
+   * usuario tenga escrito. Sin precio, las dos evaluaciones que dependen de él
+   * (PREMIUM y OTRO SEGMENTO) no se emiten: no se inventa lo que no se sabe.
+   */
+  const kwsEval = useMemo(() => {
+    const base = data.meta?.senales?.precio_unitario_propio ?? data.meta?.senales?.mi_precio
+    const precio = parseFloat(String(miPrecio).replace(',', '.'))
+    const hayPrecio = !Number.isNaN(precio) && precio > 0
+    const factor = hayPrecio && base ? base / precio : 1
+    const compras = data.kws.map((k) => k.compra_mil).filter((c) => c)
+    const med = compras.length ? [...compras].sort((a, b) => a - b)[Math.floor(compras.length / 2)] : 0
+    return data.kws.map((k) => {
+      const pf = k.price_fit == null ? null : Math.round(k.price_fit * factor * 100) / 100
+      let v = null
+      let motivo = ''
+      if (hayPrecio && pf != null && pf < 0.6) { v = 'PRECIO INFERIOR'; motivo = `el precio promedio del término es el ${Math.round(pf * 100)}% del tuyo` }
+      else if (k.trend >= 80) { v = 'ESTACIONAL'; motivo = `su volumen se dispara ${Math.round(k.trend)}% en la temporada` }
+      else if (med && k.compra_mil < med * 0.4) { v = 'CVR BAJO'; motivo = `KW CVR ${(k.compra_mil / 10).toFixed(2)}%, contra ${(med / 10).toFixed(2)}% del nicho` }
+      else if (hayPrecio && pf != null && pf > 1.6) { v = 'PRECIO SUPERIOR'; motivo = `el precio promedio del término es el ${Math.round(pf * 100)}% del tuyo` }
+      else if (hayPrecio) { v = 'ATACAR'; motivo = 'precio y conversión en rango' }
+      else if (k.compra_mil) { v = 'ATACAR'; motivo = 'conversión en rango — el precio no está definido' }
+      return { ...k, price_fit: hayPrecio ? pf : null, veredicto: v, motivo }
+    })
+  }, [data, miPrecio])
+
+  // Los valores que EXISTEN en cada columna cerrada, para el filtro de tildar.
+  // Salen de la data, no de una lista escrita a mano: si el motor inventa un
+  // veredicto nuevo, aparece solo.
+  const opcionesCol = useMemo(() => {
+    const out = {}
+    COLS.filter((c) => c.tipo === 'opciones').forEach((c) => {
+      out[c.k] = [...new Set(kwsEval.map((k) => String(k[c.k] ?? '')).filter(Boolean))].sort()
+    })
+    return out
+  }, [kwsEval])
+  const verSerp = !kwHid.has('serp')
+  const kwComps = showComp ? comps.filter((c) => !kwHid.has(c.asin)) : []
+  const kwOpciones = [
+    ...baseCols.slice(1).map((c) => ({ k: c.k, label: c.label })),
+    { k: 'serp', label: 'SERP' },
+    ...(showComp ? comps.map((c) => ({ k: c.asin, label: c.brand || c.asin, grupo: 'Competidores' })) : []),
+  ]
+
+  // El buscador de arriba usa el MISMO motor que los filtros de columna. Frank
+  // escribió `goth + decor` acá y le devolvió cero: hacía includes() de la
+  // cadena literal, así que buscaba una keyword que dijera "goth + decor" tal
+  // cual. Si la sintaxis existe en un lado tiene que existir en todos.
+  const query = q.trim()
+  const rows = useMemo(() => {
+    if (!isTable) return []
+    // Una columna escondida no puede seguir filtrando por atrás: sería un filtro
+    // invisible. Solo se aplican los filtros de columnas que están a la vista.
+    const vis = new Set([
+      ...visCols.map((c) => c.k),
+      ...(verSerp ? ['serp'] : []),
+      ...kwComps.map((c) => `rank:${c.asin}`),
+    ])
+    // Un filtro de opciones sin nada tildado es un array vacío: existe pero no
+    // filtra. Si no se descarta acá, no dejaría pasar ninguna fila.
+    const activos = Object.entries(colF)
+      .filter(([k, v]) => vis.has(k) && (Array.isArray(v) ? v.length > 0 : Boolean(v)))
+    return sortRows(
+      kwsEval
+        .map((k, i) => ({ ...k, _i: i, _b: assign[i], ...usos(k.kw) }))
+        .filter((k) => k._b === tab
+          && (verMarcas || !k.branded)
+          && (!query || matchFilter(k.kw, query))
+          && activos.every(([key, expr]) => matchFilter(valorCol(k, key, rankMode), expr))),
+      sort,
+      (r, key) => ordenCol(r, key, rankMode)
+    )
+  }, [assign, tab, query, sort, isTable, colF, rankMode, kwHid, showComp, verSerp, kwsEval, verMarcas, usos])
+
+  // Las keywords que HOY están en el MKL. Roots y Normalizer se arman sobre esto y
+  // no sobre el bucket congelado del JSON: si mueves una keyword con el multi-move,
+  // las dos herramientas se mueven con ella.
+  const mklKws = useMemo(() => data.kws.filter((k, i) => assign[i] === 'MKL'), [assign])
+
+  /**
+   * Índice de roots: n-gramas de 1 a 3 palabras sobre el MKL actual, igual que
+   * DataDive. Un root que aparece en una sola keyword no es un root, y la misma
+   * keyword no cuenta dos veces aunque repita el n-grama.
+   * Es un Map root → keywords porque la lista de la izquierda y las keywords de la
+   * derecha salen del MISMO lugar: así no pueden contradecirse.
+   */
+  const rootIdx = useMemo(() => {
+    const campo = rootMode === 'norm' ? 'norm' : 'kw_lower'
+    const bolsa = new Map()
+    mklKws.forEach((k) => {
+      const toks = (k[campo] || '').split(' ').filter(Boolean)
+      const vistos = new Set()
+      for (const largo of [1, 2, 3]) {
+        for (let i = 0; i + largo <= toks.length; i++) {
+          const r = toks.slice(i, i + largo).join(' ')
+          if (vistos.has(r)) continue
+          vistos.add(r)
+          if (!bolsa.has(r)) bolsa.set(r, [])
+          bolsa.get(r).push(k)
+        }
+      }
+    })
+    return bolsa
+  }, [mklKws, rootMode])
+
+  // Frecuencia = en cuántas keywords aparece · Vol. broad = SV sumado de todas ellas.
+  const rootBase = useMemo(() => {
+    const out = []
+    rootIdx.forEach((kws, root) => {
+      if (kws.length < 2) return
+      out.push({ root, kws: kws.length, sv: kws.reduce((s, k) => s + k.vol, 0), words: root.split(' ').length })
+    })
+    out.sort((a, b) => (b.sv - a.sv) || (b.kws - a.kws))
+    return out.slice(0, TOPE_ROOTS)
+  }, [rootIdx])
+
+  const rootList = useMemo(() => {
+    const filtrado = rootBase.filter((r) =>
+      matchFilter(r.root, rootF.root)
+      && (rootHid.has('kws') || matchFilter(r.kws, rootF.kws))
+      && (rootHid.has('sv') || matchFilter(r.sv, rootF.sv)))
+    return sortRows(filtrado, rootSort)
+  }, [rootBase, rootF, rootSort, rootHid])
+  const maxRootSv = rootList.reduce((m, r) => Math.max(m, r.sv), 0) || 1
+
+  const rootKws = useMemo(() => {
+    if (!rootSel.size) return []
+    // Unión de los roots tildados: una keyword que está en dos roots va una sola vez.
+    const union = new Map()
+    rootSel.forEach((r) => (rootIdx.get(r) || []).forEach((k) => union.set(k.kw, k)))
+    const base = [...union.values()].filter((k) => matchFilter(k.kw, rkF.kw)
+      && (rkHid.has('vol') || matchFilter(k.vol, rkF.vol))
+      && (rkHid.has('rel') || matchFilter(k.rel, rkF.rel)))
+    return sortRows(base, rkSort)
+  }, [rootSel, rootIdx, rkF, rkSort, rkHid])
+  const rootKwsSv = rootKws.reduce((s, k) => s + k.vol, 0)
+
+  /**
+   * Normalizer sobre el MKL actual. El SV de cada forma es la SUMA de las keywords
+   * que colapsaron en ella: antes se armaba con un diccionario forma→volumen y la
+   * última keyword pisaba a la anterior, así que el volumen quedaba subestimado
+   * (con esta data, 35% abajo del real). `n` es cuántas variantes colapsaron.
+   */
+  const normBase = useMemo(() => {
+    const bolsa = new Map()
+    mklKws.forEach((k) => {
+      const b = bolsa.get(k.norm) || { kw: k.norm, sv: 0, n: 0, variantes: [] }
+      b.sv += k.vol
+      b.n += 1
+      b.variantes.push(k.kw)
+      bolsa.set(k.norm, b)
+    })
+    return [...bolsa.values()].sort((a, b) => b.sv - a.sv)
+  }, [mklKws])
+
+  const normList = useMemo(() => {
+    const base = normBase.filter((n) => matchFilter(n.kw, normF.kw)
+      && (normHid.has('sv') || matchFilter(n.sv, normF.sv))
+      && (normHid.has('n') || matchFilter(n.n, normF.n)))
+    return sortRows(base, normSort)
+  }, [normBase, normF, normSort, normHid])
+  const normSv = normList.reduce((s, n) => s + n.sv, 0)
+
+
+  const compVis = useMemo(() => {
+    const busca = compQ.trim().toLowerCase()
+    const base = comps.filter((c) => !compHid.has(c.asin)
+      && (!busca || `${c.brand || ''} ${c.asin}`.toLowerCase().includes(busca)))
+    if (!compSort.key) return base
+    const row = COMP_ROWS.find((r) => r.k === compSort.key)
+    return sortRows(base, compSort, (c, k) => (row && row.sortVal ? row.sortVal(c) : c[k]))
+  }, [comps, compHid, compQ, compSort])
+  const compOpciones = [
+    { k: '__med', label: 'Mediana del nicho' },
+    ...comps.map((c) => ({ k: c.asin, label: c.brand || c.asin, grupo: 'Competidores' })),
+  ]
+  const verMed = !compHid.has('__med')
+
+  const toggle = (i) => setSel((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n })
+  const allShown = rows.length > 0 && rows.every((r) => sel.has(r._i))
+  const toggleAll = () => setSel((s) => {
+    const n = new Set(s)
+    if (allShown) rows.forEach((r) => n.delete(r._i))
+    else rows.forEach((r) => n.add(r._i))
+    return n
+  })
+  const moveSel = (to) => {
+    setAssign((a) => { const n = [...a]; sel.forEach((i) => { n[i] = to }); return n })
+    setSel(new Set())
+  }
+
+  // Las keywords que el usuario movió a mano: las que hoy están en un bucket
+  // distinto del que calculó el motor. Es lo único que hay que guardar de
+  // `assign` — guardar los 6.179 valores enteros haría que una regeneración del
+  // JSON pisara el cálculo nuevo con el viejo.
+  const movidas = useMemo(() => {
+    const m = {}
+    data.kws.forEach((k, i) => { if (assign[i] !== k.bucket) m[k.kw_lower] = assign[i] })
+    return m
+  }, [assign])
+
+  /**
+   * Al abrir, lo guardado en Supabase manda sobre lo del navegador: es el estado
+   * compartido, el que ve Tecki y el que sobrevive si Frank cambia de máquina.
+   * El localStorage queda como respaldo para cuando la red no responde.
+   */
+  const [sincronizado, setSincronizado] = useState(false)
+  useEffect(() => {
+    let vivo = true
+    traerCorrecciones(prod).then((remoto) => {
+      if (!vivo) return
+      if (remoto && Object.keys(remoto).length) {
+        setAssign(data.kws.map((k) => remoto[k.kw_lower] ?? k.bucket))
+      }
+      setSincronizado(true)
+    })
+    return () => { vivo = false }
+  }, [prod, data])
+
+  // Guardado. Va en un efecto y no en cada handler para no repetir la escritura
+  // en los quince lugares que tocan estos estados.
+  useEffect(() => {
+    try {
+      localStorage.setItem(LS_CLAVE(prod), JSON.stringify({
+        buckets: movidas,
+        kwHid: [...kwHid],
+        kwOrden,
+        miPrecio,
+        rankMode,
+        verH10,
+        verMarcas,
+        showComp,
+        guardadoEl: new Date().toISOString(),
+      }))
+    } catch {
+      /* cuota llena o modo privado: se pierde el guardado, no la sesión */
+    }
+  }, [prod, movidas, kwHid, kwOrden, miPrecio, rankMode, verH10, verMarcas, showComp])
+
+  /**
+   * Y a Supabase, medio segundo después del último clic. Sin esa espera, mover
+   * diez keywords seguidas dispararía diez sincronizaciones completas.
+   * No sube hasta haber leído: si escribiera antes, un arranque con la red
+   * lenta borraría en la nube lo que todavía no llegó al navegador.
+   */
+  useEffect(() => {
+    if (!sincronizado) return
+    const meta = {}
+    data.kws.forEach((k) => { if (movidas[k.kw_lower]) meta[k.kw_lower] = { orig: k.bucket, vol: k.vol } })
+    const t = setTimeout(() => { guardarCorrecciones(prod, movidas, meta) }, 500)
+    return () => clearTimeout(t)
+  }, [prod, movidas, sincronizado, data])
+
+  /**
+   * Los cambios viven en el localStorage de ESTE navegador: nadie más los ve, ni
+   * yo desde el otro lado. Este botón los saca en texto plano para pegarlos en
+   * el chat, que es como Frank me muestra su criterio hasta que el guardado
+   * viva en Supabase.
+   */
+  const copiarCambios = () => {
+    const por = {}
+    data.kws.forEach((k, i) => {
+      if (assign[i] === k.bucket) return
+      const destino = assign[i]
+      ;(por[destino] = por[destino] || []).push(`${k.kw}  (${miles(k.vol)}, venía de ${k.bucket})`)
+    })
+    const texto = [
+      `MKL ${data.meta.product} — ${Object.keys(movidas).length} correcciones a mano`,
+      ...Object.entries(por).flatMap(([destino, kws]) => [``, `→ ${destino} (${kws.length})`, ...kws.map((x) => `   ${x}`)]),
+    ].join('\n')
+    navigator.clipboard.writeText(texto)
+  }
+
+  const descartarCambios = () => {
+    if (!window.confirm(`Vas a descartar ${Object.keys(movidas).length} movimientos y volver a lo que calculó el motor. ¿Seguro?`)) return
+    setAssign(data.kws.map((k) => k.bucket))
+    setSel(new Set())
+  }
+  const toggleRoot = (r) => setRootSel((s) => { const n = new Set(s); n.has(r) ? n.delete(r) : n.add(r); return n })
+  const setF = (setter) => (key, val) => setter((f) => ({ ...f, [key]: val }))
+
+  /**
+   * El encabezado pegado son tres filas: grupos, títulos y filtros. Cada una
+   * tiene que arrancar donde termina la anterior, y sus altos dependen de la
+   * tipografía — con un valor fijo en el CSS, al cambiar la fuente el
+   * encabezado se montaba encima de la primera fila de datos. Se miden acá y
+   * el CSS los lee de estas variables.
+   */
+  const panelRef = useRef(null)
+  const medirEncabezado = useCallback(() => {
+    const nodo = panelRef.current
+    if (!nodo) return
+    const filas = nodo.querySelectorAll('.mkl-thead tr')
+    if (filas.length < 2) return
+    nodo.style.setProperty('--mkl-th1', `${Math.round(filas[0].getBoundingClientRect().height)}px`)
+    nodo.style.setProperty('--mkl-th2', `${Math.round(filas[1].getBoundingClientRect().height)}px`)
+  }, [])
+  useLayoutEffect(() => {
+    medirEncabezado()
+    window.addEventListener('resize', medirEncabezado)
+    return () => window.removeEventListener('resize', medirEncabezado)
+  }, [medirEncabezado, tab, kwHid, kwOrden, showComp, verH10])
+  const filtroActivo = Object.values(colF).some((v) => (Array.isArray(v) ? v.length > 0 : Boolean(v)))
+
+  return (
+    // Siempre a pantalla completa: el MKL se trabaja con todo el ancho, como
+    // DataDive, y el resto de las pestañas usa el MISMO contenedor para que
+    // cambiar de pestaña no mueva la interfaz de lugar. Lo que se lee (el
+    // veredicto) se limita solo, adentro, al ancho de lectura.
+    <ProveedorAyuda>
+    <main className="rsch rsch-full" ref={panelRef}>
+      <div className="rsch-tabs">
+        {BUCKETS.map((t) => (
+          <button key={t} type="button" className={`rsch-tab${tab === t ? ' active' : ''}`} onClick={() => { setTab(t); setSel(new Set()) }}>
+            {t} <span className="rsch-tab-n">{counts[t]}</span>
+          </button>
+        ))}
+      </div>
+      <div className="rsch-tabs" style={{ marginTop: 6, opacity: 0.92 }}>
+        {TOOLS.map((t) => (
+          <button key={t} type="button" className={`rsch-tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
+            {t}{' '}
+            {t !== 'Veredicto' && (
+              <span className="rsch-tab-n">
+                {t === 'Roots' ? rootList.length : t === 'Normalizer' ? normList.length : compVis.length}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+      {/* Alto fijo de dos renglones. Cada pestaña tiene una descripción de
+          largo distinto, así que la tabla arrancaba más arriba o más abajo según
+          dónde estuvieras — y al cambiar de pestaña saltaba. El texto completo
+          queda en el title. (Frank, 2026-07-31) */}
+      <p className="rsch-tabdesc rsch-tabdesc-fija" title={TAB_DESC[tab === 'Trash' ? 'Descartadas' : tab]}>
+        {TAB_DESC[tab === 'Trash' ? 'Descartadas' : tab]}
+      </p>
+
+      {/* Que el usuario vea que su trabajo está guardado, y que pueda volver
+          atrás. Sin este cartel, "se guarda" es una promesa invisible. */}
+      {Object.keys(movidas).length > 0 && (
+        <p className="rsch-guardado">
+          <b>{Object.keys(movidas).length}</b>{' '}
+          {Object.keys(movidas).length === 1 ? 'keyword movida' : 'keywords movidas'} a mano.
+          Guardadas — Tecki las ve.
+          <button type="button" className="rsch-bulk-clear" onClick={copiarCambios}>
+            Copiar mis cambios
+          </button>
+          <button type="button" className="rsch-bulk-clear" onClick={descartarCambios}>
+            Volver a lo calculado
+          </button>
+        </p>
+      )}
+
+      {/* ── Veredicto del nicho: el informe, aparte de la herramienta ──────── */}
+      {tab === 'Veredicto' && (
+        <div className="rsch-informe">
+          {/* El titular: el veredicto en grande y la lectura al lado, a todo el
+              ancho. Es lo único que hay que leer si no se lee nada más. */}
+          <header className="rsch-inf-hero" style={{ '--ver': VER_COLOR[ov.veredicto] }}>
+            <div className="rsch-inf-fallo">
+              <span className="rsch-inf-eyebrow">Veredicto del nicho</span>
+              <strong>{ov.veredicto}</strong>
+              <span className="rsch-inf-prod">{data.meta.product}</span>
+            </div>
+            <p className="rsch-inf-lectura">{ov.lectura}</p>
+          </header>
+
+          {/* Las cifras del dive: una fila de tarjetas, número arriba y etiqueta
+              abajo. Antes el número quedaba en un borde y su etiqueta en el otro. */}
+          <div className="rsch-inf-cifras">
+            {[
+              [miles(ov.n_niche), 'keywords del producto', `${miles(ov.sv_niche)} búsquedas/mes`],
+              [miles(counts.MKL), 'en el núcleo', 'las que pelea el nicho'],
+              [miles(counts.Outliers), 'Outliers', 'volumen que nadie domina'],
+              [miles(ov.sv_uncontested), 'búsquedas sin dueño', '2 competidores o menos'],
+              [`${ov.lider_share}%`, 'del nicho en P1 del líder', 'qué tan concentrado está'],
+              [miles(data.meta.n_comp), 'competidores', 'sobre los que se midió todo'],
+            ].map(([v, t, sub]) => (
+              <div key={t} className="rsch-inf-cifra">
+                <b>{v}</b>
+                <span>{t}</span>
+                <em>{sub}</em>
+              </div>
+            ))}
+          </div>
+
+          <div className="rsch-inf-cols">
+            <section className="rsch-inf-bloque">
+              <h2 className="rsch-inf-h2">Por qué</h2>
+              <ul className="rsch-inf-razones">
+                {ov.razones.map((r) => <li key={r}>{r}</li>)}
+              </ul>
+              <p className="rsch-inf-nota">{ov.falta}</p>
+            </section>
+
+            {ov.top_libres?.length > 0 && (
+              <section className="rsch-inf-bloque rsch-inf-entrada">
+                <h2 className="rsch-inf-h2">Por dónde se entra</h2>
+                <table className="rsch-inf-tabla">
+                  <tbody>
+                    {ov.top_libres.map((k) => (
+                      <tr key={k.kw}>
+                        <td>{k.kw}</td>
+                        <td>{miles(k.vol)}<small>/mes</small></td>
+                        <td>{k.n}<small> comp.</small></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="rsch-inf-nota">
+                  Términos del producto que rankean 2 competidores o menos. Son la puerta: ahí no hay con quién pelear.
+                </p>
+              </section>
+            )}
+          </div>
+
+          <p className="rsch-foot">
+            Esto se lee <b>una vez</b>, antes de decidir si entras al nicho. El MKL es lo que se trabaja
+            todos los días: está en la pestaña <b>MKL</b>, a pantalla completa.
+            {' '}Núcleo desde {S.min_comp} competidores en primera página y {S.min_sv} búsquedas · outliers desde {miles(S.outlier_min_sv)}.
+            {' '}Fuente: {data.meta.source}.
+          </p>
+        </div>
+      )}
+
+      {/* ── Competidores (estilo Competitor Details de DD) ─────────────────── */}
+      {tab === 'Competidores' && (
+        <>
+          <div className="rsch-bar">
+            <input
+              className="rsch-search"
+              type="search"
+              placeholder="Filtrar competidor (marca o ASIN)…"
+              value={compQ}
+              onChange={(e) => setCompQ(e.target.value)}
+              style={{ width: 240 }}
+            />
+            <MenuColumnas fija="Métrica" opciones={compOpciones} ocultas={compHid} setOcultas={setCompHid} />
+            {compSort.key && (
+              <span className="rsch-bulk">
+                <span className="rsch-bulk-n">
+                  ordenado por {(COMP_ROWS.find((r) => r.k === compSort.key) || {}).label} ({compSort.dir === 'desc' ? 'mayor a menor' : 'menor a mayor'})
+                </span>
+                <button type="button" className="rsch-bulk-clear" onClick={() => setCompSort({ key: null, dir: 'desc' })}>
+                  volver al orden original
+                </button>
+              </span>
+            )}
+          </div>
+          <div className="mkl-scroll">
+            <table className="mkl-table" style={{ width: 'auto', minWidth: '1100px' }}>
+              <thead className="mkl-thead">
+                <tr>
+                  <Th label={`Competidores ${compVis.length}`} ayuda={INFO.comp_metrica} align="left" style={{ minWidth: 210 }} />
+                  {verMed && <Th label="Mediana del nicho" ayuda={INFO.comp_med} align="left" style={{ minWidth: 140 }} />}
+                  {compVis.map((c) => (
+                    <Th
+                      key={c.asin}
+                      className="mkl-th-comp rsch-th-comp"
+                      label={(c.brand || c.asin).slice(0, 14)}
+                      ayuda={`${c.brand || c.asin} (${c.asin}) — ${c.titulo || 'sin título en Keepa'}`}
+                      style={{ minWidth: 118 }}
+                    />
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {COMP_ROWS.map((row) => {
+                  const activo = compSort.key === row.k
+                  return (
+                    <tr key={row.k} className="mkl-krow">
+                      <td className="mkl-kw">
+                        {/* La tabla está transpuesta: cada fila es una métrica, así que
+                            el sorter de columnas vive en el nombre de la fila. */}
+                        <button
+                          type="button"
+                          className={`rsch-rowsort${activo ? ' active' : ''}`}
+                          onClick={() => onCompSort(row.k)}
+                          aria-label={`Ordenar competidores por ${row.label}`}
+                        >
+                          {row.label}
+                          <span className={`mkl-sortcaret${activo ? '' : ' dim'}`} aria-hidden="true">
+                            {activo ? (compSort.dir === 'desc' ? '▾' : '▴') : '⇅'}
+                          </span>
+                        </button>
+                        <Ayuda texto={row.info} />
+                      </td>
+                      {verMed && (
+                        <td className="mkl-num-cell" style={{ opacity: 0.75 }}>
+                          {row.med && med[row.med] != null ? (row.fmt ? row.fmt(med[row.med]) : med[row.med]) : '—'}
+                        </td>
+                      )}
+                      {compVis.map((c) => {
+                        const v = c[row.k]
+                        return (
+                          <td key={c.asin} className={['brand', 'asin', 'categoria', 'edad', 'titulo', 'imagen'].includes(row.k) ? '' : 'mkl-num-cell'}>
+                            {row.foto ? (
+                              v ? (
+                                <a href={`https://www.amazon.com/dp/${c.asin}`} target="_blank" rel="noreferrer" title={c.titulo || c.asin}>
+                                  <img src={v} alt={c.titulo || c.asin} className="rsch-comp-foto" loading="lazy" />
+                                </a>
+                              ) : <span style={{ opacity: 0.4 }}>—</span>
+                            ) : row.k === 'titulo' ? (
+                              <span className="rsch-comp-titulo" title={v || ''}>{v || '—'}</span>
+                            ) : row.badge ? (
+                              <span style={{ background: STRENGTH_COLOR[v] || 'transparent', color: '#14150f', padding: '1px 7px', borderRadius: 6, fontSize: 11, fontWeight: 700 }}>
+                                {v}
+                              </span>
+                            ) : row.bar ? (
+                              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                                <span style={{ width: 34, height: 6, background: 'rgba(255,255,255,0.12)', borderRadius: 3, overflow: 'hidden' }}>
+                                  <span style={{ display: 'block', width: `${Math.min(100, v || 0)}%`, height: '100%', background: '#e0a94c' }} />
+                                </span>
+                                {row.fmt(v)}
+                              </span>
+                            ) : (
+                              row.fmt ? row.fmt(v) : v
+                            )}
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          {compVis.length === 0 && (
+            <p className="rsch-tabdesc" style={{ marginTop: 10 }}>Ningún competidor pasa el filtro.</p>
+          )}
+          <p className="rsch-foot">
+            Cobertura, share, fuerza y volumen de Outliers salen del <b>MKL de ahora</b>: se recalculan solos
+            cuando mueves keywords entre buckets, igual que la mediana de esas tres filas. Precio, rating,
+            reseñas, edad, variaciones y categoría salen de <b>Keepa</b> y no dependen del MKL.
+            <br />
+            ⚠️ <b>“Actividad de venta 30d” NO son unidades:</b> son las veces que le cayó el BSR en 30 días
+            (evento de venta observado). Otras herramientas muestran unidades <i>estimadas</i> con una curva; nosotros
+            preferimos el dato duro hasta tener la curva BSR→ventas calibrada con ventas reales de cuentas
+            conectadas. Sirve para comparar competidores entre sí, no para leerlo como “vendió N”.
+          </p>
+        </>
+      )}
+
+      {/* ── Roots ─────────────────────────────────────────────────────────── */}
+      {tab === 'Roots' && (
+        <>
+          <div className="rsch-bar">
+            <button type="button" className="rsch-bulk-btn" onClick={() => { setRootMode((m) => (m === 'norm' ? 'raw' : 'norm')); setRootSel(new Set()) }}>
+              Mostrar: {rootMode === 'norm' ? 'roots normalizados' : 'roots crudos'}
+            </button>
+            <MenuColumnas
+              etiqueta="Columnas de roots"
+              fija="Root"
+              opciones={[{ k: 'kws', label: 'Frec.' }, { k: 'sv', label: 'Vol. broad' }]}
+              ocultas={rootHid}
+              setOcultas={setRootHid}
+            />
+            {rootSel.size > 0 && (
+              <MenuColumnas
+                etiqueta="Columnas de keywords"
+                fija="Keyword"
+                opciones={[{ k: 'vol', label: 'Vol' }, { k: 'rel', label: 'Rel %' }]}
+                ocultas={rkHid}
+                setOcultas={setRkHid}
+              />
+            )}
+            {rootSel.size > 0 && (
+              <span className="rsch-bulk">
+                <span className="rsch-bulk-n">{rootSel.size} root(s) · {rootKws.length} keywords · {miles(rootKwsSv)} SV</span>
+                <button type="button" className="rsch-bulk-clear" onClick={() => setRootSel(new Set())}>limpiar</button>
+              </span>
+            )}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 1fr) minmax(320px, 1fr)', gap: 16, alignItems: 'start' }}>
+            <div className="mkl-scroll">
+              <table className="mkl-table" style={{ width: '100%' }}>
+                <thead className="mkl-thead">
+                  <tr>
+                    <th className="mkl-th"></th>
+                    <Th label={`Root (${rootList.length})`} ayuda={INFO.root_root} align="left" orden="root" sort={rootSort} onSort={onRootSort} />
+                    {!rootHid.has('kws') && <Th label="Frec." ayuda={INFO.root_frec} align="right" orden="kws" sort={rootSort} onSort={onRootSort} />}
+                    {!rootHid.has('sv') && <Th label="Vol. broad" ayuda={INFO.root_sv} align="right" orden="sv" sort={rootSort} onSort={onRootSort} />}
+                  </tr>
+                  <tr>
+                    <th className="mkl-th"></th>
+                    <FiltroTh campo="root" etiqueta="root" valor={rootF.root} onChange={setF(setRootF)} />
+                    {!rootHid.has('kws') && <FiltroTh campo="kws" etiqueta="frecuencia" valor={rootF.kws} onChange={setF(setRootF)} numerico />}
+                    {!rootHid.has('sv') && <FiltroTh campo="sv" etiqueta="volumen broad" valor={rootF.sv} onChange={setF(setRootF)} numerico />}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rootList.map((r) => (
+                    <tr key={r.root} className={`mkl-krow${rootSel.has(r.root) ? ' rsch-selrow' : ''}`}>
+                      <td className="rsch-chk">
+                        <input type="checkbox" checked={rootSel.has(r.root)} onChange={() => toggleRoot(r.root)} aria-label={`Seleccionar ${r.root}`} />
+                      </td>
+                      <td className="mkl-kw">
+                        <span style={{ background: rootBg(r.words), padding: '1px 6px', borderRadius: 6 }}>{r.root}</span>
+                      </td>
+                      {!rootHid.has('kws') && <td className="mkl-num-cell">{r.kws}</td>}
+                      {!rootHid.has('sv') && (
+                        <td className="mkl-num-cell">
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                            <span style={{ width: 46, height: 6, background: 'rgba(255,255,255,0.10)', borderRadius: 3, overflow: 'hidden' }}>
+                              <span style={{ display: 'block', width: `${(r.sv / maxRootSv) * 100}%`, height: '100%', background: '#e0a94c' }} />
+                            </span>
+                            {miles(r.sv)}
+                          </span>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                  {rootList.length === 0 && <tr><td colSpan={4} className="mkl-empty">Ningún root pasa el filtro.</td></tr>}
+                </tbody>
+              </table>
+            </div>
+
+
+            <div className="mkl-scroll">
+              {rootSel.size === 0 ? (
+                <p className="rsch-tabdesc" style={{ margin: 0, padding: '0.8rem' }}>
+                  Marca uno o varios roots para ver acá sus keywords. Sumar roots amplía la cobertura:
+                  si escribes los dos en el listing, te indexás por las keywords de ambos.
+                </p>
+              ) : (
+                <table className="mkl-table" style={{ width: 'auto', minWidth: '100%' }}>
+                  <thead className="mkl-thead">
+                    <tr>
+                      {/* minWidth: sin esto la columna se comprime hasta mostrar una
+                          sola letra por keyword. El header de Vol trae el total
+                          formateado —"Vol (158,896)"— y se lleva todo el ancho.
+                          (Frank lo cazó con el root `decor`, 2026-08-01) */}
+                      <Th label={`Keywords (${rootKws.length})`} ayuda={INFO.root_kws} align="left" orden="kw" sort={rkSort} onSort={onRkSort} style={{ minWidth: 240 }} />
+                      {!rkHid.has('vol') && <Th label={`Vol (${miles(rootKwsSv)})`} ayuda={INFO.vol} align="right" orden="vol" sort={rkSort} onSort={onRkSort} />}
+                      {!rkHid.has('rel') && <Th label="Rel %" ayuda={INFO.rel} align="right" orden="rel" sort={rkSort} onSort={onRkSort} />}
+                    </tr>
+                    {/* Los filtros faltaban acá: con varios roots tildados la lista se hace
+                        larga y sin filtro no hay forma de bajarla. */}
+                    <tr>
+                      <FiltroTh campo="kw" etiqueta="keyword" valor={rkF.kw} onChange={setF(setRkF)} />
+                      {!rkHid.has('vol') && <FiltroTh campo="vol" etiqueta="volumen" valor={rkF.vol} onChange={setF(setRkF)} numerico />}
+                      {!rkHid.has('rel') && <FiltroTh campo="rel" etiqueta="relevancy" valor={rkF.rel} onChange={setF(setRkF)} numerico />}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rootKws.map((k) => (
+                      <tr key={k.kw} className="mkl-krow">
+                        <td className="mkl-kw">{k.kw}</td>
+                        {!rkHid.has('vol') && <td className="mkl-num-cell">{miles(k.vol)}</td>}
+                        {!rkHid.has('rel') && <td className="mkl-num-cell">{k.rel}%</td>}
+                      </tr>
+                    ))}
+                    {rootKws.length === 0 && <tr><td colSpan={3} className="mkl-empty">Ninguna keyword pasa el filtro.</td></tr>}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+          <p className="rsch-foot">
+            Los roots se arman en vivo sobre las <b>{miles(mklKws.length)} keywords que hoy están en el MKL</b>:
+            frases de 1 a 3 palabras, y las que aparecen en una sola keyword no cuentan como root. Si mueves
+            keywords entre buckets, frecuencia y volumen broad se recalculan solos.
+            {' '}<b>Así se arma el PPC:</b> una campaña por root, de a un root por vez — no desde el Normalizer,
+            que es limpieza de texto. Fondo verde = roots de 2 y 3 palabras, que son los que sirven de verdad.
+          </p>
+        </>
+      )}
+
+      {/* ── Normalizer ────────────────────────────────────────────────────── */}
+      {/* ── UKL: el universo del nicho, otra fuente que el MKL ───────────────── */}
+
+      {tab === 'Normalizer' && (
+        <>
+          <div className="rsch-bar">
+            <button
+              type="button"
+              className="rsch-activate"
+              onClick={() => navigator.clipboard.writeText(normList.map((n) => n.kw).join('\n'))}
+            >
+              Copiar {normList.length} keywords normalizadas
+            </button>
+            <MenuColumnas
+              fija="Forma normalizada"
+              opciones={[{ k: 'sv', label: 'SV' }, { k: 'n', label: 'Variantes' }]}
+              ocultas={normHid}
+              setOcultas={setNormHid}
+            />
+            <span className="rsch-tabdesc">
+              Salen de las {counts.MKL} keywords del MKL: se les quitan plurales y conjunciones, y las que
+              quedan iguales se agrupan sumando su volumen. El botón copia lo que estés viendo, filtro incluido.
+            </span>
+          </div>
+          <div className="mkl-scroll">
+            <table className="mkl-table" style={{ width: 'auto', minWidth: '620px' }}>
+              <thead className="mkl-thead">
+                <tr>
+                  <Th label="Forma normalizada" ayuda={INFO.norm_kw} align="left" orden="kw" sort={normSort} onSort={onNormSort} style={{ minWidth: 320 }} />
+                  {!normHid.has('sv') && <Th label={`SV (${miles(normSv)})`} ayuda={INFO.norm_sv} align="right" orden="sv" sort={normSort} onSort={onNormSort} style={{ minWidth: 130 }} />}
+                  {!normHid.has('n') && <Th label="Variantes" ayuda={INFO.norm_n} align="right" orden="n" sort={normSort} onSort={onNormSort} style={{ minWidth: 110 }} />}
+                </tr>
+                <tr>
+                  <FiltroTh campo="kw" etiqueta="forma normalizada" valor={normF.kw} onChange={setF(setNormF)} />
+                  {!normHid.has('sv') && <FiltroTh campo="sv" etiqueta="SV" valor={normF.sv} onChange={setF(setNormF)} numerico />}
+                  {!normHid.has('n') && <FiltroTh campo="n" etiqueta="variantes" valor={normF.n} onChange={setF(setNormF)} numerico />}
+                </tr>
+              </thead>
+              <tbody>
+                {normList.map((n) => (
+                  <tr key={n.kw} className="mkl-krow">
+                    <td className="mkl-kw">{n.kw}</td>
+                    {!normHid.has('sv') && <td className="mkl-num-cell">{miles(n.sv)}</td>}
+                    {!normHid.has('n') && (
+                      // El title lista las variantes: si dice 3, se ven cuáles son las 3.
+                      <td className="mkl-num-cell" title={n.variantes.join(' · ')}>
+                        {n.n > 1 ? <b style={{ color: '#e0a94c' }}>{n.n}</b> : n.n}
+                      </td>
+                    )}
+                  </tr>
+                ))}
+                {normList.length === 0 && <tr><td colSpan={3} className="mkl-empty">Ninguna keyword pasa el filtro.</td></tr>}
+              </tbody>
+            </table>
+          </div>
+          <p className="rsch-foot">
+            {miles(normList.length)} formas normalizadas · {miles(normSv)} SV, sobre las {miles(mklKws.length)} keywords
+            del MKL de ahora. En <b style={{ color: '#e0a94c' }}>dorado</b>, las formas donde colapsó más de una
+            keyword: ahí tienes variantes que en PPC te compiten entre sí. Pasa el mouse por el número para verlas.
+            {' '}El SV de cada fila es la <b>suma</b> de las keywords que colapsaron, no la de una sola.
+            {' '}Esto es limpieza de texto: las campañas se arman por root, en la pestaña Roots.
+          </p>
+        </>
+      )}
+
+      {/* ── Tablas de keywords ────────────────────────────────────────────── */}
+      {isTable && (tab === 'Negatives' && !negOn ? (
+        <div className="rsch-gate">
+          <p>
+            <strong>Negatives está desactivado.</strong> Los negativos son <em>product-aware</em>: el MKL sabe qué negar solo si conoce el producto.
+            Se poblan desde el <strong>último Listing Audit</strong> del ASIN (o se corre si no hay). MAVRA aún no está lanzado → estos son el
+            <em> product-fit filter</em> preliminar (battery / cordless / warmer).
+          </p>
+          <button type="button" className="rsch-activate" onClick={() => setNegOn(true)}>Activar Negatives (preview)</button>
+        </div>
+      ) : (
+        <>
+          <div className="rsch-bar">
+            <Buscador valor={q} onChange={setQ} />
+            <MenuColumnas fija="Keyword" opciones={kwOpciones} ocultas={kwHid} setOcultas={setKwHid} />
+            {/* Los interruptores: mismo tamaño, solo ícono, y el estado se ve
+                encendido. Antes eran botones de texto corrido que competían con
+                el buscador por la atención. */}
+            {/* La explicación larga vive en el tooltip y no como párrafo debajo
+                de la barra: ocupaba cuatro renglones fijos para algo que solo
+                importa mientras se mira el modo apagado. (Frank, 2026-07-31) */}
+            <Boton
+              icono={verH10 ? Iconos.EyeOff : Iconos.Eye}
+              activo={!verH10}
+              onClick={() => setVerH10((v) => !v)}
+              titulo={verH10
+                ? 'Ver qué queda del análisis si el usuario no tiene Helium 10 conectado.'
+                : `Así se ve sin Helium 10 conectado. Se caen ${visCols.filter((c) => tapada(c)).length} de ${visCols.length} columnas: las suyas y también los cálculos de AGTA que se alimentan de ellas — KW CVR sale de dividir dos columnas de Helium 10, y Relevancia y P1 salen de su reverse-ASIN. Queda en pie lo que no depende de la herramienta: la keyword, el fit con tu producto y el precio.`}
+            >
+              {verH10 ? 'Sin H10' : 'Con H10'}
+            </Boton>
+            <Boton
+              icono={Iconos.Tag}
+              activo={!verMarcas}
+              onClick={() => setVerMarcas((v) => !v)}
+              titulo={`Keywords que nombran una marca ajena — Scentsy, Hocus Pocus, Harry Potter, IKEA. No van al listado; sirven para campañas de conquista. Hay ${data.kws.filter((k) => k.branded).length} en este producto.`}
+            >
+              {verMarcas ? 'Con marcas' : 'Sin marcas'}
+            </Boton>
+            <Boton
+              icono={Iconos.Users}
+              activo={showComp}
+              onClick={() => setShowComp((v) => !v)}
+              titulo="Mostrar u ocultar la columna de cada competidor con su puesto"
+            >
+              Competidores
+            </Boton>
+            {showComp && (
+              <Boton
+                icono={Iconos.ArrowUpDown}
+                activo={rankMode === 'sponsored'}
+                onClick={() => setRankMode((m) => (m === 'organic' ? 'sponsored' : 'organic'))}
+                titulo="Orgánico = dónde rankea gratis · Patrocinado = en qué puesto aparece pagando"
+              >
+                {rankMode === 'organic' ? 'Orgánico' : 'Pagado'}
+              </Boton>
+            )}
+            {(kwOrden || kwHid.size > 0 || !verH10) && (
+              <Boton
+                icono={Iconos.RotateCcw}
+                onClick={() => { setKwOrden(null); setKwHid(new Set()); setVerH10(true) }}
+                titulo="Volver al orden y a las columnas de fábrica"
+              />
+            )}
+            <label className="rsch-precio" title="A qué precio POR UNIDAD pensás vender. De acá salen la columna Precio y la Evaluación. Si lo dejás vacío, no se emiten los veredictos que dependen del precio.">
+              tu precio
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                value={miPrecio}
+                placeholder="sin definir"
+                onChange={(e) => setMiPrecio(e.target.value)}
+              />
+            </label>
+            {filtroActivo && (
+              <Boton icono={Iconos.FilterX} onClick={() => setColF({})} titulo="Quitar todos los filtros de columna">
+                Limpiar filtros
+              </Boton>
+            )}
+            {/* La ayuda al final: es lo último que se busca, no compite. */}
+            <Boton
+              icono={Iconos.HelpCircle}
+              activo={verLeyenda}
+              onClick={() => setVerLeyenda((v) => !v)}
+              titulo="Qué significa cada color y cada marca de la tabla"
+            >
+              Cómo se lee
+            </Boton>
+            {sel.size > 0 && (
+              <span className="rsch-bulk">
+                <span className="rsch-bulk-n">{sel.size} seleccionadas → mover a</span>
+                {BUCKETS.filter((t) => t !== tab).map((t) => (
+                  <button key={t} type="button" className="rsch-bulk-btn" onClick={() => moveSel(t)}>{t}</button>
+                ))}
+                <button type="button" className="rsch-bulk-clear" onClick={() => setSel(new Set())}>limpiar</button>
+              </span>
+            )}
+          </div>
+          {/* Leyenda: en dos bloques separados y detrás de un botón. Todo junto
+              en una fila corrida mezclaba dos cosas que no se parecen —el puesto
+              de un competidor y el veredicto de una keyword— y confundía. */}
+          {verLeyenda && (
+            <div className="rsch-leyenda">
+              <div className="rsch-ley-g">
+                <span className="rsch-ley-t">De dónde sale el dato</span>
+                <span className="rsch-ley-i"><span className="rsch-ley-h10" /> viene así de Helium 10</span>
+                <span className="rsch-ley-i"><span className="rsch-ley-agta" /> lo calcula AGTA</span>
+                <span className="rsch-ley-i" style={{ opacity: 0.6 }}>hay cálculos de AGTA que igual necesitan datos de Helium 10</span>
+              </div>
+              <div className="rsch-ley-g">
+                <span className="rsch-ley-t">Dónde rankea</span>
+                <span className="rsch-ley-i"><b style={{ color: '#e0a94c' }}>9</b> top 10 orgánico</span>
+                <span className="rsch-ley-i"><span style={{ color: '#a78bfa', fontWeight: 600 }}>4</span> top 10 pago</span>
+              </div>
+              <div className="rsch-ley-g">
+                <span className="rsch-ley-t">Evaluación de la keyword</span>
+                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR.ATACAR }}>●</span> ATACAR — precio y conversión en rango</span>
+                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['PRECIO SUPERIOR'] }}>●</span> PRECIO SUPERIOR — el promedio del término está por encima del tuyo</span>
+                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['PRECIO INFERIOR'] }}>●</span> PRECIO INFERIOR — el promedio del término está por debajo del tuyo</span>
+                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['CVR BAJO'] }}>●</span> CVR BAJO — el KW CVR está muy por debajo del nicho</span>
+                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR.ESTACIONAL }}>●</span> ESTACIONAL — el volumen se dispara en una época</span>
+              </div>
+              <div className="rsch-ley-g">
+                <span className="rsch-ley-t">SERP</span>
+                <span className="rsch-ley-i"><span className="rsch-flag sbv">SBV</span> video patrocinado</span>
+                <span className="rsch-ley-i"><span className="rsch-flag ch">AC</span> Amazon's Choice</span>
+                <span className="rsch-ley-i"><span className="rsch-flag sp">SP</span> anuncio patrocinado</span>
+                <span className="rsch-ley-t" style={{ marginTop: '0.5rem' }}>Al lado de la keyword</span>
+                <span className="rsch-ley-i"><span className="rsch-flag ch">libre</span> la rankean 2 competidores o menos</span>
+              </div>
+            </div>
+          )}
+          <div className="mkl-scroll">
+            <table className="mkl-table mkl-fija" style={{ width: anchoTabla, minWidth: anchoTabla }}>
+              {/* Los anchos se declaran acá y no los decide el contenido: así
+                  cambiar de pestaña, esconder una columna o encontrarse una
+                  keyword más larga no corre nada de lugar. */}
+              <colgroup>
+                <col style={{ width: 30 }} />
+                {visCols.map((c) => <col key={c.k} style={{ width: anchoDe(c) }} />)}
+                {verSerp && <col style={{ width: 76 }} />}
+                {kwComps.map((c) => <col key={c.asin} style={{ width: 66 }} />)}
+              </colgroup>
+              <thead className="mkl-thead">
+                {/* Fila de familias: con 20 columnas, saber que se esta mirando
+                    ANTES de leer el nombre de cada una. Los tramos se calculan
+                    desde las columnas visibles, asi que aguantan que el usuario
+                    reordene o esconda. */}
+                <tr className="mkl-grupos">
+                  <th className="mkl-th" />
+                  {tramosDeGrupo(visCols).map((g, i) => (
+                    <th key={`${g.grupo}-${i}`} className="mkl-th mkl-grupo-th" colSpan={g.n}>{g.grupo}</th>
+                  ))}
+                  {verSerp && <th className="mkl-th mkl-grupo-th">SERP</th>}
+                  {kwComps.length > 0 && (
+                    <th className="mkl-th mkl-grupo-th" colSpan={kwComps.length}>
+                      Ranks por competidor · {rankMode === 'organic' ? 'orgánicos' : 'patrocinados'}
+                    </th>
+                  )}
+                </tr>
+                <tr>
+                  <th className="mkl-th"><input type="checkbox" checked={allShown} onChange={toggleAll} aria-label="Seleccionar todas" /></th>
+                  {visCols.map((c, i) => (
+                    <Th
+                      key={c.k}
+                      label={c.label}
+                      ayuda={INFO[c.k]}
+                      align={c.align}
+                      orden={c.k}
+                      sort={sort}
+                      onSort={onSort}
+                      origen={c.origen}
+                      className={i > 0 && visCols[i - 1].grupo !== c.grupo ? 'mkl-corte' : ''}
+                      mover={moverCol}
+                      arrastrando={arrastrando}
+                      setArrastrando={setArrastrando}
+                    />
+                  ))}
+                  {verSerp && <Th label="SERP" ayuda={INFO.serp} orden="serp" sort={sort} onSort={onSort} />}
+                  {kwComps.map((c) => (
+                    <Th
+                      key={c.asin}
+                      className="mkl-th-comp rsch-th-comp"
+                      label={(c.brand || c.asin).slice(0, 8)}
+                      ayuda={`${c.brand || c.asin} (${c.asin}) — hoy cubre el ${c.share}% del volumen del MKL desde página 1. En la celda va el puesto en el que rankea esa keyword.`}
+                      orden={`rank:${c.asin}`}
+                      sort={sort}
+                      onSort={onSort}
+                    />
+                  ))}
+                </tr>
+                {/* Fila de filtros por columna (como DataDive): texto, >100, <50, 100-500 */}
+                <tr>
+                  <th className="mkl-th"></th>
+                  {visCols.map((c, i) => (
+                    <FiltroTh
+                      key={c.k}
+                      corte={i > 0 && visCols[i - 1].grupo !== c.grupo}
+                      campo={c.k}
+                      etiqueta={c.label}
+                      valor={colF[c.k]}
+                      onChange={setF(setColF)}
+                      numerico={c.tipo === 'num'}
+                      opciones={c.tipo === 'opciones' ? opcionesCol[c.k] : undefined}
+                    />
+                  ))}
+                  {verSerp && <FiltroTh campo="serp" etiqueta="SERP" valor={colF.serp} onChange={setF(setColF)} />}
+                  {kwComps.map((c) => (
+                    <FiltroTh
+                      key={c.asin}
+                      campo={`rank:${c.asin}`}
+                      etiqueta={`rank de ${c.brand || c.asin}`}
+                      valor={colF[`rank:${c.asin}`]}
+                      onChange={setF(setColF)}
+                      numerico
+                    />
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.slice(0, 600).map((r) => (
+                  <tr key={r._i} className={`mkl-krow${sel.has(r._i) ? ' rsch-selrow' : ''}`}>
+                    <td className="rsch-chk"><input type="checkbox" checked={sel.has(r._i)} onChange={() => toggle(r._i)} /></td>
+                    {visCols.map((c, i) => (
+                      <td
+                        key={c.k}
+                        className={`${c.align === 'right' ? 'mkl-num-cell' : c.k === 'kw' ? 'mkl-kw' : ''}`
+                          + `${i > 0 && visCols[i - 1].grupo !== c.grupo ? ' mkl-corte' : ''}`}
+                        data-origen={c.origen}
+                        style={c.align === 'center' ? { textAlign: 'center' } : c.k === 'root' ? { textAlign: 'left' } : undefined}
+                        // Cualquier celda puede cortar con puntos suspensivos; el valor
+                        // entero queda en el tooltip. Sin esto, un root de dos palabras
+                        // hacía esa fila el doble de alta que las demás.
+                        title={typeof r[c.k] === 'string' ? r[c.k] : undefined}
+                      >
+                        {tapada(c) ? (
+                          <span className="mkl-tapada" title="Este dato lo trae Helium 10: sin la herramienta conectada, no está.">sin H10</span>
+                        ) : c.k === 'kw' ? (
+                          // el texto completo queda en el title: la celda puede cortar
+                          <span title={r.kw}>{r.kw}</span>
+                        ) : c.k === 'veredicto' && r.veredicto ? (
+                          <span
+                            title={r.motivo || ''}
+                            style={{ color: VEREDICTO_COLOR[r.veredicto] || 'inherit', fontWeight: 600, fontSize: 11 }}
+                          >
+                            {r.veredicto}
+                          </span>
+                        ) : c.k.startsWith('use_') ? (
+                          <UsoDot valor={r[c.k]} campo={c.label} />
+                        ) : c.fmt ? c.fmt(r[c.k]) : r[c.k]}
+                        {c.k === 'kw' && r.opp_real && <span className="rsch-flag ch" title="Sin dueño: 2 competidores o menos y es de tu producto" style={{ marginLeft: 6 }}>libre</span>}
+                      </td>
+                    ))}
+                    {verSerp && (
+                      <td className="rsch-serp">
+                        {r.sbv ? <span className="rsch-flag sbv" title="Sponsored Brand Video presente">SBV</span> : null}
+                        {r.choice ? <span className="rsch-flag ch" title="Amazon's Choice en este término">AC</span> : null}
+                        {r.sp ? <span className="rsch-flag sp" title="Sponsored Product presente">SP</span> : null}
+                      </td>
+                    )}
+                    {kwComps.map((c) => {
+                      const sponsored = rankMode === 'sponsored'
+                      const rk = sponsored ? (r.sranks || {})[c.asin] : r.ranks[c.asin]
+                      return (
+                        <td key={c.asin} className="mkl-rank-cell">
+                          {rk ? (
+                            <span
+                              className={sponsored ? undefined : rk <= 10 ? 'mkl-rank-good' : 'mkl-rank-mid'}
+                              style={sponsored ? { color: rk <= 3 ? '#a78bfa' : rk <= 10 ? '#8b7ae0' : '#6b6b8a', fontWeight: 600 } : undefined}
+                              title={sponsored ? 'Puesto en el que aparece pagando (Sponsored Rank)' : 'Puesto orgánico'}
+                            >
+                              {rk}
+                            </span>
+                          ) : (
+                            <span className="mkl-rank-none">·</span>
+                          )}
+                        </td>
+                      )
+                    })}
+                  </tr>
+                ))}
+                {rows.length === 0 && (
+                  <tr><td colSpan={visCols.length + 1 + (verSerp ? 1 : 0) + kwComps.length} className="mkl-empty">Sin keywords con esos filtros.</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          {/* El conteo es dato y se queda; la leyenda es ayuda y se pliega.
+              Estaba todo suelto acá abajo y eran seis renglones fijos que
+              empujaban la tabla fuera de la pantalla: con la lista larga se
+              perdían las últimas filas justo cuando hay que revisarlas de a
+              muchas. La ayuda se lee una vez, las filas se miran siempre. */}
+          <p className="rsch-foot">
+            {miles(rows.length)} keywords en {tab === 'Trash' ? 'Descartadas' : tab}{rows.length > 600 ? ' (se muestran las primeras 600)' : ''}. Marca el checkbox y mové varias de un bucket a otro.
+            {data.meta.sponsored?.asins_sin_data?.length > 0 && ` Sin data de SR todavía: ${data.meta.sponsored.asins_sin_data.join(', ')}.`}
+          </p>
+          <details className="rsch-foot-fold">
+            <summary>cómo leer esta tabla</summary>
+            <p className="rsch-foot">
+              Cada filtro habla el idioma de su columna: las numéricas aceptan <code>&gt;100</code>, <code>&lt;50</code> o <code>100-500</code>;
+              {' '}Match, Tier, Prio y Veredicto se <b>marcan de una lista</b> (puedes ver solo exact, o exact + phrase). Con “Columnas” escondes las que no
+              estés mirando, y <b>arrastrando el encabezado</b> las reordenas.
+              Rank por competidor: <span className="mkl-rank-top">dorado sólido</span> = ≤3 · <b style={{ color: '#e0a94c' }}>dorado</b> = ≤10 · gris = 11+ · · = no rankea (o fuera del top {S.max_rank}).
+              {' '}En <b style={{ color: '#a78bfa' }}>violeta</b>, los ranks <b>patrocinados</b> (dónde aparece pagando): salen del reverse-ASIN de Helium 10, no de scrapear el SERP.
+            </p>
+          </details>
+        </>
+      ))}
+
+      <p className="rsch-foot" style={{ marginTop: 18 }}>
+        {miles(counts.Trash)} keywords descartadas (nadie del nicho rankea ni en el top {S.max_rank}).{' '}
+        <button type="button" className="rsch-bulk-clear" onClick={() => { setTab(tab === 'Trash' ? 'MKL' : 'Trash'); setSel(new Set()) }}>
+          {tab === 'Trash' ? 'volver al MKL' : 'ver descartadas'}
+        </button>
+      </p>
+    </main>
+    </ProveedorAyuda>
+  )
+}

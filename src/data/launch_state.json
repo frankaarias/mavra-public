@@ -1,0 +1,771 @@
+{
+ "generado": "2026-08-01",
+ "productos": {
+  "SWD": {
+   "nombre": "3 Skulls Wall Decor",
+   "asin": "B0GGJG2WFR",
+   "sku": "MVWSKLBLK",
+   "items": [
+    {
+     "id": "titulo75",
+     "texto": "Título ≤ 75 caracteres",
+     "estado": false,
+     "detalle": "190 chars: \"MAVRA Gothic Skull Wall Decor Set of 3 - Sculpted Matte Black Skulls, Real 3D Wall Art Not a Print, Screw or Tape Mount, Goth Room Decor for Bedroom, Skull Decor & Gothic Gift, Not Halloween\"",
+     "auto": true
+    },
+    {
+     "id": "ih",
+     "texto": "Item Highlight ≤ 125 escrito",
+     "estado": false,
+     "detalle": "Redactado y sin subir (119/125). Amazon no lo tiene.",
+     "auto": true
+    },
+    {
+     "id": "bullets",
+     "texto": "5 viñetas",
+     "estado": true,
+     "detalle": "5 viñeta(s) en Amazon",
+     "auto": true
+    },
+    {
+     "id": "desc",
+     "texto": "Descripción cargada",
+     "estado": false,
+     "detalle": "22 caracteres — es el nombre del producto repetido",
+     "auto": true
+    },
+    {
+     "id": "backend",
+     "texto": "Backend / generic_keyword lleno",
+     "estado": false,
+     "detalle": "vacío",
+     "auto": true
+    },
+    {
+     "id": "ptype",
+     "texto": "product_type correcto",
+     "estado": true,
+     "detalle": "product_type = WALL_ART",
+     "auto": true
+    },
+    {
+     "id": "imagenes",
+     "texto": "Imágenes: main + las de objeción",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "aplus",
+     "texto": "A+ publicado con alt text",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "precio",
+     "texto": "Precio definido con margen",
+     "estado": true,
+     "detalle": "US$ 39.99",
+     "auto": true
+    },
+    {
+     "id": "stock",
+     "texto": "Inventario en el fulfillment center",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "indexacion",
+     "texto": "Indexación probada (keyword + ASIN en la barra)",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "adlive",
+     "texto": "El anuncio está sirviendo (servingStatus LIVE)",
+     "estado": true,
+     "detalle": "13 de 13 anuncios en AD_STATUS_LIVE",
+     "auto": true
+    },
+    {
+     "id": "campanas",
+     "texto": "Campañas creadas y ENABLED",
+     "estado": true,
+     "detalle": "13 campañas · $210/día",
+     "auto": true
+    },
+    {
+     "id": "cadencia",
+     "texto": "Cadencia de bids entre match types",
+     "estado": true,
+     "detalle": "broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $2.0 · exact $5.0 · exact $5.0 · exact $5.0 · exact $5.0 · exact $5.0 · exact $5.0 · phrase $5.0 · phrase $5.0 · phrase $5.0",
+     "auto": true
+    },
+    {
+     "id": "negmarca",
+     "texto": "Exclusiones de marca cargadas (negativos phrase)",
+     "estado": true,
+     "detalle": "8 exclusiones en los 12 ad groups de búsquedas: print, poster, canvas, tapestry, sugar, cow, cowboy, western · 1 ad group apunta a productos, ahí la exclusión va por ASIN y está vacía",
+     "auto": true
+    },
+    {
+     "id": "sinneg",
+     "texto": "Ninguna broad tiene negativizada su propia exacta",
+     "estado": true,
+     "detalle": "96 negativos cargados, ninguno tapa el root",
+     "auto": true
+    },
+    {
+     "id": "impresiones",
+     "texto": "La campaña recibe impresiones",
+     "estado": null,
+     "detalle": "el reporte de Amazon todavía no cubre estas fechas",
+     "auto": false
+    },
+    {
+     "id": "resenas",
+     "texto": "Primeras reseñas",
+     "estado": false,
+     "detalle": "0 reseñas (H10: review_count nulo)",
+     "auto": true
+    }
+   ],
+   "ok": 8,
+   "total": 18,
+   "verificables": 13,
+   "keywords": [
+    "+goth +decor",
+    "+gothic +decor",
+    "+skeleton +decor",
+    "+skull +decor",
+    "+skull +wall",
+    "+spooky +decor",
+    "+whimsigoth +decor",
+    "MAVRA",
+    "MAVRA gothic",
+    "emo wall decor",
+    "goth wall decor",
+    "gothic wall decor",
+    "horror wall decor",
+    "mavra goth",
+    "skull wall decor",
+    "spooky wall decor"
+   ],
+   "exclusiones": {
+    "activas": [
+     "print",
+     "poster",
+     "canvas",
+     "tapestry",
+     "sugar",
+     "cow",
+     "cowboy",
+     "western"
+    ],
+    "propuestas": [
+     {
+      "t": "sticker",
+      "motivo": "Propuesto: quien busca sticker no paga US$ 39.99."
+     },
+     {
+      "t": "decal",
+      "motivo": "Propuesto: vinilo de pared, misma objeción que sticker."
+     },
+     {
+      "t": "wallpaper",
+      "motivo": "Propuesto: papel mural, otra categoría."
+     },
+     {
+      "t": "tattoo",
+      "motivo": "Propuesto: 'skull tattoo' es diseño, no objeto."
+     },
+     {
+      "t": "svg",
+      "motivo": "Propuesto: busca archivo digital."
+     },
+     {
+      "t": "png",
+      "motivo": "Propuesto: busca archivo digital."
+     },
+     {
+      "t": "3d print",
+      "motivo": "Propuesto: busca el STL, no el producto terminado."
+     },
+     {
+      "t": "mold",
+      "motivo": "Propuesto: molde para hacerlo uno mismo."
+     },
+     {
+      "t": "coloring",
+      "motivo": "Propuesto: libro para colorear."
+     },
+     {
+      "t": "costume",
+      "motivo": "Propuesto: disfraz, compra de una noche."
+     },
+     {
+      "t": "mask",
+      "motivo": "Propuesto: máscara, no decoración."
+     },
+     {
+      "t": "toy",
+      "motivo": "Propuesto: juguete, expectativa de precio y calidad opuesta."
+     },
+     {
+      "t": "cake",
+      "motivo": "Propuesto: repostería."
+     },
+     {
+      "t": "keychain",
+      "motivo": "Propuesto: llavero, ticket de US$ 8."
+     },
+     {
+      "t": "necklace",
+      "motivo": "Propuesto: joyería."
+     },
+     {
+      "t": "ring",
+      "motivo": "Propuesto: joyería."
+     },
+     {
+      "t": "shirt",
+      "motivo": "Propuesto: apparel."
+     },
+     {
+      "t": "real human",
+      "motivo": "Propuesto: cráneo humano real / anatómico. Otro comprador."
+     },
+     {
+      "t": "anatomical",
+      "motivo": "Propuesto: modelo médico."
+     },
+     {
+      "t": "mural",
+      "motivo": "Propuesto: pintura de pared."
+     }
+    ],
+    "ad_groups_busqueda": 12,
+    "ad_groups_producto": 1,
+    "exclusiones_producto": 0
+   }
+  },
+  "CND": {
+   "nombre": "Skull Candle Set",
+   "asin": "B0GGJN8FKK",
+   "sku": "MVCSKLBLK",
+   "items": [
+    {
+     "id": "titulo75",
+     "texto": "Título ≤ 75 caracteres",
+     "estado": false,
+     "detalle": "195 chars: \"MAVRA Skull Candle Set - Gothic Candles, Real Black Paraffin Skull & Spine Candle + 2 Votives, Pine & Moss Scented, Sculpted Goth Room Decor, Witchy Ritual Candle Gift for Dark Home & Skull Decor\"",
+     "auto": true
+    },
+    {
+     "id": "ih",
+     "texto": "Item Highlight ≤ 125 escrito",
+     "estado": false,
+     "detalle": "Redactado y sin subir (120/125). Amazon no lo tiene.",
+     "auto": true
+    },
+    {
+     "id": "bullets",
+     "texto": "5 viñetas",
+     "estado": true,
+     "detalle": "5 viñeta(s) en Amazon",
+     "auto": true
+    },
+    {
+     "id": "desc",
+     "texto": "Descripción cargada",
+     "estado": false,
+     "detalle": "22 caracteres — es el nombre del producto repetido",
+     "auto": true
+    },
+    {
+     "id": "backend",
+     "texto": "Backend / generic_keyword lleno",
+     "estado": false,
+     "detalle": "vacío",
+     "auto": true
+    },
+    {
+     "id": "ptype",
+     "texto": "product_type correcto",
+     "estado": true,
+     "detalle": "product_type = CANDLE",
+     "auto": true
+    },
+    {
+     "id": "imagenes",
+     "texto": "Imágenes: main + las de objeción",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "aplus",
+     "texto": "A+ publicado con alt text",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "precio",
+     "texto": "Precio definido con margen",
+     "estado": true,
+     "detalle": "US$ 39.99",
+     "auto": true
+    },
+    {
+     "id": "stock",
+     "texto": "Inventario en el fulfillment center",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "indexacion",
+     "texto": "Indexación probada (keyword + ASIN en la barra)",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "adlive",
+     "texto": "El anuncio está sirviendo (servingStatus LIVE)",
+     "estado": true,
+     "detalle": "12 de 12 anuncios en AD_STATUS_LIVE",
+     "auto": true
+    },
+    {
+     "id": "campanas",
+     "texto": "Campañas creadas y ENABLED",
+     "estado": true,
+     "detalle": "12 campañas · $180/día",
+     "auto": true
+    },
+    {
+     "id": "cadencia",
+     "texto": "Cadencia de bids entre match types",
+     "estado": true,
+     "detalle": "broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $2.0 · exact $5.0 · exact $5.0 · exact $5.0 · exact $5.0 · phrase $5.0 · phrase $5.0 · phrase $5.0",
+     "auto": true
+    },
+    {
+     "id": "negmarca",
+     "texto": "Exclusiones de marca cargadas (negativos phrase)",
+     "estado": true,
+     "detalle": "8 exclusiones en los 10 ad groups de búsquedas: print, poster, canvas, tapestry, sugar, cow, cowboy, western · 2 ad groups apuntan a productos, ahí la exclusión va por ASIN y está vacía",
+     "auto": true
+    },
+    {
+     "id": "sinneg",
+     "texto": "Ninguna broad tiene negativizada su propia exacta",
+     "estado": true,
+     "detalle": "80 negativos cargados, ninguno tapa el root",
+     "auto": true
+    },
+    {
+     "id": "impresiones",
+     "texto": "La campaña recibe impresiones",
+     "estado": null,
+     "detalle": "el reporte de Amazon todavía no cubre estas fechas",
+     "auto": false
+    },
+    {
+     "id": "resenas",
+     "texto": "Primeras reseñas",
+     "estado": false,
+     "detalle": "0 reseñas (H10: review_count nulo)",
+     "auto": true
+    }
+   ],
+   "ok": 8,
+   "total": 18,
+   "verificables": 13,
+   "keywords": [
+    "+goth +decor",
+    "+gothic +decor",
+    "+skeleton +decor",
+    "+skull +candle",
+    "+skull +decor",
+    "+spooky +decor",
+    "+whimsigoth +decor",
+    "MAVRA",
+    "MAVRA gothic",
+    "gothic candles",
+    "horror candle",
+    "mavra goth",
+    "skull candle",
+    "spine candle"
+   ],
+   "exclusiones": {
+    "activas": [
+     "print",
+     "poster",
+     "canvas",
+     "tapestry",
+     "sugar",
+     "cow",
+     "cowboy",
+     "western"
+    ],
+    "propuestas": [
+     {
+      "t": "sticker",
+      "motivo": "Propuesto: quien busca sticker no paga US$ 39.99."
+     },
+     {
+      "t": "decal",
+      "motivo": "Propuesto: vinilo de pared, misma objeción que sticker."
+     },
+     {
+      "t": "wallpaper",
+      "motivo": "Propuesto: papel mural, otra categoría."
+     },
+     {
+      "t": "tattoo",
+      "motivo": "Propuesto: 'skull tattoo' es diseño, no objeto."
+     },
+     {
+      "t": "svg",
+      "motivo": "Propuesto: busca archivo digital."
+     },
+     {
+      "t": "png",
+      "motivo": "Propuesto: busca archivo digital."
+     },
+     {
+      "t": "3d print",
+      "motivo": "Propuesto: busca el STL, no el producto terminado."
+     },
+     {
+      "t": "mold",
+      "motivo": "Propuesto: molde para hacerlo uno mismo."
+     },
+     {
+      "t": "coloring",
+      "motivo": "Propuesto: libro para colorear."
+     },
+     {
+      "t": "costume",
+      "motivo": "Propuesto: disfraz, compra de una noche."
+     },
+     {
+      "t": "mask",
+      "motivo": "Propuesto: máscara, no decoración."
+     },
+     {
+      "t": "toy",
+      "motivo": "Propuesto: juguete, expectativa de precio y calidad opuesta."
+     },
+     {
+      "t": "cake",
+      "motivo": "Propuesto: repostería."
+     },
+     {
+      "t": "keychain",
+      "motivo": "Propuesto: llavero, ticket de US$ 8."
+     },
+     {
+      "t": "necklace",
+      "motivo": "Propuesto: joyería."
+     },
+     {
+      "t": "ring",
+      "motivo": "Propuesto: joyería."
+     },
+     {
+      "t": "shirt",
+      "motivo": "Propuesto: apparel."
+     },
+     {
+      "t": "real human",
+      "motivo": "Propuesto: cráneo humano real / anatómico. Otro comprador."
+     },
+     {
+      "t": "anatomical",
+      "motivo": "Propuesto: modelo médico."
+     },
+     {
+      "t": "candle making",
+      "motivo": "Propuesto: busca insumos para fabricar."
+     },
+     {
+      "t": "wax melt",
+      "motivo": "Propuesto: formato distinto, otro precio."
+     },
+     {
+      "t": "wick",
+      "motivo": "Propuesto: repuestos."
+     }
+    ],
+    "ad_groups_busqueda": 10,
+    "ad_groups_producto": 2,
+    "exclusiones_producto": 0
+   }
+  },
+  "LMP": {
+   "nombre": "Skull Lamp",
+   "asin": "B0GGJMDB32",
+   "sku": "MVLSKLBLK",
+   "items": [
+    {
+     "id": "titulo75",
+     "texto": "Título ≤ 75 caracteres",
+     "estado": false,
+     "detalle": "199 chars: \"MAVRA Skull Lamp - Gothic Table Lamp, Shadow Projection, 3-Level Touch Dimmer & Standard E27 Bulb, 3 Shade Modes (Matte, Glitter, Naked Cage), Goth Room Decor for Bedside Nightstand, Skull Decor Gift\"",
+     "auto": true
+    },
+    {
+     "id": "ih",
+     "texto": "Item Highlight ≤ 125 escrito",
+     "estado": false,
+     "detalle": "Redactado y sin subir (114/125). Amazon no lo tiene.",
+     "auto": true
+    },
+    {
+     "id": "bullets",
+     "texto": "5 viñetas",
+     "estado": true,
+     "detalle": "5 viñeta(s) en Amazon",
+     "auto": true
+    },
+    {
+     "id": "desc",
+     "texto": "Descripción cargada",
+     "estado": false,
+     "detalle": "16 caracteres — es el nombre del producto repetido",
+     "auto": true
+    },
+    {
+     "id": "backend",
+     "texto": "Backend / generic_keyword lleno",
+     "estado": false,
+     "detalle": "vacío",
+     "auto": true
+    },
+    {
+     "id": "ptype",
+     "texto": "product_type correcto",
+     "estado": true,
+     "detalle": "product_type = LAMP",
+     "auto": true
+    },
+    {
+     "id": "imagenes",
+     "texto": "Imágenes: main + las de objeción",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "aplus",
+     "texto": "A+ publicado con alt text",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "precio",
+     "texto": "Precio definido con margen",
+     "estado": true,
+     "detalle": "US$ 39.99",
+     "auto": true
+    },
+    {
+     "id": "stock",
+     "texto": "Inventario en el fulfillment center",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "indexacion",
+     "texto": "Indexación probada (keyword + ASIN en la barra)",
+     "estado": null,
+     "detalle": "verificar a mano",
+     "auto": false
+    },
+    {
+     "id": "adlive",
+     "texto": "El anuncio está sirviendo (servingStatus LIVE)",
+     "estado": true,
+     "detalle": "12 de 12 anuncios en AD_STATUS_LIVE",
+     "auto": true
+    },
+    {
+     "id": "campanas",
+     "texto": "Campañas creadas y ENABLED",
+     "estado": true,
+     "detalle": "12 campañas · $190/día",
+     "auto": true
+    },
+    {
+     "id": "cadencia",
+     "texto": "Cadencia de bids entre match types",
+     "estado": true,
+     "detalle": "broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $2.0 · exact $5.0 · exact $5.0 · exact $5.0 · exact $5.0 · exact $5.0 · phrase $5.0 · phrase $5.0 · phrase $5.0",
+     "auto": true
+    },
+    {
+     "id": "negmarca",
+     "texto": "Exclusiones de marca cargadas (negativos phrase)",
+     "estado": true,
+     "detalle": "8 exclusiones en los 11 ad groups de búsquedas: print, poster, canvas, tapestry, sugar, cow, cowboy, western · 1 ad group apunta a productos, ahí la exclusión va por ASIN y está vacía",
+     "auto": true
+    },
+    {
+     "id": "sinneg",
+     "texto": "Ninguna broad tiene negativizada su propia exacta",
+     "estado": true,
+     "detalle": "88 negativos cargados, ninguno tapa el root",
+     "auto": true
+    },
+    {
+     "id": "impresiones",
+     "texto": "La campaña recibe impresiones",
+     "estado": null,
+     "detalle": "el reporte de Amazon todavía no cubre estas fechas",
+     "auto": false
+    },
+    {
+     "id": "resenas",
+     "texto": "Primeras reseñas",
+     "estado": false,
+     "detalle": "0 reseñas (H10: review_count nulo)",
+     "auto": true
+    }
+   ],
+   "ok": 8,
+   "total": 18,
+   "verificables": 13,
+   "keywords": [
+    "+goth +decor",
+    "+gothic +decor",
+    "+skeleton +decor",
+    "+skull +decor",
+    "+skull +lamp",
+    "+spooky +decor",
+    "+whimsigoth +decor",
+    "MAVRA",
+    "MAVRA gothic",
+    "goth lamps",
+    "gothic lamp",
+    "mavra goth",
+    "skeleton lamp",
+    "skull lamp",
+    "spooky lamp"
+   ],
+   "exclusiones": {
+    "activas": [
+     "print",
+     "poster",
+     "canvas",
+     "tapestry",
+     "sugar",
+     "cow",
+     "cowboy",
+     "western"
+    ],
+    "propuestas": [
+     {
+      "t": "sticker",
+      "motivo": "Propuesto: quien busca sticker no paga US$ 39.99."
+     },
+     {
+      "t": "decal",
+      "motivo": "Propuesto: vinilo de pared, misma objeción que sticker."
+     },
+     {
+      "t": "wallpaper",
+      "motivo": "Propuesto: papel mural, otra categoría."
+     },
+     {
+      "t": "tattoo",
+      "motivo": "Propuesto: 'skull tattoo' es diseño, no objeto."
+     },
+     {
+      "t": "svg",
+      "motivo": "Propuesto: busca archivo digital."
+     },
+     {
+      "t": "png",
+      "motivo": "Propuesto: busca archivo digital."
+     },
+     {
+      "t": "3d print",
+      "motivo": "Propuesto: busca el STL, no el producto terminado."
+     },
+     {
+      "t": "mold",
+      "motivo": "Propuesto: molde para hacerlo uno mismo."
+     },
+     {
+      "t": "coloring",
+      "motivo": "Propuesto: libro para colorear."
+     },
+     {
+      "t": "costume",
+      "motivo": "Propuesto: disfraz, compra de una noche."
+     },
+     {
+      "t": "mask",
+      "motivo": "Propuesto: máscara, no decoración."
+     },
+     {
+      "t": "toy",
+      "motivo": "Propuesto: juguete, expectativa de precio y calidad opuesta."
+     },
+     {
+      "t": "cake",
+      "motivo": "Propuesto: repostería."
+     },
+     {
+      "t": "keychain",
+      "motivo": "Propuesto: llavero, ticket de US$ 8."
+     },
+     {
+      "t": "necklace",
+      "motivo": "Propuesto: joyería."
+     },
+     {
+      "t": "ring",
+      "motivo": "Propuesto: joyería."
+     },
+     {
+      "t": "shirt",
+      "motivo": "Propuesto: apparel."
+     },
+     {
+      "t": "real human",
+      "motivo": "Propuesto: cráneo humano real / anatómico. Otro comprador."
+     },
+     {
+      "t": "anatomical",
+      "motivo": "Propuesto: modelo médico."
+     },
+     {
+      "t": "lava lamp",
+      "motivo": "Propuesto: otro producto entero."
+     },
+     {
+      "t": "bulb",
+      "motivo": "Propuesto: busca la bombilla suelta."
+     },
+     {
+      "t": "night light",
+      "motivo": "Propuesto: luz de niños, US$ 12."
+     }
+    ],
+    "ad_groups_busqueda": 11,
+    "ad_groups_producto": 1,
+    "exclusiones_producto": 0
+   }
+  }
+ }
+}

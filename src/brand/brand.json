@@ -1,0 +1,1709 @@
+{
+ "identity": {
+  "name": "MAVRA",
+  "tagline": "Inhabit your shadow.",
+  "slogan": "The darkness you deserved.",
+  "movement": "Dark Renaissance",
+  "archetype": {
+   "name": "The Liberator",
+   "quote": "Aquí puedes ser quien realmente eres.",
+   "body": "No opera desde la escasez. Opera desde la habilitación — construye el espacio donde el cliente puede ser completamente él mismo, sin necesidad de aprobación externa."
+  },
+  "symbol": {
+   "name": "La calavera",
+   "body": "Memento mori elevado a objeto de diseño. No evoca muerte como amenaza sino como recordatorio de vivir con intención. El cráneo MAVRA es anatómicamente preciso, esculpido, no estampado — diferenciación táctil y visual inmediata."
+  },
+  "market": "USA",
+  "language": "en-US",
+  "docVersion": "Ver. 2026 · Documento interno",
+  "voice": {
+   "always": [
+    "Frases cortas con peso",
+    "Vocabulario ritual — invocar, habitar, convocar",
+    "Describir lo que proyecta, no lo que es",
+    "Referencia sensorial en copy largo",
+    "Datos técnicos siempre al final",
+    "Paradojas deliberadas"
+   ],
+   "never": [
+    "Exclamaciones",
+    "Jerga de e-commerce (\"¡Oferta!\", \"¡Envío gratis!\")",
+    "Explicar por qué somos góticos",
+    "Halloween como referente",
+    "Pedir disculpas por la estética",
+    "\"Descuento\", \"gratis\", \"oferta\""
+   ]
+  },
+  "keywords": [
+   "santuario",
+   "sombra",
+   "maestría",
+   "habitar",
+   "invocar",
+   "completar",
+   "rito",
+   "alquimia",
+   "proyectar",
+   "narrativa",
+   "curador",
+   "legado",
+   "silencio",
+   "misterio",
+   "oscuridad"
+  ]
+ },
+ "positioning": {
+  "coreValue": "La oscuridad no es ausencia de luz. Es la presencia de profundidad.",
+  "statement": "Para los curadores de espacios oscuros que buscan profundidad estética más allá de lo temporal, MAVRA es la única marca de home decor gótico que combina maestría artesanal con narrativa simbólica — porque creemos que la oscuridad es una forma superior y legítima de hacer hogar.",
+  "territory": "MAVRA ocupa el espacio vacío entre alta sofisticación estética y accesibilidad e-commerce. Los competidores directos eligen uno de los dos extremos. MAVRA es la única marca que combina narrativa de lujo oscuro con distribución Amazon Prime.",
+  "whyWe": "Somos MAVRA, curadores de espacios oscuros con maestría — creemos en que la sombra es una forma superior y legítima de hacer hogar.",
+  "fiveWhats": [
+   [
+    "¿Qué vendemos?",
+    "Objetos de home decor de estética oscura — cráneos, lámparas, velas."
+   ],
+   [
+    "¿Qué ofrecemos?",
+    "La posibilidad de construir un espacio que refleje la identidad más auténtica del cliente."
+   ],
+   [
+    "¿Qué proporcionamos?",
+    "Permanencia estética — objetos que no caducan con la temporada."
+   ],
+   [
+    "¿Qué aportamos?",
+    "Legitimidad cultural a la estética oscura en el hogar."
+   ],
+   [
+    "¿Qué somos?",
+    "Curadores del hogar oscuro — guardianes de la maestría sobre el espacio."
+   ]
+  ],
+  "purpose": [
+   {
+    "label": "Propósito",
+    "body": "Que la sombra sea una forma legítima y superior de hacer hogar."
+   },
+   {
+    "label": "Promesa",
+    "body": "Cada objeto MAVRA transforma un espacio genérico en un santuario con identidad."
+   },
+   {
+    "label": "Posicionamiento",
+    "body": "La única marca de home decor oscuro que combina narrativa de lujo con accesibilidad Amazon Prime."
+   }
+  ],
+  "commandments": [
+   "El hogar oscuro no es decoración — es <strong>declaración de identidad</strong>.",
+   "La calavera no evoca muerte. Evoca <strong>intención de vivir</strong>.",
+   "Nunca pedimos disculpas por la estética. <strong>La asumimos como punto de partida</strong>.",
+   "La oscuridad tiene temperatura: es <strong>ámbar, cobre, burdeos</strong> — nunca frío.",
+   "Nuestros productos existen los 365 días. <strong>No somos Halloween</strong>.",
+   "El comprador es el curador, no el consumidor. <strong>Lo tratamos como tal</strong>.",
+   "La sombra que proyecta el producto <strong>es parte del producto</strong>.",
+   "Sin narrativa, un cráneo es plástico. <strong>La narrativa es el material real</strong>.",
+   "El unboxing es el primer ritual. <strong>El packaging no se economiza</strong>.",
+   "Habitamos la oscuridad con maestría. <strong>Inhabit your shadow.</strong>"
+  ],
+  "values": [
+   {
+    "title": "Legitimidad",
+    "body": "Elevamos la estética oscura al estatus de diseño real e intencional.",
+    "featured": true
+   },
+   {
+    "title": "Pertenencia",
+    "body": "Convertimos el hogar en prueba de identidad — sin que tengan que explicarse.",
+    "featured": true
+   },
+   {
+    "title": "Propósito",
+    "body": "Construimos desde intención antes que desde urgencia.",
+    "featured": true
+   },
+   {
+    "title": "Permanencia",
+    "body": "Nuestros objetos no caducan con la temporada. Son atemporales."
+   },
+   {
+    "title": "Maestría",
+    "body": "Cada pieza refleja curaduría — no producción en masa sin conciencia."
+   },
+   {
+    "title": "Autenticidad",
+    "body": "Hablamos a quienes ya decidieron. No convencemos — confirmamos."
+   }
+  ],
+  "narratives": [
+   {
+    "title": "El Santuario",
+    "body": "El hogar no es un contenedor de objetos. Es el único lugar donde la persona puede ser completamente ella misma. MAVRA construye ese espacio con cada pieza."
+   },
+   {
+    "title": "El Memento Mori",
+    "body": "La calavera no es símbolo de muerte — es recordatorio de vivir con intención. Cada cráneo MAVRA lleva esa carga filosófica intacta."
+   },
+   {
+    "title": "La Permanencia",
+    "body": "En un mundo de tendencias efímeras, MAVRA es lo que queda. La oscuridad no tiene temporada. El santuario no caduca en noviembre."
+   },
+   {
+    "title": "La Curación",
+    "body": "El cliente MAVRA no decora. Cura. Cada decisión de colocación, cada combinación de luz y objeto, es un acto de autoría sobre el propio espacio."
+   }
+  ],
+  "pyramid": [
+   {
+    "label": "Nivel 6 — Máximo",
+    "top": true,
+    "body": "MAVRA: Marca de home decor oscuro con narrativa de lujo accesible y distribución Prime. Ningún competidor ocupa este espacio completo."
+   },
+   {
+    "label": "Nivel 5",
+    "mid": true,
+    "body": "Productos artesanales de nicho con alta narrativa pero sin distribución masiva (Etsy, pequeñas marcas independientes)."
+   },
+   {
+    "label": "Nivel 4",
+    "body": "Amazon mainstream con estética oscura pero sin narrativa de marca (genéricos)."
+   },
+   {
+    "label": "Nivel 3",
+    "body": "Retailers estacionales (Spirit Halloween, Party City) — asociación fatal con lo temporal."
+   },
+   {
+    "label": "Nivel 2",
+    "body": "Big box stores (Target, Walmart) con sección \"goth\" limitada y sin coherencia."
+   },
+   {
+    "label": "Nivel 1 — Mínimo",
+    "body": "Fast decor sin personalidad estética específica."
+   }
+  ],
+  "antiCompetition": [
+   "Nunca mencionar Halloween ni asociar con temporada festiva.",
+   "Siempre mostrar el producto en uso real, no en estudio genérico.",
+   "El unboxing es el primer momento de experiencia — no economizar en packaging.",
+   "El copy nunca explica por qué somos góticos — lo asume como punto de partida.",
+   "Las reseñas son activos de narrativa — curar y responder como parte de la voz de marca."
+  ],
+  "conclusions": {
+   "platform": "MAVRA no vende productos de decoración. Vende el derecho a habitar la propia sombra sin disculpa. El posicionamiento es defensible porque requiere consistencia total — una inconsistencia en el tono destruye la ilusión de permanencia.",
+   "total": [
+    "MAVRA no compite en el mercado del home decor gótico. MAVRA define el estándar de lo que ese mercado debería ser.",
+    "La ventaja competitiva es la coherencia total del sistema: cada touchpoint — desde el listing de Amazon hasta el papel de seda del unboxing — refuerza la misma promesa: la oscuridad como forma de maestría.",
+    "Tagline final: \"Inhabit your shadow.\" — instrucción, no descripción. MAVRA no dice lo que es. Le dice al cliente lo que puede ser."
+   ]
+  }
+ },
+ "audience": {
+  "matrix": {
+   "buyer": {
+    "label": "The Guy — Quien compra",
+    "body": "Usuario de Amazon Prime con alta alfabetización visual. Ya cruzó el umbral de aceptación social de lo \"macabro\". Su motivación central es la curaduría del entorno — necesita que cada objeto en su hogar refleje coherencia intelectual y sofisticación."
+   },
+   "user": {
+    "label": "The Dog — Quien disfruta",
+    "body": "El consumidor actúa como validador de la experiencia. Su estatus no se eleva por el precio del objeto, sino por su capacidad de transformar una habitación genérica en un espacio cargado de narrativa."
+   },
+   "aspiration": {
+    "label": "The Queen — A quien aspiramos",
+    "body": "El Elder Goth, 25–45 años. Profesional creativo con ingreso estable. Ha superado las fases experimentales y busca piezas duraderas que se integren en un hogar de diseño Dark Academia o minimalismo oscuro."
+   },
+   "lost": {
+    "label": "The Snake — Quien se fue con la competencia",
+    "body": "El consumidor que se fue a Target o Spirit Halloween por: percepción de kitsch, falta de narrativa (sin valor simbólico no justifica el precio), fricción logística."
+   }
+  },
+  "feelMap": {
+   "headers": [
+    "Feel Out — Yo Exterior",
+    "Feel In — Yo Interior"
+   ],
+   "rows": [
+    [
+     "<strong>01. ¿Qué escucha y ve?</strong><br>Cultura visual saturada de estetismo digital (Instagram, TikTok). Ve tendencias Whimsigoth y Dark Academia que validan su gusto oscuro.",
+     "<strong>02. ¿Qué se dice a sí mismo?</strong><br><em>\"Mi espacio es mi santuario. Aquí no tengo que explicar por qué encuentro belleza en una calavera.\"</em>"
+    ],
+    [
+     "<strong>03. ¿Qué opina?</strong><br>Que la sociedad moderna es superficial y el \"posicionamiento de felicidad forzada\" es alienante. Defiende que el hogar debe ser un refugio de autenticidad.",
+     "<strong>04. ¿Qué piensa?</strong><br>Que la muerte (memento mori) no es algo temible, sino un recordatorio de vivir con intención. El uso de símbolos oscuros lo conecta con una historia humana más profunda."
+    ],
+    [
+     "<strong>05. ¿Qué hace?</strong><br>Comparte \"corner goals\" y \"shelfies\" en redes. Visita tiendas de antigüedades, asiste a festivales de música alternativa.",
+     "<strong>06. ¿Qué quiere?</strong><br>Sentido de permanencia y profundidad emocional. Que su hogar le proporcione un \"abrazo sensorial\" — texturas ricas y juego de luces y sombras."
+    ]
+   ]
+  },
+  "desireCanvas": [
+   {
+    "label": "Self — Autoimagen",
+    "body": "Soy una persona con sensibilidad estética superior. Mi elección de objetos demuestra que no soy un consumidor pasivo de tendencias, sino un curador de mi propia existencia."
+   },
+   {
+    "label": "Enemy — Dominio",
+    "body": "Esa persona ha logrado capturar una atmósfera que a mí me falta. Existe una envidia estética — la lámpara de proyección actúa como eje central que cohesiona el estilo."
+   },
+   {
+    "label": "Friend — Aspiraciones",
+    "body": "Mi amigo entiende mi mundo. Su compra valida mi propio gusto y refuerza nuestra conexión subcultural."
+   },
+   {
+    "label": "Social — Estatus",
+    "body": "Quiero que perciban mi hogar como un lugar de misterio, elegancia y sabiduría. Un espacio donde cada detalle ha sido elegido para contar una historia."
+   }
+  ],
+  "journey": {
+   "headers": [
+    "Proof Points — Qué necesita para confiar",
+    "Feel Points — Cómo lo hacemos sentir único",
+    "Sweet Points — Cómo tangibilizamos"
+   ],
+   "rows": [
+    [
+     "<strong>Calidad verificable:</strong> fotos sin filtros del recubrimiento metálico, especificaciones de peso y acabado.",
+     "Tratarlo como <strong>insider de la subcultura</strong>, no como consumidor genérico.",
+     "<strong>Unboxing sensorial:</strong> papel de seda negro, caja que parezca libro antiguo o cofre victoriano."
+    ],
+    [
+     "<strong>Prueba social:</strong> reseñas que validen la nitidez de la proyección de sombra y la durabilidad del metal.",
+     "Lenguaje que <strong>respeta los códigos íntimos</strong> de la comunidad — referencias a literatura, música, filosofía dark.",
+     "<strong>Gothic Sanctuary Kit:</strong> bundles de lámpara + velas + wall decor que simplifican la creación de la atmósfera completa."
+    ],
+    [
+     "<strong>Narrativa simbólica:</strong> explicación del valor del memento mori, la historia de la calavera en el arte.",
+     "<strong>Involucrarlo en el proceso:</strong> feedback sobre nuevos diseños, acceso anticipado a ediciones limitadas.",
+     "<strong>AR en Shopify:</strong> herramienta que permite ver cómo se proyecta la sombra de la calavera en la pared real del usuario antes de comprar."
+    ]
+   ]
+  },
+  "ego": "MAVRA se posiciona en el cuadrante Provocador / Dominante — una marca que desafía las normas estéticas convencionales con confianza absoluta. No busca aprobación masiva. Se dirige a quienes ya han tomado la decisión de vivir de forma auténtica.",
+  "conclusions": [
+   "El consumidor MAVRA es un alquimista del ambiente. Su acto de compra no es consumismo — es curaduría. El producto debe hablar en el idioma de la permanencia y la profundidad.",
+   "Insight central: \"No compro decoración. Construyo un santuario.\""
+  ]
+ },
+ "competitors": {
+  "headers": [
+   "Competidor",
+   "Territorio",
+   "Debilidad que MAVRA explota"
+  ],
+  "rows": [
+   [
+    "Competitors S4",
+    "Precio bajo, volumen alto",
+    "Sin narrativa — producto commodity sin identidad"
+   ],
+   [
+    "Etsy artisans",
+    "Alta narrativa, producción limitada",
+    "Sin escala, sin Prime, sin consistencia"
+   ],
+   [
+    "Spirit Halloween",
+    "Estacional, reconocimiento de marca",
+    "Asociación directa con Halloween — MAVRA los evita explícitamente"
+   ],
+   [
+    "Target gótico",
+    "Acceso masivo, precio accesible",
+    "Estética diluida — no habla a la subcultura"
+   ]
+  ]
+ },
+ "visual": {
+  "palette": {
+   "board": [
+    {
+     "name": "Negro Cálido",
+     "hex": "var(--bg)",
+     "main": true
+    },
+    {
+     "name": "Hueso / Crema",
+     "hex": "var(--fg)",
+     "main": true,
+     "border": "1px solid rgba(var(--fg-rgb),0.3)"
+    },
+    {
+     "name": "Cobre / Bronce",
+     "hex": "var(--copper)",
+     "main": true
+    },
+    {
+     "name": "Burdeos",
+     "hex": "var(--burgundy)",
+     "main": true
+    },
+    {
+     "name": "Negro Profundo",
+     "hex": "#231E1B"
+    },
+    {
+     "name": "Cobre Vivo",
+     "hex": "var(--copper-bright)"
+    },
+    {
+     "name": "Burdeos Intenso",
+     "hex": "#7A1535"
+    }
+   ],
+   "ui": [
+    {
+     "name": "Negro Profundo",
+     "hex": "#231E1B",
+     "border": "1px solid rgba(var(--fg-rgb),0.15)"
+    },
+    {
+     "name": "Hueso Claro",
+     "hex": "#EDE4D3",
+     "border": "1px solid rgba(var(--fg-rgb),0.3)"
+    },
+    {
+     "name": "Cobre Vivo",
+     "hex": "var(--copper-bright)"
+    },
+    {
+     "name": "Burdeos Intenso",
+     "hex": "#7A1535"
+    }
+   ]
+  },
+  "senses": [
+   {
+    "label": "Vista",
+    "body": "Oscuridad con temperatura ámbar. Sombras dramáticas que revelan forma. Negro mate nunca brillante. Textura siempre perceptible."
+   },
+   {
+    "label": "Tacto",
+    "body": "Peso inesperado en la mano. Polirresina densa. Superficies irregulares con intención. Paraffin negro mate en las velas — nunca cera blanca."
+   },
+   {
+    "label": "Olfato",
+    "body": "Humo de vela apagada. Papel antiguo y cuero. Tierra húmeda en el unboxing. Madera oscura envejecida."
+   },
+   {
+    "label": "Sonido",
+    "body": "Silencio de santuario. La llama que cracklea levemente. El peso del cráneo al posarse en la superficie."
+   }
+  ],
+  "laws": [
+   {
+    "title": "Chiaroscuro Obligatorio",
+    "body": "Cada imagen tiene exactamente un punto de luz dominante. Un elemento iluminado. Todo lo demás en sombra. No existe la iluminación uniforme en MAVRA."
+   },
+   {
+    "title": "El Producto Es el Protagonista",
+    "body": "Ningún prop, persona, ni elemento decorativo compite en jerarquía visual con el producto. El producto ocupa el punto de máxima luminosidad de la composición."
+   },
+   {
+    "title": "Contexto Real, No Studio",
+    "body": "Las escenas ocurren en santuarios reales: rincones oscuros de habitaciones, paredes de piedra o madera, esquinas con apliques. Prohibido: fondos blancos de estudio."
+   },
+   {
+    "title": "Asimetría con Intención",
+    "body": "Las composiciones pesan hacia un lado. El vacío es diseño. El espacio negativo no se llena — se respeta."
+   },
+   {
+    "title": "Permanencia, No Temporada",
+    "body": "Cada escena debe verse igual en octubre que en abril. Si un elemento evoca Halloween, cosecha o cualquier festividad, ese elemento no es MAVRA."
+   }
+  ],
+  "photography": {
+   "backgrounds": {
+    "approved": [
+     "Estuco oscuro / hormigón pintado negro cálido (var(--bg))",
+     "Piedra vista natural o revestida",
+     "Madera oscura panelada (roble, nogal, envejecida)",
+     "Ladrillo visto oscuro o con veladura negra",
+     "Yeso desgastado con imperfecciones visibles",
+     "Papel pintado: damasco negro/negro, brocado burdeos o bronce opaco"
+    ],
+    "forbidden": [
+     "Blanco o crema limpio (excepción solo Amazon main image)",
+     "Gris claro \"neutro\" de estudio",
+     "Cualquier color saturado de fondo",
+     "Seamless de papel fotográfico",
+     "Fondos de tela lisos sin textura",
+     "Paredes con molduras blancas o colores pastel"
+    ]
+   },
+   "surfaces": {
+    "approved": [
+     "Madera oscura maciza — acabado mate o satinado, nunca brillante",
+     "Piedra: mármol negro Marquina, pizarra, granito negro",
+     "Metal: hierro fundido, bronce envejecido, cobre oxidado",
+     "Terciopelo: negro, borgoña (var(--burgundy)), verde botella muy oscuro"
+    ]
+   },
+   "lighting": {
+    "approved": [
+     "Velas reales — pilar negro, borgoña o hueso/marfil (≥15cm). Fuente preferida.",
+     "Apliques de pared: hierro forjado, latón envejecido. Solo bombillas filamento Edison, máx 2200K.",
+     "Luz rasante (raking light) — puntual a 10-20° del eje de la superficie",
+     "Luz de estudio: 2200K–2700K máximo, un solo foco con snoot/grid, potencia baja",
+     "Luz natural: solo hora dorada tardía (últimos 20min antes del ocaso)"
+    ],
+    "forbidden": [
+     "Tiras LED de cualquier color",
+     "Ring lights o beauty dishes sin modificación severa",
+     "Flash de relleno uniforme",
+     "Luz de techo como iluminación principal",
+     "Bombillas LED frías (temperatura >3000K)",
+     "Luz de pantallas como fuente primaria",
+     "Luz de neón de cualquier color"
+    ]
+   },
+   "props": {
+    "approved": [
+     {
+      "label": "Botánica Oscura",
+      "items": [
+       "Rosas secas/marchitas",
+       "Ramas con espinas",
+       "Hierbas secas",
+       "Musgo oscuro seco"
+      ]
+     },
+     {
+      "label": "Libros & Vidrio",
+      "items": [
+       "Encuadernación cuero/tela oscura",
+       "Frascos boticario oscuros",
+       "Campanas de vidrio",
+       "Copas cristal oscuro"
+      ]
+     },
+     {
+      "label": "Piedra & Metal",
+      "items": [
+       "Obsidiana, turmalina, cuarzo ahumado",
+       "Llaves antiguas hierro/bronce",
+       "Relojes de bolsillo/arena",
+       "Sellos de lacre"
+      ]
+     }
+    ],
+    "forbidden": {
+     "seasonal": [
+      "Decoración Halloween (arañas, fantasmas, murciélagos)",
+      "Decoración navideña de cualquier tipo",
+      "Calabazas — incluso pintadas de negro",
+      "Coronas de otoño / hojas secas de colores",
+      "Elementos de cosecha: trigo, maíz, girasoles"
+     ],
+     "material": [
+      "Plástico visible en encuadre",
+      "Metal cromado o plateado brillante",
+      "Naranja, púrpura brillante, verde lima, rosa vivo, amarillo",
+      "Purpurina o elementos iridiscentes",
+      "Peluches, juguetes, funko pops",
+      "Frases motivacionales impresas visibles"
+     ]
+    }
+   },
+   "wardrobe": {
+    "approved": [
+     "Mano sosteniendo o acercándose al producto (encuadre cerrado)",
+     "Silueta de espaldas frente a la pared o rincón",
+     "Perfil mirando hacia el producto, rostro en sombra parcial",
+     "Figura en segundo plano desenfocado, producto en primer plano nítido"
+    ],
+    "forbidden": [
+     "Rostro completo iluminado mirando a cámara",
+     "Pose de \"influencer sosteniendo producto\"",
+     "Cuerpo completo de frente con producto en mano extendida",
+     "Sonrisa visible"
+    ]
+   }
+  },
+  "cameraLanguage": {
+   "shotSizes": [
+    {
+     "term": "ECU — Extreme Close-Up",
+     "desc": "Detalle puro: textura, ornamento, material.",
+     "prompt": "extreme close-up, hand-carved skull relief detail, aged copper patina, raking side light at 10°, razor-sharp focus on carved grooves, black background, gothic luxury craft photography"
+    },
+    {
+     "term": "CU — Close-Up",
+     "desc": "Objeto aislado con mood, sin contexto de habitación.",
+     "prompt": "close-up, MAVRA skull lamp on dark marble surface, single candle reflected in eye socket, shallow depth of field, warm amber light, deep surrounding shadows, moody product photography"
+    },
+    {
+     "term": "MCU — Medium Close-Up",
+     "desc": "Balance sujeto + ambiente muy cercano.",
+     "prompt": "medium close-up, gothic skull candleholder on velvet-draped mantelpiece, dark textured stone wall behind, warm candlelight from left, partial shadow right side, no background clutter"
+    },
+    {
+     "term": "MS — Medium Shot",
+     "desc": "Sujeto con entorno moderado. Contexto visible.",
+     "prompt": "medium shot, gothic reading nook corner, skull wall lamp mounted above a small shelf with black roses and a leather-bound book, candlelight from left, dark stone wall, atmospheric shadows"
+    },
+    {
+     "term": "MLS — Medium Long Shot",
+     "desc": "Revela el layout parcial de la habitación.",
+     "prompt": "medium long shot, dark living room corner, skull lamp on heavy wooden side table, floor partially lit, heavy drapes in background, chiaroscuro lighting, multiple atmospheric shadows"
+    },
+    {
+     "term": "WS — Wide Shot",
+     "desc": "Vista amplia de la escena completa.",
+     "prompt": "wide shot, moody gothic living room interior, dark velvet sofa, skull wall art above stone mantelpiece, single floor lamp casting amber light, deep shadows in corners, atmospheric"
+    },
+    {
+     "term": "EWS — Extreme Wide Shot",
+     "desc": "Arquitectura, escala total, atmósfera del espacio.",
+     "prompt": "extreme wide shot, grand gothic interior, vaulted dark ceiling, skull wall pieces as focal points at eye level, massive stone fireplace, dramatic single-source light, atmospheric haze, cinematic scale"
+    }
+   ],
+   "angles": [
+    {
+     "term": "Eye Level",
+     "desc": "Perspectiva natural. Observacional.",
+     "prompt": "eye-level shot, gothic skull lamp on dark wooden side table, black dried roses beside it, natural perspective, single warm side-lighting from right, soft atmospheric shadows"
+    },
+    {
+     "term": "High Angle / Picado",
+     "desc": "Cámara mira hacia abajo. Sujeto expuesto.",
+     "prompt": "high-angle shot looking down, skull sculpture on gothic altar arrangement, dark velvet surface, black pillar candles flanking, obsidian crystals, editorial flat-lay atmosphere"
+    },
+    {
+     "term": "Low Angle / Contrapicado",
+     "desc": "Cámara mira hacia arriba. Poder, drama.",
+     "prompt": "low-angle shot looking up at wall-mounted skull lamp, dark textured stone wall, ceiling architecture partially visible above, dramatic foreshortening, monumental scale, rim-lit from above"
+    },
+    {
+     "term": "Bird's Eye / Cenital",
+     "desc": "Directamente desde arriba. Aplana el espacio.",
+     "prompt": "bird's-eye view straight down, gothic coffee table arrangement, skull centerpiece surrounded by black taper candles, obsidian crystals and dried botanicals, dark linen surface"
+    },
+    {
+     "term": "Worm's Eye / A Ras",
+     "desc": "Desde el suelo hacia arriba. Grandiosidad.",
+     "prompt": "worm's-eye view from floor level looking up at skull lamp mounted high on dark stone wall, severe upward perspective, baroque architectural details above, dramatic monumental scale"
+    },
+    {
+     "term": "Dutch Angle",
+     "desc": "Frame inclinado. Tensión cinematográfica.",
+     "prompt": "dutch angle 12–15 degrees, skull wall lamp in gothic corridor, tilted frame creating visual unease, single candle light source, atmospheric shadows, dark and brooding, cinematic still"
+    },
+    {
+     "term": "Overhead / Top-Down",
+     "desc": "Cámara justo encima del sujeto. Ideal flat-lay.",
+     "prompt": "overhead shot directly from above, gothic altar table, skull sculpture as centerpiece, dried black roses and aged leather books arranged around it, dark velvet surface, styled flat-lay"
+    },
+    {
+     "term": "Ground Level",
+     "desc": "Casi en el suelo. Textura y profundidad dramática.",
+     "prompt": "ground-level shot along dark marble floor toward gothic fireplace with skull mantel piece, floor texture in extreme foreground, atmospheric depth, warm candlelight glow in far distance"
+    }
+   ],
+   "lensDepth": [
+    {
+     "term": "Ultra-Wide",
+     "desc": "Espacio expansivo, perspectiva exagerada.",
+     "prompt": "ultra-wide angle lens, gothic living room with skull lamp, space feels vast and dramatic, architectural distortion, deep shadows in corners, towering arched ceiling, cinematic room scale"
+    },
+    {
+     "term": "Standard (50mm)",
+     "desc": "Natural, cercano a la visión humana.",
+     "prompt": "50mm standard lens, gothic interior, skull lamp on dark wooden surface, balanced natural perspective, true-to-life depth, warm atmospheric light, dark room beyond, product photography quality"
+    },
+    {
+     "term": "Telephoto Compression",
+     "desc": "Aplana profundidad. Fondo parece más cercano.",
+     "prompt": "telephoto compression 85mm, layered gothic room with skull lamps on multiple surfaces, background elements appear close and dense, compressed depth, lush layered dark aesthetic"
+    },
+    {
+     "term": "Macro",
+     "desc": "Detalles mínimos: textura, material, ornamento.",
+     "prompt": "macro photography, extreme detail of skull surface, hand-carved gothic patterns, aged patina in crevices, raking light revealing depth of relief carving, razor-sharp focus, black background"
+    },
+    {
+     "term": "Shallow DOF / Bokeh",
+     "desc": "Sujeto nítido, fondo difuminado.",
+     "prompt": "shallow depth of field f/1.4 equivalent, gothic skull lamp in sharp focus on dark wooden surface, creamy soft bokeh background, candles blurred in distance, elegant product isolation"
+    },
+    {
+     "term": "Deep Focus",
+     "desc": "Todo nítido, foreground y background.",
+     "prompt": "deep focus, everything sharp from foreground to background, gothic room interior, skull lamp center frame, dark stone walls in full detail, multiple lit candles visible, architectural richness"
+    }
+   ],
+   "composition": [
+    {
+     "term": "Rule of Thirds",
+     "desc": "Elemento clave fuera del centro. Frame dinámico.",
+     "prompt": "rule of thirds composition, skull lamp placed at left vertical third intersection, negative space on right, gothic interior context, single warm light source, natural visual tension"
+    },
+    {
+     "term": "Negative Space",
+     "desc": "Espacio vacío alrededor del sujeto.",
+     "prompt": "negative space composition, skull lamp isolated on right side, vast dark wall occupying left two-thirds, single dramatic side-light, product breathes within the frame, minimal and powerful"
+    },
+    {
+     "term": "Symmetry",
+     "desc": "Espejo de elementos. Elegancia formal.",
+     "prompt": "perfectly symmetrical composition, gothic fireplace centered, skull mantelpiece at exact center, twin black candelabras flanking at equal distance, formal and monumental, architectural elegance"
+    },
+    {
+     "term": "Framing Within Frame",
+     "desc": "Arco o puerta enmarca la escena.",
+     "prompt": "framing within the frame, gothic stone archway in foreground frames a candlelit room beyond, skull wall lamp visible through arch, layered narrative depth, atmospheric composition"
+    },
+    {
+     "term": "Leading Lines",
+     "desc": "Líneas guían el ojo al punto focal.",
+     "prompt": "leading lines composition, dark hallway perspective lines converge toward gothic skull lamp on far wall, architectural lines drawing eye to product, atmospheric depth, cinematic corridor shot"
+    }
+   ]
+  },
+  "directorBrief": [
+   {
+    "frank": "quiero ver el detalle, cierra en...",
+    "mavro": "close-up, skull lamp detail, hand-carved gothic relief in sharp focus, shallow depth of field, dark wooden surface, warm side-lighting revealing texture, black background"
+   },
+   {
+    "frank": "plano medio, que se vea algo de la habitación",
+    "mavro": "medium shot, skull lamp on dark side table, gothic reading nook partial view, leather books and dried botanicals in scene, single warm light from left, atmospheric shadows"
+   },
+   {
+    "frank": "quiero ver el cuarto completo",
+    "mavro": "wide shot, gothic living room interior, skull wall art above fireplace, dark velvet furniture, atmospheric lighting, deep corner shadows, cinematic room atmosphere"
+   },
+   {
+    "frank": "que se vea la arquitectura, el espacio total",
+    "mavro": "extreme wide shot, grand gothic interior, vaulted dark ceiling, skull wall pieces at eye level, massive stone fireplace, dramatic single-source light, atmospheric haze, cinematic scale"
+   },
+   {
+    "frank": "desde abajo, que se vea imponente",
+    "mavro": "low-angle shot worm's-eye view, looking up at wall-mounted skull lamp, dark stone wall, ceiling architecture above, dramatic monumental perspective, rim-lit from above"
+   },
+   {
+    "frank": "desde arriba, como overhead",
+    "mavro": "high-angle shot or bird's-eye view looking down, skull sculpture on dark surface, gothic altar arrangement, black candles, obsidian crystals, editorial flat-lay atmosphere"
+   },
+   {
+    "frank": "fondo difuminado, bokeh",
+    "mavro": "shallow depth of field f/1.4 equivalent, skull lamp in sharp focus on dark wooden surface, soft creamy bokeh background, candles blurred but visible, product elegantly isolated"
+   },
+   {
+    "frank": "todo enfocado, que se vean los detalles del fondo",
+    "mavro": "deep focus, gothic interior, skull lamp center frame, every background element sharp — stone texture, candle flames, architectural details — rich layered dark scene"
+   },
+   {
+    "frank": "que se vea lujoso",
+    "mavro": "luxury product photography, skull lamp on black marble surface, single overhead spot accent, gold and copper surface reflections, macro-quality surface detail, high-end editorial"
+   },
+   {
+    "frank": "de noche con vela, todo oscuro",
+    "mavro": "candlelight only, single flame as sole light source, skull lamp in amber warm glow, deep shadows everywhere, intimate gothic atmosphere, no ambient light, ISO grain, night interior"
+   },
+   {
+    "frank": "como en una tienda de lujo",
+    "mavro": "luxury retail display, skull lamp on dark plinth, clean dark architectural space, single overhead accent light, high-contrast black walls, editorial e-commerce, aspirational dark decor"
+   },
+   {
+    "frank": "como foto de Pinterest, que inspire",
+    "mavro": "editorial home decor photography, skull lamp as hero piece, styled gothic vignette, dried botanicals and dark books as props, moody warm light, aspirational dark interior"
+   },
+   {
+    "frank": "que se vea misterioso",
+    "mavro": "dark and mysterious atmosphere, skull lamp barely lit in deep shadows, single rim light from behind, atmospheric haze optional, cinematic chiaroscuro, gothic noir mood"
+   },
+   {
+    "frank": "inclinado, cinematográfico",
+    "mavro": "dutch angle 12 degrees, skull lamp in gothic corridor, tilted frame creating visual tension, atmospheric candlelight, cinematic dark mood, editorial film still aesthetic"
+   },
+   {
+    "frank": "que se vean las sombras que proyecta",
+    "mavro": "skull lamp projecting shadow patterns on dark stone wall, dramatic shadow silhouette as main visual element, interior at night, single internal light source, gothic shadow theater"
+   },
+   {
+    "frank": "en un rincón oscuro",
+    "mavro": "dark room corner composition, skull lamp in 45-degree corner, two wall planes for shadow projection, deep foreground shadow, lamp as sole light source, moody interior night"
+   },
+   {
+    "frank": "que el producto sea el centro de todo",
+    "mavro": "skull lamp as absolute hero, centered with negative space around it, single dramatic overhead light directed at product only, all other elements supporting, nothing competing"
+   },
+   {
+    "frank": "foto de catálogo Amazon pero con onda",
+    "mavro": "product photography, skull lamp on near-black background, three-quarter angle, single dramatic side light, visible shadow, all carved details sharp, clean e-commerce with gothic mood"
+   },
+   {
+    "frank": "con mucho detalle de textura, que se sienta el material",
+    "mavro": "macro detail shot, skull carved surface, raking light at 8° to reveal texture depth, deep shadows in carved crevices, tactile luxury material close-up, hand-crafted quality visible"
+   },
+   {
+    "frank": "que parezca editorial de revista",
+    "mavro": "editorial magazine photography, medium shot styled gothic room, skull lamp as art-directed hero, dramatic single light source, dark sophisticated aesthetic, interior design publication quality"
+   },
+   {
+    "frank": "que los props se vean pero no compitan",
+    "mavro": "shallow depth of field, skull lamp razor-sharp focus, atmospheric bokeh of gothic elements behind — candles, books, botanicals blurred but visible — product isolated without empty scene"
+   },
+   {
+    "frank": "que se vea el espacio grande, que impresione",
+    "mavro": "ultra-wide angle lens, grand gothic living room, skull lamp as focal point, vaulted dark ceiling, architectural scale, deep corner shadows, cinematic room atmosphere, impressive scale"
+   }
+  ],
+  "romanNumerals": [
+   "I",
+   "II",
+   "III",
+   "IV",
+   "V"
+  ],
+  "typography": {
+   "combos": [
+    {
+     "label": "Cinzel 400 · Crema",
+     "content": "<div style=\"font-family:'Cinzel',serif;font-weight:400;font-size:1.5rem;color:var(--fg);text-transform:uppercase;letter-spacing:0.05em;line-height:1.2;\">Inhabit Your Shadow</div><div style=\"font-family:'Basilia',serif;font-size:0.82rem;color:rgba(var(--fg-rgb),0.55);margin-top:0.75rem;line-height:1.7;\">La oscuridad no pide permiso.</div>"
+    },
+    {
+     "label": "Cinzel 600 · Crema",
+     "content": "<div style=\"font-family:'Cinzel',serif;font-weight:600;font-size:1.5rem;color:var(--fg);text-transform:uppercase;letter-spacing:0.03em;line-height:1.2;\">The Liberator</div><div style=\"font-family:'Basilia',serif;font-size:0.82rem;color:rgba(var(--fg-rgb),0.55);margin-top:0.75rem;line-height:1.7;\">Aquí puedes ser quien realmente eres.</div>"
+    },
+    {
+     "label": "Cinzel 400 · Cobre",
+     "content": "<div style=\"font-family:'Cinzel',serif;font-weight:400;font-size:1.5rem;color:var(--copper);text-transform:uppercase;letter-spacing:0.05em;line-height:1.2;\">Wall Skulls</div><div style=\"font-family:'Basilia',serif;font-size:0.82rem;color:rgba(var(--fg-rgb),0.55);margin-top:0.75rem;line-height:1.7;\">Set de 3 · Polirresina mate.</div>"
+    },
+    {
+     "label": "Basilia 400 · Crema",
+     "content": "<div style=\"font-family:'Basilia',serif;font-weight:400;font-size:1.1rem;color:var(--fg);line-height:1.6;\">Dark is not a season.<br>It's a permanent state.</div>"
+    },
+    {
+     "label": "IMFell Italic · Crema apagada",
+     "content": "<div style=\"font-family:'IMFell',serif;font-style:italic;font-size:1.1rem;color:rgba(var(--fg-rgb),0.5);line-height:1.7;\">\"Construido para sobrevivir su ocasión.\"</div>"
+    },
+    {
+     "label": "Josefin Sans · Cobre",
+     "content": "<div style=\"font-family:'Josefin Sans',sans-serif;font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--copper);line-height:2;\">SKULL WALL SCONCE<br>ANATOMICAL · MATTE BLACK<br>SET OF 3</div>"
+    },
+    {
+     "label": "Cinzel + Basilia + Josefin",
+     "content": "<div style=\"font-family:'Cinzel',serif;font-weight:400;font-size:1.1rem;color:var(--fg);text-transform:uppercase;letter-spacing:0.06em;\">Inhabit</div><div style=\"font-family:'Basilia',serif;font-size:0.85rem;color:rgba(var(--fg-rgb),0.6);margin:0.5rem 0;line-height:1.6;\">La oscuridad que merecías.</div><div style=\"font-family:'Josefin Sans',sans-serif;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(var(--copper-rgb),0.6);\">MAVRA · EST. 2024</div>"
+    },
+    {
+     "label": "Cinzel Cobre + Crema body",
+     "bg": "rgba(var(--copper-rgb),0.05)",
+     "content": "<div style=\"font-family:'Cinzel',serif;font-weight:600;font-size:1.1rem;color:var(--copper);text-transform:uppercase;letter-spacing:0.05em;\">THE LIBERATOR</div><div style=\"font-family:'Basilia',serif;font-size:0.85rem;color:rgba(var(--fg-rgb),0.65);margin-top:0.5rem;line-height:1.6;\">Para espacios donde la estética es el punto.</div>"
+    },
+    {
+     "label": "Cinzel + Burdeos accent",
+     "bg": "rgba(var(--burgundy-rgb),0.08)",
+     "content": "<div style=\"font-family:'Cinzel',serif;font-weight:400;font-size:1.1rem;color:var(--fg);text-transform:uppercase;letter-spacing:0.06em;\">Skull Candle Set</div><div style=\"font-family:'Basilia',serif;font-size:0.85rem;color:rgba(var(--fg-rgb),0.55);margin-top:0.5rem;line-height:1.6;\">Negro real. No recubrimiento.</div><div style=\"display:inline-block;margin-top:0.75rem;font-family:'Josefin Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--fg);background:var(--burgundy);padding:0.25rem 0.6rem;\">RITUAL</div>"
+    }
+   ]
+  }
+ },
+ "activation": {
+  "goldenMoments": [
+   "El primer scroll — el listing detiene el pulgar.",
+   "La foto macro — el cliente ve el detalle escultórico y entiende que no es genérico.",
+   "La proyección de sombra — entiende lo que el objeto puede hacer en su pared real.",
+   "El botón de compra — el precio se justifica por la narrativa, no por la utilidad.",
+   "El unboxing — el packaging confirma que tomó la decisión correcta.",
+   "La primera instalación — el objeto en su pared, exactamente como lo imaginó.",
+   "La primera foto para compartir — el santuario ya existe.",
+   "La primera reseña que deja — no habla del producto, habla del espacio.",
+   "La primera compra de cross-sell — agrega velas, la vela al Wall Skull.",
+   "El cliente que regala MAVRA — el círculo se completa: el comprador se convierte en curador de la identidad de otro."
+  ],
+  "burnPyramid": [
+   {
+    "tier": "Nivel 6 — Máximo",
+    "action": "Brand Evangelist",
+    "body": "El cliente regala MAVRA. Recomienda activamente. Siente que MAVRA forma parte de su identidad subcultural.",
+    "bg": "rgba(var(--copper-rgb),0.16)"
+   },
+   {
+    "tier": "Nivel 5",
+    "action": "Repeat Buyer + Bundle",
+    "body": "Segunda compra — agrega velas al Wall Skull, o lámpara a las velas. El ecosistema MAVRA se construye.",
+    "bg": "rgba(var(--copper-rgb),0.1)"
+   },
+   {
+    "tier": "Nivel 4",
+    "action": "Review Maker",
+    "body": "El cliente deja una reseña de 5 estrellas que describe la atmósfera, no el producto. El ciclo narrativo se cierra.",
+    "bg": "rgba(var(--burgundy-rgb),0.12)"
+   },
+   {
+    "tier": "Nivel 3",
+    "action": "Compartir en redes",
+    "body": "Primer \"shelfie\" o \"corner goals\" con el producto. La marca aparece orgánicamente en el ecosistema visual del cliente.",
+    "bg": "rgba(var(--burgundy-rgb),0.08)"
+   },
+   {
+    "tier": "Nivel 2",
+    "action": "Primera compra",
+    "body": "El listing convierte. El comprador tomó la decisión con la narrativa visual."
+   },
+   {
+    "tier": "Nivel 1 — Mínimo",
+    "action": "Awareness",
+    "body": "El scroll se detiene. La imagen principal rompe el patrón en la SERP de Amazon."
+   }
+  ]
+ },
+ "nav": {
+  "brandGuidelines": [
+   {
+    "id": "d1",
+    "label": "Driver 1 — Consumidor",
+    "driver": true
+   },
+   {
+    "id": "d1-dog",
+    "label": "Dog Matrix"
+   },
+   {
+    "id": "d1-feel",
+    "label": "Feel Map"
+   },
+   {
+    "id": "d1-canvas",
+    "label": "Brand Desire Canvas"
+   },
+   {
+    "id": "d1-journey",
+    "label": "Attitudinal Journey"
+   },
+   {
+    "id": "d1-ego",
+    "label": "Brand Ego"
+   },
+   {
+    "id": "d1-conclusiones",
+    "label": "Conclusiones D1"
+   },
+   {
+    "id": "d2",
+    "label": "Driver 2 — Competencia",
+    "driver": true
+   },
+   {
+    "id": "d2-pyramid",
+    "label": "Max Pyramid"
+   },
+   {
+    "id": "d2-territory",
+    "label": "Brand Territory"
+   },
+   {
+    "id": "d2-abc",
+    "label": "ABC Roll Axis"
+   },
+   {
+    "id": "d2-revolution",
+    "label": "Revolution Matrix"
+   },
+   {
+    "id": "d3",
+    "label": "Driver 3 — Plataforma",
+    "driver": true
+   },
+   {
+    "id": "d3-5qs",
+    "label": "Los 5 Qués"
+   },
+   {
+    "id": "d3-core",
+    "label": "Core Value"
+   },
+   {
+    "id": "d3-positioning",
+    "label": "Brand Positioning"
+   },
+   {
+    "id": "d3-proposito",
+    "label": "Propósito Check"
+   },
+   {
+    "id": "d3-mandamientos",
+    "label": "10 Mandamientos"
+   },
+   {
+    "id": "d3-values",
+    "label": "Brand Values"
+   },
+   {
+    "id": "d3-conclusiones",
+    "label": "Conclusiones D3"
+   },
+   {
+    "id": "d4",
+    "label": "Driver 4 — Identidad",
+    "driver": true
+   },
+   {
+    "id": "d4-symbol",
+    "label": "Brand Symbol"
+   },
+   {
+    "id": "d4-archetype",
+    "label": "Brand Charisma"
+   },
+   {
+    "id": "d4-voice",
+    "label": "Tone of Voice Path"
+   },
+   {
+    "id": "d4-board",
+    "label": "Full Brand Board"
+   },
+   {
+    "id": "d4-tagline",
+    "label": "Tagline & Slogan"
+   },
+   {
+    "id": "d4-sense",
+    "label": "The Sense Square"
+   },
+   {
+    "id": "d5",
+    "label": "Driver 5 — Activación",
+    "driver": true
+   },
+   {
+    "id": "d5-why",
+    "label": "Why We"
+   },
+   {
+    "id": "d5-narratives",
+    "label": "Brand Narratives"
+   },
+   {
+    "id": "d5-rituals",
+    "label": "Brand Rituals"
+   },
+   {
+    "id": "d5-golden",
+    "label": "10 Golden Moments"
+   },
+   {
+    "id": "d5-burn",
+    "label": "Burn Pyramid"
+   },
+   {
+    "id": "d5-conclusiones",
+    "label": "Conclusiones Totales"
+   }
+  ],
+  "escenografia": [
+   {
+    "id": "principios",
+    "label": "Principios"
+   },
+   {
+    "id": "fondos",
+    "label": "Fondos"
+   },
+   {
+    "id": "iluminacion",
+    "label": "Iluminación"
+   },
+   {
+    "id": "props",
+    "label": "Props"
+   },
+   {
+    "id": "camara",
+    "label": "Lenguaje de Cámara"
+   },
+   {
+    "id": "setups",
+    "label": "Setups por Producto"
+   },
+   {
+    "id": "avatares",
+    "label": "Avatares"
+   }
+  ],
+  "avatares": [
+   {
+    "id": "distincion",
+    "label": "La distinción",
+    "driver": true
+   },
+   {
+    "id": "amazon",
+    "label": "↳ 01 · Amazon"
+   },
+   {
+    "id": "social",
+    "label": "↳ 02 · Enmascarado"
+   },
+   {
+    "id": "crs",
+    "label": "↳ 03 · CRS"
+   },
+   {
+    "id": "porque",
+    "label": "Por qué importa",
+    "driver": true
+   },
+   {
+    "id": "produccion",
+    "label": "Reglas de producción",
+    "driver": true
+   },
+   {
+    "id": "metodo",
+    "label": "Método Marketing Studio",
+    "driver": true
+   }
+  ],
+  "filmografia": [
+   {
+    "id": "identidad",
+    "label": "Identidad Cinematográfica",
+    "driver": true
+   },
+   {
+    "id": "style-bible",
+    "label": "Style Bible Lines",
+    "driver": true
+   },
+   {
+    "id": "estructura",
+    "label": "Estructura de Prompt",
+    "driver": true
+   },
+   {
+    "id": "movimientos",
+    "label": "Movimientos Aprobados",
+    "driver": true
+   },
+   {
+    "id": "reglas",
+    "label": "Reglas de Prompting",
+    "driver": true
+   },
+   {
+    "id": "corrientes",
+    "label": "Guía por Corriente",
+    "driver": true
+   },
+   {
+    "id": "lmp",
+    "label": "↳ LMP — Trad Goth"
+   },
+   {
+    "id": "swd",
+    "label": "↳ SWD — Victorian Gothic"
+   },
+   {
+    "id": "cnd",
+    "label": "↳ CND — Whimsigoth"
+   },
+   {
+    "id": "templates",
+    "label": "Prompt Templates",
+    "driver": true
+   },
+   {
+    "id": "learnings",
+    "label": "Learnings de Producción",
+    "driver": true
+   }
+  ],
+  "briefing": [
+   "marca",
+   "productos",
+   "escenografia",
+   "herramientas",
+   "aprendizajes"
+  ]
+ },
+ "currents": [
+  {
+   "id": "victoriano",
+   "tag": "C1",
+   "badge": "Fundacional",
+   "title": "Gótico Victoriano",
+   "sub": "El culto al luto y la opulencia. La morada como gabinete de maravillas.",
+   "identity": "La era victoriana integró el gótico de forma profundamente doméstica. La fascinación por la mortalidad se tradujo en rituales de luto que requerían textiles pesados y una decoración saturada.",
+   "home": [
+    "Paredes empapeladas con patrones de damasco u ornamentación floral oscura",
+    "Muebles de caoba con tallados intrincados y espejos con marcos barrocos",
+    "Cráneos, especímenes bajo campanas de vidrio, libros antiguos de cuero",
+    "La casa como extensión de los gabinetes de maravillas del siglo XIX"
+   ],
+   "wardrobe": [
+    "Vestido de luto victoriano en bombasí negro mate, cuello alto, corsé estructurado",
+    "Ribete de cuentas de azabache en cuello y puños, broche de azabache a la garganta",
+    "Falda al piso con textura sutil de damasco auto-rayado — nunca licra ni satén brillante",
+    "Joyería: azabache y ónix, nunca plata brillante ni plástico — el luto no es disfraz"
+   ],
+   "palette": [
+    "#1a0a0a",
+    "var(--burgundy)",
+    "var(--copper)",
+    "var(--fg)",
+    "#8B6914"
+   ],
+   "mavraNote": "Buyer persona: coleccionistas y curadores del hogar con sensibilidad histórica. Los tres productos (CND / LMP / SWD) encajan como piezas de gabinete de maravillas: el cráneo-vela como curiosidad de estudio, la lámpara como instrumento de ritual, el wall decor como reliquia escultórica. Copy: opulencia, permanencia, narrativa del objeto."
+  },
+  {
+   "id": "batcave",
+   "tag": "C2",
+   "title": "Trad Goth / Batcave",
+   "sub": "El DIY de la oscuridad. Autenticidad sobre opulencia.",
+   "identity": "Nacida de la música post-punk y el club londinense The Batcave. Valora la autenticidad sobre la opulencia, utilizando materiales accesibles para crear una atmósfera de club o cementerio bajo la lluvia.",
+   "home": [
+    "Redes de pesca colgadas, encajes rotos, collages con carátulas de discos",
+    "Iluminación estrictamente tenue, pantallas envueltas en telas oscuras",
+    "Iconografía de cine de terror clásico (Universal, Hammer Horror)",
+    "Industrial y efímero — alejado de lo aristocrático"
+   ],
+   "wardrobe": [
+    "Cuero negro gastado y encajes rotos superpuestos — DIY real, nunca de tienda de disfraces",
+    "Botas de combate, cadenas, pins de bandas post-punk",
+    "Texturas visiblemente usadas: rasgados, remendados, teñidos a mano",
+    "Sin brillo ni glamour artificial — la autenticidad es la prenda"
+   ],
+   "palette": [
+    "var(--bg)",
+    "#1C1C1C",
+    "#2D2D2D",
+    "#C8C0B0"
+   ],
+   "mavraNote": "Buyer persona: góticos auténticos con historia en la subcultura — resistentes a lo kitsch. Los tres productos funcionan si se presentan sin sobre-estilización: entornos reales, con textura, sin glamour artificial. Copy: autenticidad, textura, anti-performativo. Escenas de lifestyle: oscuras, con grano, crudas."
+  },
+  {
+   "id": "whimsigoth",
+   "tag": "C3",
+   "badge": "★ Más Popular",
+   "badgeClass": "popular",
+   "title": "Whimsigoth",
+   "sub": "La intersección de la magia y el confort. Tim Burton para el hogar contemporáneo.",
+   "identity": "Alcanzó su apogeo en los años 90 con influencia de Tim Burton. El hogar Whimsigoth es ante todo acogedor e invitante — lejos de la frialdad de otros estilos góticos.",
+   "home": [
+    "Motivos de lunas, estrellas, cristales y velas — extensivo",
+    "Paleta oscura con tonos cálidos: naranja quemado, ocre, morado amatista",
+    "Textiles: terciopelos mullidos, sedas, encajes superpuestos",
+    "Naturaleza al interior: helechos, hiedras, flores secas"
+   ],
+   "wardrobe": [
+    "Terciopelo mullido en morado amatista u ocre quemado, capas de encaje superpuesto",
+    "Cárdigan largo oscuro o capa sobre vestido — silueta acogedora, nunca gélida",
+    "Accesorio de cristal colgante (amatista, cuarzo) como pieza central",
+    "Botas altas de cuero suave — cómodo antes que restrictivo"
+   ],
+   "palette": [
+    "#1a0f1a",
+    "#5B2D8E",
+    "var(--copper-bright)",
+    "#8B4513",
+    "var(--fg)"
+   ],
+   "mavraNote": "Buyer persona más grande de los cinco. Hogar acogedor y oscuro, ritual de velas y cristales. Los tres productos encajan en este universo: el cráneo-vela como pieza central del altar, la lámpara como fuente de sombras acogedoras, el wall decor como focal point de la repisa. Copy: ritual, magia cotidiana, confort oscuro."
+  },
+  {
+   "id": "southern",
+   "tag": "C4",
+   "title": "Southern Gothic",
+   "sub": "La elegancia de la ruina. La belleza de lo que está siendo reclamado por el tiempo.",
+   "identity": "Inspirado por Anne Rice y William Faulkner. El sur de Estados Unidos: calor húmedo, historia opresiva y decadencia aristocrática. Valora la pátina del tiempo y la narrativa de lo olvidado.",
+   "home": [
+    "Maderas con pintura descascarada, espejos con azogue manchado",
+    "Textiles de lino o algodón heredados — con historia",
+    "Candelabros de metal oxidado, lámparas de gas reconvertidas",
+    "Taxidermia, retratos antiguos, libros que huelen a papel viejo"
+   ],
+   "wardrobe": [
+    "Lino o algodón envejecido en tonos tierra desteñidos — con historia, no de fábrica",
+    "Encaje amarillento por el tiempo, nunca blanco nuevo",
+    "Joyería de metal oxidado o latón envejecido",
+    "La pátina va en la tela misma — arrugas, desgaste, remiendos visibles"
+   ],
+   "palette": [
+    "#1C1410",
+    "#6B4C2A",
+    "#8B7355",
+    "#C8B898"
+   ],
+   "mavraNote": "Buyer persona: amantes de la estética rústica oscura y apreciadores del objeto con historia. Los tres productos funcionan en entornos con madera oscura, libros viejos y luz ámbar. Copy: tiempo, peso, la belleza de lo que queda. Escenas de lifestyle: superficies con pátina, luz de vela, objetos heredados."
+  },
+  {
+   "id": "pastel",
+   "tag": "C5",
+   "title": "Pastel Goth",
+   "sub": "La subversión lúdica. Creepy-cute. La identidad que no cabe en categorías.",
+   "identity": "Surgido en la era de internet. Una respuesta lúdica e irónica a la seriedad del gótico tradicional. Perfil joven y digital, encontrando en la unión del rosa pastel con calaveras una forma de expresión sin límites.",
+   "home": [
+    "Muebles victorianos pintados en lavanda, menta o rosa bebé",
+    "El contraste como regla: cojín de murciélago negro sobre sofá rosa",
+    "Velas de cráneo en tonos iridiscentes — iconografía oculta vibrante",
+    "Peluches de monstruos con iconografía oculta integrada"
+   ],
+   "wardrobe": [
+    "Silueta victoriana clásica pero en lavanda, menta o rosa bebé — contraste como regla",
+    "Iconografía oculta bordada o en pines (calaveras, lunas) sobre tela pastel",
+    "Accesorios creepy-cute: calaveras iridiscentes, moños con detalle gótico",
+    "Juguetón siempre — nunca solemne ni acartonado"
+   ],
+   "palette": [
+    "#2D1B2D",
+    "#C9A6C0",
+    "#A8D4C8",
+    "#F2BFCD",
+    "var(--bg)"
+   ],
+   "mavraNote": "Buyer persona: compradores jóvenes y digitales, compradores de regalo, coleccionistas creepy-cute. El contraste oscuro-lúdico funciona con los tres productos presentados en entornos de color (lavanda, mint, rosa) con iconografía MAVRA como punto focal. Copy: irreverente, sin disculpa, juguetón. El gifting y el unboxing son momentos fotogénicos clave."
+  },
+  {
+   "id": "base",
+   "tag": "C6",
+   "badge": "Base de Marca",
+   "title": "MAVRA Base",
+   "sub": "La identidad neutra de la que nacen las otras cinco. Gótico minimalista, sin afiliación de subcultura.",
+   "identity": "No es una corriente de buyer persona como las otras cinco — es la identidad visual de fondo de MAVRA como marca: gótico minimalista, líneas limpias, sin ruido decorativo ni señales de subcultura específica. Se usa quando el contenido necesita representar a la marca misma (no a un tipo de comprador), priorizando el atractivo universal sobre la identificación de nicho.",
+   "home": [
+    "Interior gótico minimalista — paredes oscuras lisas, sin empapelado ni patrones",
+    "Muebles de líneas rectas y estructuradas, sin tallados ornamentales",
+    "Un solo acento gótico por escena (el producto), nunca saturación decorativa",
+    "Iluminación controlada y direccional — el mismo lenguaje que \"EF-C Gothic Minimalism\" en los videos CND"
+   ],
+   "wardrobe": [
+    "Prenda estructurada en negro mate — cuello alto o turtleneck, pantalón oscuro slim, botas oscuras",
+    "Sin accesorios, sin ropa de color, sin maquillaje dramático",
+    "Silueta limpia y contenida — presencia autosuficiente, no disfraz ni personaje",
+    "Es la base neutra sobre la que se aplica vestuario específico al generar CRS por corriente"
+   ],
+   "palette": [
+    "var(--bg)",
+    "var(--burgundy)",
+    "var(--copper)",
+    "var(--fg)"
+   ],
+   "mavraNote": "Uso: listings de Amazon, hero images, y cualquier asset de marca donde se necesita un rostro/tono reconocible y universal en vez de un buyer persona específico. Women1 en esta corriente es el avatar oficial de marca — consistente en todo Amazon y contenido oficial, distinto de los avatares variados usados en UGC."
+  }
+ ],
+ "products": [
+  {
+   "id": "wall-skulls",
+   "index": "01",
+   "sku": "MAVRA-SWD",
+   "title": "Wall Skulls",
+   "concept": "Guardianes del espacio. El cráneo deja de ser adorno de pared para volverse el nodo focal de un cuarto con intención.",
+   "diff": {
+    "headline": "Sculpted, not stamped.",
+    "support": "Relieve anatómico real, esculpido pieza por pieza. El negro mate no es un render 3D — es material denso que pesa en la mano."
+   },
+   "specs": [
+    {
+     "label": "Incluye",
+     "value": "Set de 3 cráneos de pared · 3 tamaños graduados"
+    },
+    {
+     "label": "Material",
+     "value": "Polirresina de alta densidad · negro mate satinado, sin brillo"
+    },
+    {
+     "label": "Dimensiones",
+     "value": "8.15\" × 5.9\"  ·  7.3\" × 5.5\"  ·  6.7\" × 5.1\""
+    },
+    {
+     "label": "Construcción",
+     "value": "Relieve escultórico al frente · espalda plana con keyhole hanger"
+    },
+    {
+     "label": "Montaje",
+     "value": "Tornillo + chazos, o cinta doble permanente — cero daño en pared"
+    }
+   ],
+   "stats": [
+    "Set de 3",
+    "Negro mate",
+    "Tornillo o cinta",
+    "Polirresina densa"
+   ],
+   "claims": [
+    "MOUNT ONCE. HAUNT FOREVER.",
+    "YOUR WALL. YOUR LANGUAGE.",
+    "A SANCTUARY IS BORN."
+   ]
+  },
+  {
+   "id": "skull-candle",
+   "index": "02",
+   "sku": "MAVRA-CND",
+   "title": "Skull Candle Set",
+   "concept": "El instrumento del rito diario. Encenderla es el gesto que abre el ritual — parafina negra que arde tan oscura como se ve.",
+   "diff": {
+    "headline": "Skull candle + spine candle.",
+    "support": "La vela de espina no la tiene ningún competidor de la categoría. Dos piezas escultóricas, ambas de parafina negra real."
+   },
+   "specs": [
+    {
+     "label": "Incluye",
+     "value": "Vela calavera + vela espina + 2 votivas · caja de regalo"
+    },
+    {
+     "label": "Material",
+     "value": "Parafina negra real · negra en toda la masa, no blanquea al quemar"
+    },
+    {
+     "label": "Aroma",
+     "value": "Pine & Moss Scent"
+    },
+    {
+     "label": "Dimensiones",
+     "value": "Skull 4.53\" × 3.39\""
+    },
+    {
+     "label": "Duración",
+     "value": "Skull 12 h de quema · Spine 6 h"
+    },
+    {
+     "label": "Detalle",
+     "value": "Suturas craneales y anatomía real, hand-finished"
+    }
+   ],
+   "stats": [
+    "Parafina real",
+    "Skull 12 h",
+    "Spine 6 h",
+    "Pine & Moss"
+   ],
+   "claims": [
+    "HOLD THE DARK.",
+    "RITUAL DEMANDS A SPINE.",
+    "BURNS AS DARK AS IT LOOKS."
+   ]
+  },
+  {
+   "id": "skull-lamp",
+   "index": "03",
+   "sku": "MAVRA-LMP",
+   "title": "Skull Lamp",
+   "concept": "Ingeniería de la sombra. El producto no es la lámpara: es la calavera que proyecta en tu pared cuando la enciendes.",
+   "diff": {
+    "headline": "Shadow projection.",
+    "support": "Encendida, la jaula facetada proyecta la sombra del cráneo sobre la pared. Ningún competidor lo demuestra en su imagen principal."
+   },
+   "specs": [
+    {
+     "label": "Incluye",
+     "value": "Lámpara + ambas veils (matte + glitter) + bombillo E26"
+    },
+    {
+     "label": "Estructura",
+     "value": "Base sólida + marco geométrico de metal (jaula facetada)"
+    },
+    {
+     "label": "Dimensiones",
+     "value": "Shade 5.4\" de ancho · 12.2\" de alto total"
+    },
+    {
+     "label": "Modos de shade",
+     "value": "Matte · Glitter · Naked Cage (jaula desnuda)"
+    },
+    {
+     "label": "Control",
+     "value": "Touch-dimmer de 3 niveles: Soft · Medium · High"
+    },
+    {
+     "label": "Bombillo",
+     "value": "E26, incluido"
+    }
+   ],
+   "stats": [
+    "3 modos",
+    "2 veils incluidas",
+    "Dimmer 3 niveles",
+    "E26 incluido"
+   ],
+   "claims": [
+    "PICK YOUR DARKNESS.",
+    "CONTROL THE NIGHT.",
+    "THE DARK OBEYS."
+   ]
+  }
+ ],
+ "campaigns": {
+  "launch": [
+   {
+    "n": "Fase 0",
+    "t": "Antes de abrir el listado",
+    "d": "Nada de esto se compra con presupuesto después. Si falta, el lanzamiento arranca cojo.",
+    "items": [
+     "titulo75",
+     "ih",
+     "bullets",
+     "desc",
+     "backend",
+     "ptype",
+     "imagenes",
+     "aplus",
+     "precio",
+     "stock"
+    ]
+   },
+   {
+    "n": "Fase 1",
+    "t": "El día que abre",
+    "d": "Si una keyword no está indexada, sus anuncios no van a servir por más bid que le pongas.",
+    "items": [
+     "indexacion",
+     "adlive",
+     "campanas"
+    ]
+   },
+   {
+    "n": "Fase 2",
+    "t": "PPC de lanzamiento",
+    "d": "El PPC no es el motor de ventas al principio: es el motor de prueba. El orgánico tarda semanas, el PPC contesta en 7-14 días y encima trae CTR y CVR. Los negativos son dos cosas distintas: los que la marca decide antes de tener datos, y los que romperían el descubrimiento del root.",
+    "items": [
+     "cadencia",
+     "negmarca",
+     "sinneg"
+    ]
+   },
+   {
+    "n": "Fase 3",
+    "t": "Los primeros 14 días",
+    "d": "La vara de esta etapa es movimiento, no conversión. Exigir CVR sin reseñas mata keywords que eran buenas.",
+    "items": [
+     "impresiones",
+     "resenas"
+    ]
+   }
+  ],
+  "sponsoredBrands": [
+   {
+    "id": "swd-col-hsv",
+    "prod": "SWD",
+    "formato": "Collection",
+    "destino": "Store",
+    "bracket": "HSV",
+    "estado": "por crear",
+    "kws": [
+     "goth wall decor",
+     "skull wall decor"
+    ],
+    "a": "Sculpted, never stamped. Real shadow.",
+    "b": "Not a print. A real object on your wall."
+   },
+   {
+    "id": "swd-col-lsv",
+    "prod": "SWD",
+    "formato": "Collection",
+    "destino": "Store",
+    "bracket": "LSV",
+    "estado": "por crear",
+    "kws": [
+     "skeleton wall decor",
+     "whimsigoth wall decor"
+    ],
+    "a": "Not a print. Weight you can feel.",
+    "b": "Look closer. That is the whole point."
+   },
+   {
+    "id": "lmp-col-hsv",
+    "prod": "LMP",
+    "formato": "Collection",
+    "destino": "Store",
+    "bracket": "HSV",
+    "estado": "por crear",
+    "kws": [
+     "skull lamp",
+     "gothic lamp"
+    ],
+    "a": "Dim it to your own dark. Real metal.",
+    "b": "Three levels of dark, not one glare."
+   },
+   {
+    "id": "lmp-col-lsv",
+    "prod": "LMP",
+    "formato": "Collection",
+    "destino": "Store",
+    "bracket": "LSV",
+    "estado": "por crear",
+    "kws": [
+     "skeleton lamp",
+     "whimsigoth lamp"
+    ],
+    "a": "Metal, not plastic. Weighted base.",
+    "b": "Bright is easy. Dark is the hard part."
+   },
+   {
+    "id": "swd-tos",
+    "prod": "SWD",
+    "formato": "Video",
+    "destino": "Store",
+    "bracket": "TOS",
+    "estado": "por crear",
+    "kws": [
+     "skull wall decor"
+    ],
+    "a": "Closer is better",
+    "b": "Mount once, haunt forever"
+   },
+   {
+    "id": "lmp-tos",
+    "prod": "LMP",
+    "formato": "Video",
+    "destino": "Store",
+    "bracket": "TOS",
+    "estado": "por crear",
+    "kws": [
+     "skull lamp"
+    ],
+    "a": "The light comes through it",
+    "b": "Out all year, every year"
+   },
+   {
+    "id": "cnd-col",
+    "prod": "CND",
+    "formato": "Collection",
+    "destino": "Store",
+    "bracket": "—",
+    "estado": "activa",
+    "kws": [
+     "skull candle",
+     "spine candle"
+    ],
+    "a": null,
+    "b": null
+   },
+   {
+    "id": "cnd-tos",
+    "prod": "CND",
+    "formato": "Video",
+    "destino": "Store",
+    "bracket": "TOS",
+    "estado": "activa",
+    "kws": [
+     "skull candle"
+    ],
+    "a": "The ritual begins",
+    "b": null
+   },
+   {
+    "id": "swd-pdp",
+    "prod": "SWD",
+    "formato": "Video",
+    "destino": "Producto",
+    "bracket": "—",
+    "estado": "activa",
+    "kws": [
+     "skull wall decor"
+    ],
+    "a": null,
+    "b": null
+   },
+   {
+    "id": "lmp-pdp",
+    "prod": "LMP",
+    "formato": "Video",
+    "destino": "Producto",
+    "bracket": "—",
+    "estado": "activa",
+    "kws": [
+     "skull lamp"
+    ],
+    "a": null,
+    "b": null
+   },
+   {
+    "id": "cnd-pdp",
+    "prod": "CND",
+    "formato": "Video",
+    "destino": "Producto",
+    "bracket": "—",
+    "estado": "activa",
+    "kws": [
+     "skull candle"
+    ],
+    "a": null,
+    "b": null
+   }
+  ]
+ },
+ "productSetups": [
+  {
+   "title": "Wall Skulls — \"Guardianes del Espacio\"",
+   "concept": "El cráneo no es decoración de pared. Es el nodo focal de un espacio intencional.",
+   "sections": [
+    {
+     "label": "Setup de Pared",
+     "items": [
+      "Pared ideal: texturizada oscura con variación de valor dentro de la misma oscuridad",
+      "Altura: a nivel de ojos o ligeramente por encima. Nunca ángulo picado",
+      "Luz rasante desde un costado (nunca frontal) — revela relieve y textura",
+      "La sombra que proyecta el cráneo en la pared es parte del asset"
+     ]
+    },
+    {
+     "label": "Props Compañeros",
+     "items": [
+      "Aplique de pared encendido en el mismo encuadre (parcial, en borde)",
+      "Pequeña repisa debajo: 1-2 velas + libro o cristal oscuro",
+      "Ramas secas apoyadas en pared, entrando por el borde del encuadre"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Lámparas — \"Altar de Luz\" / \"Ingeniería de la Sombra\"",
+   "concept": "El activo de marketing principal no es la lámpara: son las sombras que proyecta.",
+   "sections": [
+    {
+     "label": "Setup de Rincón Oscuro",
+     "items": [
+      "El rincón es obligatorio — crea dos planos de proyección (pared + pared)",
+      "Lámpara a 20-40cm de la esquina para maximizar proyección",
+      "Habitación completamente oscurecida — ninguna fuente de luz ambiental"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Velas — \"Ritual de Transformación\" / \"Elegancia Macabra\"",
+   "concept": "Las velas de MAVRA son el instrumento del rito diario.",
+   "sections": [
+    {
+     "label": "Setup Ritual Personal",
+     "items": [
+      "La vela encendida es el único punto de luz en la escena",
+      "La llama en el tercio superior del encuadre, no centrada",
+      "Capturar siempre: apagada (humo) + encendida (llama) + detalle cera derramada"
+     ]
+    }
+   ]
+  }
+ ],
+ "creators": {
+  "faqs": [
+   {
+    "q": "Do I need a minimum follower count?",
+    "a": "No. We care about audience fit more than audience size. A creator with 3K followers in the right niche outperforms a 100K account in the wrong one."
+   },
+   {
+    "q": "Can I post on multiple platforms?",
+    "a": "Yes. Tell us which ones and we'll discuss based on your content mix."
+   },
+   {
+    "q": "Is this a one-time thing or ongoing?",
+    "a": "It starts as one exchange. If it works for both of us, we keep building. No pressure either way."
+   },
+   {
+    "q": "Will I be asked for exclusivity?",
+    "a": "No. Gifted partnerships don't require exclusivity from us."
+   },
+   {
+    "q": "What products can I receive?",
+    "a": "Skull Lamp / Wall Skull Decor / Skull Candle Set — or a combination. We'll align based on what makes most sense for your content."
+   },
+   {
+    "q": "I'm outside the US — can I still apply?",
+    "a": "Our products currently ship within the US. If you're international but create for a US audience, reach out and we'll evaluate case by case."
+   }
+  ]
+ }
+}
