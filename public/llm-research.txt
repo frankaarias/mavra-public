@@ -5,9 +5,9 @@ MAVRA — RESEARCH (MKL) · VOLCADO DE TEXTO
 Volcado del visor de Research (MKL) del dashboard de MAVRA.
 
 Son los datos de investigacion de keywords y mercado de Amazon para los tres
-productos. Va separado del volcado principal (llm.txt) por tamano: es el 70%
-del contenido del sitio y casi nada de esto hace al analisis de marca.
-Capturado el 2026-09-15 con un navegador real, incluyendo las 17 vistas internas.
+productos. Va separado del volcado principal (https://mavra-public.vercel.app/llm.txt) por tamano: es
+el grueso del contenido del sitio y casi nada de esto hace al analisis de marca.
+Capturado con un navegador real, con sus vistas internas expandidas.
 
 
 ------------------------------------------------------------------------------
@@ -15,7 +15,7 @@ INDICE
 ------------------------------------------------------------------------------
 
 [ESTRATEGIA]
-  Research (MKL)  —  /research   (secciones: CND, SWD, UKL 1780, OUTLIERS 147, RESIDUE 1658, NEGATIVES 941, VEREDICTO, ROOTS 120, NORMALIZER 243, COMPETIDORES 9, Columnas 33/33 ▾, Con marcas, Todos ▾, Todos ▾, Todos ▾, Todas ▾)
+  Research (MKL)  —  /research   (secciones: CND, SWD, UKL 1780, OUTLIERS 147, RESIDUE 1658, NEGATIVES 941, VEREDICTO, ROOTS 120, NORMALIZER 243, COMPETIDORES 9, Columnas 33/33 ▾, Con marcas, Todos ▾, Todos ▾, Todos ▾, Todos ▾)
 
 
 ##############################################################################
@@ -407,6 +407,8 @@ Cómo se lee
 284 keywords en MKL. Marca el checkbox y mové varias de un bucket a otro.
 
 CÓMO LEER ESTA TABLA
+
+Cada filtro habla el idioma de su columna: las numéricas aceptan >100, <50 o 100-500; Match, Tier, Prio y Veredicto se marcan de una lista (puedes ver solo exact, o exact + phrase). Con “Columnas” escondes las que no estés mirando, y arrastrando el encabezado las reordenas. Rank por competidor: dorado sólido = ≤3 · dorado = ≤10 · gris = 11+ · · = no rankea (o fuera del top 306). En violeta, los ranks patrocinados (dónde aparece pagando): salen del reverse-ASIN de Helium 10, no de scrapear el SERP.
 
 1,693 keywords descartadas (nadie del nicho rankea ni en el top 306). VER DESCARTADAS
 
@@ -3833,24 +3835,33 @@ Keywords donde ninguno de los competidores aparece ni en el top 306.
 ------------------------------------------------------------
 --- SECCION: Todos ▾
 ------------------------------------------------------------
-AHORA
-DESPUES
-NO
+BRAND GUIDELINES
+TIPOGRAFÍA
+ESCENOGRAFÍA
+FILMOGRAFÍA
+AVATARES
 
 
 ------------------------------------------------------------
 --- SECCION: Todos ▾
 ------------------------------------------------------------
-AUDIENCIA
-CATALOGO
-VENDER
+PRODUCTOS
+LISTINGS
+A+ CONTENT
+COPY & ADS
+CAMPAÑAS
+CAMPAÑAS PINTEREST
+LAUNCH
 
 
 ------------------------------------------------------------
---- SECCION: Todas ▾
+--- SECCION: Todos ▾
 ------------------------------------------------------------
-DESDE
-HASTA
+CORRIENTES
+COMPETITORS
+RESEARCH (MKL)
+BRIEFING
+
 
 ==============================================================================
 CAPTURAS DE PANTALLA (para juzgar el diseno, no el texto)
@@ -3859,29 +3870,6 @@ CAPTURAS DE PANTALLA (para juzgar el diseno, no el texto)
 Cada archivo es la pagina completa renderizada a 1440 px de ancho, de arriba
 a abajo, en el tema oscuro por defecto. Sirven para leer margenes, jerarquia
 tipografica, densidad y uso de color — lo que el volcado de texto no muestra.
-Las dos paginas mas largas (A+ Content y Copy & Ads) estan cortadas a 12000 px.
+Las paginas mas largas estan cortadas a 12000 px de alto.
 
-  https://mavra-public.vercel.app/shots/aplus-briefs.jpg
-  https://mavra-public.vercel.app/shots/avatares.jpg
-  https://mavra-public.vercel.app/shots/brand-guidelines.jpg
-  https://mavra-public.vercel.app/shots/briefing.jpg
-  https://mavra-public.vercel.app/shots/campanas.jpg
-  https://mavra-public.vercel.app/shots/competitors.jpg
-  https://mavra-public.vercel.app/shots/copy.jpg
-  https://mavra-public.vercel.app/shots/corrientes.jpg
-  https://mavra-public.vercel.app/shots/creators.jpg
-  https://mavra-public.vercel.app/shots/filmografia.jpg
-  https://mavra-public.vercel.app/shots/fonts.jpg
-  https://mavra-public.vercel.app/shots/home.jpg
-  https://mavra-public.vercel.app/shots/influencers-directorio.jpg
-  https://mavra-public.vercel.app/shots/influencers-lote1-gifting.jpg
-  https://mavra-public.vercel.app/shots/influencers-motor-seleccion.jpg
-  https://mavra-public.vercel.app/shots/influencers-pipeline.jpg
-  https://mavra-public.vercel.app/shots/influencers.jpg
-  https://mavra-public.vercel.app/shots/launch.jpg
-  https://mavra-public.vercel.app/shots/listings-briefs.jpg
-  https://mavra-public.vercel.app/shots/pinterest.jpg
   https://mavra-public.vercel.app/shots/research.jpg
-  https://mavra-public.vercel.app/shots/sb.jpg
-  https://mavra-public.vercel.app/shots/scenography.jpg
-  https://mavra-public.vercel.app/shots/skulls.jpg

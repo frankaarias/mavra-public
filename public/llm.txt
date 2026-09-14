@@ -2,15 +2,14 @@
 MAVRA — DASHBOARD DE MARCA · VOLCADO DE TEXTO COMPLETO
 ==============================================================================
 
-Volcado de texto del dashboard de marca de MAVRA (mavra-public.vercel.app).
+Volcado de texto del dashboard de marca de MAVRA (https://mavra-public.vercel.app).
 
 QUE ES ESTO
 El sitio es una aplicacion de una sola pagina: el servidor entrega un documento
 vacio y el navegador dibuja todo el contenido con JavaScript. Un extractor web
 que no ejecuta JavaScript ve la pagina vacia. Este archivo es el texto ya
-dibujado de las 20 paginas del sitio, capturado con un navegador real el
-2026-09-15, incluyendo las pestanas y vistas internas que solo aparecen al
-hacer clic.
+dibujado de las paginas del sitio, capturado con un navegador real, incluyendo
+las pestanas y vistas internas que solo aparecen al hacer clic.
 
 COMO LEERLO
 Cada pagina va bajo un bloque "# PAGINA:" con su ruta original. Las vistas
@@ -19,10 +18,12 @@ Marca, Producto, Estrategia, Influencers.
 
 QUE NO ESTA ACA
 - El diseno visual (tipografias en pantalla, margenes, jerarquias, color en uso).
-  Para eso hay capturas de pantalla completas de cada pagina en /shots/.
+  Para eso estan las capturas listadas al final.
 - Tres paginas de cifras financieras, excluidas a proposito de la copia publica.
-- El visor de Research (keywords de Amazon) va en un archivo aparte por tamano:
+- El visor de Research (keywords de Amazon) va aparte por tamano:
   https://mavra-public.vercel.app/llm-research.txt
+
+Generado automaticamente por scripts/volcado/volcar.py en cada despliegue.
 
 
 ------------------------------------------------------------------------------
@@ -2318,6 +2319,10 @@ objeción: "¿es frágil?" + "¿qué tamaño llega?" + "¿qué compro aparte?" �
 ASSEMBLES IN UNDER A MINUTE — Then It's Permanent Unscrew the ring, seat the shade, lock it in, bring the dark — four simple steps, no tools, no wiring. Once it's up, it stays up: MAVRA builds gothic home decor as a permanent identity, not a seasonal costume. A collectible-grade skull lamp and a striking goth gift for anyone who arranges their darkness with intention.
 objeción: "¿cómo se arma?" → 4 pasos sin herramientas · gift angle · reafirma permanencia
 ALTERNATIVA KEYWORD-FIRST
+ALTERNATIVA KEYWORD-FIRST (197 CHARS)
+197
+/ 200 CHARS
+Skull Lamp - MAVRA Gothic Table Lamp, Shadow Projection, 3-Level Touch Dimmer, 3 Shade Modes (Matte/Glitter/Naked Cage), Standard E26 Bulb, Goth Room Decor & Skull Decor Gift for Bedside Nightstand
 TÍTULO ≤75 + ITEM HIGHLIGHT
 Amazon solo muestra el Item Highlight si el título baja de 75 caracteres, y el highlight no puede repetir texto del título. Van juntos. El título largo de arriba quedó obsoleto por ese tope.
 T
@@ -2997,6 +3002,93 @@ SIN VOC DIRECTO
 El VOC lista destinatarios (skull collector, goth, teenager, pareja) sin quote textual de compra-regalo. Adyacente statement-piece: "the kind of piece people notice the second they walk in." (Nomnu, 5★)
 
 SUSTENTO POR CLAIM DE LAS VIÑETAS — 5
+1. CAST THE SKULL ONTO YOUR WALL — Shadow Projection
+A9-A10
+i
+Conversión + relevancia semántica (no ranking)
+
+Refuerza "shadow projection" (driver, no keyword: shadow lamp 507 · td 5) y ancla la permanencia. El bullet busca conversión + relevancia de "gothic atmosphere / year-round decor".
+
+COSMO
+i
+
+El intent "gothic atmosphere permanente" se conecta con el atributo sombra-de-cráneo + el ángulo no-Halloween; COSMO premia el fit contexto-atributo por encima del match literal.
+
+VOC
+i
+
+"the way the light shines through the eyes and nose just looks cool, kind of like a prop from a darker fantasy movie." (Nomnu, 5★) + "Who says it only has to be during Halloween, why not year round." (Nomnu, 5★)
+
+2. THREE LAMPS IN ONE — Both Veils Included
+A9-A10
+i
+Feature de diferenciación · sin keyword de volumen
+
+Resuelve la objeción "¿qué compro aparte?" (both veils included), que impacta CVR = señal A10. Nadie más ofrece veils intercambiables.
+
+COSMO
+i
+
+Intención de versatilidad/valor; COSMO asocia "mood lighting" a los 3 modos = atributo único del producto.
+
+VOC
+i
+
+SIN VOC DIRECTO
+
+Ningún competidor tiene veils intercambiables. Adyacente (versatilidad de luz): "has 3 light settings that are perfect." (Nomnu, 5★)
+
+3. COMMAND THE DARKNESS WITH A TOUCH — 3-Level Dimmer
+A9-A10
+i
+touch lamp 27,145 · td 4 · dimmable lamp 4,146 · td 1
+
+Feature de alto volumen; el bullet lo eleva a promesa central (gap del rival).
+
+COSMO
+i
+
+El intent "controlar el brillo / no encandilarme" conecta con el atributo touch-dimmer Soft→High + el glow cálido del bombillo E26 estándar. Resuelve causalmente la queja #1 del nicho.
+
+VOC
+i
+
+"the dimmer switch really allows you to pick a very dim setting and have it provide ample light without being overbearing." (OVANUS, 5★) + gap: "the included bulb is so obnoxiously bright white it looks ridiculous." (Shandaglo, 3★)
+
+4. BUILT SOLID, ARRIVES READY — No Fragile Guesswork
+A9-A10
+i
+Resuelve objeciones material/fragilidad (señal A10)
+
+No keyword; impacto directo en reviews/CVR. Refuerza atributos "metal real + base sólida + dimensiones 5.4×12.2".
+
+COSMO
+i
+
+El intent "que no sea plástico barato / que no se vuelque" conecta con el atributo metal + base circular pesada; COSMO premia el listing cuyo atributo real cubre el miedo del comprador.
+
+VOC
+i
+
+"black plastic, not metal… a noticeable mold seam… reeks of cheapness." (OVANUS, 4★) + "So Cute But Not Weighted… slipped off the table and broke." (OVANUS, 3★). Bombillo que el rival dice incluir y no llega: "says 'Bulb is included,' which it not!" (Zeckos, 4★)
+
+5. ASSEMBLES IN UNDER A MINUTE — Then It's Permanent
+A9-A10
+i
+Objeción de armado + permanencia + gift (señal A10)
+
+No keyword; menos fricción = mejor rating. Reafirma permanencia + gift angle.
+
+COSMO
+i
+
+El intent "fácil de armar, sin herramientas" conecta con el atributo 4 pasos sin tools + bombillo E26 estándar incluido; y "permanente no-Halloween" con el posicionamiento de marca.
+
+VOC
+i
+
+"we are keeping them out all year. They are more than a halloween decoration." (ehuoyan, 5★) + "I like this product for more than Halloween… keep permanently in my living room." (ehuoyan, 5★). Fricción de armado del rival que MAVRA evita: bombillo "10 minutes of swearing" (Nomnu).
+
 CAMPAÑAS DE LANZAMIENTO
 
 Base: AdsCrafted (Discovery → Harvest → Scale, con separación de match types y optimización de placement/top-of-search) + Chris Rawlings / Sophie Society (dominar top-of-search de la hero keyword para forzar ranking orgánico; ranking-first bidding en lanzamiento, luego pivote a profit). Precio de referencia del segmento premium ~$45–65 (Nomnu $75 / liveMAX $51 arriba; Shandaglo raven $30 / Vela $25 abajo).
@@ -3067,6 +3159,14 @@ YYZZH Pirate/Skull Table Lamp — $27.99 (forma directa)
 B0H6WCCSJM
 Stained-glass Witch Hat Lamp (Generic) — segmento adyacente de gran volumen
 LÓGICA DE HARVESTING — EL LOOP DE ADSCRAFTED
+Cadencia: cada 3–4 días, search term report de las campañas de descubrimiento (C3 broad, C4 auto, C5 seasonal).
+Graduación (G1): search term con Orders ≥ 2 (o 1 si el ACoS ya se disparó) → duplicar a C1 Exact. Bid de arranque = RPC = (Revenue / Clicks) × Target ACoS. La graduación es SIEMPRE a exact.
+Negar-vs-ladder (raíz-vs-cerrado): si el término es una RAÍZ con hijos por descubrir → NO se niega en la fuente; se re-siembra el ladder de match (exact 100% · phrase 0.75× · broad 0.5×, convención de industria) para seguir cosechando sus hijos. Si es un término CERRADO (long-tail de compra, sin hijos) → se aísla el exact + negative-exact en la fuente.
+Negativizador (N1): término con clics ≥ piso por tipo (SP 30 · SD 12 · SBV 15) Y (spend ≥ 1.5–2× CPA objetivo ó ACoS ≫ target) con 0 órdenes → negative exact. El piso por tipo es intención/CPC del canal, no significancia estadística.
+Word-level (N2): una palabra con ≥ 50 clics acumulados y 0 órdenes → negative phrase a nivel de cuenta.
+Negativos permanentes desde día 1 (mal-calificados): rechargeable, cordless, battery operated, candle warmer, wax melt, wax warmer, car, door projector, welcome light, night light for kids, medical model.
+Semanal: subir bid/modifier de los exact que rankean top-5 orgánico; al llegar a top-3 en la hero → bajar bid (Rawlings: ya no pagás por el ranking ganado).
+Todos los umbrales (30/12/15 clics, ≥2 órdenes, ≥50 word-level, 1.5–2× CPA) son defaults editables por el usuario.
 SPONSORED BRANDS — VIDEO
 SBV-1
 "SHADOW HOOK"
@@ -3093,6 +3193,18 @@ $8–$15/día
 PRESUPUESTO TOTAL DE LANZAMIENTO
 ~$90–$150/día en la ventana de ranking (primeras 3–4 semanas), 45–55% en C1 (Exact Hero) + SBV-1. Fuera de ventana: ~$45–70/día en modo profit.
 COSMO GAP & NOTAS
+SUPUESTOS
+
+Precio no confirmado en briefs → se asume rango premium $45–65. Confirmar precio real con Frank para calibrar bids/ACOS. ASIN propio del Skull Lamp no estaba en los briefs → no se corrió Cerebro sobre el listing live; si Frank pasa el ASIN, correr get_keywords_by_asin para auditar cobertura y sembrar negativos.
+
+COSMO GAP — IMÁGENES VS. COPY
+
+Las imágenes YA cubren shadow projection, 3 shade modes + both veils, escala 5.4×12.2, construcción metal, 3-level dimmer, bedside touch, armado 4 pasos. El copy refuerza lo que la imagen NO dice: bombillo E26 estándar incluido (compatible con cualquier E26, no propietario), keywords de estética/uso (gothic/goth room decor, nightstand, dark academia, dimmable), el ángulo permanente-no-Halloween explícito, y el ángulo regalo.
+
+PENDIENTE H10 / NO BLOQUEADO
+
+Todas las llamadas H10 corrieron OK (Magnet ×5 seeds, Product Research ×2, Cerebro ×2), cero errores de auth, volúmenes reales. Único no medido: CPC exacto por keyword (los bids son rangos por competencia del nicho, no CPC medido — refinar con el primer reporte de términos del launch).
+
 MAVRA — COPY & ADS · HOME
 
 
@@ -3113,6 +3225,9 @@ SCULPTED, NOT STAMPED — Anatomical Detail & a Pine & Moss Scent Look close and
 feature: esculpido + aroma · objeción: "¿detalle real o molde genérico?" → suturas/esculpido a mano · aroma descrito, no solo nombrado
 ARRIVES GIFT-READY, STAYS ALL YEAR — Boxed Gothic Home Decor The set ships in a protective gift box, so it lands ready to hand over — a goth gift that needs no wrapping. And it's no Halloween prop you retire in November: MAVRA builds gothic home decor as a permanent identity. Keep it on the shelf in July as proudly as October — your dark aesthetic, year-round.
 feature: caja de regalo · objeción: "¿sirve de regalo?" → sí, viene en caja · reafirma permanencia no-Halloween
+ALTERNATIVA KEYWORD-FIRST (195 CHARS)
+195
+Skull Candle Set - MAVRA Gothic Candles with Real Black Paraffin Skull & Spine Candle + 2 Votives, Pine & Moss Scented, Sculpted Witchy Goth Room Decor, Ritual Candle Gift Box for Dark Home Decor
 MAVRA Gothic Skull Candle Set, Sculpted Black Skulls for Goth Home Decor
 72/75
 Gothic Decor Dyed to the Core. Witchy Home Decor and Spell Candles in One. Ghost Candles for Spooky Home Decor.
@@ -3364,6 +3479,31 @@ candle gift set 1,259/mo · td 11 · witchy gifts 3,369 · goth gifts 1,261 · s
 Segmento regalo con volumen propio; la caja de regalo ya lo justifica en imagen.
 "gift" conecta con el atributo caja de regalo lista; COSMO lo enlaza con el nicho de regalo probado (incl. quiroprácticos por el spine).
 "perfect for gifting to chiropractors, orthopedics, or other bone-doctors!" (Zellinni, 5★)
+1. A COMPLETE RITUAL, NOT A LONE CANDLE — Skull + Spine + 2 Votives
+spine candle 531 · td 3 + skull candle set (product-exact)
+Convierte el set en argumento; señal de diferenciación vs. rivales que venden 1 pieza.
+El intent "el set completo / el altar" conecta con las 4 piezas como composición; el spine es el atributo que "tu repisa no tenía".
+"must have made the cast from a real human spine" (Kobi & Knight, 5★) + framing altar: "they're just the right combinations of goth, creepy, and spooky that I love to use in my home." (Kobi & Knight, 5★)
+2. TRUE BLACK, ALL THE WAY DOWN — Real Black Paraffin That Won't Bleach
+Rebate objeción "quema en blanco" (señal A10)
+No keyword de ranking; rebate la objeción que la imagen no verbaliza → impacto CVR/rating.
+El intent "negro real que no se pone gris" conecta con la parafina pigmentada al núcleo; COSMO premia el atributo que responde el miedo específico.
+Color al núcleo, lo que el comprador exige: "colored all the way through rather than being white in the center." (Tobeape, 5★) + gap: "It looks like a grey hunk of plastic… it is NOT that color." (Zellinni, 1★) + "black residue on my hands that's hard to get off." (Tobeape, 2★)
+3. HOURS OF SLOW BURN, BUILT AT REAL SCALE — Skull 12 hrs · Spine 6 hrs
+Responde "dura poco" + "tamaño chico" con dato (12h/6h · 4.53")
+No keyword; anti-devolución = A10.
+El intent "que dure / que sea del tamaño de la foto" conecta con el burn time declarado + escala real; COSMO liga la honestidad de atributo con la confianza de compra.
+El rival mintió con el MISMO número que MAVRA declara honesto: "IT SAYS THAT IT BURNS FOR 12 HRS BUT THAT IS COMPLETELY WRONG!… within 2 and half hours it was completely burned out." (GUTE, 3★) + tamaño: "made to look much bigger than it actually is." (ElectricWise, 1★)
+4. SCULPTED, NOT STAMPED — Anatomical Detail & a Pine & Moss Scent
+Esculpido + aroma (el gap #1 del nicho)
+No keyword; el aroma convierte una queja de mercado en promesa.
+Doble fit: "detalle real" ↔ suturas esculpidas, y "que huela intencional (no dulce/estacional)" ↔ Pine & Moss (forest resin / damp earth).
+Sculpt: "The details in the skull, snake and spine are pretty amazing." (Kobi & Knight, 5★). Aroma-gap (químico o ausente): "it reeks of 'mint'… immediately caused an allergy attack." (Zellinni, 1★) + "I couldn't smell the scent at all… The fragrance throw is basically nonexistent." (CULACEE, 3★)
+5. ARRIVES GIFT-READY, STAYS ALL YEAR — Boxed Gothic Home Decor
+Caja de regalo + permanencia · refuerza candle gift set 1,259
+No keyword; refuerza el segmento gift sin perseguir ranking.
+El intent "regalo listo / decor todo el año" conecta con gift box + posicionamiento no-Halloween; COSMO lo enlaza con el comprador que decora permanente.
+"I love the box they come in… I also use the coffin box the candle comes in as decor as well. It's packaging is killer!" (Kobi & Knight, 5★) + permanencia: "I display them all year round because every day is Halloween." (Zellinni, 5★)
 Base: AdsCrafted (Discovery → Harvest → Scale) + Chris Rawlings / Sophie Society (dominar top-of-search de la hero; ranking-first en lanzamiento, pivote a profit al llegar a top-3 orgánico). Precio: único set análogo directo Kobi & Knight $39.99 (skull+spine en coffin box); spine solo Zellinni $8.99 / ElectricWise $14.99. Set de 4 esculpido + parafina real + aroma → band premium ~$34.99–$54.99 (confirmar con Frank).
 KEYWORDS (SKAG)
 skull candle set · skull candle · gothic candles · goth candles · spine candle · skull decor · goth room decor
@@ -3398,6 +3538,8 @@ B0GC94MMZN / B0DGB5PXT1
 Sneferu Skull Planter Spine Gothic Vase — $25.99/$27.99 (tráfico "spine gothic")
 B0FB88BNLC / B0FB8DFJY6
 DRACIT Gothic Skull Canvas Wall Art — $75.99/$104.99 · 1,857/mo (líder revenue gótico-skull)
+Negativos permanentes desde día 1 (mal-calificados): warmer, candle warmer, wax melt, wax warmer, mold, resin/silicone mold, wall art, canvas, candelabra, candle/candlestick holder, sconce, taper candles, unity candle.
+Semanal: subir bid/modifier de los exact que rankean top-5 orgánico; al llegar a top-3 en la hero (spine candle / skull candle set) → bajar bid (Rawlings: ya no pagás por el ranking ganado).
 "THE RITUAL / DARK AESTHETIC"
 categoría, ofensiva — el spine como hook
 skull candle · gothic candles · spine candle · goth room decor · skull decor · witch candles · dark academia decor
@@ -3407,6 +3549,11 @@ skull candle set · spine candle · gothic candles · + targeting a ASINs de C6 
 Mismo hook del ritual, cierra en comparación implícita — "4 pieces · real black paraffin, no white bleed · sculpted, not stamped · Pine & Moss · gift-boxed" (lo que los competidores no tienen: Zellinni es 1 pieza sin aroma; Kobi no es parafina esculpida premium).
 $0.65–$1.25
 ~$85–$140/día en la ventana de ranking (primeras 3–4 semanas), 45–55% en C1 (Exact Hero: spine candle + skull candle set) + SBV-1. Fuera de ventana: ~$45–70/día en modo profit.
+CONFLICTO SIN RESOLVER — ALTURA DEL SPINE
+Aparece como 5.67" en el overlay de imagen (Slot 2) pero se marcó conflicto vs ~10". El copy NO afirma la altura del spine — solo el ancho del skull (4.53"), que sí está confirmado. Resolver con medición física antes de agregarla.
+Imágenes YA cubren set de 4, escala del skull, caja de regalo, altar permanente, textura esculpida + "Pine & Moss", spine solo, burn 12h/6h. El copy refuerza lo que la imagen NO verbaliza: la objeción "quema en blanco" rebatida en palabras (Bullet 2), el framing "set/ritual de 4 piezas" como valor, keywords de estética/uso, el aroma DESCRITO (forest resin/damp earth), el ángulo regalo como keyword, y la permanencia afirmada explícita.
+SUPUESTOS & PENDIENTE H10
+Precio no confirmado → band $34.99–$54.99 (confirmar con Frank). ASIN propio no disponible → no se corrió Cerebro. 9 seeds de Magnet + 3 Product Research corrieron OK, cero errores de auth, volúmenes reales. Recomendado: search_amazon_brand_analytics (ABA click/conversion share) sobre skull candle / gothic candles / spine candle.
 
 
 ------------------------------------------------------------
@@ -3426,6 +3573,9 @@ MADE TO FIT, BUILT TO HAUNT — Sized for Real Walls, Arrives Ready No guessing 
 objeción: "¿qué tamaño llega? ¿en foto se ve distinto?" → 3 dimensiones exactas + hardware incluido + llega como se muestra
 PERMANENT GOTHIC DECOR — Not a Costume You Box Up in November MAVRA builds the dark aesthetic as a year-round identity, not a seasonal prop — no orange, no plastic, no expiration date. It's goth room decor and skull decor for people who live in the dark all twelve months, and a striking gothic gift for the one who arranges their darkness with intention. Hang it once; let it haunt the wall forever.
 objeción: "¿esto es solo para Halloween?" → NO, permanente año-completo · gift angle · reafirma la voz de marca
+ALTERNATIVA KEYWORD-FIRST (190 CHARS)
+190
+Gothic Skull Wall Decor Set of 3 - MAVRA Sculpted Matte Black Skulls, Real 3D Wall Art Not a Print, Screw or Tape Mount, Goth Room Decor, Skull Decor for Bedroom & Gothic Gift, Not Halloween
 MAVRA Gothic Wall Decor Set of 3, Carved Black Skulls for Goth Room Decor
 Gothic Home Decor With Real Depth. Horror Decor, Witch Decor, Whimsigoth. Screws or Permanent Tape. Never Seasonal.
 115/125
@@ -3766,6 +3916,31 @@ Relevancia REAL vs reportada · skull wall hanging 0 vol · td 16 · 3d wall art
 NO son keywords. "3d / wall hanging" parecen términos pero no tienen demanda → se explotan como concepto de copy ("sculpted / real / not a print"), no para rankear.
 El SERP es 90% canvas plano; COSMO puede leer la intención "quiero algo real/dimensional, no barato" y premiar el atributo 3D polirresina = categoría de uno.
 "very flat and cheap looking once you get close up." (FWIEXA, 2★) + matiz nuevo — el comprador ya castiga el print de IA: "Very obviously AI generated, low quality images… came out blurry." (ANERZA, 1★)
+1. THREE SKULLS, ONE SYSTEM — A Curated Wall, Not a Single Piece
+set of 3 (diferenciador) + gothic/skull wall decor
+Los competidores venden 1 solo → señal de diferenciación.
+El intent "arreglo de pared compuesto, no una pieza sola" conecta con el trío graduado curado; COSMO premia el sistema-de-pared.
+Análogo set-de-3 (Dolkgy): "Bought all three styles and love them displayed together." (Dolkgy, 5★) + "It makes my house look like a gallery." (FWIEXA, 5★) + "conversation pieces that people immediately notice when they walk in." (VINADECOR, 5★)
+2. SCULPTED, NOT STAMPED — Real Dimensional Skulls, Never a Flat Print (wedge #1)
+Wedge #1 · el SERP son prints planos · alto impacto CTR/CVR (A10)
+No keyword; la foto 3D rompe el patrón canvas del SERP.
+El intent "quiero algo real, no un print plano/barato" conecta con la polirresina densa con relieve anatómico; COSMO premia causalmente el atributo dimensional.
+"It's supposed to be painted. It looks like a freaking print transfer, smh." (BICERE, 1★) + "very flat and cheap looking once you get close up." (FWIEXA, 2★) + print de IA: "Very obviously AI generated, low quality images… came out blurry." (ANERZA, 1★)
+3. MOUNT ONCE, HAUNT FOREVER — Your Wall, Your Rules, No Damage
+skull wall mount 368 · td 5 (adyacente) · rebate queja de hardware (A10)
+Rebate la queja de hardware más citada del nicho → CVR/rating.
+El intent "colgarlo sin dañar la pared / apto alquiler" conecta con tornillo O cinta doble-faz + keyhole hanger; COSMO liga el uso con el atributo de montaje dual.
+Análogo 3D (Dolkgy): "Do NOT use the hook it comes with!… it had fallen off and smashed everywhere because the hook fell off the wall." (Dolkgy, 1★) + "the hanger pins fell sending the print to the floor… Perfectly nice print ruined by an inferior hanger." (FWIEXA, 3★)
+4. MADE TO FIT, BUILT TO HAUNT — Sized for Real Walls, Arrives Ready
+3 dimensiones exactas + hardware incluido · anti-devolución (A10)
+No keyword; rebate "más chico que la foto" + "llega roto".
+El intent "que sea del tamaño de la foto / que llegue entero" conecta con dims declaradas + pieza 3D sólida (más resistente que canvas); COSMO premia la honestidad de atributo.
+"the very first room image shows the item way bigger than it actually is!" (BICERE, 3★) + material: "The frames are not wood, but are plastic or foam wrapped in a wood patterned vinyl." (Ausril, 3★) + peso real del análogo 3D: "heavy enough to not feel cheap." (Dolkgy, 5★)
+5. PERMANENT GOTHIC DECOR — Not a Costume You Box Up in November
+Ángulo permanente + gift · refuerza goth room decor / skull decor
+No keyword; refuerza la estética-skull sin perseguir ranking.
+El intent "decoración dark todo el año, no disfraz" conecta con el posicionamiento no-Halloween; COSMO lo enlaza con el comportamiento real del comprador (colgar y no descolgar).
+"I wanted to swap out my normal artwork for something spooky for the Halloween season… It's November 1 and quite frankly I don't even want to take them down… They are not just cutesy for the season." (FWIEXA, 5★)
 Base: AdsCrafted (Discovery → Harvest → Scale) + Chris Rawlings / Sophie Society (dominar top-of-search de la hero; ranking-first, luego profit). Referencia de precio: canvas gótico-skull $75–$107 (FWIEXA $95, DRACIT $76, BICERE $107), sculptural gótico premium $70–$75 (Nomnu $75, VINADECOR $70). Un set escultórico 3D de 3 piezas puede sostener $50–$90. Precio real del SWD a confirmar con Frank.
 gothic wall decor · gothic wall art · goth wall decor · skull wall decor · skull wall art · skull decor · goth room decor · skull decor for home
 Dominar top-of-search de la cabeza ganable (td 0–6). Bid agresivo + Top-of-Search modifier +50% a +100%.
@@ -3799,6 +3974,9 @@ B0DJQJJ2M4
 VINADECOR Real Death Head Moth Skull Shadow Box Gothic — $69.75 · 535/mo · 4.8★ (análogo 3D montable)
 B0FC25KRSM
 Trulave Gothic Skull Bathroom Wall Art — $32.99 (low-price)
+Graduación (G1): search term con Orders ≥ 2 (o 1 si el ACoS ya se disparó) → duplicar a C1 Exact. Bid de arranque = RPC = (Revenue / Clicks) × Target ACoS. Candidatos calientes por CVR: skull decor for home, skull home decor, macabre decor, spooky home decor, goth room decor, whimsigoth decor. La graduación es SIEMPRE a exact.
+Negativos permanentes desde día 1: cow, bull, longhorn, steer, deer, elk, antler, western, cowboy, cowgirl, southwestern, sugar skull, dia de los muertos, day of the dead, canvas, poster, print, painting, framed, tapestry, wallpaper, decal, sticker, mold, diamond art, neon sign, tin sign, planter, shower curtain, tumbler, mug.
+Semanal: subir bid/modifier de los exact top-5 orgánico; al llegar a top-3 en la hero (gothic wall decor / skull wall decor) → bajar bid (Rawlings: ya no pagás por el ranking ganado).
 "REAL, NOT A PRINT"
 gothic wall decor · gothic wall art · goth wall decor · skull wall decor · skull decor · gothic decor · dark academia decor · goth room decor
 Primeros 2 s un plano lateral rasante de UN cráneo sobre pared charcoal → la luz revela el relieve anatómico y la sombra que proyecta (lo que un print jamás hace). Corte: una mano monta los 3 cráneos (screw + tape), luego pull-back que revela el trío completo. Quick-cuts: macro de textura ("sculpted, not stamped"), los 3 tamaños lado a lado, cuarto real. Cierre en wordmark MAVRA + "MOUNT ONCE · HAUNT FOREVER" / "Inhabit Your Shadow".
@@ -3806,6 +3984,10 @@ gothic wall decor · skull wall decor · gothic skull canvas · + targeting a AS
 Mismo hook 3D, cierra en comparación implícita — "Set of 3 · Real sculpted skulls · Screw or tape mount · Not a flat print" (lo que los canvas competidores no pueden ofrecer). Defiende búsquedas de marca/categoría y aparece sobre el listing del competidor de print.
 $0.60–$1.20
 ~$85–$140/día en la ventana de ranking (primeras 3–4 semanas), 45–55% en C1 (Exact Hero) + SBV-1. Fuera de ventana: ~$40–65/día en modo profit.
+Imágenes/A+ YA cubren los 3 cráneos negro mate, install screw+tape "MOUNT ONCE / HAUNT FOREVER", matte macro "SCULPTED. NOT STAMPED", real scale + dimensiones, identidad "YOUR WALL", cross-sell dark room. El copy refuerza: el "set de 3 como SISTEMA" vs. competidores que venden 1, "Real, no un print" (el SERP es 90% canvas plano), keywords no verbalizadas (gothic/goth wall decor, dark academia, whimsigoth, macabre), el ángulo permanente-no-Halloween, el material (polirresina) + keyhole hanger renter-friendly, y el ángulo regalo (cnv 22–40%).
+Precio no confirmado → rango $50–90 (canvas sets $75–107; sculptural Nomnu $75 / VINADECOR $70). Confirmar con Frank. ASIN propio no estaba en briefs → correr Cerebro si Frank lo pasa (auditar cobertura, sembrar negativos, ver qué de la cabeza ya rankea).
+PENDIENTE H10 / HALLAZGO
+Todas las llamadas H10 OK (Magnet ×10 seeds, Product Research ×2), cero errores de auth, volúmenes reales (52,857 frases únicas; 18,150 relevantes al nicho). Hallazgo: skull wall hanging y 3d wall art skull NO son cabezas reales (0 vol / dominados por moldes de resina y lámparas de ilusión) → no se persiguen como ranking; se usan como concepto de copy ("dimensional/sculpted").
 
 
 ------------------------------------------------------------
@@ -4996,6 +5178,26 @@ western
 Cargadas en los 12 ad groups que compiten por búsquedas. El que apunta a productos excluye por ASIN, no por frase: hoy tiene 0.
 
 20 propuestas sin cargar — esperan tu OK
+sticker — quien busca sticker no paga US$ 39.99.
+decal — vinilo de pared, misma objeción que sticker.
+wallpaper — papel mural, otra categoría.
+tattoo — 'skull tattoo' es diseño, no objeto.
+svg — busca archivo digital.
+png — busca archivo digital.
+3d print — busca el STL, no el producto terminado.
+mold — molde para hacerlo uno mismo.
+coloring — libro para colorear.
+costume — disfraz, compra de una noche.
+mask — máscara, no decoración.
+toy — juguete, expectativa de precio y calidad opuesta.
+cake — repostería.
+keychain — llavero, ticket de US$ 8.
+necklace — joyería.
+ring — joyería.
+shirt — apparel.
+real human — cráneo humano real / anatómico. Otro comprador.
+anatomical — modelo médico.
+mural — pintura de pared.
 FASE 4
 CUANDO YA HAY SEÑAL
 
@@ -5026,6 +5228,9 @@ broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0
 80 negativos cargados, ninguno tapa el root
 Cargadas en los 10 ad groups que compiten por búsquedas. Los 2 que apuntan a productos excluyen por ASIN, no por frase: hoy tienen 0.
 22 propuestas sin cargar — esperan tu OK
+candle making — busca insumos para fabricar.
+wax melt — formato distinto, otro precio.
+wick — repuestos.
 
 
 ------------------------------------------------------------
@@ -5041,6 +5246,9 @@ broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0 · broad $1.0
 8 exclusiones en los 11 ad groups de búsquedas: print, poster, canvas, tapestry, sugar, cow, cowboy, western · 1 ad group apunta a productos, ahí la exclusión va por ASIN y está vacía
 88 negativos cargados, ninguno tapa el root
 Cargadas en los 11 ad groups que compiten por búsquedas. El que apunta a productos excluye por ASIN, no por frase: hoy tiene 0.
+lava lamp — otro producto entero.
+bulb — busca la bombilla suelta.
+night light — luz de niños, US$ 12.
 
 
 ##############################################################################
@@ -7372,6 +7580,7 @@ The subject format helps us route your message and respond faster. We won't be a
 
 START THE CONVERSATION →
 
+
 ==============================================================================
 CAPTURAS DE PANTALLA (para juzgar el diseno, no el texto)
 ==============================================================================
@@ -7379,29 +7588,44 @@ CAPTURAS DE PANTALLA (para juzgar el diseno, no el texto)
 Cada archivo es la pagina completa renderizada a 1440 px de ancho, de arriba
 a abajo, en el tema oscuro por defecto. Sirven para leer margenes, jerarquia
 tipografica, densidad y uso de color — lo que el volcado de texto no muestra.
-Las dos paginas mas largas (A+ Content y Copy & Ads) estan cortadas a 12000 px.
+Las paginas mas largas estan cortadas a 12000 px de alto.
 
   https://mavra-public.vercel.app/shots/aplus-briefs.jpg
   https://mavra-public.vercel.app/shots/avatares.jpg
   https://mavra-public.vercel.app/shots/brand-guidelines.jpg
   https://mavra-public.vercel.app/shots/briefing.jpg
+  https://mavra-public.vercel.app/shots/campanas-1.jpg
+  https://mavra-public.vercel.app/shots/campanas-2.jpg
   https://mavra-public.vercel.app/shots/campanas.jpg
   https://mavra-public.vercel.app/shots/competitors.jpg
+  https://mavra-public.vercel.app/shots/copy-1.jpg
+  https://mavra-public.vercel.app/shots/copy-10.jpg
+  https://mavra-public.vercel.app/shots/copy-11.jpg
+  https://mavra-public.vercel.app/shots/copy-2.jpg
+  https://mavra-public.vercel.app/shots/copy-3.jpg
+  https://mavra-public.vercel.app/shots/copy-4.jpg
+  https://mavra-public.vercel.app/shots/copy-5.jpg
+  https://mavra-public.vercel.app/shots/copy-6.jpg
+  https://mavra-public.vercel.app/shots/copy-7.jpg
+  https://mavra-public.vercel.app/shots/copy-8.jpg
+  https://mavra-public.vercel.app/shots/copy-9.jpg
   https://mavra-public.vercel.app/shots/copy.jpg
   https://mavra-public.vercel.app/shots/corrientes.jpg
   https://mavra-public.vercel.app/shots/creators.jpg
   https://mavra-public.vercel.app/shots/filmografia.jpg
   https://mavra-public.vercel.app/shots/fonts.jpg
   https://mavra-public.vercel.app/shots/home.jpg
-  https://mavra-public.vercel.app/shots/influencers-directorio.jpg
-  https://mavra-public.vercel.app/shots/influencers-lote1-gifting.jpg
-  https://mavra-public.vercel.app/shots/influencers-motor-seleccion.jpg
-  https://mavra-public.vercel.app/shots/influencers-pipeline.jpg
+  https://mavra-public.vercel.app/shots/influencers-1.jpg
+  https://mavra-public.vercel.app/shots/influencers-2.jpg
+  https://mavra-public.vercel.app/shots/influencers-3.jpg
+  https://mavra-public.vercel.app/shots/influencers-4.jpg
   https://mavra-public.vercel.app/shots/influencers.jpg
+  https://mavra-public.vercel.app/shots/launch-1.jpg
+  https://mavra-public.vercel.app/shots/launch-2.jpg
   https://mavra-public.vercel.app/shots/launch.jpg
   https://mavra-public.vercel.app/shots/listings-briefs.jpg
   https://mavra-public.vercel.app/shots/pinterest.jpg
-  https://mavra-public.vercel.app/shots/research.jpg
+  https://mavra-public.vercel.app/shots/sb-1.jpg
   https://mavra-public.vercel.app/shots/sb.jpg
   https://mavra-public.vercel.app/shots/scenography.jpg
   https://mavra-public.vercel.app/shots/skulls.jpg
