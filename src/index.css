@@ -3055,3 +3055,107 @@ main:not(.case-study) code {
 .language-toggle button:hover { color: var(--fg); }
 .language-toggle button.active { background: rgba(var(--copper-rgb), .25); color: var(--fg); }
 .language-toggle button:focus-visible { outline: 1px solid var(--copper-bright); outline-offset: 2px; }
+
+/* Brand OS is deliberately a continuation of the Case Study, not a second visual system. */
+main.case-study.brand-os-index {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: #0b0a09;
+}
+.case-study .brand-os-hero {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: clamp(7rem, 14vh, 10rem) clamp(1.25rem, 5vw, 5.5rem) clamp(3.5rem, 7vh, 5rem);
+  border-right: 1px solid rgba(196, 131, 42, 0.12);
+  border-bottom: 1px solid var(--case-line);
+  border-left: 1px solid rgba(196, 131, 42, 0.12);
+}
+.case-study .brand-os-hero .section-label {
+  margin: 0 0 .8rem;
+  color: var(--case-bright);
+  font: 600 .65rem var(--font-mono);
+  letter-spacing: .18em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.case-study .brand-os-hero h1 {
+  max-width: 900px;
+  margin: 0;
+  color: var(--case-ink);
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.45rem, 6vw, 5.9rem);
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: 1.06;
+  text-transform: none;
+}
+.case-study .brand-os-intro {
+  max-width: 690px;
+  margin: 1.8rem 0 0;
+  color: var(--case-muted);
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.75;
+}
+.case-study .brand-os-note {
+  margin: 1.25rem 0 0;
+  color: var(--case-bright);
+  font: 600 .65rem var(--font-mono);
+  letter-spacing: .18em;
+  line-height: 1.55;
+  text-transform: uppercase;
+}
+.case-study .brand-os-grid {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 5.5rem) 0;
+  border: 0;
+}
+.case-study .brand-os-card {
+  min-height: 330px;
+  border: 1px solid var(--case-line);
+  border-right: 0;
+  background: transparent;
+}
+.case-study .brand-os-card:nth-child(even) { border-right: 1px solid var(--case-line); }
+.case-study .brand-os-number {
+  margin: 0 0 2.6rem;
+  color: var(--case-bright);
+  font: 600 .65rem var(--font-mono);
+  letter-spacing: .18em;
+}
+.case-study .brand-os-card h2 {
+  color: var(--case-ink);
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.2rem, 1.75vw, 1.55rem);
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 1.22;
+  text-transform: none;
+}
+.case-study .brand-os-card > p:not(.brand-os-number) {
+  color: var(--case-muted);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.case-study .brand-os-card nav a,
+.case-study .brand-os-footer a {
+  color: var(--case-bright);
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+}
+.case-study .brand-os-footer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem clamp(1.25rem, 5vw, 5.5rem) 3rem;
+  color: var(--case-muted);
+  font-family: var(--font-mono);
+  font-size: .65rem;
+}
+@media (max-width: 700px) {
+  .case-study .brand-os-card { border-right: 1px solid var(--case-line); }
+}

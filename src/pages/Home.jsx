@@ -37,7 +37,7 @@ export default function Home() {
   const t = copy[language] || copy.en
 
   return (
-    <main className="brand-os-index">
+    <main className="case-study brand-os-index">
       <header className="brand-os-hero">
         <p className="section-label">{t.eyebrow}</p>
         <h1>{t.title}</h1>
