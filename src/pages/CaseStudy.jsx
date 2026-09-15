@@ -143,7 +143,7 @@ const FEATURED_WORK = {
     {
       number: '03', chapter: 'Design', title: 'Creative direction made operational across every surface.',
       body: 'The visual system is documented as production-ready thinking: a product world, scene logic, image order and visual constraints that can move from a brief into retail execution.',
-      images: [['/shots/briefing.jpg', 'Creative direction', '/briefing'], ['/shots/scenography.jpg', 'Scenography system', '/scenography']],
+      images: [['/shots/briefing.jpg', 'Creative direction', '/briefing#briefing-top'], ['/shots/scenography.jpg', 'Scenography system', '/scenography#scenography-top']],
     },
     {
       number: '04', chapter: 'Merchandise', title: 'Amazon retail treated as an authored product experience.',
@@ -175,7 +175,7 @@ const FEATURED_WORK = {
     {
       number: '03', chapter: 'Diseñar', title: 'Dirección creativa operacionalizada en cada superficie.',
       body: 'El sistema visual se documenta como pensamiento listo para producción: mundo de producto, lógica de escena, orden de imagen y restricciones que pasan de brief a ejecución retail.',
-      images: [['/shots/briefing.jpg', 'Dirección creativa', '/briefing'], ['/shots/scenography.jpg', 'Sistema de escenografía', '/scenography']],
+      images: [['/shots/briefing.jpg', 'Dirección creativa', '/briefing#briefing-top'], ['/shots/scenography.jpg', 'Sistema de escenografía', '/scenography#scenography-top']],
     },
     {
       number: '04', chapter: 'Comercializar', title: 'Amazon retail tratado como una experiencia de producto con autoría.',

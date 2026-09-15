@@ -9,7 +9,7 @@ export default function Escenografia() {
 
   return (
     <>
-      <div className="page-header">
+      <div id="scenography-top" className="page-header">
         <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.8rem)', color: 'var(--fg)', marginBottom: '0.25rem' }}>
           Guía de Escenografía
         </h1>

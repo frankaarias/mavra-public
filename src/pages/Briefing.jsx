@@ -48,7 +48,7 @@ export default function Briefing() {
   }
 
   return (
-    <main style={styles.page}>
+    <main id="briefing-top" style={styles.page}>
       <nav aria-label="Creative direction sections" style={{ position: 'sticky', top: '60px', zIndex: 30, display: 'flex', gap: '20px', overflowX: 'auto', padding: '12px 0', background: C.background, borderBottom: `1px solid ${C.border}` }}>
         {SECTIONS.map((id) => (
           <button key={id} type="button" onClick={() => goTo(id)} style={{ flex: '0 0 auto', padding: '4px 0', color: active === id ? C.copper : C.muted, background: 'none', border: 0, borderBottom: active === id ? `1px solid ${C.copper}` : '1px solid transparent', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '0.64rem', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
