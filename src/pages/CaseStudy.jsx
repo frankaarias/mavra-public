@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { ArrowDown, ArrowUpRight, Check, Mail } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import '../case-study-evidence.css'
 
 const COPY = {
   en: {
@@ -127,11 +128,81 @@ const ROLE = {
   es: ['Estrategia de marca', 'Amazon growth', 'Dirección creativa', 'Product marketing', 'Operación de launch', 'Workflows de IA'],
 }
 
+const FEATURED_WORK = {
+  en: [
+    {
+      number: '01', chapter: 'Discover', title: 'A research workspace that separates opportunity from noise.',
+      body: 'The market work did not stop at a keyword list. It connected demand, competitive coverage, relevance and product fit so the category could be read as a set of decisions.',
+      images: [['/shots/research.jpg', 'Research workspace', '/research']],
+    },
+    {
+      number: '02', chapter: 'Define', title: 'A brand territory built from the market reading.',
+      body: 'Consumer tension, competitive context and cultural territory were turned into one positioning system. This is where a category observation became a permanent dark-interior brand.',
+      images: [['/shots/brand-guidelines.jpg', 'Brand platform', '/brand-guidelines'], ['/shots/corrientes.jpg', 'Cultural territory', '/corrientes']],
+    },
+    {
+      number: '03', chapter: 'Design', title: 'Creative direction made operational across every surface.',
+      body: 'The visual system is documented as production-ready thinking: a product world, scene logic, image order and visual constraints that can move from a brief into retail execution.',
+      images: [['/shots/briefing.jpg', 'Creative direction', '/briefing'], ['/shots/scenography.jpg', 'Scenography system', '/scenography']],
+    },
+    {
+      number: '04', chapter: 'Merchandise', title: 'Amazon retail treated as an authored product experience.',
+      body: 'Listing and A+ work translates the brand into a buying sequence: what the customer must understand first, what requires proof next and how the collection becomes relevant after that.',
+      images: [['/shots/listings-briefs.jpg', 'Listing image briefs', '/listings-briefs'], ['/shots/aplus-briefs.jpg', 'A+ architecture', '/aplus-briefs']],
+    },
+    {
+      number: '05', chapter: 'Grow', title: 'Launch and paid activity structured as one learning loop.',
+      body: 'The growth work documents campaign structure, launch readiness and how signals should change the next decision. It is an operating framework, not a collection of isolated tactics.',
+      images: [['/shots/campanas.jpg', 'Campaign architecture', '/campaigns'], ['/shots/launch.jpg', 'Launch framework', '/launch']],
+    },
+    {
+      number: '06', chapter: 'Operate', title: 'Creator operations built with a traceable selection system.',
+      body: 'The creator program connects source research, qualification and activation logic. Its documented scale is part of the proof: 126 creators mapped and 86 manually verified.',
+      images: [['/shots/influencers.jpg', 'Creator operations', '/influencers'], ['/shots/creators.jpg', 'Creator brief', '/creators']],
+    },
+  ],
+  es: [
+    {
+      number: '01', chapter: 'Descubrir', title: 'Un workspace de research que separa oportunidad de ruido.',
+      body: 'El trabajo de mercado no terminó en una lista de keywords. Conectó demanda, cobertura competitiva, relevancia y ajuste de producto para leer la categoría como un conjunto de decisiones.',
+      images: [['/shots/research.jpg', 'Workspace de research', '/research']],
+    },
+    {
+      number: '02', chapter: 'Definir', title: 'Un territorio de marca construido desde la lectura de mercado.',
+      body: 'Tensión del consumidor, contexto competitivo y territorio cultural se convirtieron en un solo sistema de posicionamiento. Aquí una observación de categoría se volvió una marca permanente de dark interiors.',
+      images: [['/shots/brand-guidelines.jpg', 'Plataforma de marca', '/brand-guidelines'], ['/shots/corrientes.jpg', 'Territorio cultural', '/corrientes']],
+    },
+    {
+      number: '03', chapter: 'Diseñar', title: 'Dirección creativa operacionalizada en cada superficie.',
+      body: 'El sistema visual se documenta como pensamiento listo para producción: mundo de producto, lógica de escena, orden de imagen y restricciones que pasan de brief a ejecución retail.',
+      images: [['/shots/briefing.jpg', 'Dirección creativa', '/briefing'], ['/shots/scenography.jpg', 'Sistema de escenografía', '/scenography']],
+    },
+    {
+      number: '04', chapter: 'Comercializar', title: 'Amazon retail tratado como una experiencia de producto con autoría.',
+      body: 'El trabajo de listing y A+ traduce la marca a una secuencia de compra: qué necesita entender primero el cliente, qué necesita prueba y cuándo la colección se vuelve relevante.',
+      images: [['/shots/listings-briefs.jpg', 'Briefs de imagen del listing', '/listings-briefs'], ['/shots/aplus-briefs.jpg', 'Arquitectura A+', '/aplus-briefs']],
+    },
+    {
+      number: '05', chapter: 'Crecer', title: 'Lanzamiento y actividad pagada estructurados como un loop de aprendizaje.',
+      body: 'El trabajo de growth documenta estructura de campañas, preparación de lanzamiento y cómo las señales deben cambiar la siguiente decisión. Es un marco operativo, no tácticas aisladas.',
+      images: [['/shots/campanas.jpg', 'Arquitectura de campañas', '/campaigns'], ['/shots/launch.jpg', 'Marco de launch', '/launch']],
+    },
+    {
+      number: '06', chapter: 'Operar', title: 'Operación de creators construida con un sistema de selección trazable.',
+      body: 'El programa de creators conecta research de fuentes, calificación y lógica de activación. Su escala documentada es parte de la prueba: 126 creators mapeados y 86 verificados manualmente.',
+      images: [['/shots/influencers.jpg', 'Operación de creators', '/influencers'], ['/shots/creators.jpg', 'Brief de creators', '/creators']],
+    },
+  ],
+}
+
 export default function CaseStudy() {
-  const [lang, setLang] = useState('en')
+  const [lang, setLang] = useState(() => {
+    try { return localStorage.getItem('mavra-case-language') || 'en' } catch { return 'en' }
+  })
   const [submitted, setSubmitted] = useState(false)
   const copy = COPY[lang]
   const chapters = useMemo(() => CHAPTERS[lang], [lang])
+  const featuredWork = FEATURED_WORK[lang]
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -143,9 +214,9 @@ export default function CaseStudy() {
       <section className="case-hero">
         <div className="case-grid-noise" aria-hidden="true" />
         <div className="case-language" aria-label="Language selector">
-          <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
+          <button className={lang === 'en' ? 'active' : ''} onClick={() => { setLang('en'); try { localStorage.setItem('mavra-case-language', 'en') } catch {} }}>EN</button>
           <span>/</span>
-          <button className={lang === 'es' ? 'active' : ''} onClick={() => setLang('es')}>ES</button>
+          <button className={lang === 'es' ? 'active' : ''} onClick={() => { setLang('es'); try { localStorage.setItem('mavra-case-language', 'es') } catch {} }}>ES</button>
         </div>
         <div className="case-hero-copy">
           <p className="case-eyebrow">{copy.eyebrow}</p>
@@ -162,8 +233,30 @@ export default function CaseStudy() {
         </dl>
       </section>
 
+      <section className="case-work-intro">
+        <div className="case-section-label">01 / {lang === 'en' ? 'Selected evidence' : 'Evidencia seleccionada'}</div>
+        <div className="case-work-intro-copy">
+          <h2>{lang === 'en' ? 'The system, visible before the explanation.' : 'El sistema visible antes de explicarlo.'}</h2>
+          <p>{lang === 'en' ? 'These are the actual working surfaces built for MAVRA. The case study gives them context; it does not replace them with a claim.' : 'Estas son las superficies de trabajo reales construidas para MAVRA. El caso de estudio les da contexto; no las reemplaza por una promesa.'}</p>
+        </div>
+        <div className="case-featured-work">
+          {featuredWork.map(work => (
+            <article className="case-work-item" key={work.number}>
+              <div className="case-work-copy">
+                <span>{work.number} / {work.chapter}</span>
+                <h3>{work.title}</h3>
+                <p>{work.body}</p>
+              </div>
+              <div className={`case-work-images ${work.images.length === 1 ? 'single' : ''}`}>
+                {work.images.map(([src, alt, to]) => <Link to={to} key={src} aria-label={alt}><img src={src} alt={alt} loading="lazy" /><em>{alt} <ArrowUpRight size={13} /></em></Link>)}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="case-section case-challenge">
-        <div className="case-section-label">01 / {copy.challengeKicker}</div>
+        <div className="case-section-label">02 / {copy.challengeKicker}</div>
         <div className="case-split-copy">
           <h2>{copy.challengeTitle}</h2>
           <p>{copy.challengeText}</p>
@@ -171,7 +264,7 @@ export default function CaseStudy() {
       </section>
 
       <section id="system" className="case-section">
-        <div className="case-section-label">02 / {copy.systemKicker}</div>
+        <div className="case-section-label">03 / {copy.systemKicker}</div>
         <h2 className="case-wide-title">{copy.systemTitle}</h2>
         <div className="case-chapter-grid">
           {chapters.map((chapter) => (
@@ -188,7 +281,7 @@ export default function CaseStudy() {
       </section>
 
       <section className="case-section">
-        <div className="case-section-label">03 / {copy.decisionKicker}</div>
+        <div className="case-section-label">04 / {copy.decisionKicker}</div>
         <h2 className="case-wide-title">{copy.decisionTitle}</h2>
         <div className="case-decision-list">
           {DECISIONS[lang].map(([title, body, to], index) => (
@@ -202,7 +295,7 @@ export default function CaseStudy() {
       </section>
 
       <section className="case-section case-proof" id="evidence">
-        <div className="case-section-label">04 / {copy.proofKicker}</div>
+        <div className="case-section-label">05 / {copy.proofKicker}</div>
         <div className="case-split-copy">
           <div><h2>{copy.proofTitle}</h2><p>{copy.proofText}</p></div>
           <Link className="case-button secondary case-all-evidence" to="/brand">{copy.secondary} <ArrowUpRight size={15} /></Link>
@@ -213,7 +306,7 @@ export default function CaseStudy() {
       </section>
 
       <section className="case-section case-role">
-        <div className="case-section-label">05 / {copy.roleKicker}</div>
+        <div className="case-section-label">06 / {copy.roleKicker}</div>
         <div className="case-split-copy">
           <div><h2>{copy.roleTitle}</h2><p>{copy.roleText}</p></div>
           <ul>{ROLE[lang].map(item => <li key={item}><Check size={15} /> {item}</li>)}</ul>
@@ -222,7 +315,7 @@ export default function CaseStudy() {
 
       <section className="case-contact" id="contact">
         <div className="case-contact-copy">
-          <p className="case-section-label">06 / {copy.contactKicker}</p>
+          <p className="case-section-label">07 / {copy.contactKicker}</p>
           <h2>{copy.contactTitle}</h2>
           <p>{copy.contactText}</p>
         </div>
