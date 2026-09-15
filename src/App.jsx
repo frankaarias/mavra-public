@@ -12,6 +12,7 @@ import ScrollToRouteStart from './components/ScrollToRouteStart.jsx'
 import Home from './pages/Home.jsx'
 import CaseStudy from './pages/CaseStudy.jsx'
 import BrandGuidelines from './pages/BrandGuidelines.jsx'
+import BrandGuidelinesSource from './pages/BrandGuidelinesSource.jsx'
 import Tipografia from './pages/Tipografia.jsx'
 import Escenografia from './pages/Escenografia.jsx'
 import Corrientes from './pages/Corrientes.jsx'
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/" element={<CaseStudy />} />
         <Route path="/brand" element={<Home />} />
         <Route path="/brand-guidelines" element={<BrandGuidelines />} />
+        <Route path="/brand-guidelines/source" element={<BrandGuidelinesSource />} />
         <Route path="/fonts" element={<Tipografia />} />
         <Route path="/tipografia" element={<Tipografia />} />
         <Route path="/scenography" element={<Escenografia />} />
