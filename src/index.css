@@ -2957,3 +2957,22 @@ main:not(.case-study) code {
   main:not(.case-study) li,
   main:not(.case-study) td { font-size: 1rem !important; }
 }
+
+/* Brand OS is a wayfinding index. Detailed identity content lives once in Brand Guidelines. */
+.brand-os-index { max-width: 1180px; margin: 0 auto; padding: clamp(5.5rem, 11vw, 10rem) clamp(1.35rem, 5vw, 4.5rem) 4rem; }
+.brand-os-hero { max-width: 760px; padding-bottom: clamp(3.5rem, 8vw, 7rem); border-bottom: 1px solid rgba(var(--copper-rgb), 0.28); }
+.brand-os-hero h1 { max-width: 700px; margin: 1rem 0 1.75rem; font-size: clamp(2.45rem, 5.4vw, 5.4rem); font-weight: 400; line-height: 1.04; letter-spacing: -0.035em; }
+.brand-os-intro { max-width: 630px; margin: 0; color: rgba(var(--fg-rgb), .76); font-family: 'Basilia', serif; font-size: clamp(1.05rem, 1.4vw, 1.27rem); line-height: 1.7; }
+.brand-os-note { margin: 1.25rem 0 0; color: rgba(var(--copper-rgb), .86); font-family: 'Josefin Sans', sans-serif; font-size: .68rem; line-height: 1.55; letter-spacing: .13em; text-transform: uppercase; }
+.brand-os-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-left: 1px solid rgba(var(--copper-rgb), .22); border-top: 1px solid rgba(var(--copper-rgb), .22); }
+.brand-os-card { min-height: 350px; padding: clamp(1.7rem, 3.6vw, 3rem); border-right: 1px solid rgba(var(--copper-rgb), .22); border-bottom: 1px solid rgba(var(--copper-rgb), .22); background: linear-gradient(135deg, rgba(var(--copper-rgb), .045), transparent 48%); }
+.brand-os-number { margin: 0 0 2.6rem; color: var(--copper); font-family: 'Josefin Sans', sans-serif; font-size: .68rem; letter-spacing: .22em; }
+.brand-os-card h2 { margin: 0 0 .8rem; font-family: 'Cinzel', serif; font-size: clamp(1.15rem, 1.7vw, 1.55rem); font-weight: 400; }
+.brand-os-card > p:not(.brand-os-number) { max-width: 390px; margin: 0 0 1.75rem; color: rgba(var(--fg-rgb), .64); font-family: 'Basilia', serif; font-size: 1rem; line-height: 1.65; }
+.brand-os-card nav { display: flex; flex-wrap: wrap; gap: .5rem .75rem; }
+.brand-os-card nav a, .brand-os-footer a { color: var(--copper); font-family: 'Josefin Sans', sans-serif; font-size: .7rem; letter-spacing: .11em; text-decoration: none; text-transform: uppercase; transition: color .2s ease; }
+.brand-os-card nav a:hover, .brand-os-footer a:hover { color: var(--fg); }
+.brand-os-card nav span, .brand-os-footer span { margin-left: .25rem; }
+.brand-os-footer { display: flex; justify-content: space-between; gap: 1rem; padding: 2rem 0 .5rem; color: rgba(var(--fg-rgb), .4); font-family: 'Josefin Sans', sans-serif; font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; }
+.brand-os-footer > span { margin-left: 0; }
+@media (max-width: 700px) { .brand-os-grid { grid-template-columns: 1fr; } .brand-os-card { min-height: 0; } .brand-os-footer { align-items: flex-start; flex-direction: column; } }
