@@ -2965,7 +2965,7 @@ main:not(.case-study) code {
 .brand-os-intro { max-width: 630px; margin: 0; color: rgba(var(--fg-rgb), .76); font-family: 'Basilia', serif; font-size: clamp(1.05rem, 1.4vw, 1.27rem); line-height: 1.7; }
 .brand-os-note { margin: 1.25rem 0 0; color: rgba(var(--copper-rgb), .86); font-family: 'Josefin Sans', sans-serif; font-size: .68rem; line-height: 1.55; letter-spacing: .13em; text-transform: uppercase; }
 .brand-os-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-left: 1px solid rgba(var(--copper-rgb), .22); border-top: 1px solid rgba(var(--copper-rgb), .22); }
-.brand-os-card { min-height: 350px; padding: clamp(1.7rem, 3.6vw, 3rem); border-right: 1px solid rgba(var(--copper-rgb), .22); border-bottom: 1px solid rgba(var(--copper-rgb), .22); background: linear-gradient(135deg, rgba(var(--copper-rgb), .045), transparent 48%); }
+.brand-os-card { min-height: 350px; padding: clamp(1.7rem, 3.6vw, 3rem); border-right: 1px solid rgba(var(--copper-rgb), .22); border-bottom: 1px solid rgba(var(--copper-rgb), .22); background: transparent; }
 .brand-os-number { margin: 0 0 2.6rem; color: var(--copper); font-family: 'Josefin Sans', sans-serif; font-size: .68rem; letter-spacing: .22em; }
 .brand-os-card h2 { margin: 0 0 .8rem; font-family: 'Cinzel', serif; font-size: clamp(1.15rem, 1.7vw, 1.55rem); font-weight: 400; }
 .brand-os-card > p:not(.brand-os-number) { max-width: 390px; margin: 0 0 1.75rem; color: rgba(var(--fg-rgb), .64); font-family: 'Basilia', serif; font-size: 1rem; line-height: 1.65; }
