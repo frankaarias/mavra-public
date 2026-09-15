@@ -1376,21 +1376,15 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
         {TAB_DESC[tab === 'Trash' ? 'Descartadas' : tab]}
       </p>
 
-      {/* Que el usuario vea que su trabajo está guardado, y que pueda volver
-          atrás. Sin este cartel, "se guarda" es una promesa invisible. */}
-      {Object.keys(movidas).length > 0 && (
-        <p className="rsch-guardado">
-          <b>{Object.keys(movidas).length}</b>{' '}
-          {Object.keys(movidas).length === 1 ? 'keyword movida' : 'keywords movidas'} a mano.
-          Guardadas — Tecki las ve.
-          <button type="button" className="rsch-bulk-clear" onClick={copiarCambios}>
-            Copiar mis cambios
-          </button>
-          <button type="button" className="rsch-bulk-clear" onClick={descartarCambios}>
-            Volver a lo calculado
-          </button>
-        </p>
-      )}
+      {/* 🔴 EL CARTEL DE «KEYWORDS MOVIDAS A MANO» SALE DE LA PANTALLA.
+          Existía para que quien movía keywords viera que su trabajo quedaba
+          guardado. Pero esta página la lee alguien de fuera, y ahí ese cartel
+          cuenta cómo se hizo la salchicha: cuántas se tocaron a mano, que hay
+          un bot mirando, y dos botones para deshacerlo.
+          Frank, 2026-09-15: «quita eso».
+          ⚠️ Lo que se va es el AVISO. `movidas`, `copiarCambios` y
+          `descartarCambios` siguen vivos: los cambios se guardan igual y el
+          multi-move sigue funcionando. */}
 
       {/* ── Veredicto del nicho: el informe, aparte de la herramienta ──────── */}
       {tab === 'Veredicto' && (
