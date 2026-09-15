@@ -52,7 +52,12 @@ const BUCKETS = ['UKL', 'MKL', 'Outliers', 'Residue']
 const BUCKETS_OCULTOS = ['Negatives']
 // El veredicto del nicho es un INFORME, el MKL es una HERRAMIENTA: no comparten
 // pantalla. El veredicto vive en su propia pestaña y la tabla usa todo el alto.
-const TOOLS = ['Veredicto', 'Roots', 'Normalizer', 'Competidores']
+// 🔴 EL ORDEN LO PIDIÓ FRANK, Y NO ES ARBITRARIO: es el del MKL que entregamos.
+// Primero los cuatro grupos de keywords, después las herramientas. Roots va
+// antes que Veredicto porque Roots se usa todos los días y el Veredicto se lee
+// una vez. `Normalizer` sale de la navegación (2026-09-15) — su lista sigue
+// calculándose, solo deja de tener pestaña.
+const TOOLS = ['Roots', 'Veredicto', 'Competidores']
 // Los umbrales son los mismos en los tres (son los de DataDive), así que los textos
 // de ayuda se arman una sola vez.
 const S = lmp.meta.settings
@@ -138,15 +143,9 @@ const COLS = [
   { k: 'idn', origen: 'agta', necesitaH10: true, grupo: 'Tu producto', label: 'IDN', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
   { k: 'price_fit', origen: 'agta', grupo: 'Tu producto', label: 'Precio', align: 'right', tipo: 'num', fmt: (v) => (v == null ? '—' : `${Math.round(v * 100)}%`) },
   // Grupo 5 — qué hacer con ella
-  { k: 'veredicto', origen: 'agta', necesitaH10: true, grupo: 'Qué hacer', label: 'Eval', align: 'center', tipo: 'opciones' },
-  { k: 'tier', origen: 'agta', grupo: 'Qué hacer', label: 'Tier', align: 'center', tipo: 'opciones' },
-  { k: 'prio', origen: 'agta', grupo: 'Qué hacer', label: 'Prio', align: 'center', tipo: 'opciones' },
-  { k: 'match', origen: 'agta', grupo: 'Qué hacer', label: 'Match recomendado', align: 'center', tipo: 'opciones' },
   // Las dos etiquetas propias de la UKL. Se venían calculando desde el día uno y
   // no se mostraban en ningún lado: la tabla traía las 324 filas sin decir qué
   // hacer con ninguna. Van acá para que filtren y ordenen como cualquier otra.
-  { k: 'cuando', origen: 'agta', grupo: 'Qué hacer', label: 'Cuándo', align: 'center', tipo: 'opciones' },
-  { k: 'para', origen: 'agta', grupo: 'Qué hacer', label: 'Para qué', align: 'center', tipo: 'opciones' },
   // Grupo 6 — dónde está usada hoy dentro del listing. Mismos cinco campos que
   // muestra DataDive, medidos contra el copy real del producto. (2026-07-31)
   ...USAGE_FIELDS.map((f) => ({
@@ -1008,8 +1007,21 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
   // basta una keyword más larga en otra pestaña para que TODAS las columnas se
   // corran y la tabla parezca otra. Con estos anchos, cambiar de pestaña o
   // esconder una columna no mueve nada de lugar.
+  // 🔴 LAS NUMÉRICAS PASAN DE 78 A 96 PX, Y NO ES HOLGURA DE GUSTO.
+  //
+  // Con 78 px «224,160» se dibujaba «224,1…» y «100,000» como «100,0…»: la
+  // celda pedía 81 px y tenía 78. Un número cortado no es un número incómodo,
+  // es OTRO número — «224,1…» se lee doscientos veinticuatro coma uno.
+  //
+  // ⚠️ Y solo se ve mirando la pantalla: en el árbol el texto está entero, el
+  // recorte lo hace el CSS al pintar. Medirlo desde el DOM tampoco sirve —
+  // measureText sobre la celda ya recortada mide el texto CORTADO y devuelve
+  // que cabe. Se mide el dato más largo del set, no lo que se ve.
+  //
+  // 96 = «1,333,788» (el mayor de Competing Products) a 15,68px con Inter, más
+  // los 16 px de padding y los 2 del borde de grupo, que también restan ancho.
   const anchoDe = (c) => (c.k === 'kw' ? 250 : c.k === 'root' ? 108 : c.k === 'match' ? 150
-    : c.k === 'veredicto' ? 112 : c.tipo === 'opciones' ? 86 : 78)
+    : c.k === 'veredicto' ? 112 : c.tipo === 'opciones' ? 86 : 96)
   // `table-layout: fixed` solo respeta el colgroup si la tabla tiene un ancho
   // declarado. Con `width: auto` el navegador vuelve al reparto automático y el
   // colgroup queda de adorno — que fue lo que pasó en el primer intento.
