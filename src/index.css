@@ -2877,3 +2877,32 @@ th .rsch-opts-btn { width: 100%; }
 .lnc-kpi-row b { color: var(--fg); display: inline-block; min-width: 110px; }
 .lnc-kpi-nota { font-family: var(--font-sans); font-size: 0.7rem; color: rgba(var(--copper-rgb),0.75); margin-top: 0.6rem; }
 .lnc-foot { margin-top: 2rem; font-family: var(--font-sans); font-size: 0.66rem; color: rgba(var(--fg-rgb),0.4); line-height: 1.7; }
+
+
+/* Reading scale for the deep documentation surfaces. Keeps the brand typefaces;
+   only restores a comfortable body size across long-form pages and tables. */
+main:not(.case-study) p,
+main:not(.case-study) li,
+main:not(.case-study) td {
+  font-size: clamp(0.98rem, 1.05vw, 1.08rem) !important;
+  line-height: 1.75 !important;
+}
+main:not(.case-study) th,
+main:not(.case-study) h4,
+main:not(.case-study) .section-label {
+  font-size: clamp(0.7rem, 0.78vw, 0.8rem) !important;
+  line-height: 1.45 !important;
+}
+main:not(.case-study) h3 {
+  font-size: clamp(0.98rem, 1.05vw, 1.14rem) !important;
+  line-height: 1.35 !important;
+}
+main:not(.case-study) code {
+  font-size: clamp(0.78rem, 0.88vw, 0.9rem) !important;
+  line-height: 1.65 !important;
+}
+@media (max-width: 640px) {
+  main:not(.case-study) p,
+  main:not(.case-study) li,
+  main:not(.case-study) td { font-size: 1rem !important; }
+}
