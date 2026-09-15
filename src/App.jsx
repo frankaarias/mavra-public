@@ -8,6 +8,7 @@ const Research = lazy(() => import('./pages/Research.jsx'))
 const Cargando = () => <div style={{ padding: '4rem 2rem', fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(var(--copper-rgb),0.6)' }}>Cargando…</div>
 import Navbar from './components/Navbar.jsx'
 import Home from './pages/Home.jsx'
+import CaseStudy from './pages/CaseStudy.jsx'
 import BrandGuidelines from './pages/BrandGuidelines.jsx'
 import Tipografia from './pages/Tipografia.jsx'
 import Escenografia from './pages/Escenografia.jsx'
@@ -32,7 +33,8 @@ export default function App() {
       <Navbar />
       <Suspense fallback={<Cargando />}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<CaseStudy />} />
+        <Route path="/brand" element={<Home />} />
         <Route path="/brand-guidelines" element={<BrandGuidelines />} />
         <Route path="/fonts" element={<Tipografia />} />
         <Route path="/tipografia" element={<Tipografia />} />

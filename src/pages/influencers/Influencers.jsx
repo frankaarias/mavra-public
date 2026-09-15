@@ -1,78 +1,46 @@
-import { useState } from 'react'
-import Ecosystem from './Ecosystem.jsx'
-import Pipeline from './Pipeline.jsx'
-import Directorio from './Directorio.jsx'
-import Motor from './Motor.jsx'
-import Lote from './Lote.jsx'
-import ChatWidget from '../../components/ChatWidget.jsx'
+import { useEffect } from 'react'
+import brand from '../../brand/brand.json'
 
-const TABS = [
-  { id: 'ecosystem', label: 'El Ecosistema', icon: '◈' },
-  { id: 'pipeline', label: 'Pipeline', icon: '◉' },
-  { id: 'directorio', label: 'Directorio', icon: '◇' },
-  { id: 'lote', label: 'Lote 1 · gifting', icon: '✉' },
-  { id: 'motor', label: 'Motor de selección', icon: '⚙' },
+const { identity } = brand
+
+const stages = [
+  ['Discovery', 'Find creators whose audience, aesthetic and content format naturally fit the product world.'],
+  ['Qualification', 'Assess audience relevance, content quality, storefront fit and the collaboration model before outreach.'],
+  ['Activation', 'Build a clear product story, sensible measurement plan and creator-first collaboration brief.'],
+  ['Learning', 'Use response and content signals to improve the next cohort rather than treating every outreach cycle as isolated.'],
 ]
 
+const s = {
+  page: { maxWidth: '1280px', margin: '0 auto', padding: '70px clamp(20px, 4vw, 52px)' },
+  eyebrow: { color: 'var(--copper)', fontSize: '0.67rem', letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0 },
+  title: { color: 'var(--fg)', fontFamily: 'var(--font-condensed)', fontSize: 'clamp(2.4rem, 6vw, 4.8rem)', fontWeight: 400, lineHeight: 1, letterSpacing: '0.04em', margin: '16px 0 0' },
+  lead: { color: 'rgba(var(--fg-rgb),0.62)', fontFamily: "'IM Fell English', Georgia, serif", fontStyle: 'italic', fontSize: '1.25rem', lineHeight: 1.55, maxWidth: '760px', margin: '22px 0 0' },
+  grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(245px,1fr))', gap: '14px', marginTop: '30px' },
+  card: { padding: '26px', minHeight: '180px', border: '1px solid rgba(var(--copper-rgb),0.23)', background: 'rgba(255,255,255,0.02)' },
+  number: { color: 'var(--copper)', fontSize: '0.65rem', letterSpacing: '0.18em' },
+  h3: { color: 'var(--fg)', fontFamily: 'var(--font-condensed)', fontWeight: 400, fontSize: '1.22rem', letterSpacing: '0.06em', margin: '15px 0 0' },
+  body: { color: 'rgba(var(--fg-rgb),0.58)', fontSize: '0.87rem', lineHeight: 1.7, margin: '12px 0 0' },
+}
+
 export default function Influencers() {
-  const [activeTab, setActiveTab] = useState('ecosystem')
-
+  useEffect(() => { document.title = `${identity.name} — Creator Operations` }, [])
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', paddingTop: '60px' }}>
-      {/* Left sidebar - sub-tabs */}
-      <aside style={{
-        width: '200px',
-        flexShrink: 0,
-        borderRight: '1px solid rgba(var(--copper-rgb),0.15)',
-        padding: '32px 0',
-        position: 'sticky',
-        top: '60px',
-        height: 'calc(100vh - 60px)',
-        background: 'rgba(var(--bg-rgb),0.95)',
-      }}>
-        <div style={{ padding: '0 20px', marginBottom: '24px' }}>
-          <p style={{ fontSize: '0.58rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(var(--copper-rgb),0.6)', marginBottom: '4px' }}>Influencers</p>
-          <p style={{ fontSize: '0.7rem', color: 'rgba(var(--fg-rgb),0.3)', lineHeight: 1.4 }}>126 creadores · 86 verificados uno por uno · 41 en A</p>
+    <main style={s.page}>
+      <header>
+        <p style={s.eyebrow}>Case study evidence · Creator operations</p>
+        <h1 style={s.title}>Creator strategy is<br />a system of fit.</h1>
+        <p style={s.lead}>MAVRA’s creator program is designed around relevance and repeatability: matching the product world to audiences that can make it credible, then learning from each activation.</p>
+      </header>
+      <section style={{ marginTop: '64px' }}>
+        <p style={s.eyebrow}>Operating model</p>
+        <div style={s.grid}>
+          {stages.map(([title, text], index) => <article key={title} style={s.card}><span style={s.number}>0{index + 1}</span><h2 style={s.h3}>{title}</h2><p style={s.body}>{text}</p></article>)}
         </div>
-        {TABS.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              width: '100%',
-              padding: '12px 20px',
-              background: activeTab === tab.id ? 'rgba(var(--copper-rgb),0.12)' : 'transparent',
-              border: 'none',
-              borderLeft: activeTab === tab.id ? '2px solid var(--copper-bright)' : '2px solid transparent',
-              color: activeTab === tab.id ? 'var(--fg)' : 'rgba(var(--fg-rgb),0.4)',
-              fontFamily: "var(--font-sans)",
-              fontSize: '0.78rem',
-              letterSpacing: '0.05em',
-              cursor: 'pointer',
-              textAlign: 'left',
-              transition: 'all 0.2s',
-            }}
-          >
-            <span style={{ color: activeTab === tab.id ? 'var(--copper-bright)' : 'rgba(var(--copper-rgb),0.4)', fontSize: '0.7rem' }}>{tab.icon}</span>
-            {tab.label}
-          </button>
-        ))}
-      </aside>
-
-      {/* Main content */}
-      <main style={{ flex: 1, overflowY: 'auto', padding: '40px 56px 120px' }}>
-        {activeTab === 'ecosystem' && <Ecosystem />}
-        {activeTab === 'pipeline' && <Pipeline />}
-        {activeTab === 'directorio' && <Directorio />}
-        {activeTab === 'lote' && <Lote />}
-        {activeTab === 'motor' && <Motor />}
-      </main>
-
-      {/* Chat widget always visible */}
-      <ChatWidget context="influencers" />
-    </div>
+      </section>
+      <section style={{ marginTop: '72px', padding: '30px', border: '1px solid rgba(var(--copper-rgb),0.23)', background: 'rgba(var(--copper-rgb),0.04)' }}>
+        <p style={s.eyebrow}>Documented scope</p>
+        <p style={{ ...s.body, marginBottom: 0, maxWidth: '800px', fontSize: '0.98rem' }}>The MAVRA system mapped 126 potential creators, with 86 accounts manually verified and 41 qualified in the highest relevance tier. These are scope metrics, not campaign-performance claims. Individual creator records, contact details and outreach materials are not part of the public case study.</p>
+      </section>
+    </main>
   )
 }

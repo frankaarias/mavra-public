@@ -100,7 +100,8 @@ export default function Navbar() {
 
       <div className="nav-right">
         <div className={`nav-links${mobileOpen ? ' open' : ''}`}>
-        <NavLink to="/" end onClick={close}>Home</NavLink>
+        <NavLink to="/" end onClick={close}>Case Study</NavLink>
+        <NavLink to="/brand" onClick={close}>Brand OS</NavLink>
 
         {GROUPS.map(group => (
           <div

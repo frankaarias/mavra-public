@@ -1,334 +1,114 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import brand from '../brand/brand.json'
 
-const { identity, nav } = brand
+const { identity } = brand
+const SECTIONS = ['marca', 'portfolio', 'visual-system', 'framework', 'principles']
 
-const VAR = {
-  dark: 'var(--bg)', cream: 'var(--fg)', copper: 'var(--copper)', burgundy: 'var(--burgundy)',
-  muted: '#A8A096', faint: 'rgba(var(--fg-rgb),0.35)',
-};
+const C = {
+  background: 'var(--bg)', foreground: 'var(--fg)', copper: 'var(--copper)',
+  muted: 'rgba(var(--fg-rgb),0.58)', border: 'rgba(var(--copper-rgb),0.22)',
+}
 
-const S = {
-  page: { maxWidth: '1600px', margin: '0 auto', padding: '60px clamp(20px, 4vw, 48px)' },
-  hero: { textAlign: 'center', padding: '60px 0 40px', borderBottom: `1px solid ${VAR.copper}` },
-  eyebrow: { fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase', color: VAR.muted, marginBottom: '16px' },
-  h1: { fontFamily: "var(--font-condensed)", fontSize: 'clamp(2rem,5vw,3.5rem)', fontWeight: '400', color: VAR.cream, letterSpacing: '0.1em', marginBottom: '16px' },
-  tagline: { fontFamily: "'IM Fell English', Georgia, serif", fontStyle: 'italic', fontSize: '1.2rem', color: VAR.faint },
-  meta: { fontSize: '12px', color: VAR.muted, marginTop: '12px', letterSpacing: '1px' },
-  sectionHeader: { marginBottom: '40px' },
-  label: { fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase', color: VAR.copper, display: 'block', marginBottom: '8px' },
-  h2: { fontFamily: "var(--font-condensed)", fontSize: '1.6rem', fontWeight: '400', color: VAR.cream, marginBottom: '16px' },
-  h3: { fontFamily: "var(--font-condensed)", fontSize: '1rem', color: VAR.copper, marginBottom: '12px', fontWeight: '400' },
-  body: { fontSize: '0.95rem', color: VAR.muted, lineHeight: '1.8', marginBottom: '16px' },
-  card: { background: 'rgba(255,255,255,0.03)', border: `1px solid rgba(var(--copper-rgb),0.2)`, padding: '24px', borderRadius: '2px', marginBottom: '16px' },
-  grid2: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '24px' },
-  hr: { border: 'none', borderTop: `1px solid ${VAR.copper}`, margin: '60px 0' },
-  doList: { listStyle: 'none', padding: 0 },
-  doItem: { padding: '8px 0 8px 20px', position: 'relative', fontSize: '0.9rem', color: VAR.muted, borderBottom: '1px solid rgba(var(--copper-rgb),0.1)' },
-};
+const styles = {
+  page: { maxWidth: '1360px', margin: '0 auto', padding: '60px clamp(20px, 4vw, 48px)' },
+  hero: { maxWidth: '800px', padding: '64px 0 48px', borderBottom: `1px solid ${C.border}` },
+  eyebrow: { margin: '0 0 14px', color: C.copper, fontSize: '0.68rem', letterSpacing: '0.2em', textTransform: 'uppercase' },
+  title: { margin: 0, color: C.foreground, fontFamily: 'var(--font-condensed)', fontSize: 'clamp(2.3rem, 6vw, 4.8rem)', fontWeight: 400, lineHeight: 0.98, letterSpacing: '0.035em' },
+  lead: { margin: '22px 0 0', color: C.muted, fontFamily: "'IM Fell English', Georgia, serif", fontSize: '1.25rem', fontStyle: 'italic', lineHeight: 1.55 },
+  section: { marginTop: '72px' },
+  label: { display: 'block', marginBottom: '9px', color: C.copper, fontSize: '0.65rem', letterSpacing: '0.18em', textTransform: 'uppercase' },
+  h2: { margin: 0, color: C.foreground, fontFamily: 'var(--font-condensed)', fontSize: '2rem', fontWeight: 400, letterSpacing: '0.04em' },
+  body: { margin: '14px 0 0', color: C.muted, fontSize: '0.95rem', lineHeight: 1.75, maxWidth: '760px' },
+  grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', marginTop: '28px' },
+  card: { minHeight: '155px', padding: '24px', background: 'rgba(255,255,255,0.025)', border: `1px solid ${C.border}` },
+  cardTitle: { margin: 0, color: C.foreground, fontFamily: 'var(--font-condensed)', fontSize: '1.15rem', fontWeight: 400, letterSpacing: '0.06em' },
+  cardText: { margin: '12px 0 0', color: C.muted, fontSize: '0.84rem', lineHeight: 1.65 },
+}
 
+const PRODUCT_LINES = [
+  ['Wall Skulls', 'A dimensional wall-decor system designed to make the permanent dark interior feel authored rather than seasonal.'],
+  ['Skull Candle Set', 'A four-piece ritual object that combines sculptural detail, atmosphere and giftable presentation.'],
+  ['Skull Lamp', 'A light object designed around shadow, modulation and an immediately recognizable room-level effect.'],
+]
+
+const PRINCIPLES = [
+  ['Product fidelity', 'The product remains the visual source of truth. Every scene, crop and format is built to preserve its silhouette, scale and material character.'],
+  ['Atmosphere serves proof', 'Mood is never decoration alone. Light, surfaces and composition are selected to make a product attribute easier to understand and desire.'],
+  ['One visual system', 'Listing images, A+ content, campaign creative and social assets share the same visual grammar so each touchpoint reinforces the next.'],
+  ['Evidence before claims', 'The visual stack answers practical buying questions — scale, materials, use, presentation and product relationships — before asking for conversion.'],
+]
 
 export default function Briefing() {
-  const [active, setActive] = useState('marca');
-  useEffect(() => { document.title = `${identity.name} — Briefing para Diseñador`; }, []);
+  const [active, setActive] = useState('marca')
+  useEffect(() => { document.title = `${identity.name} — Creative Direction` }, [])
 
-  const scrollTo = (id) => {
-    setActive(id);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const goTo = (id) => {
+    setActive(id)
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
-    <div style={S.page}>
-      {/* Sticky subnav */}
-      <div style={{ position: 'sticky', top: '60px', background: VAR.dark, zIndex: 50, borderBottom: `1px solid rgba(var(--copper-rgb),0.3)`, padding: '12px 0', marginBottom: '40px', display: 'flex', gap: '24px', overflowX: 'auto' }}>
-        {nav.briefing.map(id => (
-          <button key={id} onClick={() => scrollTo(id)} style={{ background: 'none', border: 'none', color: active === id ? VAR.copper : VAR.muted, fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', cursor: 'pointer', whiteSpace: 'nowrap', padding: '4px 0', borderBottom: active === id ? `1px solid ${VAR.copper}` : '1px solid transparent' }}>
-            {id}
+    <main style={styles.page}>
+      <nav aria-label="Creative direction sections" style={{ position: 'sticky', top: '60px', zIndex: 30, display: 'flex', gap: '20px', overflowX: 'auto', padding: '12px 0', background: C.background, borderBottom: `1px solid ${C.border}` }}>
+        {SECTIONS.map((id) => (
+          <button key={id} type="button" onClick={() => goTo(id)} style={{ flex: '0 0 auto', padding: '4px 0', color: active === id ? C.copper : C.muted, background: 'none', border: 0, borderBottom: active === id ? `1px solid ${C.copper}` : '1px solid transparent', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '0.64rem', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+            {id.replace('-', ' ')}
           </button>
         ))}
-      </div>
+      </nav>
 
-      {/* Hero */}
-      <div style={S.hero}>
-        <p style={S.eyebrow}>Documento de producción visual · Confidencial</p>
-        <h1 style={S.h1}>{identity.name}<br />Briefing para Diseñador</h1>
-        <p style={S.tagline}>"Inhabit your shadow."</p>
-        <p style={S.meta}>Versión 2.0 · Mayo 2026 · Wall Skulls + Skull Candle + Skull Lamp</p>
-      </div>
+      <header style={styles.hero}>
+        <p style={styles.eyebrow}>Case study evidence · Creative direction</p>
+        <h1 style={styles.title}>A visual system<br />built for Amazon.</h1>
+        <p style={styles.lead}>MAVRA's creative direction translates brand position, product truth and retail questions into one coherent visual experience.</p>
+      </header>
 
-      <hr style={S.hr} />
+      <section id="marca" style={styles.section}>
+        <span style={styles.label}>01 — Brand point of view</span>
+        <h2 style={styles.h2}>Darkness as a form of authorship.</h2>
+        <p style={styles.body}>MAVRA is designed for people who treat their home as a personal world, not a temporary costume. The visual language is intentional, warm and precise: dark surfaces, controlled light and objects that feel collected rather than mass-decorated.</p>
+      </section>
 
-      {/* 01 — MARCA */}
-      <section id="marca" style={{ marginBottom: '80px' }}>
-        <div style={S.sectionHeader}>
-          <span style={S.label}>01 — Identidad de Marca</span>
-          <h2 style={S.h2}>{identity.name}</h2>
-          <p style={S.body}>Decoración gótica premium para Amazon FBA. Marca propia. Todo lo que diseñes debe comunicar una sola cosa: que la oscuridad es una forma de maestría, no de miedo.</p>
-        </div>
-
-        <div style={S.card}>
-          <span style={S.label}>Arquetipo</span>
-          <h3 style={S.h3}>The Liberator</h3>
-          <p style={S.body}>"Aquí puedes ser quien realmente eres." No depende de escasez — depende de lo que el producto habilita: construir el espacio donde el cliente puede ser completamente él mismo.</p>
-        </div>
-
-        <div style={S.grid2}>
-          <div style={S.card}>
-            <span style={S.label}>Tagline (permanente)</span>
-            <p style={{ fontFamily: "'IM Fell English', Georgia, serif", fontStyle: 'italic', fontSize: '1.2rem', color: VAR.cream, margin: 0 }}>"Inhabit your shadow."</p>
-          </div>
-          <div style={S.card}>
-            <span style={S.label}>Slogan (campaña)</span>
-            <p style={{ fontFamily: "'IM Fell English', Georgia, serif", fontStyle: 'italic', fontSize: '1.2rem', color: VAR.cream, margin: 0 }}>"The darkness you deserved."</p>
-          </div>
-        </div>
-
-        <div style={{ marginBottom: '32px' }}>
-          <span style={S.label}>Paleta de Color</span>
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '16px' }}>
-            {[['var(--bg)', 'Negro cálido'], ['var(--fg)', 'Hueso/Crema'], ['var(--copper)', 'Cobre/Bronce'], ['var(--burgundy)', 'Burdeos']].map(([hex, name]) => (
-              <div key={hex} style={{ textAlign: 'center' }}>
-                <div style={{ width: '56px', height: '56px', background: hex, border: '1px solid rgba(var(--copper-rgb),0.4)', margin: '0 auto 8px', borderRadius: '2px' }} />
-                <div style={{ fontSize: '10px', color: VAR.muted, letterSpacing: '1px' }}>{name}</div>
-                <div style={{ fontSize: '10px', color: VAR.copper, fontFamily: 'monospace' }}>{hex}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div style={{ marginBottom: '32px' }}>
-          <span style={S.label}>Sistema Tipográfico</span>
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '12px' }}>
-            <thead><tr>{['Rol', 'Fuente', 'Uso'].map(h => <th key={h} style={{ textAlign: 'left', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '2px', color: VAR.copper, padding: '10px 12px', borderBottom: `1px solid rgba(var(--copper-rgb),0.2)` }}>{h}</th>)}</tr></thead>
-            <tbody>
-              {[
-                ['Headline', 'Cinzel', 'Títulos, marca, momentos clave'],
-                ['Body', 'Basilia Regular', 'Cuerpo de texto, descripciones'],
-                ['Editorial / Citas', 'IM Fell English Italic', 'Frases de marca, citas — fijo'],
-                ['Props / Callouts', 'Josefin Sans', 'Etiquetas, datos técnicos, UI'],
-              ].map(row => (
-                <tr key={row[0]}>{row.map((v, i) => <td key={i} style={{ padding: '10px 12px', fontSize: '13px', color: i === 1 ? VAR.cream : VAR.muted, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>{v}</td>)}</tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div style={S.card}>
-          <span style={S.label}>Tono de Voz</span>
-          <div style={S.grid2}>
-            <div>
-              <p style={{ fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', color: VAR.copper, marginBottom: '12px' }}>Hacer</p>
-              <ul style={S.doList}>
-                {['Vocabulario ritual: invocar, habitar, convocar', 'Frases cortas con peso — 3 palabras que pesan más que un párrafo', 'Sereno y seguro — habla desde la certeza', 'Describe lo que proyecta, no lo que es', 'Referencias: Caravaggio, memento mori, arquitectura gótica'].map(item => (
-                  <li key={item} style={S.doItem}><span style={{ position: 'absolute', left: 0, color: VAR.copper }}>+</span>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p style={{ fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', color: VAR.burgundy, marginBottom: '12px' }}>No hacer</p>
-              <ul style={S.doList}>
-                {['Exclamaciones de ningún tipo', 'Jerga de e-commerce: "oferta", "¡No te lo pierdas!"', 'Mencionar Halloween como referente', 'Pedir disculpas por la estética', 'Explicar por qué es gótica — mostrarlo'].map(item => (
-                  <li key={item} style={S.doItem}><span style={{ position: 'absolute', left: 0, color: VAR.burgundy }}>×</span>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div style={S.card}>
-          <span style={S.label}>Referencias Visuales de Marca</span>
-          <p style={S.body}><strong style={{ color: VAR.copper }}>theblackenedteeth.com</strong> — referente principal. Museum-grade documentation aesthetic. Estudiarla en profundidad antes de diseñar.</p>
-          <p style={{ ...S.body, marginBottom: 0 }}><strong style={{ color: VAR.copper }}>killstar.com</strong> — referente secundario. Gothic fashion premium. Nivel de producción visual de referencia.</p>
+      <section id="portfolio" style={styles.section}>
+        <span style={styles.label}>02 — Product architecture</span>
+        <h2 style={styles.h2}>Three expressions, one brand world.</h2>
+        <div style={styles.grid}>
+          {PRODUCT_LINES.map(([title, text]) => <article key={title} style={styles.card}><h3 style={styles.cardTitle}>{title}</h3><p style={styles.cardText}>{text}</p></article>)}
         </div>
       </section>
 
-      <hr style={S.hr} />
-
-      {/* 02 — PRODUCTOS */}
-      <section id="productos" style={{ marginBottom: '80px' }}>
-        <div style={S.sectionHeader}>
-          <span style={S.label}>02 — Productos</span>
-          <h2 style={S.h2}>Los 3 Productos {identity.name}</h2>
-        </div>
-
-        {[
-          { name: 'Wall Skulls (SWD)', sub: 'Set de 3 wall skulls de polirresina negra mate (3 tamaños)', specs: [['Material', 'High-density polyresin negra mate'], ['Acabado', 'Satin-matte — sin brillo. Microestructura de casting visible a detalle'], ['Dimensiones', '3 tamaños · 8.15"×5.9" · 7.3"×5.5" · 6.7"×5.1"'], ['Construcción', 'Relieve escultórico al frente · espalda plana con keyhole hanger · Screw & Wall Anchors o Permanent Double-Sided Tape']], overlay: 'S1: sin overlay | S2: MOUNT ONCE. HAUNT FOREVER. | S3: SCULPTED. NOT STAMPED. | S4: MADE TO FIT. BUILT TO HAUNT. | S5: YOUR WALL. YOUR LANGUAGE. | S6: A SANCTUARY IS BORN. (Add the flames to your realm.)' },
-          { name: 'Skull Candle Set (CND)', sub: 'Vela calavera + vela espina + 2 votives. Parafina negra real. Aromáticas (Pine & Moss Scent).', specs: [['Material', 'Cera negra de parafina — 100% black, sin degradar'], ['Detalles', 'Suturas craneales · fisuras naturales de enfriamiento · anatomía real'], ['Dimensiones', 'Skull 4.53"×3.39" · Spine 5.67"×1.38" (callouts listing; el A+ Premium cita spine ~10"H — verificar)'], ['Piezas', 'Skull candle (12 hrs) · Spine candle (6 hrs) · 2 votives (NO tealights; la vision del unboxing los etiqueta "tealights" — verificar)']], overlay: 'S1: sin overlay | S2: HOLD THE DARK. | S3: GIVE THE DARK. | S4: YOUR ALTAR. YOUR RULES. | S5: SCULPTED. NOT STAMPED. | S6: RITUAL DEMANDS A SPINE. | S7: BURNS AS DARK AS IT LOOKS.' },
-          { name: 'Skull Lamp (LMP)', sub: 'Lámpara de mesa geométrica. Proyecta sombra de calavera cuando encendida.', specs: [['Dimensiones', 'Shade: 5.4" (13.7cm) ancho · Height: 12.2" (31cm)'], ['Bulbo', 'E26 incluido. Compatible con cualquier bombillo E26, incl. smart bulbs'], ['Modos shade', 'Matte Diffuser · Glitter Translucent · Naked Cage (sin veil) — ambas veils incluidas'], ['Control', 'Touch dimmer — 3 niveles: Soft · Medium · High']], overlay: 'S1: sin overlay | S2: PICK YOUR DARKNESS. (Both Veils Included) | S3: MADE TO FIT. BUILT TO HAUNT. | S4: BUILT TO LAST THE DARK | S5: CONTROL THE NIGHT (Soft/Medium/High) | S6: THE DARK OBEYS. | S7: BUILD THE DARK (Assembly)' },
-        ].map(({ name, sub, specs, overlay }) => (
-          <div key={name} style={{ ...S.card, marginBottom: '24px' }}>
-            <h3 style={S.h3}>{name}</h3>
-            <p style={S.body}>{sub}</p>
-            <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '16px' }}>
-              <tbody>
-                {specs.map(([k, v]) => (
-                  <tr key={k}>
-                    <td style={{ padding: '6px 12px 6px 0', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: VAR.copper, whiteSpace: 'nowrap', width: '140px' }}>{k}</td>
-                    <td style={{ padding: '6px 0', fontSize: '13px', color: VAR.muted }}>{v}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div style={{ background: 'rgba(var(--copper-rgb),0.08)', padding: '12px 16px', fontSize: '11px', color: VAR.muted, letterSpacing: '0.5px', fontFamily: 'monospace' }}>
-              <span style={{ color: VAR.copper, fontSize: '10px', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '6px' }}>Overlays aprobados</span>
-              {overlay}
-            </div>
-          </div>
-        ))}
-      </section>
-
-      <hr style={S.hr} />
-
-      {/* 03 — ESCENOGRAFÍA */}
-      <section id="escenografia" style={{ marginBottom: '80px' }}>
-        <div style={S.sectionHeader}>
-          <span style={S.label}>03 — Escenografía</span>
-          <h2 style={S.h2}>Setup de Fotografía</h2>
-        </div>
-
-        <div style={S.card}>
-          <h3 style={S.h3}>Iluminación estándar {identity.name} (TODOS los prompts)</h3>
-          <p style={{ ...S.body, fontFamily: 'monospace', background: 'rgba(var(--copper-rgb),0.06)', padding: '12px 16px', fontSize: '12px' }}>
-            Warm 2400K tungsten key light from upper-left, soft and controlled — warm golden tones, natural shadows falling toward the right, vignette into deep darkness at frame edges. No flat fill light.
-          </p>
-          <p style={S.body}>Excepción — Skull candle solo (@skull lora): luz raking desde la DERECHA (no izquierda).</p>
-        </div>
-
-        <div style={S.card}>
-          <h3 style={S.h3}>Superficies Aprobadas</h3>
-          <div style={S.grid2}>
-            {[['Superficie', 'Dark ebonized oak — madera oscura con grano natural visible'], ['Pared', 'Charcoal matte — gris oscuro sin pattern'], ['Alternativa pared', 'Garnet-burgundy casi negro (#1A0008) para Victorian Gothic'], ['Pared gothic exterior', 'Tongue-and-groove wood siding, near-black — para Southern Gothic']].map(([k, v]) => (
-              <div key={k} style={{ borderLeft: `2px solid ${VAR.copper}`, paddingLeft: '12px' }}>
-                <div style={{ fontSize: '10px', textTransform: 'uppercase', color: VAR.copper, letterSpacing: '1px', marginBottom: '4px' }}>{k}</div>
-                <div style={{ fontSize: '13px', color: VAR.muted }}>{v}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div style={S.card}>
-          <h3 style={S.h3}>Corrientes Góticas — Estado</h3>
+      <section id="visual-system" style={styles.section}>
+        <span style={styles.label}>03 — Visual system</span>
+        <h2 style={styles.h2}>A repeatable aesthetic, not isolated images.</h2>
+        <div style={styles.grid}>
           {[
-            { name: 'Victorian Gothic', status: '✅ Aprobado', desc: 'Pared sólida #1A0008, mahogany table, libros, vela taper, cortina forest-green, marco oval dorado' },
-            { name: 'Trad Goth / Batcave', status: '✅ Aprobado', desc: 'Pared charcoal bare, superficie concreto, lamp como sole light source. Minimalismo total.' },
-            { name: 'Whimsigoth', status: '✅ Aprobado', desc: 'Pared dusty plum-charcoal, cristales, altar, dos velas taper, mystical. Dos fuentes de luz.' },
-            { name: 'Southern Gothic', status: '✅ Aprobado', desc: 'Ladrillo envejecido o madera tongue-and-groove, decay elegante, sepia 2200K, botanical dried.' },
-            { name: 'Pastel Goth', status: '✅ Aprobado', desc: 'Pared lavanda matte, sole light source, Edison estándar. Pared da el efecto, no smart bulb.' },
-          ].map(({ name, status, desc }) => (
-            <div key={name} style={{ padding: '12px 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ fontSize: '13px', color: VAR.cream }}>{name}</span>
-                <span style={{ fontSize: '11px', color: VAR.copper }}>{status}</span>
-              </div>
-              <p style={{ fontSize: '12px', color: VAR.muted, margin: 0 }}>{desc}</p>
-            </div>
-          ))}
+            ['Light', 'Chiaroscuro, directional warmth and controlled shadow make form, finish and depth legible without losing atmosphere.'],
+            ['Space', 'Permanent interiors, editorial surfaces and human-scale context position the products beyond seasonal decoration.'],
+            ['Composition', 'Each frame has a job: establish the product, prove its details, communicate scale or place it inside a broader collecting world.'],
+          ].map(([title, text]) => <article key={title} style={styles.card}><h3 style={styles.cardTitle}>{title}</h3><p style={styles.cardText}>{text}</p></article>)}
         </div>
       </section>
 
-      <hr style={S.hr} />
-
-      {/* 04 — HERRAMIENTAS */}
-      <section id="herramientas" style={{ marginBottom: '80px' }}>
-        <div style={S.sectionHeader}>
-          <span style={S.label}>04 — Herramientas</span>
-          <h2 style={S.h2}>Stack de Generación</h2>
-        </div>
-
-        <div style={S.grid2}>
-          {[
-            { tool: 'Freepik Spaces / Nano Banana 2', desc: 'Google Imagen 3.1. Prompting con @refs. Para corrientes, composiciones multi-producto, background swaps.' },
-            { tool: 'gpt-image-2', desc: 'OpenAI. Para generación rápida, edición de imagen, logo flattening, UGC brandkit.' },
-            { tool: 'Kling v1.6 PRO (fal.ai)', desc: 'Video UGC. Imagen a video 9:16. La imagen fuente DEBE tener el ratio 9:16 antes de enviar.' },
-            { tool: 'Gemini 2.5 Flash', desc: 'Análisis de imágenes generadas. Herramienta oficial de visión — NUNCA GPT-4o ni Read tool.' },
-          ].map(({ tool, desc }) => (
-            <div key={tool} style={S.card}>
-              <h3 style={{ ...S.h3, marginBottom: '8px' }}>{tool}</h3>
-              <p style={{ ...S.body, marginBottom: 0 }}>{desc}</p>
-            </div>
-          ))}
+      <section id="framework" style={styles.section}>
+        <span style={styles.label}>04 — Production framework</span>
+        <h2 style={styles.h2}>Creative direction that connects to retail.</h2>
+        <p style={styles.body}>The work is planned from the customer's decision journey outward: what they need to understand first, what objection follows, and which product proof earns the next moment of attention. This creates a single brief across listing imagery, A+ content, advertising and creator-facing assets.</p>
+        <div style={styles.grid}>
+          {['Brand territory', 'Product story', 'Image architecture', 'Retail execution'].map((label, index) => <article key={label} style={styles.card}><span style={styles.label}>0{index + 1}</span><h3 style={styles.cardTitle}>{label}</h3></article>)}
         </div>
       </section>
 
-      <hr style={S.hr} />
-
-      {/* 05 — APRENDIZAJES */}
-      <section id="aprendizajes" style={{ marginBottom: '80px' }}>
-        <div style={S.sectionHeader}>
-          <span style={S.label}>05 — Aprendizajes Críticos de Producción</span>
-          <h2 style={S.h2}>Reglas que No Se Rompen</h2>
+      <section id="principles" style={styles.section}>
+        <span style={styles.label}>05 — Creative principles</span>
+        <h2 style={styles.h2}>How the system stays coherent.</h2>
+        <div style={styles.grid}>
+          {PRINCIPLES.map(([title, text]) => <article key={title} style={styles.card}><h3 style={styles.cardTitle}>{title}</h3><p style={styles.cardText}>{text}</p></article>)}
         </div>
-
-        {[
-          {
-            cat: 'Freepik / Prompting',
-            rules: [
-              '@Naked Front = vista frontal LMP. @Naked Medium Left Darker = vista lateral izquierda. Usar el correcto según el ángulo que necesitas.',
-              'NUNCA usar UUIDs en prompts — siempre nombre corto: @List #146, @Naked Front, @DSC5186 #2.',
-              'El approach correcto para corrientes LMP es "exactly as provided, change ONLY these elements" — no scene-rebuild completo.',
-              'SIEMPRE incluir el nombre del estilo en el descriptor de luz/atmósfera al final: "Southern Gothic warmth", "Victorian Gothic ceremonial".',
-              'Skull shadow projection: NUNCA poner paredes con pattern (damask, wallpaper) — suprime la proyección. Paredes sólidas oscuras.',
-              'Cuando hay @ref → NO describir el contenido del objeto. Descripción causa alucinaciones.',
-              'NUNCA poner el aspect ratio en el prompt — se da en el selector del generador.',
-              'Prompts cortos preservan mejor el @ref. Enhanced puede mejorar atmósfera pero diluye adherencia al producto.',
-            ],
-          },
-          {
-            cat: 'Skull Lamp (LMP)',
-            rules: [
-              'Shadow projection: la proyección del skull es non-negotiable. Pared sólida oscura para máxima legibilidad.',
-              'Edison filament: "preserved exactly as lit in source with visible glowing filaments" — NO tocar esta línea.',
-              'Corrientes de LMP van en ESPAÑOL (actualizado 2026-05-14 — antes había inconsistencia).',
-              'Para corrientes LMP: prompt quirúrgico "exactly as provided, change only these elements" — no rebuild.',
-              '@Naked Front = frontal. @Naked Medium Left Darker / @Naked Medium Left Darker 2 = lateral izquierdo.',
-            ],
-          },
-          {
-            cat: 'Skull Candle (CND)',
-            rules: [
-              'Set = skull + spine + 2 VOTIVES (no tealights). Con espacio: @candle set.',
-              'Aromáticas — Pine & Moss Scent. Las votives son velitas cilíndricas, no tealights.',
-              'Para shots individuales del skull: luz raking desde la DERECHA (no izquierda). Diferente al estándar.',
-              'Prompts CND: @DSC5186 #2 como referencia. Descripción mínima cuando hay @ref.',
-              'Corrientes CND van en ESPAÑOL. Formato: "@DSC5186 #2 como referencia — cero desviación..." + descripción de escena.',
-            ],
-          },
-          {
-            cat: 'Wall Skulls (SWD)',
-            rules: [
-              'SWD: @DSC01792 copia — nunca UUID, nunca @img1.',
-              'Skull morphology prior irreversible — el modelo reinterpreta. Única solución: compositing externo (Frank monta foto real en PIL/Photoshop).',
-              'NUNCA usar "plaque" en prompts — confunde al modelo.',
-              'Camera angle VA AL INICIO del prompt — si llega tarde, el modelo se ancla a perpendicular.',
-              'Para M4/B7 cross-sell: @List #117 (SWD frontales), @candle set, @Naked Front. Profundidad física explícita en metros.',
-            ],
-          },
-          {
-            cat: 'General',
-            rules: [
-              'Imágenes → Gemini 2.5 Flash (SDK google.genai). NUNCA GPT-4o ni Read tool.',
-              'gpt-image-2 es el modelo de imágenes de OpenAI. NUNCA DALL-E-3 ni gpt-image-1.',
-              'Todos los prompts de corrientes: en ESPAÑOL. Aprobado 2026-05-14.',
-            ],
-          },
-        ].map(({ cat, rules }) => (
-          <div key={cat} style={{ ...S.card, marginBottom: '24px' }}>
-            <h3 style={S.h3}>{cat}</h3>
-            <ul style={S.doList}>
-              {rules.map(rule => (
-                <li key={rule} style={{ ...S.doItem, paddingLeft: '20px' }}>
-                  <span style={{ position: 'absolute', left: 0, color: VAR.copper }}>→</span>
-                  {rule}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
       </section>
 
-      <div style={{ borderTop: `1px solid rgba(var(--copper-rgb),0.3)`, padding: '32px 0', color: VAR.muted, fontSize: '12px', letterSpacing: '1px', textAlign: 'center' }}>
-        {identity.name} · Briefing para Diseñador · Versión 2.0 · Mayo 2026 · AGT
-      </div>
-    </div>
-  );
+      <footer style={{ marginTop: '76px', padding: '28px 0', borderTop: `1px solid ${C.border}` }}>
+        <p style={{ ...styles.body, margin: 0, maxWidth: '680px', fontSize: '0.8rem' }}>This public case-study view documents the creative reasoning and selected outputs. Source files, production notes and working references remain outside the public experience.</p>
+      </footer>
+    </main>
+  )
 }

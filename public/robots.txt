@@ -1,5 +1,5 @@
-# El sitio no se indexa en buscadores. El volcado para lectura automatica si
-# esta permitido: es el motivo por el que existe.
+# El sitio no se indexa en buscadores. Los resúmenes públicos para lectura
+# automatizada sí están permitidos.
 User-agent: *
 Allow: /llm.txt
 Allow: /llm-research.txt

@@ -1,20 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&family=Josefin+Sans:wght@300;400;600&display=swap');
-/* Tipografia de AGTA: el dashboard es la HERRAMIENTA, no la marca. Las paginas
-   que muestran la identidad de MAVRA declaran sus fuentes por su cuenta. */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Barlow+Condensed:wght@500;600;700;800&display=swap');
 
-/* Tailwind base va acá arriba; las UTILIDADES van al final del archivo — ver el
-   comentario de allá abajo, que explica por qué. (2026-07-30) */
+
 @tailwind base;
 @tailwind components;
 
-/* Lo único del preflight que hace falta. Está apagado para no arrasar con las
-   2.400 líneas de CSS propio, pero sin estas dos líneas la utilidad `border` de
-   Tailwind da un ancho sobre un estilo `none` y no se ve nada. Van en la capa
-   BASE y no al final: así son el piso, y cualquier borde propio las pisa.
-   Primero lo puse suelto al final y le salió un recuadro a cada elemento de la
-   página — sin `border-width: 0`, forzar el estilo hace que todos hereden el
-   ancho `medium` del navegador. (2026-07-30) */
+
 @layer base {
   *, ::before, ::after { border-width: 0; border-style: solid; border-color: rgba(var(--copper-rgb), 0.35); }
 }
@@ -74,8 +66,7 @@ html {
 }
 
 :root {
-  /* Tipografía de AGTA. El dashboard es la HERRAMIENTA, no la marca: las páginas
-     que muestran la identidad de MAVRA declaran sus fuentes por su cuenta. */
+
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-condensed: 'Barlow Condensed', var(--font-sans);
@@ -129,7 +120,7 @@ a {
   margin: 0;
 }
 
-/* Reveal animation */
+
 .reveal {
   opacity: 0;
   transform: translateY(40px);
@@ -141,7 +132,7 @@ a {
   transform: translateY(0);
 }
 
-/* Global Navigation */
+
 .global-nav {
   position: fixed;
   top: 0;
@@ -155,6 +146,197 @@ a {
   background: rgba(var(--bg-rgb),0.92);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(var(--copper-rgb),0.2);
+}
+
+
+.case-study {
+  --case-ink: #e9e1d5;
+  --case-muted: rgba(233, 225, 213, 0.62);
+  --case-line: rgba(196, 131, 42, 0.26);
+  --case-bright: #d69d4c;
+  background: #0b0a09;
+  color: var(--case-ink);
+  font-family: var(--font-sans);
+}
+
+.case-hero,
+.case-section,
+.case-contact,
+.case-footer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: clamp(1.25rem, 5vw, 5.5rem);
+  padding-right: clamp(1.25rem, 5vw, 5.5rem);
+}
+
+.case-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: min(820px, calc(100vh - 60px));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: clamp(5rem, 13vh, 9rem);
+  padding-bottom: clamp(2.5rem, 7vh, 5rem);
+  border-left: 1px solid rgba(196, 131, 42, 0.12);
+  border-right: 1px solid rgba(196, 131, 42, 0.12);
+  background:
+    linear-gradient(105deg, rgba(11, 10, 9, 0.96) 15%, rgba(11, 10, 9, 0.55) 75%),
+    linear-gradient(0deg, rgba(11, 10, 9, 0.76), transparent 60%),
+    url('/shots/home.jpg') center / cover;
+}
+
+.case-grid-noise {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.32;
+  background-image: linear-gradient(rgba(196, 131, 42, 0.075) 1px, transparent 1px), linear-gradient(90deg, rgba(196, 131, 42, 0.075) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to right, #000, transparent 72%);
+}
+
+.case-language {
+  position: absolute;
+  top: 2rem;
+  right: clamp(1.25rem, 5vw, 5.5rem);
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  font: 600 0.62rem var(--font-mono);
+  letter-spacing: 0.14em;
+  color: rgba(233, 225, 213, 0.42);
+}
+
+.case-language button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0.35rem;
+  color: inherit;
+  cursor: pointer;
+}
+
+.case-language button.active,
+.case-language button:hover { color: var(--case-bright); }
+
+.case-hero-copy { max-width: 780px; }
+.case-eyebrow,
+.case-category,
+.case-section-label {
+  font: 600 0.65rem var(--font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.case-eyebrow { color: var(--case-bright); margin-bottom: 0.8rem; }
+.case-category { color: rgba(233, 225, 213, 0.6); margin-bottom: 1.7rem; }
+.case-hero h1,
+.case-section h2,
+.case-contact h2 {
+  max-width: 900px;
+  font-family: 'Cinzel', serif;
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+.case-hero h1 { font-size: clamp(2.45rem, 6vw, 5.9rem); }
+.case-intro { max-width: 690px; margin-top: 1.8rem; color: var(--case-muted); font-size: clamp(1rem, 1.6vw, 1.2rem); line-height: 1.75; }
+.case-hero-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2.2rem; }
+
+.case-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 43px;
+  padding: 0.65rem 0.95rem;
+  border: 1px solid var(--case-line);
+  font: 600 0.68rem var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.case-button:hover { transform: translateY(-2px); border-color: var(--case-bright); }
+.case-button.primary { border-color: var(--case-bright); background: var(--case-bright); color: #16110b; }
+.case-button.primary:hover { background: #e6ae5d; color: #16110b; }
+.case-button.secondary { color: var(--case-ink); background: rgba(11, 10, 9, 0.36); }
+
+.case-scope-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(3rem, 10vh, 6rem); border-top: 1px solid var(--case-line); }
+.case-scope-grid > div { padding: 1rem 1rem 0 0; border-right: 1px solid var(--case-line); }
+.case-scope-grid > div:not(:first-child) { padding-left: 1rem; }
+.case-scope-grid > div:last-child { border: 0; }
+.case-scope-grid dt { margin-bottom: 0.34rem; font: 0.58rem var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(233, 225, 213, 0.5); }
+.case-scope-grid dd { font-size: 0.82rem; color: var(--case-ink); }
+
+.case-section { padding-top: clamp(4rem, 10vw, 8rem); padding-bottom: clamp(4rem, 10vw, 8rem); border-top: 1px solid var(--case-line); }
+.case-section-label { color: var(--case-bright); margin-bottom: 1.5rem; }
+.case-split-copy { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(230px, 0.75fr); gap: clamp(2rem, 8vw, 10rem); align-items: end; }
+.case-split-copy h2, .case-wide-title { font-size: clamp(2rem, 4.6vw, 4.2rem); }
+.case-split-copy p { color: var(--case-muted); font-size: 1.04rem; line-height: 1.8; }
+.case-wide-title { margin-bottom: clamp(2rem, 5vw, 4.5rem); }
+
+.case-chapter-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--case-line); border-left: 1px solid var(--case-line); }
+.case-chapter { min-height: 290px; display: flex; flex-direction: column; padding: 1.4rem; border-right: 1px solid var(--case-line); border-bottom: 1px solid var(--case-line); background: linear-gradient(135deg, rgba(196,131,42,0.06), transparent 50%); }
+.case-chapter-number { color: var(--case-bright); font: 0.62rem var(--font-mono); letter-spacing: 0.14em; }
+.case-chapter h3 { margin: 2.5rem 0 0.8rem; color: var(--case-ink); font-size: 1.3rem; font-weight: 500; text-transform: none; letter-spacing: 0; }
+.case-chapter p { color: var(--case-muted); font-size: 0.88rem; line-height: 1.7; }
+.case-evidence-links { display: flex; flex-wrap: wrap; gap: 0.6rem 0.9rem; margin-top: auto; padding-top: 1.5rem; }
+.case-evidence-links a, .case-footer a { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--case-bright); font: 0.58rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+
+.case-decision-list { border-top: 1px solid var(--case-line); }
+.case-decision { display: grid; grid-template-columns: 54px minmax(0, 1fr) 24px; gap: 1rem; align-items: start; padding: clamp(1.3rem, 3vw, 2.25rem) 0; border-bottom: 1px solid var(--case-line); transition: padding 180ms ease, background 180ms ease; }
+.case-decision:hover { padding-left: 0.75rem; padding-right: 0.75rem; background: rgba(196,131,42,0.06); }
+.case-decision > span { color: var(--case-bright); font: 0.62rem var(--font-mono); letter-spacing: 0.12em; }
+.case-decision h3 { color: var(--case-ink); font-size: clamp(1.15rem, 2vw, 1.55rem); line-height: 1.3; font-weight: 500; text-transform: none; letter-spacing: 0; }
+.case-decision p { max-width: 740px; margin-top: 0.4rem; color: var(--case-muted); font-size: 0.94rem; line-height: 1.7; }
+.case-decision > svg { color: var(--case-bright); }
+
+.case-proof { background: linear-gradient(100deg, rgba(61,10,30,0.22), transparent 72%); }
+.case-all-evidence { justify-self: end; }
+.case-proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(2.5rem, 5vw, 4.5rem); border-top: 1px solid var(--case-line); }
+.case-proof-grid article { padding: 1.2rem 1rem 0 0; border-right: 1px solid var(--case-line); }
+.case-proof-grid article:not(:first-child) { padding-left: 1rem; }
+.case-proof-grid article:last-child { border-right: 0; }
+.case-proof-grid strong { display: block; font: 400 clamp(2.5rem, 6vw, 4.8rem) 'Cinzel', serif; line-height: 1; color: var(--case-bright); }
+.case-proof-grid h3 { margin-top: 0.8rem; color: var(--case-ink); font-size: 0.84rem; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.case-proof-grid p { margin-top: 0.25rem; color: var(--case-muted); font-size: 0.76rem; line-height: 1.6; }
+
+.case-role ul { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; padding: 0; }
+.case-role li { display: flex; align-items: center; gap: 0.5rem; color: var(--case-ink); font-size: 0.9rem; }
+.case-role li svg { color: var(--case-bright); flex: 0 0 auto; }
+
+.case-contact { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr); gap: clamp(2.5rem, 8vw, 10rem); padding-top: clamp(4rem, 9vw, 7rem); padding-bottom: clamp(4rem, 9vw, 7rem); background: #15100d; }
+.case-contact h2 { font-size: clamp(2rem, 4.3vw, 3.75rem); }
+.case-contact-copy > p:last-child { max-width: 530px; margin-top: 1.3rem; color: var(--case-muted); line-height: 1.75; }
+.case-contact-form { display: grid; gap: 1.15rem; }
+.case-contact-form label { display: grid; gap: 0.45rem; }
+.case-contact-form label span { color: rgba(233,225,213,0.55); font: 0.58rem var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.case-contact-form input, .case-contact-form textarea { width: 100%; border: 0; border-bottom: 1px solid var(--case-line); border-radius: 0; padding: 0.45rem 0; background: transparent; color: var(--case-ink); font: 0.94rem var(--font-sans); outline: none; resize: vertical; }
+.case-contact-form input:focus, .case-contact-form textarea:focus { border-color: var(--case-bright); }
+.case-contact-form button { justify-self: start; margin-top: 0.6rem; cursor: pointer; }
+.case-form-notice { color: var(--case-bright); font-size: 0.8rem; }
+.case-footer { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1.35rem; padding-bottom: 1.35rem; border-top: 1px solid var(--case-line); background: #0b0a09; color: rgba(233,225,213,0.5); font: 0.6rem var(--font-mono); letter-spacing: 0.08em; }
+
+@media (max-width: 900px) {
+  .case-hero { min-height: 720px; }
+  .case-chapter-grid { grid-template-columns: repeat(2, 1fr); }
+  .case-contact { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .case-hero { min-height: 680px; }
+  .case-scope-grid, .case-proof-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem 0; }
+  .case-scope-grid > div:nth-child(2), .case-proof-grid article:nth-child(2) { border-right: 0; }
+  .case-chapter-grid, .case-split-copy { grid-template-columns: 1fr; }
+  .case-chapter { min-height: 240px; }
+  .case-role ul { grid-template-columns: 1fr; }
+  .case-all-evidence { justify-self: start; }
+  .case-footer { align-items: flex-start; flex-direction: column; }
 }
 
 .nav-brand {
@@ -225,7 +407,7 @@ a {
   color: var(--copper);
 }
 
-/* Dropdown groups */
+
 .nav-group {
   position: relative;
   cursor: default;
@@ -233,7 +415,7 @@ a {
   align-items: center;
 }
 
-/* invisible bridge — prevents mouseLeave gap between label and dropdown */
+
 .nav-group::after {
   content: '';
   position: absolute;
@@ -291,7 +473,7 @@ a {
   background: rgba(var(--copper-rgb),0.08);
 }
 
-/* Hamburger button */
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -356,7 +538,7 @@ a {
   }
 }
 
-/* Gate overlay */
+
 .gate-overlay {
   display: none;
   position: fixed;
@@ -436,7 +618,7 @@ a {
   display: block;
 }
 
-/* Footer */
+
 .global-footer {
   text-align: center;
   padding: 3rem 2rem;
@@ -457,7 +639,7 @@ a {
   color: var(--copper);
 }
 
-/* Productos (Skulls) page */
+
 .skull-card {
   border: 1px solid rgba(var(--copper-rgb),0.22);
   background: linear-gradient(180deg, rgba(var(--copper-rgb),0.05), rgba(var(--copper-rgb),0.012));
@@ -502,7 +684,7 @@ a {
   }
 }
 
-/* Copy & Ads page */
+
 .copy-page {
   max-width: 1600px;
   margin: 0 auto;
@@ -518,7 +700,7 @@ a {
   gap: 4rem;
 }
 
-/* Sticky product switcher + section nav */
+
 .copy-sticky {
   position: sticky;
   top: 60px;
@@ -617,7 +799,7 @@ a {
   scroll-margin-top: 178px;
 }
 
-/* Hero — listing preview */
+
 .copy-hero-head {
   display: flex;
   align-items: flex-start;
@@ -715,7 +897,7 @@ a {
   color: rgba(var(--copper-rgb),0.72);
 }
 
-/* Count pills */
+
 .copy-count {
   display: inline-flex;
   align-items: baseline;
@@ -756,7 +938,7 @@ a {
   color: #db9090;
 }
 
-/* Two-column grid */
+
 .copy-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -768,7 +950,7 @@ a {
   min-width: 0;
 }
 
-/* Backend block */
+
 .copy-backend-block {
   margin-top: 1.5rem;
   padding: 1.25rem 1.4rem;
@@ -785,7 +967,7 @@ a {
   margin-bottom: 0.9rem;
 }
 
-/* Campaign — horizontal cards */
+
 .copy-camp-list {
   display: grid;
   gap: 1.1rem;
@@ -940,7 +1122,7 @@ a {
   transform: translateY(-2px);
 }
 
-/* Competidores del nicho (set completo H10) */
+
 .copy-comp-body {
   padding: 0.85rem 1.1rem 1.4rem;
 }
@@ -1028,7 +1210,7 @@ a {
   white-space: nowrap;
 }
 
-/* Tipo chips */
+
 .copy-comp-chips {
   display: inline-flex;
   flex-wrap: wrap;
@@ -1080,7 +1262,7 @@ a {
   border-color: rgba(var(--copper-rgb),0.4);
 }
 
-/* Cómo ganarle row */
+
 .copy-comp-winrow td {
   padding-top: 0.35rem;
   border-bottom: 1px solid rgba(var(--copper-rgb),0.18);
@@ -1112,7 +1294,7 @@ a {
   line-height: 1.55;
 }
 
-/* Sustento de aceptación (A9-A10 · COSMO · VOC) */
+
 .copy-sustento-legend {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -1166,7 +1348,7 @@ a {
   background: rgba(var(--copper-rgb),0.1);
 }
 
-/* Info dot + popover */
+
 .copy-info {
   position: relative;
   display: inline-flex;
@@ -1342,11 +1524,8 @@ a {
   }
 }
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   MKL chart — DataDive-style reverse-ASIN matrix (Skull Lamp)
-   ══════════════════════════════════════════════════════════════════════════════ */
-/* Let direct .copy-product grid-item sections shrink so .mkl-scroll can scroll
-   internally instead of forcing horizontal overflow of the whole page. */
+
+
 .copy-product > .copy-section { min-width: 0; }
 
 .mkl-intro {
@@ -1389,7 +1568,7 @@ a {
   color: rgba(var(--copper-rgb),0.8);
 }
 
-/* competitor coverage — competencia folded into the chart */
+
 .mkl-cov {
   margin-bottom: 1.5rem;
   padding: 1.1rem 1.25rem;
@@ -1459,7 +1638,7 @@ a {
 .mkl-cov-val em { font-style: normal; color: rgba(var(--copper-rgb),0.9); font-size: 0.62rem; }
 .mkl-cov-row.conq .mkl-cov-val em { color: #92bd8c; }
 
-/* legend */
+
 .mkl-legend {
   display: flex;
   flex-wrap: wrap;
@@ -1487,7 +1666,7 @@ a {
   color: rgba(var(--fg-rgb),0.72);
 }
 
-/* controls */
+
 .mkl-controls {
   display: flex;
   flex-wrap: wrap;
@@ -1573,7 +1752,7 @@ a {
 .mkl-modetog button:hover { color: var(--fg); }
 .mkl-modetog button.active { background: rgba(var(--copper-bright-rgb),0.18); color: var(--fg); }
 
-/* matrix */
+
 .mkl-scroll {
   overflow-x: auto;
   border: 1px solid rgba(var(--copper-rgb),0.25);
@@ -1584,20 +1763,11 @@ a {
   border-spacing: 0;
   table-layout: fixed;
   width: 994px;
-  /* Inter con cifras tabulares, la tipografía de AGTA, heredada por TODA la
-     tabla: encabezado, chips, ranks y celdas. Antes cada clase la declaraba por
-     su cuenta y cualquier celda nueva salía con la del body. La mono es solo
-     para código. (2026-07-30) */
+
   font-family: var(--font-sans);
   font-variant-numeric: tabular-nums;
-  /* NADA de font-feature-settings acá. Le había puesto 'cv05', que en Inter es
-     una variante estilística: la ele con cola y el uno con base horizontal. Esos
-     son justamente los dos rasgos que distinguen a una monoespaciada, así que la
-     tabla entera pasaba a "parecer mono" siendo Inter. Frank lo cazó a simple
-     vista. Las cifras tabulares alcanzan para alinear columnas; las variantes de
-     glifo no aportan nada y cambian la voz de la tipografía. (2026-07-30) */
-  /* La tabla es una grilla de datos, no un párrafo: el 1.6 del body la volvía un
-     acordeón y obligaba a scrollear el doble para leer las mismas keywords. */
+
+
   line-height: 1.2;
 }
 .mkl-table.mkl-flat { width: 1190px; }
@@ -1628,9 +1798,7 @@ a {
   white-space: nowrap;
 }
 .mkl-thead .mkl-sticky { background: var(--surface); }
-/* El encabezado va SIEMPRE centrado, aunque la columna sea de texto a la
-   izquierda o numérica a la derecha: la alineación es de las celdas, no del
-   título. (Regla de Frank, 2026-07-31) */
+
 .mkl-th-left { text-align: center; padding-left: 0.85rem; }
 .mkl-th-comp { line-height: 1.1; overflow: hidden; }
 .mkl-sortth { cursor: pointer; user-select: none; }
@@ -1646,7 +1814,7 @@ a {
   margin-top: 0.15rem;
 }
 
-/* root row */
+
 .mkl-root { cursor: pointer; }
 .mkl-root > td { border-bottom: 1px solid rgba(var(--copper-rgb),0.22); border-top: 1px solid rgba(var(--copper-rgb),0.14); }
 .mkl-root-c { padding: 0.3rem 0.85rem; background: rgba(var(--copper-rgb),.14); }
@@ -1679,7 +1847,7 @@ a {
   flex-shrink: 0;
 }
 
-/* keyword rows */
+
 .mkl-krow td {
   padding: 0.16rem 0.4rem;
   border-bottom: 1px solid rgba(var(--copper-rgb),0.08);
@@ -1694,10 +1862,7 @@ a {
   font-family: var(--font-sans);
   text-align: left !important;
   padding-left: 0.8rem !important;
-  /* La keyword se lee de un renglón o no se lee: partirla en tres líneas hace
-     que cada fila mida distinto y la tabla se vuelva un acordeón. Se le da
-     ancho de sobra y, si aun así no entra, se corta con puntos suspensivos —
-     el texto completo queda en el title. */
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1709,8 +1874,7 @@ a {
 .mkl-kw-sec { color: rgba(var(--fg-rgb),0.72); }
 .mkl-kw-long { color: rgba(var(--fg-rgb),0.5); }
 .mkl-num-cell {
-  /* Como en AGTA: los números van en la sans con cifras tabulares. La mono se
-     reserva para código, no para datos. (Corregido 2026-07-30) */
+
   font-family: var(--font-sans);
   font-variant-numeric: tabular-nums;
   color: rgba(var(--fg-rgb),0.85);
@@ -1744,8 +1908,7 @@ a {
 .mkl-match-phrase { color: #cbb78a; border-color: rgba(var(--copper-rgb),0.5); background: rgba(var(--copper-rgb),0.1); }
 .mkl-match-broad { color: rgba(167, 176, 184, 0.9); border-color: rgba(120, 135, 150, 0.35); background: rgba(90, 105, 120, 0.12); }
 
-/* Usage por campo del listing (T/B/D/GK/IH) — lectura DataDive.
-   Verde = exact · naranja = broad · anillo hueco = match por plural · gris = no está. */
+
 .mkl-th-use {
   text-align: center;
   font-size: 0.58rem;
@@ -1798,7 +1961,7 @@ a {
   color: rgba(var(--copper-rgb),0.75);
 }
 
-/* Research page — MKL multi-tab (Main/Residue/Outliers/Negatives) */
+
 .rsch { max-width: 1600px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
 .rsch-head { margin-bottom: 1.5rem; }
 .rsch-eyebrow { font-family: var(--font-sans); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--copper-rgb),0.85); }
@@ -1827,9 +1990,7 @@ a {
 .rsch-flag.sp { color: rgba(167,176,184,0.9); border-color: rgba(120,135,150,0.35); background: rgba(90,105,120,0.12); }
 .rsch-move { font-family: var(--font-sans); font-size: 0.6rem; padding: 0.15rem 0.2rem; background: rgba(var(--bg-rgb),0.6); border: 1px solid rgba(var(--copper-rgb),0.4); color: var(--fg); cursor: pointer; }
 .rsch-foot { margin-top: 0.85rem; font-family: var(--font-sans); font-size: 0.6rem; line-height: 1.6; color: rgba(var(--copper-rgb),0.75); max-width: 90ch; }
-/* La leyenda es larga y solo se lee una vez: plegada por defecto para que la
-   tabla se quede con la pantalla. (Frank, 2026-08-02: "pierdo toda la parte de
-   abajo de tabla por el texto largo que hay ahí") */
+
 .rsch-foot-fold { margin-top: 0.6rem; max-width: 90ch; }
 .rsch-foot-fold > summary {
   cursor: pointer; list-style: none; font-family: var(--font-sans); font-size: 0.6rem;
@@ -1841,9 +2002,7 @@ a {
 .rsch-foot-fold > summary:hover { color: var(--fg); }
 .rsch-foot-fold .rsch-foot { margin-top: 0.5rem; }
 .rsch-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem; }
-/* Cada control ocupa lo suyo y nada más. Sin esto, un hijo sin ancho propio se
-   estira a toda la fila y empuja al resto abajo: el menú de Columnas medía
-   1.700px y la barra ocupaba tres renglones. (2026-07-31) */
+
 .rsch-bar > * { flex: 0 0 auto; }
 .rsch-bar .rsch-search { margin-bottom: 0; }
 .rsch-bulk { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
@@ -1855,8 +2014,7 @@ a {
 .rsch-chk { text-align: center; }
 .rsch-selrow td { background: rgba(var(--copper-bright-rgb),0.08) !important; }
 
-/* "?" en círculo: la ayuda de cada columna. Se muestra con mouse Y con teclado,
-   que es lo que el title= nativo del navegador no hace. */
+
 .rsch-ayuda {
   position: relative;
   display: inline-flex;
@@ -1908,13 +2066,13 @@ a {
 .rsch-ayuda:hover .rsch-ayuda-tip,
 .rsch-ayuda:focus .rsch-ayuda-tip,
 .rsch-ayuda:focus-within .rsch-ayuda-tip { display: block; }
-/* Los headers de competidor recortan el texto largo: el tooltip tiene que poder salirse. */
+
 .rsch-th-comp { overflow: visible; }
 
-/* Sorter: la flecha doble avisa que la columna se puede ordenar sin gritarlo. */
+
 .mkl-sortcaret.dim { opacity: 0.3; }
 .mkl-sortth:hover .mkl-sortcaret.dim { opacity: 0.7; }
-/* En Competidores la tabla está transpuesta: el sorter va en el nombre de la fila. */
+
 .rsch-rowsort {
   background: none;
   border: none;
@@ -1927,7 +2085,7 @@ a {
 .rsch-rowsort:hover { color: var(--fg); }
 .rsch-rowsort.active { color: rgba(var(--copper-bright-rgb),0.95); }
 
-/* Filtro dentro del header, una fila abajo del nombre de la columna. */
+
 .rsch-colfiltro {
   width: 100%;
   min-width: 0;
@@ -1936,12 +2094,9 @@ a {
   font-size: 0.68rem;
 }
 
-/* Menú de columnas escondibles. La primera columna nunca entra: sin ella no se
-   sabe qué fila se está mirando. */
+
 .rsch-cols { position: relative; display: inline-flex; }
-/* El 100% de ancho es para cuando el desplegable vive DENTRO de una celda de
-   filtro, que tiene que llenarla. En la barra de herramientas el mismo botón se
-   estiraba a 1.700px y se comía un renglón entero. (2026-07-31) */
+
 th .rsch-opts-btn { width: 100%; }
 .rsch-cols-menu {
   position: absolute;
@@ -2013,7 +2168,7 @@ th .rsch-opts-btn { width: 100%; }
   }
 }
 
-/* Placeholder pages */
+
 .placeholder-page {
   max-width: 900px;
   margin: 0 auto;
@@ -2034,11 +2189,8 @@ th .rsch-opts-btn { width: 100%; }
   font-size: 1rem;
 }
 
-/* Origen del dato en el encabezado del MKL: H = viene de Helium 10, A = lo
-   calcula AGTA. Es la diferencia entre ser un visor de la herramienta del
-   usuario y ser el motor que le agrega algo. */
-/* El origen del dato NO ocupa lugar: aparece al pasar el mouse por el
-   encabezado. Con 20 columnas, un sello permanente en cada una es ruido. */
+
+
 .rsch-origen {
   position: absolute;
   left: 50%;
@@ -2062,35 +2214,19 @@ th .rsch-opts-btn { width: 100%; }
 .rsch-origen-h10 { background: rgba(148, 163, 184, 0.18); color: #94a3b8; }
 .rsch-origen-agta { background: rgba(74, 222, 128, 0.18); color: #4ade80; }
 
-/* ── MKL a pantalla completa ────────────────────────────────────────────────
-   La herramienta y el informe no comparten pantalla: el veredicto del nicho
-   vive en su propia pestaña y el MKL usa todo el ancho y todo el alto, como
-   DataDive. Entrás y es la tabla. */
+
 .rsch.rsch-full { max-width: none; padding: 1rem 1rem 1.5rem; }
 .rsch-full .mkl-scroll { overflow: auto; max-height: calc(100vh - 210px); }
-/* Encabezado pegado: al scrollear cien filas seguís sabiendo qué columna mirás.
-   Son TRES filas — grupos, títulos y filtros — y cada una arranca donde termina
-   la anterior.
 
-   Los altos NO van fijos en píxeles: dependen de la tipografía, y con un 26px
-   escrito a mano la tercera fila quedaba en top:0 y el encabezado entero se
-   montaba sobre la primera fila de datos. Los mide el componente y los escribe
-   en estas variables. Los valores de acá son solo el respaldo. */
-/* El z-index del encabezado tiene que ganarle SIEMPRE a las celdas fijas de la
-   izquierda del cuerpo (que están en 2). Con la tercera fila en 2 empataban, y
-   en un empate gana lo que viene después en el DOM: los valores se dibujaban
-   encima de los títulos. Por eso el thead arranca en 6 y sube. */
-/* Y el fondo OPACO es lo que faltaba: un encabezado pegado pero transparente
-   deja ver las filas pasando por detrás, y el resultado se lee como texto
-   encimado sobre los títulos. Era eso, no la altura. */
+
+
 .rsch-full .mkl-thead th { position: sticky; top: 0; z-index: 8; background: var(--surface); }
 .rsch-full .mkl-thead tr:nth-child(2) th { top: var(--mkl-th1, 26px); z-index: 7; }
 .rsch-full .mkl-thead tr:nth-child(3) th {
   top: calc(var(--mkl-th1, 26px) + var(--mkl-th2, 35px));
   z-index: 6;
 }
-/* La keyword queda fija a la izquierda: con 20 columnas y competidores, sin
-   esto se scrollea a ciegas. */
+
 .rsch-full .mkl-krow td:nth-child(2),
 .rsch-full .mkl-thead th:nth-child(2) { position: sticky; left: 0; z-index: 2; background: var(--bg); }
 .rsch-full .mkl-thead th:nth-child(2) { z-index: 5; background: var(--surface); }
@@ -2100,13 +2236,12 @@ th .rsch-opts-btn { width: 100%; }
 .rsch-full .mkl-krow td:nth-child(2),
 .rsch-full .mkl-thead th:nth-child(2) { left: 30px; }
 
-/* Columna que se está arrastrando para reordenar. */
+
 .mkl-th[draggable='true'] { cursor: grab; }
 .mkl-th.rsch-dragging { opacity: 0.45; }
 .mkl-th.rsch-dropzone { box-shadow: inset 2px 0 0 #e0a94c; }
 
-/* Filtro de columna categórica: en vez de escribir "exact" a mano, se tildan
-   los valores que existen en la data. Es el filtro de Excel. */
+
 .rsch-opts { position: relative; display: block; }
 .rsch-opts-btn {
   padding: 0.25rem 0.35rem;
@@ -2162,8 +2297,7 @@ th .rsch-opts-btn { width: 100%; }
   cursor: pointer;
 }
 
-/* Foto y título del competidor. Ver contra quién competís es la mitad del
-   análisis: el precio y las reseñas no dicen si el producto se parece al tuyo. */
+
 .rsch-comp-foto {
   display: block;
   width: 84px;
@@ -2183,14 +2317,10 @@ th .rsch-opts-btn { width: 100%; }
   color: rgba(var(--fg-rgb),0.75);
 }
 
-/* ── El informe del nicho ──────────────────────────────────────────────────
-   Vive en el mismo contenedor a pantalla completa que el MKL (cambiar de
-   pestaña no mueve nada de lugar) y usa TODO el ancho: titular a lo largo,
-   cifras en fila, y abajo dos columnas. Antes era una columna angosta con el
-   número en un borde y su etiqueta en el otro. */
+
 .rsch-informe { display: flex; flex-direction: column; gap: 1.4rem; }
 
-/* Titular: el veredicto en grande, la lectura al lado. */
+
 .rsch-inf-hero {
   display: grid;
   grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
@@ -2220,7 +2350,7 @@ th .rsch-opts-btn { width: 100%; }
   color: rgba(var(--fg-rgb),0.92);
 }
 
-/* Cifras: tarjetas en fila, número arriba y etiqueta debajo. */
+
 .rsch-inf-cifras {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -2245,7 +2375,7 @@ th .rsch-opts-btn { width: 100%; }
   font-size: 0.7rem; color: rgba(var(--fg-rgb),0.45);
 }
 
-/* Dos columnas abajo: el porqué y la puerta de entrada. */
+
 .rsch-inf-cols { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.9fr); gap: 1.4rem; align-items: start; }
 .rsch-inf-bloque { border: 1px solid rgba(var(--copper-rgb),0.22); padding: 1.2rem 1.4rem; }
 .rsch-inf-h2 {
@@ -2259,7 +2389,7 @@ th .rsch-opts-btn { width: 100%; }
 .rsch-inf-razones li:last-child { margin-bottom: 0; }
 .rsch-inf-nota { margin: 0.9rem 0 0; font-family: var(--font-sans); font-size: 0.75rem; line-height: 1.6; color: rgba(var(--fg-rgb),0.5); }
 
-/* La puerta de entrada como tabla: la keyword pesa, los números se alinean. */
+
 .rsch-inf-tabla { width: 100%; border-collapse: collapse; font-family: var(--font-sans); }
 .rsch-inf-tabla td { padding: 0.4rem 0; border-bottom: 1px solid rgba(var(--copper-rgb),0.12); font-size: 0.78rem; color: rgba(var(--fg-rgb),0.88); }
 .rsch-inf-tabla tr:last-child td { border-bottom: none; }
@@ -2272,8 +2402,7 @@ th .rsch-opts-btn { width: 100%; }
 }
 
 
-/* Fila de familias del header: agrupa las 20 columnas en 5 bloques para saber
-   qué se está mirando antes de leer el nombre de cada una. */
+
 .mkl-grupo-th {
   font-size: 0.55rem;
   letter-spacing: 0.12em;
@@ -2283,12 +2412,11 @@ th .rsch-opts-btn { width: 100%; }
   padding: 0.4rem 0.5rem 0.3rem;
   background: rgba(var(--copper-rgb),0.10);
 }
-/* El corte entre familias baja por TODA la tabla: sin esa línea, la fila de
-   grupos parece una hilera de palabras sueltas en vez de agrupar columnas. */
+
 .mkl-corte { border-left: 2px solid rgba(var(--copper-rgb),0.4) !important; }
 .mkl-grupos th + th { border-left: 2px solid rgba(var(--copper-rgb),0.4); }
 
-/* Leyenda: qué quiere decir cada color, antes de la tabla y no en el pie. */
+
 .rsch-leyenda {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -2310,55 +2438,36 @@ th .rsch-opts-btn { width: 100%; }
   color: rgba(var(--copper-rgb),0.85);
   margin-right: 0.2rem;
 }
-/* Cada item en su renglon y con la muestra a ancho fijo, para que las etiquetas
-   arranquen todas en la misma columna. */
+
 .rsch-ley-i { display: grid; grid-template-columns: 3.2em 1fr; align-items: center; gap: 0.55rem; white-space: nowrap; }
-/* La muestra va centrada en su columna: los chips (SBV, AC, libre) miden
-   distinto que un numero y alineados a la derecha quedaban desparejos. */
+
 .rsch-ley-i > :first-child { justify-self: center; text-align: center; font-variant-numeric: tabular-nums; }
 .rsch-ley-i .rsch-flag { margin: 0; }
 
-/* Botón de barra en estado activo (ej. "Datos: solo AGTA"). */
+
 .rsch-bulk-btn.on { background: rgba(var(--copper-bright-rgb),0.2); color: var(--fg); border-color: rgba(var(--copper-bright-rgb),0.7); }
 
 
-/* ── Estabilidad entre pestañas ────────────────────────────────────────────
-   Cambiar de pestaña no puede mover nada de lugar: si la descripción de una
-   lista ocupa tres líneas y la de otra una, todo lo de abajo salta y el cursor
-   queda sobre otro botón. Se reserva la altura de las zonas variables. */
+
 .rsch-tabdesc { min-height: 3.4rem; max-width: 92ch; }
 .rsch-bar { min-height: 2.4rem; }
-/* Los contadores de las pestañas tienen ancho fijo: con 6.179 y 21 la pestaña
-   cambiaba de ancho y las de al lado se corrían. */
+
 .rsch-tab-n { display: inline-block; min-width: 2.6em; text-align: right; }
 .rsch-tabs { min-height: 2.1rem; }
 
 
-/* Altura fija del área de tabla: con 6.179 filas o con 21, el bloque mide lo
-   mismo, así cambiar de pestaña no mueve nada de lo que hay debajo.
-   2026-08-02: era `100vh - 260px` y Frank perdía las últimas filas — los 260
-   los comían la descripción de la pestaña y la leyenda del pie, que juntas son
-   más de veinte líneas de texto. La leyenda ahora se pliega (.rsch-foot) y el
-   alto sube a `100vh - 180px`: unas cinco filas más a la vista, sin tocar nada
-   de lo que ya estaba quieto. */
+
 .rsch-full .mkl-scroll { height: calc(100vh - 180px); max-height: none; }
-/* Los anchos los declara el <colgroup> del componente, no el contenido: con
-   `auto` bastaba una keyword mas larga en otra pestaña para que se corrieran
-   TODAS las columnas. `fixed` respeta el colgroup y la tabla queda quieta.
-   (Frank, 2026-07-30: "asegurate que las filas no se rompan cambiando entre
-   tabs por el tamaño del kw ni la columna root") */
+
 .rsch-full .mkl-table.mkl-fija { table-layout: fixed; }
 
 
-/* Un encabezado con la ayuda abierta pasa por encima de sus vecinos: los th
-   sticky crean su propio contexto de apilamiento y, sin esto, el tooltip queda
-   tapado por la columna de al lado. */
+
 .mkl-th:hover, .mkl-th:focus-within { z-index: 40 !important; }
 .rsch-full .mkl-thead th:hover { z-index: 40 !important; }
 
 
-/* El "?" y las marcas: centrado optico de verdad. El glifo de Josefin Sans
-   tiene bearing propio, asi que con flex solo no queda al medio. */
+
 .rsch-ayuda > span[aria-hidden] {
   display: block;
   width: 100%;
@@ -2372,24 +2481,17 @@ th .rsch-opts-btn { width: 100%; }
   padding: 0.1rem 0.32rem;
 }
 
-/* Precio de referencia: el veredicto depende de a que precio pensas vender, y
-   eso no puede estar clavado en el codigo. */
+
 .rsch-precio { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-sans); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(var(--fg-rgb),0.6); }
 .rsch-precio input { width: 74px; padding: 0.24rem 0.4rem; background: rgba(var(--bg-rgb),0.6); border: 1px solid rgba(var(--copper-rgb),0.5); color: var(--fg); font-family: var(--font-sans); font-size: 0.72rem; font-variant-numeric: tabular-nums; }
 
 
-/* ── De dónde sale cada dato ───────────────────────────────────────────────
-   El sello flotante quedaba descolgado entre el encabezado y los filtros. El
-   origen ahora es el COLOR de la columna: amarillo AGTA lo que calcula el
-   motor, azul Helium lo que viene de la herramienta. Sin ocupar una línea. */
+
 .mkl-th[data-origen='agta'] { background: rgba(255,230,0,0.11); }
 .mkl-th[data-origen='h10'] { background: rgba(96,165,250,0.11); }
 .mkl-krow td[data-origen='agta'] { background: rgba(255,230,0,0.035); }
 .mkl-krow td[data-origen='h10'] { background: rgba(96,165,250,0.035); }
-/* En el encabezado PEGADO el tinte de origen no puede ir como color de fondo
-   translúcido: pisaba el fondo opaco y las filas volvían a verse por detrás al
-   scrollear. Va como capa encima de un fondo sólido — mismo color a la vista,
-   pero opaco. */
+
 .rsch-full .mkl-thead th[data-origen='agta'] {
   background-color: var(--surface);
   background-image: linear-gradient(rgba(255,230,0,0.13), rgba(255,230,0,0.13));
@@ -2398,13 +2500,12 @@ th .rsch-opts-btn { width: 100%; }
   background-color: var(--surface);
   background-image: linear-gradient(rgba(96,165,250,0.13), rgba(96,165,250,0.13));
 }
-/* muestras de la leyenda */
+
 .rsch-ley-agta, .rsch-ley-h10 { display: inline-block; width: 22px; height: 11px; border-radius: 2px; }
 .rsch-ley-agta { background: rgba(255,230,0,0.35); border: 1px solid rgba(255,230,0,0.5); }
 .rsch-ley-h10 { background: rgba(96,165,250,0.35); border: 1px solid rgba(96,165,250,0.5); }
 
-/* Modo "sin Helium 10": la columna sigue en su lugar pero el dato no está —
-   así se ve cuánto del análisis depende de tener la herramienta conectada. */
+
 .mkl-tapada {
   display: inline-block;
   padding: 0 0.3rem;
@@ -2426,7 +2527,7 @@ th .rsch-opts-btn { width: 100%; }
   color: rgba(var(--fg-rgb),0.82);
 }
 
-/* Aviso de trabajo guardado (correcciones a mano sobre la master). */
+
 .rsch-guardado {
   display: flex;
   align-items: center;
@@ -2440,13 +2541,7 @@ th .rsch-opts-btn { width: 100%; }
 }
 .rsch-guardado b { color: #e0a94c; font-variant-numeric: tabular-nums; }
 
-/* Tipografía de números, el sistema de AGTA completo (2026-07-30, tercera vuelta).
-   Antes solo estaba puesta la regla de las tablas, que era la correcta pero no la
-   unica. En AGTA hay TRES tratamientos y cada numero usa el que le toca:
-     · tabla        -> Inter + tabular-nums   (.mkl-num-cell, ya estaba)
-     · KPI grande   -> Barlow Condensed 800   (aca abajo)
-     · input        -> JetBrains Mono         (aca abajo)
-   La mono NO es para mostrar datos: es para lo que se teclea y para codigo. */
+
 .rsch-inf-cifra b,
 .rsch-stat b,
 .mkl-stat-num {
@@ -2459,12 +2554,10 @@ th .rsch-opts-btn { width: 100%; }
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
-/* Los filtros de columna NO van en mono aunque sean inputs: miden 40-70px y la
-   mono es mas ancha, asi que el placeholder se corta a la mitad. La mono de AGTA
-   es para inputs de calculadora, que son grandes. */
+
 .rsch-colfiltro { font-variant-numeric: tabular-nums; }
 
-/* ── Filtro numérico por rango (reemplaza la caja de texto) ───────────────── */
+
 .rsch-rango { min-width: 190px; padding: 0.55rem 0.6rem; }
 .rsch-rango-fila { display: flex; gap: 0.45rem; }
 .rsch-rango-fila label {
@@ -2500,11 +2593,7 @@ th .rsch-opts-btn { width: 100%; }
 }
 .rsch-rango-ayuda b { color: rgba(var(--fg-rgb), 0.88); font-variant-numeric: tabular-nums; }
 
-/* Prioridad de apilamiento del encabezado. Antes el th con la ayuda abierta y el
-   th del filtro con foco empataban los dos en 40, y al empatar gana el que está
-   después en el DOM — la fila de filtros. Por eso el tooltip salía TAPADO por el
-   input de abajo: no era que faltara z-index, era que sobraba en el otro.
-   (Frank lo vio en pantalla, 2026-07-30) */
+
 .mkl-th:focus-within { z-index: 50 !important; }
 .mkl-th:has(.rsch-ayuda:hover),
 .mkl-th:has(.rsch-ayuda:focus-within),
@@ -2512,48 +2601,31 @@ th .rsch-opts-btn { width: 100%; }
 .rsch-ayuda-tip { z-index: 90; }
 
 
-/* ── Tailwind: las utilidades, al FINAL y a propósito ─────────────────────────
-   Primero las puse arriba y las clases no hacían nada: el CSS propio venía
-   después y ganaba por orden de cascada, con la misma especificidad. Una
-   utilidad tiene que poder pisar lo que ya está escrito, así que va última.
 
-   El default de bordes que necesita `border` para verse está arriba, en la capa
-   base — abajo no puede ir: pisaría los bordes propios en vez de servirles de
-   piso. */
 @tailwind utilities;
 
 
-/* La descripción de cada pestaña, a dos renglones exactos. Cada bucket tiene un
-   texto de largo distinto y eso movía la tabla de lugar al cambiar de pestaña:
-   la primera fila aparecía más arriba o más abajo y el ojo perdía la referencia.
-   El texto entero sigue disponible en el tooltip. (Frank, 2026-07-31) */
+
 .rsch-tabdesc-fija {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  /* El line-height va explícito: si lo hereda del body (1.6) el min-height
-     calculado con 1.5 no coincide y quedan 3px de diferencia entre una pestaña
-     de una línea y otra de dos. Con los dos números atados, la tabla arranca
-     siempre en el mismo pixel. */
+
   line-height: 1.5;
   min-height: 3em;
   margin-bottom: 0.5rem;
 }
 
 
-/* NINGUNA celda parte en dos lineas. Alcanzaba con que un root fuera de dos
-   palabras —"spooky candlestick"— para que esa fila midiera el doble y la tabla
-   quedara despareja. La keyword ya lo tenia; faltaba el resto.
-   El texto completo sigue disponible en el title de la celda.
-   (Frank, 2026-07-31: "se siguen rompiendo las filas por roots") */
+
 .mkl-krow td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* ══ Módulo de campañas ══════════════════════════════════════════════════════ */
+
 .cmp-page { max-width: 1500px; margin: 0 auto; padding: 6.5rem 2rem 5rem; }
 .cmp-head h1 {
   font-family: var(--font-condensed);
@@ -2712,7 +2784,7 @@ th .rsch-opts-btn { width: 100%; }
 }
 .cmp-banco-head p { font-family: var(--font-sans); font-size: 0.68rem; line-height: 1.6; color: rgba(var(--fg-rgb),0.5); }
 
-/* Título ≤75 + Item Highlight, arriba del MKL */
+
 .tih { border: 1px solid rgba(var(--fg-rgb),0.1); padding: 0.9rem 1rem; margin-bottom: 1.5rem; background: rgba(var(--fg-rgb),0.015); }
 .tih-head { margin-bottom: 0.75rem; }
 .tih-lbl {
@@ -2731,7 +2803,7 @@ th .rsch-opts-btn { width: 100%; }
 .tih-count { flex: none; font-family: var(--font-sans); font-size: 0.62rem; color: rgba(var(--fg-rgb),0.45); }
 .tih-vivo code { color: rgba(var(--fg-rgb),0.45); }
 
-/* ══ Checklist de lanzamiento ════════════════════════════════════════════════ */
+
 .lnc-page { max-width: 1000px; margin: 0 auto; padding: 6.5rem 2rem 5rem; }
 .lnc-head h1 {
   font-family: var(--font-condensed); font-size: clamp(1.8rem,4vw,2.8rem);
