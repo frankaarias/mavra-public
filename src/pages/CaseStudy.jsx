@@ -7,8 +7,8 @@ import '../case-study-evidence.css'
 const COPY = {
   en: {
     language: 'ES',
-    eyebrow: 'Frank Arias · Case Study 01',
-    category: 'Amazon Growth Transformation Architects · Case Study',
+    eyebrow: 'Amazon Growth Transformation Architects · Case Study',
+    category: 'Amazon Brand Management',
     title: 'One Amazon brand. One connected system.',
     intro: 'MAVRA is a proof-of-work case study: a dark-home brand developed from market understanding through Amazon retail execution and launch operations.',
     primary: 'Explore the system',
@@ -42,8 +42,8 @@ const COPY = {
   },
   es: {
     language: 'EN',
-    eyebrow: 'Frank Arias · Caso de estudio 01',
-    category: 'Amazon Growth Transformation Architects · Caso de estudio',
+    eyebrow: 'Amazon Growth Transformation Architects · Caso de estudio',
+    category: 'Brand Management para Amazon',
     title: 'Una marca de Amazon. Un sistema conectado.',
     intro: 'MAVRA es un caso de estudio con prueba documental: una marca de dark home desarrollada desde el entendimiento del mercado hasta la ejecución retail en Amazon y la operación de lanzamiento.',
     primary: 'Explorar el sistema',
