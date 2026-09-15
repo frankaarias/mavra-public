@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { lazy, Suspense } from 'react'
 
 // Las dos paginas del visor de research pesan 11,3 MB en datos — el 93% del
@@ -7,6 +8,7 @@ const CopyAds = lazy(() => import('./pages/CopyAds.jsx'))
 const Research = lazy(() => import('./pages/Research.jsx'))
 const Cargando = () => <div style={{ padding: '4rem 2rem', fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(var(--copper-rgb),0.6)' }}>Cargando…</div>
 import Navbar from './components/Navbar.jsx'
+import ScrollToRouteStart from './components/ScrollToRouteStart.jsx'
 import Home from './pages/Home.jsx'
 import CaseStudy from './pages/CaseStudy.jsx'
 import BrandGuidelines from './pages/BrandGuidelines.jsx'
@@ -30,6 +32,7 @@ import Avatares from './pages/Avatares.jsx'
 export default function App() {
   return (
     <>
+      <ScrollToRouteStart />
       <Navbar />
       <Suspense fallback={<Cargando />}>
       <Routes>
