@@ -2674,6 +2674,23 @@ th .rsch-opts-btn { width: 100%; }
   margin-bottom: 0.5rem;
 }
 
+/* 🔴 LOS NÚMEROS USAN LA MISMA PILA QUE EL MKL DE AGTA, QUE NO ES INTER.
+   Frank, 2026-09-15: «la fuente tipografica de los numeros!!», con la captura
+   del MKL delante.
+   ⚠️ Antes le dije que la familia «ya era la misma» y estaba MAL: comparé Inter
+   contra Inter DENTRO de /research, no /research contra app.agta.io. Medido en
+   las dos:
+       app.agta.io   ui-sans-serif, -apple-system, «Segoe UI», system-ui
+       /research     Inter
+   Son fuentes distintas, y sus cifras se ven distintas. Verificar dentro de una
+   sola de las dos páginas no compara nada.
+   La pila del sistema va SOLO en las celdas numéricas: el texto de la tabla y el
+   resto de la web conservan Inter, que es la voz de MAVRA. */
+.mkl-num-cell,
+.rsch-full .mkl-krow td {
+  font-family: ui-sans-serif, -apple-system, 'Segoe UI', system-ui, sans-serif;
+}
+
 /* 🔴 LA TABLA SE LEE COMO LA DEL MKL: SIN VERSALITAS NI TRACKING.
    Frank, 2026-09-15: «usa la misma tipografia fuente para los numeros y las
    letras como en los mkl de app.agta.io».

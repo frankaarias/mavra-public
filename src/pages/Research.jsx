@@ -123,7 +123,6 @@ const INFO = {
 const COLS = [
   // Grupo 1 — de qué término estamos hablando
   { k: 'kw', origen: 'h10', grupo: 'Término', label: 'Keyword', align: 'left', tipo: 'texto' },
-  { k: 'root', origen: 'agta', grupo: 'Término', label: 'Root', align: 'left', tipo: 'texto' },
   // Grupo 2 — cuánta demanda hay y de qué clase
   { k: 'vol', origen: 'h10', grupo: 'Demanda', label: 'Vol', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
   { k: 'sales', origen: 'h10', grupo: 'Demanda', label: 'Vtas', align: 'right', tipo: 'num' },
@@ -1020,7 +1019,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
   //
   // 96 = «1,333,788» (el mayor de Competing Products) a 15,68px con Inter, más
   // los 16 px de padding y los 2 del borde de grupo, que también restan ancho.
-  const anchoDe = (c) => (c.k === 'kw' ? 250 : c.k === 'root' ? 108 : c.k === 'match' ? 150
+  const anchoDe = (c) => (c.k === 'kw' ? 250 : c.k === 'match' ? 150
     : c.k === 'veredicto' ? 112 : c.tipo === 'opciones' ? 86 : 96)
   // `table-layout: fixed` solo respeta el colgroup si la tabla tiene un ancho
   // declarado. Con `width: auto` el navegador vuelve al reparto automático y el
