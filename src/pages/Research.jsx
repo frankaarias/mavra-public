@@ -1,4 +1,6 @@
 import { Fragment, useMemo, useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react'
+import useMavraLanguage from '../components/useMavraLanguage.js'
+import { traducir } from './researchI18n.js'
 import { Ayuda as TooltipRadix, Menu as MenuRadix, ProveedorAyuda } from '../components/ui/Flotantes'
 import { traerCorrecciones, guardarCorrecciones } from '../lib/correcciones'
 import { Boton, Buscador, Iconos } from '../components/ui/BarraHerramientas'
@@ -14,7 +16,7 @@ import LISTING_COPY from '../data/listing_copy.json'
 // Ficha de cada competidor por ASIN (foto, marca, título, precio, reseñas, rating).
 // El reverse-ASIN solo devuelve el ASIN y los ranks: esto lo completa.
 import COMP_INFO from '../data/competidores_info.json'
-import { USAGE_FIELDS, usageValor, USAGE_COLOR, USAGE_HUECO, USAGE_AYUDA, SIN_CAMPO, NO_ESTA } from '../lib/listingUsage'
+import { USAGE_FIELDS, usageValor, USAGE_COLOR, USAGE_HUECO, USAGE_AYUDA, USAGE_AYUDA_EN, SIN_CAMPO, NO_ESTA } from '../lib/listingUsage'
 
 // Los tres MKL de MAVRA. LMP sale del export de Cerebro (matriz completa por ASIN);
 // CND y SWD se reconstruyeron con el MCP de H10, una llamada por competidor, para
@@ -62,20 +64,46 @@ const TOOLS = ['Roots', 'Veredicto', 'Competidores']
 // de ayuda se arman una sola vez.
 const S = lmp.meta.settings
 
-const TAB_DESC = {
-  MKL: `Keywords obtenidas de los competidores seleccionados, filtradas por las que comparten al menos ${S.min_comp} de ellos en la primera página, con un volumen mínimo de ${S.min_sv} búsquedas al mes.`,
-  Outliers: `Keywords con ${S.outlier_min_sv.toLocaleString('en-US')} búsquedas mensuales o más que menos de ${S.outlier_max_comp} de los competidores tienen en la primera página.`,
-  Residue: 'Keywords que algún competidor rankea pero que no llegan al mínimo de competidores compartidos ni al volumen de un outlier.',
-  Negatives: 'Keywords que comparten vocabulario con el nicho pero describen otro producto.',
-  Descartadas: `Keywords donde ninguno de los competidores aparece ni en el top ${S.max_rank}.`,
-  UKL: 'El universo del nicho, no el mundo de tus competidores. El MKL sale del reverse ASIN, así que solo puede devolver términos donde alguno de ellos ya rankea; esta lista sale de Magnet por roots y trae lo que se busca en el nicho aunque ninguno esté ahí. Por eso la columna de relevancy va en rayita: la ausencia es el dato. Cada keyword lleva dos etiquetas independientes — cuándo se puede atacar y para qué sirve.',
-  Veredicto: 'La lectura del nicho antes de entrar: si conviene, por qué, y por dónde. Es la decisión que se toma una vez; el resto de las pestañas es el trabajo de todos los días.',
-  Roots: 'Las palabras que se repiten a lo largo del núcleo. La frecuencia dice en cuántas keywords aparece cada una; el volumen broad, cuánto tráfico mueve la familia entera. Cada root es una campaña de PPC, y se ataca de a uno por vez. Marca uno o varios para ver sus keywords al lado.',
-  Normalizer: 'El núcleo sin plurales ni conjunciones, agrupado por forma. Sirve para una cosa concreta: detectar cuándo estás diciendo lo mismo de tres maneras distintas. En PPC esas tres variantes compiten entre sí y te suben el costo por clic. Las campañas no se arman desde acá: se arman por root.',
-  Competidores: 'Quién es quién en el nicho, medido contra la mediana. Cobertura, share y fuerza se recalculan con los buckets actuales: si mueves keywords, estos números se mueven. Precio, reseñas, edad y actividad de venta salen de Keepa — dato observado, no estimado.',
+// 🔴 LOS TEXTOS DE LA PANTALLA, EN LOS DOS IDIOMAS.
+//
+// El selector EN/ES del sitio funcionaba y esta página no lo escuchaba: estaba
+// escrita solo en castellano, así que pulsar EN no cambiaba una palabra — y el
+// sitio arranca en inglés por defecto, o sea que un visitante veía «EN» marcado
+// sobre una página en español.
+//
+// 🔑 QUÉ NO SE TRADUCE, Y ES A PROPÓSITO: los nombres del método —`MKL`, `UKL`,
+// `Relevancy`, `share of voice`, `reverse ASIN`, `P1`, `root`, `outlier`— se
+// quedan igual en las dos versiones. Un vendedor de Amazon ya los usa en inglés;
+// traducirlos haría la versión inglesa MENOS clara, no más.
+const TAB_DESC_I18N = {
+  es: {
+    MKL: `Keywords obtenidas de los competidores seleccionados, filtradas por las que comparten al menos ${S.min_comp} de ellos en la primera página, con un volumen mínimo de ${S.min_sv} búsquedas al mes.`,
+    Outliers: `Keywords con ${S.outlier_min_sv.toLocaleString('en-US')} búsquedas mensuales o más que menos de ${S.outlier_max_comp} de los competidores tienen en la primera página.`,
+    Residue: 'Keywords que algún competidor rankea pero que no llegan al mínimo de competidores compartidos ni al volumen de un outlier.',
+    Negatives: 'Keywords que comparten vocabulario con el nicho pero describen otro producto.',
+    Descartadas: `Keywords donde ninguno de los competidores aparece ni en el top ${S.max_rank}.`,
+    UKL: 'El universo del nicho, no el mundo de tus competidores. El MKL sale del reverse ASIN, así que solo puede devolver términos donde alguno de ellos ya rankea; esta lista sale de Magnet por roots y trae lo que se busca en el nicho aunque ninguno esté ahí. Por eso la columna de relevancy va en rayita: la ausencia es el dato. Cada keyword lleva dos etiquetas independientes — cuándo se puede atacar y para qué sirve.',
+    Veredicto: 'La lectura del nicho antes de entrar: si conviene, por qué, y por dónde. Es la decisión que se toma una vez; el resto de las pestañas es el trabajo de todos los días.',
+    Roots: 'Las palabras que se repiten a lo largo del núcleo. La frecuencia dice en cuántas keywords aparece cada una; el volumen broad, cuánto tráfico mueve la familia entera. Cada root es una campaña de PPC, y se ataca de a uno por vez. Marca uno o varios para ver sus keywords al lado.',
+    Normalizer: 'El núcleo sin plurales ni conjunciones, agrupado por forma. Sirve para una cosa concreta: detectar cuándo estás diciendo lo mismo de tres maneras distintas. En PPC esas tres variantes compiten entre sí y te suben el costo por clic. Las campañas no se arman desde acá: se arman por root.',
+    Competidores: 'Quién es quién en el nicho, medido contra la mediana. Cobertura, share y fuerza se recalculan con los buckets actuales: si mueves keywords, estos números se mueven. Precio, reseñas, edad y actividad de venta salen de Keepa — dato observado, no estimado.',
+  },
+  en: {
+    MKL: `Keywords taken from the selected competitors, filtered down to the ones at least ${S.min_comp} of them hold on page one, with a minimum of ${S.min_sv} searches a month.`,
+    Outliers: `Keywords with ${S.outlier_min_sv.toLocaleString('en-US')} monthly searches or more that fewer than ${S.outlier_max_comp} competitors hold on page one.`,
+    Residue: 'Keywords some competitor ranks for, but that reach neither the shared-competitor minimum nor the volume of an outlier.',
+    Negatives: 'Keywords that share vocabulary with the niche but describe a different product.',
+    Descartadas: `Keywords where none of the competitors shows up, not even in the top ${S.max_rank}.`,
+    UKL: 'The universe of the niche, not the world of your competitors. The MKL comes from reverse ASIN, so it can only return terms where one of them already ranks; this list comes from Magnet by roots and brings what the niche searches for even when none of them is there. That is why the relevancy column shows a dash: the absence is the finding. Each keyword carries two independent labels — when it can be attacked and what it is good for.',
+    Veredicto: 'Reading the niche before entering: whether it is worth it, why, and through where. This is the decision you make once; the rest of the tabs are the everyday work.',
+    Roots: 'The words that repeat across the core. Frequency says how many keywords each one appears in; broad volume, how much traffic the whole family moves. Each root is a PPC campaign, and you attack them one at a time. Tick one or several to see their keywords alongside.',
+    Normalizer: 'The core without plurals or conjunctions, grouped by form. It serves one concrete purpose: spotting when you are saying the same thing three different ways. In PPC those three variants bid against each other and push your cost per click up. Campaigns are not built from here: they are built by root.',
+    Competidores: 'Who is who in the niche, measured against the median. Coverage, share and strength recalculate with the current buckets: move keywords and these numbers move. Price, reviews, age and sales activity come from Keepa — observed data, not estimated.',
+  },
 }
 
-const INFO = {
+const INFO_I18N = {
+  es: {
   use_T: `Título — ${USAGE_AYUDA}`,
   use_B: `Viñetas — ${USAGE_AYUDA}`,
   use_D: `Descripción — ${USAGE_AYUDA}`,
@@ -115,12 +143,49 @@ const INFO = {
   trend: 'Tendencia — cómo se mueve el volumen. Arriba de +80% es una keyword de TEMPORADA: si tu producto es de año redondo, ese volumen no es tuyo aunque sea enorme.',
   price_fit: 'Precio — precio POR UNIDAD mediano de los que rankean ahí ÷ el precio que tengas escrito arriba. Debajo de 60% ahí compran mucho más barato (otro comprador); arriba de 160% cobran más que tú y podrías subir.',
   veredicto: 'Eval — las señales en una palabra, con el nombre del KPI que la disparó. ATACAR: precio y conversión en rango. PRECIO SUPERIOR / PRECIO INFERIOR: el precio promedio de quienes rankean el término está por encima o por debajo del tuyo. CVR BAJO: el KW CVR está muy por debajo de la mediana del nicho. ESTACIONAL: el volumen se dispara en una época. Pasa el mouse sobre el valor para ver el número.',
+  },
+  en: {
+    use_T: `Title — ${USAGE_AYUDA_EN}`,
+    use_B: `Bullets — ${USAGE_AYUDA_EN}`,
+    use_D: `Description — ${USAGE_AYUDA_EN}`,
+    use_GK: `Generic Keywords, the backend search terms — ${USAGE_AYUDA_EN}`,
+    use_IH: `Item Highlight, the 125-character field Amazon shows under the title when the title drops below 75 — ${USAGE_AYUDA_EN}`,
+    kw: 'Keyword — the term exactly as a shopper types it on Amazon. · Helium 10',
+    root: 'Root — the stem that groups the keyword family: goth and gothic fall into the same one. It keeps you from building three campaigns for the same thing. · AGTA calculation',
+    vol: 'Vol — monthly searches for the term. · Helium 10',
+    sales: 'Sales — units the market sells through that term. It is the demand that actually turns into a purchase. · Helium 10',
+    rel: `Relevancy % — what share of your competitors sits on page one for that term. · AGTA calculation`,
+    p1: `P1 — how many of your ${DATASETS.LMP.meta.n_comp} competitors are on page one for that term (position ${S.p1_rank} or better). It is the basis of Relevancy. It is a count and not a percentage on purpose: if tomorrow you add or drop competitors from the dive, the threshold you picked still means the same. From ${S.min_comp} up it enters the core. · AGTA calculation over Helium 10 ranks`,
+    fit: 'Fit — how much the keyword is about YOUR product. Not the same as Relevancy: relevancy measures how much your competitors own it, fit measures whether it is any use to you. · AGTA calculation',
+    idn: 'IDN — capturable demand: volume × fit. It sorts by what you can take, not by what gets searched. · AGTA calculation',
+    td: 'TD — how many of the top listings use the keyword in their TITLE. Low = the title is free, easier to win. · Helium 10',
+    cp: 'CP — how many products compete for that term. · Helium 10',
+    tier: 'Tier — how much the keyword is yours. CORE: it names your product, its form and its type. SECONDARY: it is the product type but not exactly yours. LONG-TAIL: everything else. Volume sorts, it does not decide. · AGTA calculation',
+    prio: 'Prio — P1, P2 or P3 by capturable demand. It is the order you attack them in at launch. · AGTA calculation',
+    match: 'Suggested PPC match type. If the keyword is already specific it goes exact; if it heads a large family, phrase; if it is the head term with volume, broad. · AGTA calculation',
+    cuando: 'When it can be attacked, UKL keywords only. NOW: the product satisfies it and the gap is open (low title density). LATER: it satisfies it but the gap is closed, or it is seasonal and not the positioning. NO: do not bid. · AGTA calculation',
+    para: 'What it is good for, UKL keywords only. SELL: this product can satisfy that search. TARGET: a sibling satisfies it — do not bid, target its page instead. CATALOG: it is niche decor MAVRA does not make with any of the three SKUs; no bidding today, read it as demand for the next product. AUDIENCE: it tells you who the customer is, not what to buy — clothing, jewellery, cosplay. · AGTA calculation',
+    serp: 'SERP — result-page flags: SBV = Sponsored Brand Video · AC = Amazon’s Choice · SP = Sponsored Product. You can filter by typing SBV, AC or SP.',
+    root_root: 'Root — a word or phrase that repeats across the core. If it shows up in a single keyword it is not a root. Each root is a PPC campaign, and you attack them one at a time. · AGTA calculation',
+    root_frec: 'Frequency — in how many keywords of the current MKL this root appears. It recalculates when you move keywords between buckets.',
+    root_sv: 'Broad volume — the summed SV of every MKL keyword containing the root. It is the traffic ceiling of the family, not what you will capture.',
+    root_kws: 'The MKL keywords containing any of the ticked roots. Adding roots widens the coverage.',
+    norm_kw: 'Normalised form — the keyword without plurals or conjunctions. The ones that end up identical collapse into a single row.',
+    norm_sv: 'SV — the summed volume of every keyword that collapsed into this form. It is the real demand for the idea, not for one way of writing it.',
+    norm_n: 'Variants — how many MKL keywords collapsed into this form. If it says 3, there are 3 ways of writing the same thing that in PPC bid against each other and push your CPC up: run one.',
+    comp_metrica: 'Each row is one competitor metric. Click the row name to sort the columns by that metric.',
+    comp_med: 'Niche median — half the competitors sit above this value and half below. It is the yardstick for reading whether a number is high or low in here.',
+    compra_mil: 'KW CVR — what percentage of searches for that term ends in a purchase. It belongs to the MARKET, not to you: a keyword can convert badly while your listing is perfect. It comes from dividing the term’s sales by its volume. Read it against the niche median. · AGTA calculation over Helium 10 data',
+    trend: 'Trend — how the volume moves. Above +80% it is a SEASONAL keyword: if your product sells year-round, that volume is not yours however large it looks.',
+    price_fit: 'Price — median PER-UNIT price of those ranking there ÷ the price you typed above. Below 60% they buy much cheaper there (a different shopper); above 160% they charge more than you and you could raise.',
+    veredicto: 'Eval — the signals in one word, with the name of the KPI that triggered it. ATTACK: price and conversion in range. PRICE ABOVE / PRICE BELOW: the average price of those ranking for the term sits above or below yours. LOW CVR: the KW CVR is far under the niche median. SEASONAL: volume spikes in one season. Hover the value to see the number.',
+  },
 }
 
 // `tipo` decide cómo se filtra la columna: las de opciones cerradas (tier, prio,
 // match, veredicto) se marcan de una lista, no se escriben a mano; las numéricas
 // aceptan >100 / <50 / 100-500; el resto es texto que contiene.
-const COLS = [
+const COLS_BASE = [
   // Grupo 1 — de qué término estamos hablando
   { k: 'kw', origen: 'h10', grupo: 'Término', label: 'Keyword', align: 'left', tipo: 'texto' },
   // Grupo 2 — cuánta demanda hay y de qué clase
@@ -162,13 +227,17 @@ const COLS = [
  * es por plural, gris = no está, punteado = ese campo todavía no está escrito.
  */
 function UsoDot({ valor, campo }) {
+  const [lang] = useMavraLanguage()
   const color = USAGE_COLOR[valor]
   const hueco = USAGE_HUECO.has(valor)
   const sinCampo = valor === SIN_CAMPO
   return (
     <span
-      title={`${campo} — ${valor === NO_ESTA ? 'la keyword no está en este campo'
-        : sinCampo ? 'todavía no está escrito, no hay nada que medir' : valor}`}
+      title={`${campo} — ${valor === NO_ESTA
+        ? (lang === 'en' ? 'the keyword is not in this field' : 'la keyword no está en este campo')
+        : sinCampo
+          ? (lang === 'en' ? 'not written yet, there is nothing to measure' : 'todavía no está escrito, no hay nada que medir')
+          : valor}`}
       style={{
         display: 'inline-block', width: 10, height: 10, borderRadius: '50%',
         background: color && !hueco ? color : 'transparent',
@@ -385,7 +454,7 @@ const fuerza = (share) => (share >= 75 ? 'Muy fuerte' : share >= 50 ? 'Fuerte' :
 // es el único modo en que una tabla de comparación sirve de algo.
 //
 // 📌 El título no se pierde: sigue en el globo de ayuda de la cabecera, entero.
-const COMP_ROWS = [
+const COMP_ROWS_BASE = [
   { k: 'strength', label: 'Fuerza', med: null, badge: true, sortVal: (c) => STRENGTH_ORD[c.strength] || 0, info: 'Lectura rápida del share: Muy fuerte ≥75% · Fuerte ≥50% · Media ≥35% · Débil abajo de eso. Se recalcula con los buckets de ahora.' },
   { k: 'share', label: 'SV en P1 (share of voice)', med: 'share', fmt: (v) => `${v}%`, bar: true, info: 'Del volumen total del MKL de ahora, qué porcentaje cubre este competidor desde página 1. Es la métrica de dominio del nicho.' },
   { k: 'kws_p1', label: 'Keywords en P1', med: 'kws_p1', fmt: (v) => miles(v), info: `Cuántas keywords del MKL actual tiene en página 1 (rank ≤${S.p1_rank}).` },
@@ -500,6 +569,8 @@ function FiltroTh({ campo, etiqueta, valor, onChange, numerico, opciones, corte 
 
 /** El filtro de Excel: los valores que EXISTEN en esta columna, para tildar. */
 function FiltroOpciones({ campo, etiqueta, valor, onChange, opciones }) {
+  const [lang] = useMavraLanguage()
+  const tr = (t) => traducir(t, lang)
   const sel = Array.isArray(valor) ? valor : []
   const alternar = (v) => onChange(campo, sel.includes(v) ? sel.filter((x) => x !== v) : [...sel, v])
   const texto = sel.length === 0 ? 'Todos' : sel.length === 1 ? sel[0] : `${sel.length} valores`
@@ -512,7 +583,7 @@ function FiltroOpciones({ campo, etiqueta, valor, onChange, opciones }) {
         </label>
       ))}
       {sel.length > 0 && (
-        <button type="button" className="rsch-opts-todos" onClick={() => onChange(campo, [])}>Ver todos</button>
+        <button type="button" className="rsch-opts-todos" onClick={() => onChange(campo, [])}>{tr('Ver todos')}</button>
       )}
     </MenuRadix>
   )
@@ -544,6 +615,11 @@ function FiltroOpciones({ campo, etiqueta, valor, onChange, opciones }) {
  * mismo que la sintaxis, y no hay nada que recordar.
  */
 function FiltroPalabras({ campo, etiqueta, valor, onChange }) {
+  // El hook lee el mismo selector que el resto del sitio: este componente vive
+  // fuera de ResearchPanel y traduce por su cuenta en vez de recibir el idioma
+  // por prop, que habria obligado a pasarlo por cuatro niveles de JSX.
+  const [lang] = useMavraLanguage()
+  const tr = (t) => traducir(t, lang)
   const [escrito, setEscrito] = useState('')
   const v = (valor && typeof valor === 'object' && !Array.isArray(valor)) ? valor : {}
   const inc = v.incluye || []
@@ -613,14 +689,14 @@ function FiltroPalabras({ campo, etiqueta, valor, onChange }) {
           onChange={(e) => setEscrito(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); agregar() } }}
           onBlur={agregar}
-          placeholder="Escribe una palabra"
+          placeholder={tr('Escribe una palabra')}
           className="min-w-0 flex-1 border-0 bg-transparent px-[0.4rem] py-[0.28rem] font-sans text-[0.72rem] normal-case leading-[1.4] tracking-normal text-fg outline-none"
         />
         <button
           type="button"
           onClick={agregar}
-          aria-label="Agregar palabra"
-          title="Agregar (o Enter)"
+          aria-label={tr('Agregar palabra')}
+          title={tr('Agregar (o Enter)')}
           className="bg-transparent px-[0.35rem] py-0 text-[0.8rem] leading-none text-copper hover:text-fg"
         >
           +
@@ -643,8 +719,8 @@ function FiltroPalabras({ campo, etiqueta, valor, onChange }) {
         </div>
       )}
 
-      {inc.length > 0 && <Grupo titulo="Que tengan" palabras={inc} />}
-      {exc.length > 0 && <Grupo titulo="Que no tengan" palabras={exc} saca />}
+      {inc.length > 0 && <Grupo titulo={tr("Que tengan")} palabras={inc} />}
+      {exc.length > 0 && <Grupo titulo={tr("Que no tengan")} palabras={exc} saca />}
 
       {total > 0 && (
         <div className="mt-[0.55rem] flex justify-end border-t border-copper/20 pt-[0.4rem]">
@@ -662,6 +738,8 @@ function FiltroPalabras({ campo, etiqueta, valor, onChange }) {
 }
 
 function FiltroNumerico({ campo, etiqueta, valor, onChange }) {
+  const [lang] = useMavraLanguage()
+  const tr = (t) => traducir(t, lang)
   const v = (valor && typeof valor === 'object') ? valor : {}
   const set = (k) => (e) => {
     const x = e.target.value
@@ -692,7 +770,7 @@ function FiltroNumerico({ campo, etiqueta, valor, onChange }) {
         ))}
       </div>
       {puesto && (
-        <button type="button" className="rsch-opts-todos" onClick={() => onChange(campo, undefined)}>Ver todos</button>
+        <button type="button" className="rsch-opts-todos" onClick={() => onChange(campo, undefined)}>{tr('Ver todos')}</button>
       )}
     </MenuRadix>
   )
@@ -702,7 +780,10 @@ function FiltroNumerico({ campo, etiqueta, valor, onChange }) {
  * Menú para esconder columnas. La primera columna de cada tabla no entra: es la
  * que identifica la fila y sin ella la tabla no se lee.
  */
-function MenuColumnas({ etiqueta = 'Columnas', fija, opciones, ocultas, setOcultas }) {
+function MenuColumnas({ etiqueta, fija, opciones, ocultas, setOcultas }) {
+  const [lang] = useMavraLanguage()
+  const tr = (t) => traducir(t, lang)
+  const rotulo = etiqueta ?? tr('Columnas')
   const alternar = (k) => setOcultas((s) => {
     const n = new Set(s)
     if (n.has(k)) n.delete(k)
@@ -712,10 +793,10 @@ function MenuColumnas({ etiqueta = 'Columnas', fija, opciones, ocultas, setOcult
   const visibles = opciones.filter((o) => !ocultas.has(o.k)).length
   return (
     <MenuRadix
-      etiqueta={etiqueta}
+      etiqueta={rotulo}
       activo={visibles < opciones.length}
       ancho="min-w-[220px]"
-      boton={<>{etiqueta} {visibles + 1}/{opciones.length + 1} <span aria-hidden="true">&#9662;</span></>}
+      boton={<>{rotulo} {visibles + 1}/{opciones.length + 1} <span aria-hidden="true">&#9662;</span></>}
     >
       <p className="rsch-cols-fija">{fija} &middot; siempre visible</p>
       {opciones.map((o, i) => (
@@ -728,8 +809,8 @@ function MenuColumnas({ etiqueta = 'Columnas', fija, opciones, ocultas, setOcult
         </Fragment>
       ))}
       <div className="rsch-cols-acts">
-        <button type="button" className="rsch-bulk-clear" onClick={() => setOcultas(new Set())}>Mostrar todas</button>
-        <button type="button" className="rsch-bulk-clear" onClick={() => setOcultas(new Set(opciones.map((o) => o.k)))}>Ocultar todas</button>
+        <button type="button" className="rsch-bulk-clear" onClick={() => setOcultas(new Set())}>{tr('Mostrar todas')}</button>
+        <button type="button" className="rsch-bulk-clear" onClick={() => setOcultas(new Set(opciones.map((o) => o.k)))}>{tr('Ocultar todas')}</button>
       </div>
     </MenuRadix>
   )
@@ -748,11 +829,13 @@ function useSorter(inicial) {
 // Selector de producto: cada MKL es un dive independiente, así que al cambiar de
 // producto se remonta el panel entero (key={prod}) y los buckets arrancan limpios.
 export default function Research() {
+  const [lang] = useMavraLanguage()
+  const tr = (t) => traducir(t, lang)
   const [prod, setProd] = useState('LMP')
   return (
     <>
       <div className="rsch-prodbar" style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '10px 0' }}>
-        <span style={{ opacity: 0.6, fontSize: 12 }}>Producto:</span>
+        <span style={{ opacity: 0.6, fontSize: 12 }}>{tr('Producto:')}</span>
         {Object.keys(DATASETS).map((p) => (
           <button
             key={p}
@@ -770,7 +853,7 @@ export default function Research() {
         <span className="ml-[0.4rem] text-[0.78rem] font-semibold text-fg">
           {DATASETS[prod].meta.product}
         </span>
-        <span style={{ opacity: 0.45, fontSize: 12 }}>· {DATASETS[prod].meta.n_comp} competidores</span>
+        <span style={{ opacity: 0.45, fontSize: 12 }}>· {DATASETS[prod].meta.n_comp} {tr('competidores')}</span>
       </div>
       <ResearchPanel key={prod} prod={prod} data={DATASETS[prod]} ukl={UKL[prod]} />
     </>
@@ -923,6 +1006,26 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
     const m = data.meta?.senales
     return m?.precio_unitario_propio ?? m?.mi_precio ?? ''
   })
+  // 🔑 El idioma sale del mismo selector que el resto del sitio (`useMavraLanguage`,
+  // localStorage + evento), no de una copia local: así el toggle del encabezado
+  // cambia esta página igual que cambia Home o Case Study.
+  const [lang] = useMavraLanguage()
+  const TAB_DESC = TAB_DESC_I18N[lang] || TAB_DESC_I18N.es
+  const INFO = INFO_I18N[lang] || INFO_I18N.es
+  // 🔑 `T` traduce por el texto castellano. Ver el porqué en `researchI18n.js`:
+  // cuando falta una traducción sale el castellano, que se ve; una clave rota
+  // saldría como hueco, que no se ve hasta que alguien abre esa pestaña.
+  const T = useCallback((t) => traducir(t, lang), [lang])
+  // Las columnas y las filas de competidores se declaran fuera del componente
+  // (se arman una sola vez) y por eso traen el castellano dentro: acá se les
+  // traduce lo que se dibuja —grupo, etiqueta y ayuda— sin tocar las claves,
+  // que son lo que ordena, filtra y guarda el orden de columnas.
+  const COLS = useMemo(
+    () => COLS_BASE.map((c) => ({ ...c, grupo: T(c.grupo), label: T(c.label) })),
+    [T])
+  const COMP_ROWS = useMemo(
+    () => COMP_ROWS_BASE.map((r) => ({ ...r, label: T(r.label), info: T(r.info) })),
+    [T])
   const ov = data.overview
 
   const counts = useMemo(() => {
@@ -1352,14 +1455,14 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
       <div className="rsch-tabs">
         {BUCKETS.map((t) => (
           <button key={t} type="button" className={`rsch-tab${tab === t ? ' active' : ''}`} onClick={() => { setTab(t); setSel(new Set()) }}>
-            {t} <span className="rsch-tab-n">{counts[t]}</span>
+            {T(t)} <span className="rsch-tab-n">{counts[t]}</span>
           </button>
         ))}
       </div>
       <div className="rsch-tabs" style={{ marginTop: 6, opacity: 0.92 }}>
         {TOOLS.map((t) => (
           <button key={t} type="button" className={`rsch-tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-            {t}{' '}
+            {T(t)}{' '}
             {t !== 'Veredicto' && (
               <span className="rsch-tab-n">
                 {t === 'Roots' ? rootList.length : t === 'Normalizer' ? normList.length : compVis.length}
@@ -1393,8 +1496,8 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
               ancho. Es lo único que hay que leer si no se lee nada más. */}
           <header className="rsch-inf-hero" style={{ '--ver': VER_COLOR[ov.veredicto] }}>
             <div className="rsch-inf-fallo">
-              <span className="rsch-inf-eyebrow">Veredicto del nicho</span>
-              <strong>{ov.veredicto}</strong>
+              <span className="rsch-inf-eyebrow">{T('Veredicto del nicho')}</span>
+              <strong>{T(ov.veredicto)}</strong>
               <span className="rsch-inf-prod">{data.meta.product}</span>
             </div>
             <p className="rsch-inf-lectura">{ov.lectura}</p>
@@ -1409,23 +1512,23 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
           <div className="rsch-inf-clave">
             <div className="rsch-inf-cifra rsch-inf-cifra-xl">
               <b>{ov.lider_share}%</b>
-              <span>del nicho ya es del líder</span>
-              <em>su parte en primera página — cuanto más alto, menos sitio queda</em>
+              <span>{T('del nicho ya es del líder')}</span>
+              <em>{T('su parte en primera página — cuanto más alto, menos sitio queda')}</em>
             </div>
             <div className="rsch-inf-cifra rsch-inf-cifra-xl">
               <b>{miles(ov.sv_uncontested)}</b>
-              <span>búsquedas al mes sin dueño</span>
-              <em>las rankean 2 competidores o menos — por ahí se entra</em>
+              <span>{T('búsquedas al mes sin dueño')}</span>
+              <em>{T('las rankean 2 competidores o menos — por ahí se entra')}</em>
             </div>
           </div>
 
           {/* El contexto, en pequeño: de qué tamaño es el nicho y sobre qué se midió. */}
           <div className="rsch-inf-cifras">
             {[
-              [miles(ov.n_niche), 'keywords del producto', `${miles(ov.sv_niche)} búsquedas/mes`],
-              [miles(counts.MKL), 'en el núcleo', 'las que pelea el nicho'],
-              [miles(counts.Outliers), 'Outliers', 'volumen que nadie domina'],
-              [miles(data.meta.n_comp), 'competidores', 'sobre los que se midió todo'],
+              [miles(ov.n_niche), T('keywords del producto'), `${miles(ov.sv_niche)} ${lang === 'en' ? 'searches/mo' : 'búsquedas/mes'}`],
+              [miles(counts.MKL), T('en el núcleo'), T('las que pelea el nicho')],
+              [miles(counts.Outliers), 'Outliers', T('volumen que nadie domina')],
+              [miles(data.meta.n_comp), T('competidores'), T('sobre los que se midió todo')],
             ].map(([v, t, sub]) => (
               <div key={t} className="rsch-inf-cifra">
                 <b>{v}</b>
@@ -1437,7 +1540,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
 
           <div className="rsch-inf-cols">
             <section className="rsch-inf-bloque">
-              <h2 className="rsch-inf-h2">Por qué</h2>
+              <h2 className="rsch-inf-h2">{T('Por qué')}</h2>
               <ul className="rsch-inf-razones">
                 {ov.razones.map((r) => <li key={r}>{r}</li>)}
               </ul>
@@ -1446,30 +1549,41 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
 
             {ov.top_libres?.length > 0 && (
               <section className="rsch-inf-bloque rsch-inf-entrada">
-                <h2 className="rsch-inf-h2">Por dónde se entra</h2>
+                <h2 className="rsch-inf-h2">{T('Por dónde se entra')}</h2>
                 <table className="rsch-inf-tabla">
                   <tbody>
                     {ov.top_libres.map((k) => (
                       <tr key={k.kw}>
                         <td>{k.kw}</td>
                         <td>{miles(k.vol)}<small>/mes</small></td>
-                        <td>{k.n}<small> comp.</small></td>
+                        <td>{k.n}<small> {T('comp.')}</small></td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
                 <p className="rsch-inf-nota">
-                  Términos del producto que rankean 2 competidores o menos. Son la puerta: ahí no hay con quién pelear.
+                  {T('Términos del producto que rankean 2 competidores o menos. Son la puerta: ahí no hay con quién pelear.')}
                 </p>
               </section>
             )}
           </div>
 
           <p className="rsch-foot">
-            Esto se lee <b>una vez</b>, antes de decidir si entras al nicho. El MKL es lo que se trabaja
-            todos los días: está en la pestaña <b>MKL</b>, a pantalla completa.
-            {' '}Núcleo desde {S.min_comp} competidores en primera página y {S.min_sv} búsquedas · outliers desde {miles(S.outlier_min_sv)}.
-            {' '}Fuente: {data.meta.source}.
+            {lang === 'en' ? (
+              <>
+                You read this <b>once</b>, before deciding whether to enter the niche. The MKL is what gets worked
+                every day: it is in the <b>MKL</b> tab, full screen.
+                {' '}Core from {S.min_comp} competitors on page 1 and {S.min_sv} searches · outliers from {miles(S.outlier_min_sv)}.
+                {' '}Source: {data.meta.source}.
+              </>
+            ) : (
+              <>
+                Esto se lee <b>una vez</b>, antes de decidir si entras al nicho. El MKL es lo que se trabaja
+                todos los días: está en la pestaña <b>MKL</b>, a pantalla completa.
+                {' '}Núcleo desde {S.min_comp} competidores en primera página y {S.min_sv} búsquedas · outliers desde {miles(S.outlier_min_sv)}.
+                {' '}Fuente: {data.meta.source}.
+              </>
+            )}
           </p>
         </div>
       )}
@@ -1481,19 +1595,19 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             <input
               className="rsch-search"
               type="search"
-              placeholder="Filtrar competidor (marca o ASIN)…"
+              placeholder={T('Filtrar competidor (marca o ASIN)…')}
               value={compQ}
               onChange={(e) => setCompQ(e.target.value)}
               style={{ width: 240 }}
             />
-            <MenuColumnas fija="Métrica" opciones={compOpciones} ocultas={compHid} setOcultas={setCompHid} />
+            <MenuColumnas fija={T('Métrica')} opciones={compOpciones} ocultas={compHid} setOcultas={setCompHid} />
             {compSort.key && (
               <span className="rsch-bulk">
                 <span className="rsch-bulk-n">
-                  ordenado por {(COMP_ROWS.find((r) => r.k === compSort.key) || {}).label} ({compSort.dir === 'desc' ? 'mayor a menor' : 'menor a mayor'})
+                  {T('ordenado por')} {(COMP_ROWS.find((r) => r.k === compSort.key) || {}).label} ({compSort.dir === 'desc' ? T('mayor a menor') : T('menor a mayor')})
                 </span>
                 <button type="button" className="rsch-bulk-clear" onClick={() => setCompSort({ key: null, dir: 'desc' })}>
-                  volver al orden original
+                  {T('volver al orden original')}
                 </button>
               </span>
             )}
@@ -1502,8 +1616,8 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             <table className="mkl-table" style={{ width: 'auto', minWidth: '1100px' }}>
               <thead className="mkl-thead">
                 <tr>
-                  <Th label={`Competidores ${compVis.length}`} ayuda={INFO.comp_metrica} align="left" style={{ minWidth: 210 }} />
-                  {verMed && <Th label="Mediana del nicho" ayuda={INFO.comp_med} align="left" style={{ minWidth: 140 }} />}
+                  <Th label={`${T('Competidores')} ${compVis.length}`} ayuda={INFO.comp_metrica} align="left" style={{ minWidth: 210 }} />
+                  {verMed && <Th label={T('Mediana del nicho')} ayuda={INFO.comp_med} align="left" style={{ minWidth: 140 }} />}
                   {compVis.map((c) => (
                     <Th
                       key={c.asin}
@@ -1519,7 +1633,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                           <span className="rsch-comp-marca">{(c.brand || c.asin).slice(0, 14)}</span>
                         </span>
                       )}
-                      ayuda={`${c.brand || c.asin} (${c.asin}) — ${c.titulo || 'sin título en Keepa'}`}
+                      ayuda={`${c.brand || c.asin} (${c.asin}) — ${c.titulo || (lang === 'en' ? 'no title in Keepa' : 'sin título en Keepa')}`}
                       style={{ minWidth: 118 }}
                     />
                   ))}
@@ -1537,7 +1651,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                           type="button"
                           className={`rsch-rowsort${activo ? ' active' : ''}`}
                           onClick={() => onCompSort(row.k)}
-                          aria-label={`Ordenar competidores por ${row.label}`}
+                          aria-label={`${lang === 'en' ? 'Sort competitors by' : 'Ordenar competidores por'} ${row.label}`}
                         >
                           {row.label}
                           <span className={`mkl-sortcaret${activo ? '' : ' dim'}`} aria-hidden="true">
@@ -1565,7 +1679,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                               <span className="rsch-comp-titulo" title={v || ''}>{v || '—'}</span>
                             ) : row.badge ? (
                               <span style={{ background: STRENGTH_COLOR[v] || 'transparent', color: '#14150f', padding: '1px 7px', borderRadius: 6, fontSize: 11, fontWeight: 700 }}>
-                                {v}
+                                {T(v)}
                               </span>
                             ) : row.bar ? (
                               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
@@ -1587,17 +1701,32 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             </table>
           </div>
           {compVis.length === 0 && (
-            <p className="rsch-tabdesc" style={{ marginTop: 10 }}>Ningún competidor pasa el filtro.</p>
+            <p className="rsch-tabdesc" style={{ marginTop: 10 }}>{T('Ningún competidor pasa el filtro.')}</p>
           )}
           <p className="rsch-foot">
-            Cobertura, share, fuerza y volumen de Outliers salen del <b>MKL de ahora</b>: se recalculan solos
-            cuando mueves keywords entre buckets, igual que la mediana de esas tres filas. Precio, rating,
-            reseñas, edad, variaciones y categoría salen de <b>Keepa</b> y no dependen del MKL.
-            <br />
-            ⚠️ <b>“Actividad de venta 30d” NO son unidades:</b> son las veces que le cayó el BSR en 30 días
-            (evento de venta observado). Otras herramientas muestran unidades <i>estimadas</i> con una curva; nosotros
-            preferimos el dato duro hasta tener la curva BSR→ventas calibrada con ventas reales de cuentas
-            conectadas. Sirve para comparar competidores entre sí, no para leerlo como “vendió N”.
+            {lang === 'en' ? (
+              <>
+                Coverage, share, strength and Outlier volume come from the <b>current MKL</b>: they recalculate
+                on their own when you move keywords between buckets, and so does the median of those three rows.
+                Price, rating, reviews, age, variations and category come from <b>Keepa</b> and do not depend on the MKL.
+                <br />
+                ⚠️ <b>“Sales activity 30d” are NOT units:</b> they are the number of times its BSR dropped in 30 days
+                (observed sales event). Other tools show <i>estimated</i> units from a curve; we prefer the hard number
+                until the BSR→sales curve is calibrated against real sales from connected accounts. Use it to compare
+                competitors with each other, not to read as “sold N”.
+              </>
+            ) : (
+              <>
+                Cobertura, share, fuerza y volumen de Outliers salen del <b>MKL de ahora</b>: se recalculan solos
+                cuando mueves keywords entre buckets, igual que la mediana de esas tres filas. Precio, rating,
+                reseñas, edad, variaciones y categoría salen de <b>Keepa</b> y no dependen del MKL.
+                <br />
+                ⚠️ <b>“Actividad de venta 30d” NO son unidades:</b> son las veces que le cayó el BSR en 30 días
+                (evento de venta observado). Otras herramientas muestran unidades <i>estimadas</i> con una curva; nosotros
+                preferimos el dato duro hasta tener la curva BSR→ventas calibrada con ventas reales de cuentas
+                conectadas. Sirve para comparar competidores entre sí, no para leerlo como “vendió N”.
+              </>
+            )}
           </p>
         </>
       )}
@@ -1607,20 +1736,20 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
         <>
           <div className="rsch-bar">
             <button type="button" className="rsch-bulk-btn" onClick={() => { setRootMode((m) => (m === 'norm' ? 'raw' : 'norm')); setRootSel(new Set()) }}>
-              Mostrar: {rootMode === 'norm' ? 'roots normalizados' : 'roots crudos'}
+              {T('Mostrar:')} {rootMode === 'norm' ? T('roots normalizados') : T('roots crudos')}
             </button>
             <MenuColumnas
-              etiqueta="Columnas de roots"
-              fija="Root"
-              opciones={[{ k: 'kws', label: 'Frec.' }, { k: 'sv', label: 'Vol. broad' }]}
+              etiqueta={T('Columnas de roots')}
+              fija={T('Root')}
+              opciones={[{ k: 'kws', label: T('Frec.') }, { k: 'sv', label: T('Vol. broad') }]}
               ocultas={rootHid}
               setOcultas={setRootHid}
             />
             {rootSel.size > 0 && (
               <MenuColumnas
-                etiqueta="Columnas de keywords"
-                fija="Keyword"
-                opciones={[{ k: 'vol', label: 'Vol' }, { k: 'rel', label: 'Rel %' }]}
+                etiqueta={T('Columnas de keywords')}
+                fija={T('Keyword')}
+                opciones={[{ k: 'vol', label: 'Vol' }, { k: 'rel', label: T('Rel %') }]}
                 ocultas={rkHid}
                 setOcultas={setRkHid}
               />
@@ -1628,7 +1757,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             {rootSel.size > 0 && (
               <span className="rsch-bulk">
                 <span className="rsch-bulk-n">{rootSel.size} root(s) · {rootKws.length} keywords · {miles(rootKwsSv)} SV</span>
-                <button type="button" className="rsch-bulk-clear" onClick={() => setRootSel(new Set())}>limpiar</button>
+                <button type="button" className="rsch-bulk-clear" onClick={() => setRootSel(new Set())}>{T('limpiar')}</button>
               </span>
             )}
           </div>
@@ -1639,14 +1768,14 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                   <tr>
                     <th className="mkl-th"></th>
                     <Th label={`Root (${rootList.length})`} ayuda={INFO.root_root} align="left" orden="root" sort={rootSort} onSort={onRootSort} />
-                    {!rootHid.has('kws') && <Th label="Frec." ayuda={INFO.root_frec} align="right" orden="kws" sort={rootSort} onSort={onRootSort} />}
-                    {!rootHid.has('sv') && <Th label="Vol. broad" ayuda={INFO.root_sv} align="right" orden="sv" sort={rootSort} onSort={onRootSort} />}
+                    {!rootHid.has('kws') && <Th label={T('Frec.')} ayuda={INFO.root_frec} align="right" orden="kws" sort={rootSort} onSort={onRootSort} />}
+                    {!rootHid.has('sv') && <Th label={T('Vol. broad')} ayuda={INFO.root_sv} align="right" orden="sv" sort={rootSort} onSort={onRootSort} />}
                   </tr>
                   <tr>
                     <th className="mkl-th"></th>
-                    <FiltroTh campo="root" etiqueta="root" valor={rootF.root} onChange={setF(setRootF)} />
-                    {!rootHid.has('kws') && <FiltroTh campo="kws" etiqueta="frecuencia" valor={rootF.kws} onChange={setF(setRootF)} numerico />}
-                    {!rootHid.has('sv') && <FiltroTh campo="sv" etiqueta="volumen broad" valor={rootF.sv} onChange={setF(setRootF)} numerico />}
+                    <FiltroTh campo="root" etiqueta={T('root')} valor={rootF.root} onChange={setF(setRootF)} />
+                    {!rootHid.has('kws') && <FiltroTh campo="kws" etiqueta={T('frecuencia')} valor={rootF.kws} onChange={setF(setRootF)} numerico />}
+                    {!rootHid.has('sv') && <FiltroTh campo="sv" etiqueta={T('volumen broad')} valor={rootF.sv} onChange={setF(setRootF)} numerico />}
                   </tr>
                 </thead>
                 <tbody>
@@ -1671,7 +1800,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                       )}
                     </tr>
                   ))}
-                  {rootList.length === 0 && <tr><td colSpan={4} className="mkl-empty">Ningún root pasa el filtro.</td></tr>}
+                  {rootList.length === 0 && <tr><td colSpan={4} className="mkl-empty">{T('Ningún root pasa el filtro.')}</td></tr>}
                 </tbody>
               </table>
             </div>
@@ -1693,14 +1822,14 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                           (Frank lo cazó con el root `decor`, 2026-08-01) */}
                       <Th label={`Keywords (${rootKws.length})`} ayuda={INFO.root_kws} align="left" orden="kw" sort={rkSort} onSort={onRkSort} style={{ minWidth: 240 }} />
                       {!rkHid.has('vol') && <Th label={`Vol (${miles(rootKwsSv)})`} ayuda={INFO.vol} align="right" orden="vol" sort={rkSort} onSort={onRkSort} />}
-                      {!rkHid.has('rel') && <Th label="Rel %" ayuda={INFO.rel} align="right" orden="rel" sort={rkSort} onSort={onRkSort} />}
+                      {!rkHid.has('rel') && <Th label={T('Rel %')} ayuda={INFO.rel} align="right" orden="rel" sort={rkSort} onSort={onRkSort} />}
                     </tr>
                     {/* Los filtros faltaban acá: con varios roots tildados la lista se hace
                         larga y sin filtro no hay forma de bajarla. */}
                     <tr>
-                      <FiltroTh campo="kw" etiqueta="keyword" valor={rkF.kw} onChange={setF(setRkF)} />
-                      {!rkHid.has('vol') && <FiltroTh campo="vol" etiqueta="volumen" valor={rkF.vol} onChange={setF(setRkF)} numerico />}
-                      {!rkHid.has('rel') && <FiltroTh campo="rel" etiqueta="relevancy" valor={rkF.rel} onChange={setF(setRkF)} numerico />}
+                      <FiltroTh campo="kw" etiqueta={T('keyword')} valor={rkF.kw} onChange={setF(setRkF)} />
+                      {!rkHid.has('vol') && <FiltroTh campo="vol" etiqueta={T('volumen')} valor={rkF.vol} onChange={setF(setRkF)} numerico />}
+                      {!rkHid.has('rel') && <FiltroTh campo="rel" etiqueta={T('relevancy')} valor={rkF.rel} onChange={setF(setRkF)} numerico />}
                     </tr>
                   </thead>
                   <tbody>
@@ -1711,18 +1840,30 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                         {!rkHid.has('rel') && <td className="mkl-num-cell">{k.rel}%</td>}
                       </tr>
                     ))}
-                    {rootKws.length === 0 && <tr><td colSpan={3} className="mkl-empty">Ninguna keyword pasa el filtro.</td></tr>}
+                    {rootKws.length === 0 && <tr><td colSpan={3} className="mkl-empty">{T('Ninguna keyword pasa el filtro.')}</td></tr>}
                   </tbody>
                 </table>
               )}
             </div>
           </div>
           <p className="rsch-foot">
-            Los roots se arman en vivo sobre las <b>{miles(mklKws.length)} keywords que hoy están en el MKL</b>:
-            frases de 1 a 3 palabras, y las que aparecen en una sola keyword no cuentan como root. Si mueves
-            keywords entre buckets, frecuencia y volumen broad se recalculan solos.
-            {' '}<b>Así se arma el PPC:</b> una campaña por root, de a un root por vez — no desde el Normalizer,
-            que es limpieza de texto. Fondo verde = roots de 2 y 3 palabras, que son los que sirven de verdad.
+            {lang === 'en' ? (
+              <>
+                Roots are built live from the <b>{miles(mklKws.length)} keywords currently in the MKL</b>:
+                phrases of 1 to 3 words, and anything appearing in a single keyword does not count as a root.
+                Move keywords between buckets and frequency and broad volume recalculate on their own.
+                {' '}<b>This is how PPC gets built:</b> one campaign per root, one root at a time — not from the
+                Normalizer, which is text cleanup. Green background = 2- and 3-word roots, the ones that actually work.
+              </>
+            ) : (
+              <>
+                Los roots se arman en vivo sobre las <b>{miles(mklKws.length)} keywords que hoy están en el MKL</b>:
+                frases de 1 a 3 palabras, y las que aparecen en una sola keyword no cuentan como root. Si mueves
+                keywords entre buckets, frecuencia y volumen broad se recalculan solos.
+                {' '}<b>Así se arma el PPC:</b> una campaña por root, de a un root por vez — no desde el Normalizer,
+                que es limpieza de texto. Fondo verde = roots de 2 y 3 palabras, que son los que sirven de verdad.
+              </>
+            )}
           </p>
         </>
       )}
@@ -1741,7 +1882,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
               Copiar {normList.length} keywords normalizadas
             </button>
             <MenuColumnas
-              fija="Forma normalizada"
+              fija={T('Forma normalizada')}
               opciones={[{ k: 'sv', label: 'SV' }, { k: 'n', label: 'Variantes' }]}
               ocultas={normHid}
               setOcultas={setNormHid}
@@ -1755,14 +1896,14 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             <table className="mkl-table" style={{ width: 'auto', minWidth: '620px' }}>
               <thead className="mkl-thead">
                 <tr>
-                  <Th label="Forma normalizada" ayuda={INFO.norm_kw} align="left" orden="kw" sort={normSort} onSort={onNormSort} style={{ minWidth: 320 }} />
+                  <Th label={T('Forma normalizada')} ayuda={INFO.norm_kw} align="left" orden="kw" sort={normSort} onSort={onNormSort} style={{ minWidth: 320 }} />
                   {!normHid.has('sv') && <Th label={`SV (${miles(normSv)})`} ayuda={INFO.norm_sv} align="right" orden="sv" sort={normSort} onSort={onNormSort} style={{ minWidth: 130 }} />}
-                  {!normHid.has('n') && <Th label="Variantes" ayuda={INFO.norm_n} align="right" orden="n" sort={normSort} onSort={onNormSort} style={{ minWidth: 110 }} />}
+                  {!normHid.has('n') && <Th label={T('Variantes')} ayuda={INFO.norm_n} align="right" orden="n" sort={normSort} onSort={onNormSort} style={{ minWidth: 110 }} />}
                 </tr>
                 <tr>
-                  <FiltroTh campo="kw" etiqueta="forma normalizada" valor={normF.kw} onChange={setF(setNormF)} />
+                  <FiltroTh campo="kw" etiqueta={T('forma normalizada')} valor={normF.kw} onChange={setF(setNormF)} />
                   {!normHid.has('sv') && <FiltroTh campo="sv" etiqueta="SV" valor={normF.sv} onChange={setF(setNormF)} numerico />}
-                  {!normHid.has('n') && <FiltroTh campo="n" etiqueta="variantes" valor={normF.n} onChange={setF(setNormF)} numerico />}
+                  {!normHid.has('n') && <FiltroTh campo="n" etiqueta={T('variantes')} valor={normF.n} onChange={setF(setNormF)} numerico />}
                 </tr>
               </thead>
               <tbody>
@@ -1778,16 +1919,28 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                     )}
                   </tr>
                 ))}
-                {normList.length === 0 && <tr><td colSpan={3} className="mkl-empty">Ninguna keyword pasa el filtro.</td></tr>}
+                {normList.length === 0 && <tr><td colSpan={3} className="mkl-empty">{T('Ninguna keyword pasa el filtro.')}</td></tr>}
               </tbody>
             </table>
           </div>
           <p className="rsch-foot">
-            {miles(normList.length)} formas normalizadas · {miles(normSv)} SV, sobre las {miles(mklKws.length)} keywords
-            del MKL de ahora. En <b style={{ color: '#e0a94c' }}>dorado</b>, las formas donde colapsó más de una
-            keyword: ahí tienes variantes que en PPC te compiten entre sí. Pasa el mouse por el número para verlas.
-            {' '}El SV de cada fila es la <b>suma</b> de las keywords que colapsaron, no la de una sola.
-            {' '}Esto es limpieza de texto: las campañas se arman por root, en la pestaña Roots.
+            {lang === 'en' ? (
+              <>
+                {miles(normList.length)} normalised forms · {miles(normSv)} SV, over the {miles(mklKws.length)} keywords
+                in the current MKL. In <b style={{ color: '#e0a94c' }}>gold</b>, the forms where more than one keyword
+                collapsed: those are variants that compete with each other in PPC. Hover the number to see them.
+                {' '}Each row&apos;s SV is the <b>sum</b> of the keywords that collapsed, not that of a single one.
+                {' '}This is text cleanup: campaigns are built by root, in the Roots tab.
+              </>
+            ) : (
+              <>
+                {miles(normList.length)} formas normalizadas · {miles(normSv)} SV, sobre las {miles(mklKws.length)} keywords
+                del MKL de ahora. En <b style={{ color: '#e0a94c' }}>dorado</b>, las formas donde colapsó más de una
+                keyword: ahí tienes variantes que en PPC te compiten entre sí. Pasa el mouse por el número para verlas.
+                {' '}El SV de cada fila es la <b>suma</b> de las keywords que colapsaron, no la de una sola.
+                {' '}Esto es limpieza de texto: las campañas se arman por root, en la pestaña Roots.
+              </>
+            )}
           </p>
         </>
       )}
@@ -1796,17 +1949,28 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
       {isTable && (tab === 'Negatives' && !negOn ? (
         <div className="rsch-gate">
           <p>
-            <strong>Negatives está desactivado.</strong> Los negativos son <em>product-aware</em>: el MKL sabe qué negar solo si conoce el producto.
-            Se poblan desde el <strong>último Listing Audit</strong> del ASIN (o se corre si no hay). MAVRA aún no está lanzado → estos son el
-            <em> product-fit filter</em> preliminar (battery / cordless / warmer).
+            {lang === 'en' ? (
+              <>
+                <strong>Negatives is turned off.</strong> Negatives are <em>product-aware</em>: the MKL only knows what to
+                negate if it knows the product. They are populated from the ASIN&apos;s <strong>latest Listing Audit</strong>
+                {' '}(or one is run if there is none). MAVRA has not launched yet → these are the preliminary
+                <em> product-fit filter</em> (battery / cordless / warmer).
+              </>
+            ) : (
+              <>
+                <strong>Negatives está desactivado.</strong> Los negativos son <em>product-aware</em>: el MKL sabe qué negar solo si conoce el producto.
+                Se poblan desde el <strong>último Listing Audit</strong> del ASIN (o se corre si no hay). MAVRA aún no está lanzado → estos son el
+                <em> product-fit filter</em> preliminar (battery / cordless / warmer).
+              </>
+            )}
           </p>
-          <button type="button" className="rsch-activate" onClick={() => setNegOn(true)}>Activar Negatives (preview)</button>
+          <button type="button" className="rsch-activate" onClick={() => setNegOn(true)}>{T('Activar Negatives (preview)')}</button>
         </div>
       ) : (
         <>
           <div className="rsch-bar">
             <Buscador valor={q} onChange={setQ} />
-            <MenuColumnas fija="Keyword" opciones={kwOpciones} ocultas={kwHid} setOcultas={setKwHid} />
+            <MenuColumnas fija={T('Keyword')} opciones={kwOpciones} ocultas={kwHid} setOcultas={setKwHid} />
             {/* Los interruptores: mismo tamaño, solo ícono, y el estado se ve
                 encendido. Antes eran botones de texto corrido que competían con
                 el buscador por la atención. */}
@@ -1818,10 +1982,12 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
               activo={!verH10}
               onClick={() => setVerH10((v) => !v)}
               titulo={verH10
-                ? 'Ver qué queda del análisis si el usuario no tiene Helium 10 conectado.'
-                : `Así se ve sin Helium 10 conectado. Se caen ${visCols.filter((c) => tapada(c)).length} de ${visCols.length} columnas: las suyas y también los cálculos de AGTA que se alimentan de ellas — KW CVR sale de dividir dos columnas de Helium 10, y Relevancia y P1 salen de su reverse-ASIN. Queda en pie lo que no depende de la herramienta: la keyword, el fit con tu producto y el precio.`}
+                ? T('Ver qué queda del análisis si el usuario no tiene Helium 10 conectado.')
+                : (lang === 'en'
+                  ? `This is how it looks with no Helium 10 connected. ${visCols.filter((c) => tapada(c)).length} of ${visCols.length} columns fall away: its own, and also the AGTA calculations fed by them — KW CVR comes from dividing two Helium 10 columns, and Relevancy and P1 come from its reverse-ASIN. What stays is everything that does not depend on the tool: the keyword, the fit with your product and the price.`
+                  : `Así se ve sin Helium 10 conectado. Se caen ${visCols.filter((c) => tapada(c)).length} de ${visCols.length} columnas: las suyas y también los cálculos de AGTA que se alimentan de ellas — KW CVR sale de dividir dos columnas de Helium 10, y Relevancia y P1 salen de su reverse-ASIN. Queda en pie lo que no depende de la herramienta: la keyword, el fit con tu producto y el precio.`)}
             >
-              {verH10 ? 'Sin H10' : 'Con H10'}
+              {verH10 ? T('Sin H10') : T('Con H10')}
             </Boton>
             <Boton
               icono={Iconos.Tag}
@@ -1829,47 +1995,47 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
               onClick={() => setVerMarcas((v) => !v)}
               titulo={`Keywords que nombran una marca ajena — Scentsy, Hocus Pocus, Harry Potter, IKEA. No van al listado; sirven para campañas de conquista. Hay ${data.kws.filter((k) => k.branded).length} en este producto.`}
             >
-              {verMarcas ? 'Con marcas' : 'Sin marcas'}
+              {verMarcas ? T('Con marcas') : T('Sin marcas')}
             </Boton>
             <Boton
               icono={Iconos.Users}
               activo={showComp}
               onClick={() => setShowComp((v) => !v)}
-              titulo="Mostrar u ocultar la columna de cada competidor con su puesto"
+              titulo={T('Mostrar u ocultar la columna de cada competidor con su puesto')}
             >
-              Competidores
+              {T('Competidores')}
             </Boton>
             {showComp && (
               <Boton
                 icono={Iconos.ArrowUpDown}
                 activo={rankMode === 'sponsored'}
                 onClick={() => setRankMode((m) => (m === 'organic' ? 'sponsored' : 'organic'))}
-                titulo="Orgánico = dónde rankea gratis · Patrocinado = en qué puesto aparece pagando"
+                titulo={T('Orgánico = dónde rankea gratis · Patrocinado = en qué puesto aparece pagando')}
               >
-                {rankMode === 'organic' ? 'Orgánico' : 'Pagado'}
+                {rankMode === 'organic' ? T('Orgánico') : T('Pagado')}
               </Boton>
             )}
             {(kwOrden || kwHid.size > 0 || !verH10) && (
               <Boton
                 icono={Iconos.RotateCcw}
                 onClick={() => { setKwOrden(null); setKwHid(new Set()); setVerH10(true) }}
-                titulo="Volver al orden y a las columnas de fábrica"
+                titulo={T('Volver al orden y a las columnas de fábrica')}
               />
             )}
-            <label className="rsch-precio" title="A qué precio POR UNIDAD pensás vender. De acá salen la columna Precio y la Evaluación. Si lo dejás vacío, no se emiten los veredictos que dependen del precio.">
-              tu precio
+            <label className="rsch-precio" title={T('A qué precio POR UNIDAD piensas vender. De acá salen la columna Precio y la Evaluación. Si lo dejas vacío, no se emiten los veredictos que dependen del precio.')}>
+              {T('tu precio')}
               <input
                 type="number"
                 step="0.01"
                 min="0"
                 value={miPrecio}
-                placeholder="sin definir"
+                placeholder={T('sin definir')}
                 onChange={(e) => setMiPrecio(e.target.value)}
               />
             </label>
             {filtroActivo && (
-              <Boton icono={Iconos.FilterX} onClick={() => setColF({})} titulo="Quitar todos los filtros de columna">
-                Limpiar filtros
+              <Boton icono={Iconos.FilterX} onClick={() => setColF({})} titulo={T('Quitar todos los filtros de columna')}>
+                {T('Limpiar filtros')}
               </Boton>
             )}
             {/* La ayuda al final: es lo último que se busca, no compite. */}
@@ -1877,17 +2043,17 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
               icono={Iconos.HelpCircle}
               activo={verLeyenda}
               onClick={() => setVerLeyenda((v) => !v)}
-              titulo="Qué significa cada color y cada marca de la tabla"
+              titulo={T('Qué significa cada color y cada marca de la tabla')}
             >
-              Cómo se lee
+              {T('Cómo se lee')}
             </Boton>
             {sel.size > 0 && (
               <span className="rsch-bulk">
-                <span className="rsch-bulk-n">{sel.size} seleccionadas → mover a</span>
+                <span className="rsch-bulk-n">{sel.size} {T('seleccionadas → mover a')}</span>
                 {BUCKETS.filter((t) => t !== tab).map((t) => (
-                  <button key={t} type="button" className="rsch-bulk-btn" onClick={() => moveSel(t)}>{t}</button>
+                  <button key={t} type="button" className="rsch-bulk-btn" onClick={() => moveSel(t)}>{T(t)}</button>
                 ))}
-                <button type="button" className="rsch-bulk-clear" onClick={() => setSel(new Set())}>limpiar</button>
+                <button type="button" className="rsch-bulk-clear" onClick={() => setSel(new Set())}>{T('limpiar')}</button>
               </span>
             )}
           </div>
@@ -1897,31 +2063,31 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
           {verLeyenda && (
             <div className="rsch-leyenda">
               <div className="rsch-ley-g">
-                <span className="rsch-ley-t">De dónde sale el dato</span>
-                <span className="rsch-ley-i"><span className="rsch-ley-h10" /> viene así de Helium 10</span>
-                <span className="rsch-ley-i"><span className="rsch-ley-agta" /> lo calcula AGTA</span>
-                <span className="rsch-ley-i" style={{ opacity: 0.6 }}>hay cálculos de AGTA que igual necesitan datos de Helium 10</span>
+                <span className="rsch-ley-t">{T('De dónde sale el dato')}</span>
+                <span className="rsch-ley-i"><span className="rsch-ley-h10" /> {T('viene así de Helium 10')}</span>
+                <span className="rsch-ley-i"><span className="rsch-ley-agta" /> {T('lo calcula AGTA')}</span>
+                <span className="rsch-ley-i" style={{ opacity: 0.6 }}>{T('hay cálculos de AGTA que igual necesitan datos de Helium 10')}</span>
               </div>
               <div className="rsch-ley-g">
-                <span className="rsch-ley-t">Dónde rankea</span>
-                <span className="rsch-ley-i"><b style={{ color: '#e0a94c' }}>9</b> top 10 orgánico</span>
-                <span className="rsch-ley-i"><span style={{ color: '#a78bfa', fontWeight: 600 }}>4</span> top 10 pago</span>
+                <span className="rsch-ley-t">{T('Dónde rankea')}</span>
+                <span className="rsch-ley-i"><b style={{ color: '#e0a94c' }}>9</b> {T('top 10 orgánico')}</span>
+                <span className="rsch-ley-i"><span style={{ color: '#a78bfa', fontWeight: 600 }}>4</span> {T('top 10 pago')}</span>
               </div>
               <div className="rsch-ley-g">
-                <span className="rsch-ley-t">Evaluación de la keyword</span>
-                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR.ATACAR }}>●</span> ATACAR — precio y conversión en rango</span>
-                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['PRECIO SUPERIOR'] }}>●</span> PRECIO SUPERIOR — el promedio del término está por encima del tuyo</span>
-                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['PRECIO INFERIOR'] }}>●</span> PRECIO INFERIOR — el promedio del término está por debajo del tuyo</span>
-                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['CVR BAJO'] }}>●</span> CVR BAJO — el KW CVR está muy por debajo del nicho</span>
-                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR.ESTACIONAL }}>●</span> ESTACIONAL — el volumen se dispara en una época</span>
+                <span className="rsch-ley-t">{T('Evaluación de la keyword')}</span>
+                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR.ATACAR }}>●</span> {T('ATACAR — precio y conversión en rango')}</span>
+                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['PRECIO SUPERIOR'] }}>●</span> {T('PRECIO SUPERIOR — el promedio del término está por encima del tuyo')}</span>
+                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['PRECIO INFERIOR'] }}>●</span> {T('PRECIO INFERIOR — el promedio del término está por debajo del tuyo')}</span>
+                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['CVR BAJO'] }}>●</span> {T('CVR BAJO — el KW CVR está muy por debajo del nicho')}</span>
+                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR.ESTACIONAL }}>●</span> {T('ESTACIONAL — el volumen se dispara en una época')}</span>
               </div>
               <div className="rsch-ley-g">
                 <span className="rsch-ley-t">SERP</span>
-                <span className="rsch-ley-i"><span className="rsch-flag sbv">SBV</span> video patrocinado</span>
-                <span className="rsch-ley-i"><span className="rsch-flag ch">AC</span> Amazon's Choice</span>
-                <span className="rsch-ley-i"><span className="rsch-flag sp">SP</span> anuncio patrocinado</span>
-                <span className="rsch-ley-t" style={{ marginTop: '0.5rem' }}>Al lado de la keyword</span>
-                <span className="rsch-ley-i"><span className="rsch-flag ch">libre</span> la rankean 2 competidores o menos</span>
+                <span className="rsch-ley-i"><span className="rsch-flag sbv">SBV</span> {T('video patrocinado')}</span>
+                <span className="rsch-ley-i"><span className="rsch-flag ch">AC</span> Amazon&apos;s Choice</span>
+                <span className="rsch-ley-i"><span className="rsch-flag sp">SP</span> {T('anuncio patrocinado')}</span>
+                <span className="rsch-ley-t" style={{ marginTop: '0.5rem' }}>{T('Al lado de la keyword')}</span>
+                <span className="rsch-ley-i"><span className="rsch-flag ch">{T('libre')}</span> {T('la rankean 2 competidores o menos')}</span>
               </div>
             </div>
           )}
@@ -1949,12 +2115,12 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                   {verSerp && <th className="mkl-th mkl-grupo-th">SERP</th>}
                   {kwComps.length > 0 && (
                     <th className="mkl-th mkl-grupo-th" colSpan={kwComps.length}>
-                      Ranks por competidor · {rankMode === 'organic' ? 'orgánicos' : 'patrocinados'}
+                      {lang === 'en' ? 'Ranks per competitor' : 'Ranks por competidor'} · {rankMode === 'organic' ? T('orgánicos') : T('patrocinados')}
                     </th>
                   )}
                 </tr>
                 <tr>
-                  <th className="mkl-th"><input type="checkbox" checked={allShown} onChange={toggleAll} aria-label="Seleccionar todas" /></th>
+                  <th className="mkl-th"><input type="checkbox" checked={allShown} onChange={toggleAll} aria-label={T('Seleccionar todas')} /></th>
                   {visCols.map((c, i) => (
                     <Th
                       key={c.k}
@@ -2029,7 +2195,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                         title={typeof r[c.k] === 'string' ? r[c.k] : undefined}
                       >
                         {tapada(c) ? (
-                          <span className="mkl-tapada" title="Este dato lo trae Helium 10: sin la herramienta conectada, no está.">sin H10</span>
+                          <span className="mkl-tapada" title={T('Este dato lo trae Helium 10: sin la herramienta conectada, no está.')}>{T('sin H10')}</span>
                         ) : c.k === 'kw' ? (
                           // el texto completo queda en el title: la celda puede cortar
                           <span title={r.kw}>{r.kw}</span>
@@ -2038,19 +2204,19 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                             title={r.motivo || ''}
                             style={{ color: VEREDICTO_COLOR[r.veredicto] || 'inherit', fontWeight: 600, fontSize: 11 }}
                           >
-                            {r.veredicto}
+                            {T(r.veredicto)}
                           </span>
                         ) : c.k.startsWith('use_') ? (
                           <UsoDot valor={r[c.k]} campo={c.label} />
                         ) : c.fmt ? c.fmt(r[c.k]) : r[c.k]}
-                        {c.k === 'kw' && r.opp_real && <span className="rsch-flag ch" title="Sin dueño: 2 competidores o menos y es de tu producto" style={{ marginLeft: 6 }}>libre</span>}
+                        {c.k === 'kw' && r.opp_real && <span className="rsch-flag ch" title={T('Sin dueño: 2 competidores o menos y es de tu producto')} style={{ marginLeft: 6 }}>{T('libre')}</span>}
                       </td>
                     ))}
                     {verSerp && (
                       <td className="rsch-serp">
-                        {r.sbv ? <span className="rsch-flag sbv" title="Sponsored Brand Video presente">SBV</span> : null}
-                        {r.choice ? <span className="rsch-flag ch" title="Amazon's Choice en este término">AC</span> : null}
-                        {r.sp ? <span className="rsch-flag sp" title="Sponsored Product presente">SP</span> : null}
+                        {r.sbv ? <span className="rsch-flag sbv" title={T('Sponsored Brand Video presente')}>SBV</span> : null}
+                        {r.choice ? <span className="rsch-flag ch" title={T("Amazon's Choice en este término")}>AC</span> : null}
+                        {r.sp ? <span className="rsch-flag sp" title={T('Sponsored Product presente')}>SP</span> : null}
                       </td>
                     )}
                     {kwComps.map((c) => {
@@ -2062,7 +2228,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                             <span
                               className={sponsored ? undefined : rk <= 10 ? 'mkl-rank-good' : 'mkl-rank-mid'}
                               style={sponsored ? { color: rk <= 3 ? '#a78bfa' : rk <= 10 ? '#8b7ae0' : '#6b6b8a', fontWeight: 600 } : undefined}
-                              title={sponsored ? 'Puesto en el que aparece pagando (Sponsored Rank)' : 'Puesto orgánico'}
+                              title={sponsored ? T('Puesto en el que aparece pagando (Sponsored Rank)') : T('Puesto orgánico')}
                             >
                               {rk}
                             </span>
@@ -2075,7 +2241,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                   </tr>
                 ))}
                 {rows.length === 0 && (
-                  <tr><td colSpan={visCols.length + 1 + (verSerp ? 1 : 0) + kwComps.length} className="mkl-empty">Sin keywords con esos filtros.</td></tr>
+                  <tr><td colSpan={visCols.length + 1 + (verSerp ? 1 : 0) + kwComps.length} className="mkl-empty">{T('Sin keywords con esos filtros.')}</td></tr>
                 )}
               </tbody>
             </table>
@@ -2086,26 +2252,38 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
               perdían las últimas filas justo cuando hay que revisarlas de a
               muchas. La ayuda se lee una vez, las filas se miran siempre. */}
           <p className="rsch-foot">
-            {miles(rows.length)} keywords en {tab === 'Trash' ? 'Descartadas' : tab}{rows.length > 600 ? ' (se muestran las primeras 600)' : ''}. Marca el checkbox y mové varias de un bucket a otro.
-            {data.meta.sponsored?.asins_sin_data?.length > 0 && ` Sin data de SR todavía: ${data.meta.sponsored.asins_sin_data.join(', ')}.`}
+            {miles(rows.length)} {lang === 'en' ? 'keywords in' : 'keywords en'} {tab === 'Trash' ? T('Descartadas') : tab}{rows.length > 600 ? (lang === 'en' ? ' (showing the first 600)' : ' (se muestran las primeras 600)') : ''}. {T('Marca el checkbox y mueve varias de un bucket a otro.')}
+            {data.meta.sponsored?.asins_sin_data?.length > 0 && ` ${lang === 'en' ? 'No SR data yet' : 'Sin data de SR todavía'}: ${data.meta.sponsored.asins_sin_data.join(', ')}.`}
           </p>
           <details className="rsch-foot-fold">
-            <summary>cómo leer esta tabla</summary>
+            <summary>{T('cómo leer esta tabla')}</summary>
             <p className="rsch-foot">
-              Cada filtro habla el idioma de su columna: las numéricas aceptan <code>&gt;100</code>, <code>&lt;50</code> o <code>100-500</code>;
-              {' '}Match, Tier, Prio y Veredicto se <b>marcan de una lista</b> (puedes ver solo exact, o exact + phrase). Con “Columnas” escondes las que no
-              estés mirando, y <b>arrastrando el encabezado</b> las reordenas.
-              Rank por competidor: <span className="mkl-rank-top">dorado sólido</span> = ≤3 · <b style={{ color: '#e0a94c' }}>dorado</b> = ≤10 · gris = 11+ · · = no rankea (o fuera del top {S.max_rank}).
-              {' '}En <b style={{ color: '#a78bfa' }}>violeta</b>, los ranks <b>patrocinados</b> (dónde aparece pagando): salen del reverse-ASIN de Helium 10, no de scrapear el SERP.
+              {lang === 'en' ? (
+                <>
+                  Each filter speaks the language of its column: numeric ones accept <code>&gt;100</code>, <code>&lt;50</code> or <code>100-500</code>;
+                  {' '}Match, Tier, Prio and Verdict are <b>picked from a list</b> (you can see exact only, or exact + phrase). With “Columns” you hide the
+                  ones you are not looking at, and <b>by dragging the header</b> you reorder them.
+                  Rank per competitor: <span className="mkl-rank-top">solid gold</span> = ≤3 · <b style={{ color: '#e0a94c' }}>gold</b> = ≤10 · grey = 11+ · · = does not rank (or outside the top {S.max_rank}).
+                  {' '}In <b style={{ color: '#a78bfa' }}>violet</b>, the <b>sponsored</b> ranks (where it shows up paying): they come from the Helium 10 reverse-ASIN, not from scraping the SERP.
+                </>
+              ) : (
+                <>
+                  Cada filtro habla el idioma de su columna: las numéricas aceptan <code>&gt;100</code>, <code>&lt;50</code> o <code>100-500</code>;
+                  {' '}Match, Tier, Prio y Veredicto se <b>marcan de una lista</b> (puedes ver solo exact, o exact + phrase). Con “Columnas” escondes las que no
+                  estés mirando, y <b>arrastrando el encabezado</b> las reordenas.
+                  Rank por competidor: <span className="mkl-rank-top">dorado sólido</span> = ≤3 · <b style={{ color: '#e0a94c' }}>dorado</b> = ≤10 · gris = 11+ · · = no rankea (o fuera del top {S.max_rank}).
+                  {' '}En <b style={{ color: '#a78bfa' }}>violeta</b>, los ranks <b>patrocinados</b> (dónde aparece pagando): salen del reverse-ASIN de Helium 10, no de scrapear el SERP.
+                </>
+              )}
             </p>
           </details>
         </>
       ))}
 
       <p className="rsch-foot" style={{ marginTop: 18 }}>
-        {miles(counts.Trash)} keywords descartadas (nadie del nicho rankea ni en el top {S.max_rank}).{' '}
+        {miles(counts.Trash)} {lang === 'en' ? `discarded keywords (nobody in the niche ranks even in the top ${S.max_rank}).` : `keywords descartadas (nadie del nicho rankea ni en el top ${S.max_rank}).`}{' '}
         <button type="button" className="rsch-bulk-clear" onClick={() => { setTab(tab === 'Trash' ? 'MKL' : 'Trash'); setSel(new Set()) }}>
-          {tab === 'Trash' ? 'volver al MKL' : 'ver descartadas'}
+          {tab === 'Trash' ? T('volver al MKL') : T('ver descartadas')}
         </button>
       </p>
     </main>

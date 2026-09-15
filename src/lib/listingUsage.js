@@ -63,3 +63,14 @@ export const USAGE_AYUDA =
   'El anillo hueco marca que el match es por plural o singular. Gris = no está en ese campo. ' +
   'Punteado = ese campo todavía no está escrito, así que no hay nada que medir. ' +
   'El match es literal: Amazon no hace stemming, "goth" no cuenta como "gothic".'
+
+// 🔑 La versión inglesa del mismo texto. Vive al lado del castellano a
+// propósito: si alguien cambia la lectura de un color, tiene las dos frases
+// delante y no se olvida de una — que es como una app queda diciendo cosas
+// distintas en cada idioma.
+export const USAGE_AYUDA_EN =
+  'Where the keyword is used inside the listing, read the DataDive way. ' +
+  'Green = exact, the phrase appears verbatim. Orange = broad, all the words are there but apart. ' +
+  'A hollow ring marks a plural or singular match. Grey = not in that field. ' +
+  'Dotted = that field is not written yet, so there is nothing to measure. ' +
+  'The match is literal: Amazon does no stemming, "goth" does not count as "gothic".'
