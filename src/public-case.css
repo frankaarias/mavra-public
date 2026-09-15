@@ -1,0 +1,57 @@
+.case-hero { min-height: max(760px, 100svh); }
+.case-hero-copy, .case-scope-grid { flex-shrink: 0; }
+
+.evidence-index,
+.evidence-page {
+  min-height: 100svh;
+  padding: 8.5rem clamp(1.25rem, 5vw, 5.5rem) 2rem;
+  background: #0b0a09;
+  color: #e9e1d5;
+  font-family: var(--font-sans);
+}
+
+.evidence-index-hero,
+.evidence-page-hero,
+.evidence-index-groups,
+.evidence-page-cards,
+.evidence-index-note,
+.evidence-page-footer { max-width: 1240px; margin: 0 auto; }
+
+.evidence-index-hero,
+.evidence-page-hero { position: relative; max-width: 900px; padding-bottom: clamp(3.5rem, 8vw, 6.5rem); }
+.evidence-index h1,
+.evidence-page h1 { max-width: 850px; margin: 1rem 0 1.6rem; font: 400 clamp(2.8rem, 7vw, 6.5rem)/1.02 'Cinzel', serif; letter-spacing: -0.035em; text-transform: none; }
+.evidence-index-hero > p:last-child,
+.evidence-page-hero > p:last-child { max-width: 700px; color: rgba(233,225,213,0.65); font-size: clamp(1rem, 1.6vw, 1.18rem); line-height: 1.75; }
+.evidence-language,
+.evidence-page-topline button { border: 1px solid rgba(196,131,42,0.3); background: transparent; color: #d69d4c; padding: 0.45rem 0.6rem; font: 600 0.62rem var(--font-mono); letter-spacing: 0.14em; cursor: pointer; }
+.evidence-language { position: absolute; top: 0; right: 0; }
+
+.evidence-index-groups { border-top: 1px solid rgba(196,131,42,0.26); }
+.evidence-index-group { display: grid; grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr); gap: clamp(2rem, 8vw, 9rem); padding: clamp(2rem, 5vw, 4.25rem) 0; border-bottom: 1px solid rgba(196,131,42,0.26); }
+.evidence-index-group span,
+.evidence-page-cards span { color: #d69d4c; font: 600 0.63rem var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.evidence-index-group p { max-width: 300px; margin-top: 0.8rem; color: rgba(233,225,213,0.56); line-height: 1.6; }
+.evidence-index-group nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid rgba(196,131,42,0.2); }
+.evidence-index-group a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.85rem 0.1rem; border-bottom: 1px solid rgba(196,131,42,0.2); color: #e9e1d5; font-size: 0.92rem; }
+.evidence-index-group a:hover { color: #d69d4c; }
+.evidence-index-note { padding: 1.4rem 0 0; color: rgba(233,225,213,0.46); font: 0.62rem/1.6 var(--font-mono); letter-spacing: 0.08em; }
+
+.evidence-page-topline { display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(3rem, 8vw, 7rem); }
+.evidence-page-topline a,
+.evidence-page-footer a { display: inline-flex; align-items: center; gap: 0.45rem; color: #d69d4c; font: 600 0.62rem var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.evidence-page-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid rgba(196,131,42,0.26); border-left: 1px solid rgba(196,131,42,0.26); }
+.evidence-page-cards article { min-height: 295px; padding: 1.5rem; border-right: 1px solid rgba(196,131,42,0.26); border-bottom: 1px solid rgba(196,131,42,0.26); background: linear-gradient(135deg, rgba(196,131,42,0.06), transparent 55%); }
+.evidence-page-cards h2 { margin: 3rem 0 0.9rem; color: #e9e1d5; font: 400 1.45rem/1.25 'Cinzel', serif; text-transform: none; letter-spacing: 0; }
+.evidence-page-cards p { color: rgba(233,225,213,0.62); font-size: 0.92rem; line-height: 1.75; }
+.evidence-page-footer { display: flex; justify-content: space-between; gap: 1rem; padding: 1.45rem 0 0; color: rgba(233,225,213,0.46); font: 0.62rem/1.6 var(--font-mono); letter-spacing: 0.08em; }
+
+@media (max-width: 900px) { .case-hero { min-height: max(720px, 100svh); } }
+@media (max-width: 720px) {
+  .evidence-index, .evidence-page { padding-top: 6.5rem; }
+  .evidence-index-group { grid-template-columns: 1fr; }
+  .evidence-index-group nav, .evidence-page-cards { grid-template-columns: 1fr; }
+  .evidence-page-cards article { min-height: 220px; }
+  .evidence-page-footer { align-items: flex-start; flex-direction: column; }
+}
+@media (max-width: 640px) { .case-hero { min-height: max(680px, 100svh); } }
