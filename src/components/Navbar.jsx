@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import brand from '../brand/brand.json'
 import { NavLink } from 'react-router-dom'
+import LanguageToggle from './LanguageToggle.jsx'
 
 const { identity } = brand
 
@@ -31,6 +32,7 @@ export default function Navbar() {
         <NavLink to="/brand" onClick={close}>Brand OS</NavLink>
         <a href="/#contact" onClick={close}>Contact</a>
       </div>
+      <LanguageToggle />
       <button className="theme-toggle" onClick={toggleTheme} aria-label="Cambiar tema" title={theme === 'light' ? 'Modo oscuro' : 'Modo claro'}>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</button>
       <button className={`nav-toggle${mobileOpen ? ' open' : ''}`} onClick={() => setMobileOpen(open => !open)} aria-label="Menú"><span /><span /><span /></button>
     </div>

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import useMavraLanguage from '../components/useMavraLanguage.js'
 import { ArrowDown, ArrowUpRight, Check, Mail } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import '../case-study-evidence.css'
@@ -196,9 +197,7 @@ const FEATURED_WORK = {
 }
 
 export default function CaseStudy() {
-  const [lang, setLang] = useState(() => {
-    try { return localStorage.getItem('mavra-case-language') || 'en' } catch { return 'en' }
-  })
+  const [lang, setLang] = useMavraLanguage()
   const [submitted, setSubmitted] = useState(false)
   const copy = COPY[lang]
   const chapters = useMemo(() => CHAPTERS[lang], [lang])
@@ -213,11 +212,6 @@ export default function CaseStudy() {
     <main className="case-study">
       <section className="case-hero">
         <div className="case-grid-noise" aria-hidden="true" />
-        <div className="case-language" aria-label="Language selector">
-          <button className={lang === 'en' ? 'active' : ''} onClick={() => { setLang('en'); try { localStorage.setItem('mavra-case-language', 'en') } catch {} }}>EN</button>
-          <span>/</span>
-          <button className={lang === 'es' ? 'active' : ''} onClick={() => { setLang('es'); try { localStorage.setItem('mavra-case-language', 'es') } catch {} }}>ES</button>
-        </div>
         <div className="case-hero-copy">
           <p className="case-eyebrow">{copy.eyebrow}</p>
           <p className="case-category">{copy.category}</p>
