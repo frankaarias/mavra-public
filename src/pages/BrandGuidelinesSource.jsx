@@ -8,7 +8,7 @@ export default function BrandGuidelines() {
   useReveal()
 
   return (
-    <>
+    <div className="reading-surface">
       <div className="page-header">
         <h1>Brand Guidelines</h1>
         <p className="page-subtitle">Estrategia, identidad y sistema visual completo.</p>
@@ -292,7 +292,7 @@ export default function BrandGuidelines() {
 
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

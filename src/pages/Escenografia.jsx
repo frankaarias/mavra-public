@@ -8,7 +8,7 @@ export default function Escenografia() {
   useReveal()
 
   return (
-    <>
+    <div className="reading-surface">
       <div id="scenography-top" className="page-header">
         <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.8rem)', color: 'var(--fg)', marginBottom: '0.25rem' }}>
           Guía de Escenografía
@@ -217,7 +217,7 @@ export default function Escenografia() {
       </div>
 
       <div className="global-footer">{identity.name} · Guía de Escenografía · <a href="/">Home</a></div>
-    </>
+    </div>
   )
 }
 

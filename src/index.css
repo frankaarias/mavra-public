@@ -2921,27 +2921,38 @@ th .rsch-opts-btn { width: 100%; }
 
 /* Reading scale for the deep documentation surfaces. Keeps the brand typefaces;
    only restores a comfortable body size across long-form pages and tables. */
+.reading-surface p,
+.reading-surface li,
+.reading-surface td,
 main:not(.case-study) p,
 main:not(.case-study) li,
 main:not(.case-study) td {
   font-size: clamp(0.98rem, 1.05vw, 1.08rem) !important;
   line-height: 1.75 !important;
 }
+.reading-surface th,
+.reading-surface h4,
+.reading-surface .section-label,
 main:not(.case-study) th,
 main:not(.case-study) h4,
 main:not(.case-study) .section-label {
   font-size: clamp(0.7rem, 0.78vw, 0.8rem) !important;
   line-height: 1.45 !important;
 }
+.reading-surface h3,
 main:not(.case-study) h3 {
   font-size: clamp(0.98rem, 1.05vw, 1.14rem) !important;
   line-height: 1.35 !important;
 }
+.reading-surface code,
 main:not(.case-study) code {
   font-size: clamp(0.78rem, 0.88vw, 0.9rem) !important;
   line-height: 1.65 !important;
 }
 @media (max-width: 640px) {
+  .reading-surface p,
+  .reading-surface li,
+  .reading-surface td,
   main:not(.case-study) p,
   main:not(.case-study) li,
   main:not(.case-study) td { font-size: 1rem !important; }
