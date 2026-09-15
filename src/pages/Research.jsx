@@ -38,7 +38,18 @@ const UKL = { LMP: lmpUkl, CND: cndUkl, SWD: swdUkl }
 // El orden es el del embudo, no el del dive: primero el universo del nicho, y de
 // ahí se baja a lo que ya se pelea, lo que sobra y lo que se descarta.
 // (Frank, 2026-07-31)
-const BUCKETS = ['UKL', 'MKL', 'Outliers', 'Residue', 'Negatives']
+// 🔴 `Negatives` SIGUE SIENDO UN BUCKET, PERO NO UNA PESTAÑA.
+//
+// Frank, 2026-09-15: esta pantalla tiene que leerse como el MKL que ya
+// entregamos (app.agta.io/mkl/...), y ahí Negatives no existe — las pestañas
+// son MKL · Atípicos · Residuo · Raíces · Competidores.
+//
+// ⚠️ Se saca de la NAVEGACIÓN, no de `assign`. Las 941 keywords que hoy están
+// ahí siguen asignadas a `Negatives` y siguen contándose: borrar el bucket las
+// mandaría a otro sin que nadie lo decidiera, y un movimiento así no se ve.
+// Volver a mostrarlo es añadir la cadena a esta lista.
+const BUCKETS = ['UKL', 'MKL', 'Outliers', 'Residue']
+const BUCKETS_OCULTOS = ['Negatives']
 // El veredicto del nicho es un INFORME, el MKL es una HERRAMIENTA: no comparten
 // pantalla. El veredicto vive en su propia pestaña y la tabla usa todo el alto.
 const TOOLS = ['Veredicto', 'Roots', 'Normalizer', 'Competidores']
@@ -365,11 +376,18 @@ function mediana(xs) {
 const fuerza = (share) => (share >= 75 ? 'Muy fuerte' : share >= 50 ? 'Fuerte' : share >= 35 ? 'Media' : 'Débil')
 
 // Filas del panel de competidores: qué se muestra, de dónde sale y cómo se ordena.
+// 🔴 LA FOTO, LA MARCA Y EL ASIN YA NO SON FILAS: VIVEN EN LA CABECERA.
+//
+// Eran cuatro filas —Producto, Marca, Título, ASIN— y ocupaban el sitio de los
+// datos. Con el título completo dentro de una celda, la tabla se iba de ancho y
+// en pantalla entraban DOS competidores de nueve.
+//
+// Así lo hace el MKL que ya entregamos: identificación arriba de cada columna,
+// en pequeño, y el cuerpo solo métricas. Ahí entran los diez de un vistazo, que
+// es el único modo en que una tabla de comparación sirve de algo.
+//
+// 📌 El título no se pierde: sigue en el globo de ayuda de la cabecera, entero.
 const COMP_ROWS = [
-  { k: 'imagen', label: 'Producto', med: null, foto: true, info: 'La foto principal del listing (Keepa). Ver contra quién competís es la mitad del análisis: el precio y las reseñas no te dicen si el producto se parece al tuyo.' },
-  { k: 'brand', label: 'Marca', med: null, fmt: (v) => v, info: 'Marca dueña del ASIN, según Keepa.' },
-  { k: 'titulo', label: 'Título', med: null, fmt: (v) => v || '—', info: 'El título del listing en Amazon. Sirve para leer cómo se posiciona: qué keyword pone adelante y qué promete.' },
-  { k: 'asin', label: 'ASIN', med: null, fmt: (v) => v, info: 'El identificador del producto en Amazon.' },
   { k: 'strength', label: 'Fuerza', med: null, badge: true, sortVal: (c) => STRENGTH_ORD[c.strength] || 0, info: 'Lectura rápida del share: Muy fuerte ≥75% · Fuerte ≥50% · Media ≥35% · Débil abajo de eso. Se recalcula con los buckets de ahora.' },
   { k: 'share', label: 'SV en P1 (share of voice)', med: 'share', fmt: (v) => `${v}%`, bar: true, info: 'Del volumen total del MKL de ahora, qué porcentaje cubre este competidor desde página 1. Es la métrica de dominio del nicho.' },
   { k: 'kws_p1', label: 'Keywords en P1', med: 'kws_p1', fmt: (v) => miles(v), info: `Cuántas keywords del MKL actual tiene en página 1 (rank ≤${S.p1_rank}).` },
@@ -1377,15 +1395,31 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             <p className="rsch-inf-lectura">{ov.lectura}</p>
           </header>
 
-          {/* Las cifras del dive: una fila de tarjetas, número arriba y etiqueta
-              abajo. Antes el número quedaba en un borde y su etiqueta en el otro. */}
+          {/* 🔴 LAS SEIS CIFRAS IBAN DEL MISMO TAMAÑO, ASÍ QUE NINGUNA MANDABA.
+              Un veredicto de nicho contesta UNA pregunta —¿queda sitio para mí?— y
+              dos de las seis la contestan: cuánto del nicho tiene ya el líder, y
+              cuánto volumen no tiene dueño. Las otras cuatro son el contexto que se
+              mira DESPUÉS, si la primera lectura invita a seguir.
+              Puestas todas iguales, había que leer seis para encontrar las dos. */}
+          <div className="rsch-inf-clave">
+            <div className="rsch-inf-cifra rsch-inf-cifra-xl">
+              <b>{ov.lider_share}%</b>
+              <span>del nicho ya es del líder</span>
+              <em>su parte en primera página — cuanto más alto, menos sitio queda</em>
+            </div>
+            <div className="rsch-inf-cifra rsch-inf-cifra-xl">
+              <b>{miles(ov.sv_uncontested)}</b>
+              <span>búsquedas al mes sin dueño</span>
+              <em>las rankean 2 competidores o menos — por ahí se entra</em>
+            </div>
+          </div>
+
+          {/* El contexto, en pequeño: de qué tamaño es el nicho y sobre qué se midió. */}
           <div className="rsch-inf-cifras">
             {[
               [miles(ov.n_niche), 'keywords del producto', `${miles(ov.sv_niche)} búsquedas/mes`],
               [miles(counts.MKL), 'en el núcleo', 'las que pelea el nicho'],
               [miles(counts.Outliers), 'Outliers', 'volumen que nadie domina'],
-              [miles(ov.sv_uncontested), 'búsquedas sin dueño', '2 competidores o menos'],
-              [`${ov.lider_share}%`, 'del nicho en P1 del líder', 'qué tan concentrado está'],
               [miles(data.meta.n_comp), 'competidores', 'sobre los que se midió todo'],
             ].map(([v, t, sub]) => (
               <div key={t} className="rsch-inf-cifra">
@@ -1469,7 +1503,17 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                     <Th
                       key={c.asin}
                       className="mkl-th-comp rsch-th-comp"
-                      label={(c.brand || c.asin).slice(0, 14)}
+                      /* La foto va ARRIBA de la marca, no en una fila aparte: es
+                         lo primero que dice si ese competidor se parece al tuyo,
+                         y en una fila obligaba a bajar la vista por cada uno. */
+                      label={(
+                        <span className="rsch-comp-id">
+                          {c.imagen
+                            ? <img src={c.imagen} alt="" className="rsch-comp-foto" loading="lazy" />
+                            : <span className="rsch-comp-foto rsch-comp-foto-vacia" aria-hidden="true" />}
+                          <span className="rsch-comp-marca">{(c.brand || c.asin).slice(0, 14)}</span>
+                        </span>
+                      )}
                       ayuda={`${c.brand || c.asin} (${c.asin}) — ${c.titulo || 'sin título en Keepa'}`}
                       style={{ minWidth: 118 }}
                     />

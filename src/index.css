@@ -2297,15 +2297,38 @@ th .rsch-opts-btn { width: 100%; }
   cursor: pointer;
 }
 
+/* Foto y título del competidor. Ver contra quién competís es la mitad del
+   análisis: el precio y las reseñas no dicen si el producto se parece al tuyo.
 
+   🔴 La foto vive en la CABECERA de la columna, no en una fila. Como fila
+   ocupaba el alto de una métrica por cada competidor y obligaba a bajar la
+   vista; arriba identifica la columna entera de un golpe. Por eso baja de 84 a
+   52 px: en la cabecera compite con el resto de la tabla, no manda sobre ella. */
+.rsch-comp-id {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.rsch-comp-marca {
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
 .rsch-comp-foto {
   display: block;
-  width: 84px;
-  height: 84px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
   background: rgba(255,255,255,0.04);
   border-radius: 4px;
   margin: 0 auto;
+}
+/* Un competidor sin foto deja el hueco del MISMO tamaño: si la columna se
+   encoge, las cabeceras dejan de alinearse y la tabla se lee torcida. */
+.rsch-comp-foto-vacia {
+  border: 1px dashed rgba(var(--fg-rgb),0.18);
+  background: transparent;
 }
 .rsch-comp-titulo {
   display: -webkit-box;
@@ -2350,6 +2373,23 @@ th .rsch-opts-btn { width: 100%; }
   color: rgba(var(--fg-rgb),0.92);
 }
 
+/* Cifras: tarjetas en fila, número arriba y etiqueta debajo. */
+/* 🔴 LAS DOS CIFRAS QUE SOSTIENEN EL VEREDICTO, EN GRANDE Y ARRIBA.
+   Con las seis del mismo tamaño había que leerlas todas para encontrar las dos
+   que contestan «¿queda sitio?». Estas dos van solas, a doble columna y con el
+   número al triple; el resto baja a fila de contexto. */
+.rsch-inf-clave {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px;
+  margin-bottom: 1px;
+  background: rgba(var(--copper-rgb),0.25);
+  border: 1px solid rgba(var(--copper-rgb),0.25);
+}
+.rsch-inf-cifra-xl { padding: 1.5rem 1.6rem; gap: 0.35rem; }
+.rsch-inf-cifra-xl b { font-size: 3.1rem; letter-spacing: -0.01em; }
+.rsch-inf-cifra-xl span { font-size: 0.72rem; letter-spacing: 0.05em; color: rgba(var(--fg-rgb),0.92); }
+.rsch-inf-cifra-xl em { font-size: 0.74rem; line-height: 1.4; }
 
 .rsch-inf-cifras {
   display: grid;
