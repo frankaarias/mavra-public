@@ -1,6 +1,6 @@
-.case-hero { min-height: max(760px, 100svh); }
+.case-hero { min-height: clamp(640px, 82svh, 760px); }
 .case-hero-copy, .case-scope-grid { flex-shrink: 0; }
-.case-hero h1 { max-width: 760px; font-size: clamp(2.35rem, 4.7vw, 4.75rem); }
+.case-hero h1 { max-width: 680px; font-size: clamp(2.3rem, 4vw, 3.85rem); line-height: 1.04; }
 
 .case-work-intro {
   max-width: 1440px;
@@ -10,7 +10,7 @@
   border-right: 1px solid rgba(196, 131, 42, 0.12);
 }
 .case-work-intro-copy { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr); gap: clamp(2rem, 8vw, 10rem); align-items: end; margin-bottom: clamp(2.5rem, 6vw, 5rem); }
-.case-work-intro h2 { max-width: 800px; font: 400 clamp(2rem, 4.6vw, 4.2rem)/1.06 'Cinzel', serif; letter-spacing: -0.02em; text-transform: none; }
+.case-work-intro h2 { max-width: 800px; font: 400 clamp(1.85rem, 3.5vw, 3.25rem)/1.1 'Cinzel', serif; letter-spacing: -0.02em; text-transform: none; }
 .case-work-intro-copy p { color: var(--case-muted); font-size: 1.04rem; line-height: 1.8; }
 .case-featured-work { border-top: 1px solid var(--case-line); }
 .case-work-item { display: grid; grid-template-columns: minmax(230px, 0.7fr) minmax(0, 1.3fr); gap: clamp(2rem, 7vw, 8rem); padding: clamp(2.25rem, 5vw, 5rem) 0; border-bottom: 1px solid var(--case-line); }
@@ -46,15 +46,25 @@
 [data-theme="light"] .case-footer { background: #f4efe7; }
 
 @media (max-width: 900px) {
-  .case-hero { min-height: max(720px, 100svh); }
+  .case-hero { min-height: clamp(620px, 80svh, 700px); }
   .case-work-intro-copy, .case-work-item { grid-template-columns: 1fr; }
 }
 @media (max-height: 760px) and (min-width: 641px) {
   .case-hero { min-height: auto; padding-top: 6.5rem; }
-  .case-hero h1 { font-size: clamp(2.2rem, 4vw, 3.9rem); }
+  .case-hero h1 { font-size: clamp(2.15rem, 3.5vw, 3.35rem); }
 }
 @media (max-width: 640px) {
-  .case-hero { min-height: max(680px, 100svh); }
+  .case-hero { min-height: 650px; }
   .case-work-images { grid-template-columns: 1fr; }
   .case-work-images a, .case-work-images.single a { min-height: 230px; }
+}
+
+
+/* The public case study is intentionally a short navigation layer. The detailed
+   operating modules remain available one click away through Brand OS. */
+.global-nav .nav-links { gap: clamp(1rem, 2.1vw, 2.1rem); }
+.global-nav .nav-links a { white-space: nowrap; }
+@media (max-width: 1050px) {
+  .global-nav .nav-links { gap: 1rem; }
+  .global-nav .nav-links a { font-size: 0.58rem; }
 }

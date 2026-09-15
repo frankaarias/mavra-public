@@ -225,7 +225,7 @@ export default function CaseStudy() {
           <p className="case-intro">{copy.intro}</p>
           <div className="case-hero-actions">
             <a href="#system" className="case-button primary">{copy.primary} <ArrowDown size={15} /></a>
-            <a href="#evidence" className="case-button secondary">{copy.secondary} <ArrowUpRight size={15} /></a>
+            <Link to="/brand" className="case-button secondary">{copy.secondary} <ArrowUpRight size={15} /></Link>
           </div>
         </div>
         <dl className="case-scope-grid">
@@ -233,7 +233,7 @@ export default function CaseStudy() {
         </dl>
       </section>
 
-      <section className="case-work-intro">
+      <section className="case-work-intro" id="evidence">
         <div className="case-section-label">01 / {lang === 'en' ? 'Selected evidence' : 'Evidencia seleccionada'}</div>
         <div className="case-work-intro-copy">
           <h2>{lang === 'en' ? 'The system, visible before the explanation.' : 'El sistema visible antes de explicarlo.'}</h2>
@@ -294,7 +294,7 @@ export default function CaseStudy() {
         </div>
       </section>
 
-      <section className="case-section case-proof" id="evidence">
+      <section className="case-section case-proof" id="scope">
         <div className="case-section-label">05 / {copy.proofKicker}</div>
         <div className="case-split-copy">
           <div><h2>{copy.proofTitle}</h2><p>{copy.proofText}</p></div>
