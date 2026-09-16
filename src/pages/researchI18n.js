@@ -11,12 +11,18 @@
 // texto en el idioma equivocado se ve; un `undefined` es un hueco que nadie
 // reporta hasta que alguien mira esa pestaña.
 //
-// ⚠️ LO QUE ESTO NO TRADUCE, y hay que saberlo: el veredicto narrado
-// (`overview.lectura`, `.razones`, `.falta`) viene ESCRITO EN CASTELLANO
-// DENTRO DEL DATASET — lo genera el motor de nichos en Python, no esta página.
-// En inglés esas frases siguen saliendo en castellano hasta que se traduzcan
-// las plantillas del generador. Las etiquetas del veredicto (Lanzar / Riesgoso
-// / Evitar) sí, porque son un set cerrado y viven acá.
+// ✅ EL VEREDICTO NARRADO YA SE TRADUCE, desde el 2026-09-16 — y no aquí.
+// (`overview.lectura`, `.razones`, `.falta`) viene ESCRITO DENTRO DEL DATASET:
+// lo genera el motor de nichos en Python, que ahora manda también `lectura_en`,
+// `razones_en` y `falta_en`. La página solo elige, con el castellano de respaldo.
+// Un diccionario de aquí no podía traducirlo: son frases armadas allá con los
+// números del dive. Las etiquetas del veredicto (Lanzar / Riesgoso / Evitar) sí
+// viven aquí, porque son un set cerrado.
+//
+// 📌 Y lo que este archivo NO alcanza: los estados VACÍOS escritos a mano en el
+// JSX. El de la pestaña Roots se quedó en castellano nueve revisiones porque solo
+// se ve cuando no hay ningún root marcado. Al escribir uno nuevo, mirarlo en
+// inglés con la condición cumplida.
 
 export const EN = {
   // ── Pestañas y navegación ────────────────────────────────────────────────

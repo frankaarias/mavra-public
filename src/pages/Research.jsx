@@ -1816,8 +1816,14 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             <div className="mkl-scroll">
               {rootSel.size === 0 ? (
                 <p className="rsch-tabdesc" style={{ margin: 0, padding: '0.8rem' }}>
-                  Marca uno o varios roots para ver acá sus keywords. Sumar roots amplía la cobertura:
-                  si escribes los dos en el listing, te indexás por las keywords de ambos.
+                  {/* 🔴 El ÚNICO texto de la página que seguía en castellano con el toggle
+                      en inglés: es un estado VACÍO, así que no se ve a menos que no haya
+                      ningún root marcado — y por eso pasó nueve revisiones. Los estados
+                      vacíos son el sitio donde se esconde lo que no se tradujo.
+                      Y de paso sale el voseo: «te indexás» no va para un cliente. */}
+                  {lang === 'en'
+                    ? 'Tick one or more roots to see their keywords here. Adding roots widens your coverage: if you write both in the listing, you get indexed for the keywords of both.'
+                    : 'Marca uno o varios roots para ver aquí sus keywords. Sumar roots amplía la cobertura: si escribes los dos en el listing, te indexas por las keywords de ambos.'}
                 </p>
               ) : (
                 <table className="mkl-table" style={{ width: 'auto', minWidth: '100%' }}>
