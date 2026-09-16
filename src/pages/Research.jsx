@@ -1500,7 +1500,14 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
               <strong>{T(ov.veredicto)}</strong>
               <span className="rsch-inf-prod">{data.meta.product}</span>
             </div>
-            <p className="rsch-inf-lectura">{ov.lectura}</p>
+            {/* 🔴 EL VEREDICTO NARRADO VIENE DENTRO DEL DATO, no de esta página:
+                lo escribe el motor de nichos al armar el MKL, con los números ya
+                calculados. Por eso el toggle no lo tocaba — un diccionario de aquí no
+                puede traducir una frase que se generó allá. Desde el 2026-09-16 el
+                motor la manda en los dos idiomas y aquí solo se elige.
+                El castellano es el respaldo: si algún día falta la inglesa, se ve la
+                castellana —que se nota— en vez de un hueco. */}
+            <p className="rsch-inf-lectura">{(lang === 'en' && ov.lectura_en) || ov.lectura}</p>
           </header>
 
           {/* 🔴 LAS SEIS CIFRAS IBAN DEL MISMO TAMAÑO, ASÍ QUE NINGUNA MANDABA.
@@ -1542,9 +1549,9 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             <section className="rsch-inf-bloque">
               <h2 className="rsch-inf-h2">{T('Por qué')}</h2>
               <ul className="rsch-inf-razones">
-                {ov.razones.map((r) => <li key={r}>{r}</li>)}
+                {((lang === 'en' && ov.razones_en) || ov.razones).map((r) => <li key={r}>{r}</li>)}
               </ul>
-              <p className="rsch-inf-nota">{ov.falta}</p>
+              <p className="rsch-inf-nota">{(lang === 'en' && ov.falta_en) || ov.falta}</p>
             </section>
 
             {ov.top_libres?.length > 0 && (
