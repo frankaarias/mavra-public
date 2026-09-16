@@ -1,3 +1,4 @@
+import { useTranslation } from '../i18n/TranslationProvider.jsx'
 import { useEffect } from 'react'
 import brand from '../brand/brand.json'
 
@@ -23,23 +24,25 @@ const s = {
 }
 
 export default function CopyAds() {
+  const { text: trText } = useTranslation()
+
   useEffect(() => { document.title = `${identity.name} — Search & Growth Architecture` }, [])
   return (
     <main style={s.page}>
       <header>
-        <p style={s.eyebrow}>Case study evidence · Search and growth</p>
-        <h1 style={s.title}>One demand system,<br />not separate tactics.</h1>
-        <p style={s.lead}>MAVRA connects market language, listing decisions and launch activity into a single learning loop. The objective is not activity for its own sake; it is clearer product-market fit at every customer touchpoint.</p>
+        <p style={s.eyebrow}>{trText("Case study evidence · Search and growth")}</p>
+        <h1 style={s.title}>{trText("One demand system,")}<br />{trText("not separate tactics.")}</h1>
+        <p style={s.lead}>{trText("MAVRA connects market language, listing decisions and launch activity into a single learning loop. The objective is not activity for its own sake; it is clearer product-market fit at every customer touchpoint.")}</p>
       </header>
       <section style={{ marginTop: '64px' }}>
-        <p style={s.eyebrow}>Operating model</p>
+        <p style={s.eyebrow}>{trText("Operating model")}</p>
         <div style={s.grid}>
-          {stages.map(([title, text], index) => <article key={title} style={s.card}><span style={s.number}>0{index + 1}</span><h2 style={s.h3}>{title}</h2><p style={s.body}>{text}</p></article>)}
+          {stages.map(([title, text], index) => <article key={title} style={s.card}><span style={s.number}>{"0"}{trText(index + 1)}</span><h2 style={s.h3}>{trText(title)}</h2><p style={s.body}>{trText(text)}</p></article>)}
         </div>
       </section>
       <section style={{ marginTop: '72px', padding: '30px', border: '1px solid rgba(var(--copper-rgb),0.23)', background: 'rgba(var(--copper-rgb),0.04)' }}>
-        <p style={s.eyebrow}>What this demonstrates</p>
-        <p style={{ ...s.body, marginBottom: 0, maxWidth: '800px', fontSize: '0.98rem' }}>Brand strategy is made operational when the same customer language informs SEO, retail copy, image architecture and acquisition. The public case study documents this system without publishing proprietary campaign settings, market exports or operational account data.</p>
+        <p style={s.eyebrow}>{trText("What this demonstrates")}</p>
+        <p style={{ ...s.body, marginBottom: 0, maxWidth: '800px', fontSize: '0.98rem' }}>{trText("Brand strategy is made operational when the same customer language informs SEO, retail copy, image architecture and acquisition. The public case study documents this system without publishing proprietary campaign settings, market exports or operational account data.")}</p>
       </section>
     </main>
   )

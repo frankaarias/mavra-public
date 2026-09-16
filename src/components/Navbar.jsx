@@ -41,9 +41,9 @@ export default function Navbar() {
     <NavLink to="/" className="nav-brand" onClick={close}>{identity.name}</NavLink>
     <div className="nav-right">
       <div className={`nav-links${mobileOpen ? ' open' : ''}`}>
-        <NavLink to="/" end onClick={close}>Case Study</NavLink>
+        <NavLink to="/" end onClick={close}>{lang === 'es' ? 'Caso de estudio' : 'Case Study'}</NavLink>
         <NavLink to="/brand" onClick={close}>Brand OS</NavLink>
-        <a href="/#contact" onClick={close}>Contact</a>
+        <a href="/#contact" onClick={close}>{lang === 'es' ? 'Contacto' : 'Contact'}</a>
       </div>
       <LanguageToggle />
       <button className="theme-toggle" onClick={toggleTheme} aria-label={t.tema} title={theme === 'light' ? t.oscuro : t.claro}>{theme === 'light' ? <MoonIcon /> : <SunIcon />}</button>

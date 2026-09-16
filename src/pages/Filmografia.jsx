@@ -1,24 +1,27 @@
+import { useTranslation } from '../i18n/TranslationProvider.jsx'
 import { useEffect } from 'react'
 import brand from '../brand/brand.json'
 
 const { identity, nav } = brand
 
 export default function Filmografia() {
+  const { text: trText } = useTranslation()
+
   useEffect(() => { document.title = `Filmografía — ${identity.name}` }, [])
 
   return (
     <>
       <div className="page-header">
-        <h1>Filmografía</h1>
-        <p className="page-subtitle">Guía de cinematografía y video AI para {identity.name}.</p>
-        <div style={metaStyle}>v1.0 · 2026-05-27 · Basada en research de 27 transcripts Kling</div>
+        <h1>{trText("Filmografía")}</h1>
+        <p className="page-subtitle">{trText("Guía de cinematografía y video AI para ")}{trText(identity.name)}{"."}</p>
+        <div style={metaStyle}>{trText("v1.0 · 2026-05-27 · Basada en research de 27 transcripts Kling")}</div>
       </div>
 
       <div style={layoutStyle}>
         <aside style={sidebarStyle}>
-          <p style={sidebarLabelStyle}>Contenido</p>
+          <p style={sidebarLabelStyle}>{trText("Contenido")}</p>
           {nav.filmografia.map(n => (
-            <a key={n.id} href={`#${n.id}`} style={n.driver ? driverLinkStyle : linkStyle}>{n.label}</a>
+            <a key={n.id} href={`#${n.id}`} style={n.driver ? driverLinkStyle : linkStyle}>{trText(n.label)}</a>
           ))}
         </aside>
 
@@ -26,17 +29,17 @@ export default function Filmografia() {
 
           {/* ─── Identidad ─── */}
           <section id="identidad">
-            <H2>Identidad Cinematográfica</H2>
-            <p>{identity.name} no hace videos de producto. Hace <strong>rituales visuales</strong>. Cada clip debe sentirse como una escena de una película gótica de bajo presupuesto que alguien encontró en un VHS olvidado — íntima, oscura, deliberada.</p>
+            <H2>{trText("Identidad Cinematográfica")}</H2>
+            <p>{trText(identity.name)}{trText(" no hace videos de producto. Hace ")}<strong>{trText("rituales visuales")}</strong>{trText(". Cada clip debe sentirse como una escena de una película gótica de bajo presupuesto que alguien encontró en un VHS olvidado — íntima, oscura, deliberada.")}</p>
 
-            <H3>Principios universales</H3>
+            <H3>{trText("Principios universales")}</H3>
             <ul style={listStyle}>
-              <li>Siempre imagen de referencia → nunca text-only</li>
-              <li>Siempre un solo movimiento de cámara por clip</li>
-              <li>Siempre underexposed — la oscuridad es parte del producto</li>
-              <li>Siempre estático el sujeto — lo que se mueve es la cámara o la llama</li>
-              <li>Nunca luz natural, nunca exterior, nunca colores saturados</li>
-              <li>Nunca más de 10 segundos por clip hero</li>
+              <li>{trText("Siempre imagen de referencia → nunca text-only")}</li>
+              <li>{trText("Siempre un solo movimiento de cámara por clip")}</li>
+              <li>{trText("Siempre underexposed — la oscuridad es parte del producto")}</li>
+              <li>{trText("Siempre estático el sujeto — lo que se mueve es la cámara o la llama")}</li>
+              <li>{trText("Nunca luz natural, nunca exterior, nunca colores saturados")}</li>
+              <li>{trText("Nunca más de 10 segundos por clip hero")}</li>
             </ul>
           </section>
 
@@ -44,8 +47,8 @@ export default function Filmografia() {
 
           {/* ─── Style Bible ─── */}
           <section id="style-bible">
-            <H2>Style Bible Lines</H2>
-            <p style={noteStyle}>Copiar exacto al final de cada prompt de esa corriente. Una línea, siempre igual.</p>
+            <H2>{trText("Style Bible Lines")}</H2>
+            <p style={noteStyle}>{trText("Copiar exacto al final de cada prompt de esa corriente. Una línea, siempre igual.")}</p>
 
             <StyleBible
               corriente="LMP — Trad Goth"
@@ -65,27 +68,27 @@ export default function Filmografia() {
 
           {/* ─── Estructura de prompt ─── */}
           <section id="estructura">
-            <H2>Estructura de Prompt {identity.name}</H2>
-            <Code>{`[Subject anchor] + [Shot description] + [Camera movement] + [Preserve constraints] + [Style bible]`}</Code>
+            <H2>{trText("Estructura de Prompt ")}{trText(identity.name)}</H2>
+            <Code>{trText(`[Subject anchor] + [Shot description] + [Camera movement] + [Preserve constraints] + [Style bible]`)}</Code>
 
-            <H3>Ejemplo — LMP hero dolly in</H3>
-            <Code>{`The skull lamp on the dark wood nightstand, its warm electric glow steady and constant.
+            <H3>{trText("Ejemplo — LMP hero dolly in")}</H3>
+            <Code>{trText(`The skull lamp on the dark wood nightstand, its warm electric glow steady and constant.
 Camera performs a slow dolly in, closing distance over the full 10 seconds.
 The lamp and its skull shadow remain perfectly still throughout.
-Extreme underexposure. Heavy vignette into pure black. Deep ceremonial shadows. Trad Goth. Cinematic.`}</Code>
+Extreme underexposure. Heavy vignette into pure black. Deep ceremonial shadows. Trad Goth. Cinematic.`)}</Code>
 
-            <H3>Timestamp prompting — multi-acción en un clip</H3>
-            <Code>{`In the first 5 seconds: camera holds still.
-Final 5 seconds: slow dolly in toward the lamp.`}</Code>
+            <H3>{trText("Timestamp prompting — multi-acción en un clip")}</H3>
+            <Code>{trText(`In the first 5 seconds: camera holds still.
+Final 5 seconds: slow dolly in toward the lamp.`)}</Code>
           </section>
 
           <hr className="copper-line" />
 
           {/* ─── Movimientos ─── */}
           <section id="movimientos">
-            <H2>Movimientos de Cámara Aprobados</H2>
+            <H2>{trText("Movimientos de Cámara Aprobados")}</H2>
 
-            <H3>Hero slots (video animado)</H3>
+            <H3>{trText("Hero slots (video animado)")}</H3>
             <MovTable rows={[
               ['Dolly in ceremonial', 'slow dolly in', 'LMP hero — acercamiento al producto'],
               ['Push in dramático', 'slow push in', 'CND hero — reveal de altar'],
@@ -95,7 +98,7 @@ Final 5 seconds: slow dolly in toward the lamp.`}</Code>
               ['Tilt up reveal', 'tilt up', 'Mostrar sombra proyectada en la pared'],
             ]} />
 
-            <H3>B-rolls / módulos secundarios</H3>
+            <H3>{trText("B-rolls / módulos secundarios")}</H3>
             <MovTable rows={[
               ['Rack focus', 'rack focus foreground to background', 'Detalle de textura → ambiente'],
               ['Camera pullback', 'camera pullback', 'Revelar el contexto completo'],
@@ -104,14 +107,14 @@ Final 5 seconds: slow dolly in toward the lamp.`}</Code>
               ['Lateral truck', 'slow lateral truck right', 'Mostrar ángulos del producto'],
             ]} />
 
-            <H3>Prohibidos para {identity.name}</H3>
+            <H3>{trText("Prohibidos para ")}{trText(identity.name)}</H3>
             <ul style={listStyle}>
-              <li><Tag>handheld</Tag> / <Tag>documentary style</Tag> — destruye la solemnidad</li>
-              <li><Tag>fpv</Tag> / <Tag>drone</Tag> — fuera de contexto de interiores</li>
-              <li><Tag>fast 360 orbit</Tag> — demasiado dinámico, rompe el mood</li>
-              <li><Tag>whip pan</Tag> — agresivo, anti-ritual</li>
-              <li><Tag>zoom in</Tag> óptico — usar <Tag>dolly in</Tag> físico</li>
-              <li><Tag>barrel roll</Tag> / <Tag>inception shot</Tag> — experimental, no de marca</li>
+              <li><Tag>{trText("handheld")}</Tag>{" / "}<Tag>{trText("documentary style")}</Tag>{trText(" — destruye la solemnidad")}</li>
+              <li><Tag>{trText("fpv")}</Tag>{" / "}<Tag>{trText("drone")}</Tag>{trText(" — fuera de contexto de interiores")}</li>
+              <li><Tag>{trText("fast 360 orbit")}</Tag>{trText(" — demasiado dinámico, rompe el mood")}</li>
+              <li><Tag>{trText("whip pan")}</Tag>{trText(" — agresivo, anti-ritual")}</li>
+              <li><Tag>{trText("zoom in")}</Tag>{trText(" óptico — usar ")}<Tag>{trText("dolly in")}</Tag>{trText(" físico")}</li>
+              <li><Tag>{trText("barrel roll")}</Tag>{" / "}<Tag>{trText("inception shot")}</Tag>{trText(" — experimental, no de marca")}</li>
             </ul>
           </section>
 
@@ -119,40 +122,30 @@ Final 5 seconds: slow dolly in toward the lamp.`}</Code>
 
           {/* ─── Reglas ─── */}
           <section id="reglas">
-            <H2>Reglas de Prompting {identity.name}</H2>
+            <H2>{trText("Reglas de Prompting ")}{trText(identity.name)}</H2>
 
-            <Rule title="NUNCA negativos en movimientos de cámara">
-              El AI lee el sustantivo y lo genera aunque diga "no". <br />
-              <Bad>"no wobble"</Bad> <Bad>"no shake"</Bad> <Bad>"no stabilization wobble"</Bad><br />
-              <Good>"smooth"</Good> <Good>"steady"</Good> <Good>"continuous"</Good>
+            <Rule title={trText("NUNCA negativos en movimientos de cámara")}>{trText("El AI lee el sustantivo y lo genera aunque diga \"no\". ")}<br />
+              <Bad>{trText("\"no wobble\"")}</Bad> <Bad>{trText("\"no shake\"")}</Bad> <Bad>{trText("\"no stabilization wobble\"")}</Bad><br />
+              <Good>{trText("\"smooth\"")}</Good> <Good>{trText("\"steady\"")}</Good> <Good>{trText("\"continuous\"")}</Good>
             </Rule>
 
-            <Rule title="SIEMPRE context de escena">
-              El AI necesita saber hacia dónde va la cámara, no solo cómo se mueve.<br />
-              <Bad>"camera dolly in"</Bad><br />
-              <Good>"camera performs a slow dolly in toward the skull lamp"</Good>
+            <Rule title={trText("SIEMPRE context de escena")}>{trText("El AI necesita saber hacia dónde va la cámara, no solo cómo se mueve.")}<br />
+              <Bad>{trText("\"camera dolly in\"")}</Bad><br />
+              <Good>{trText("\"camera performs a slow dolly in toward the skull lamp\"")}</Good>
             </Rule>
 
-            <Rule title="SIEMPRE anchor para la sombra (LMP)">
-              El skull shadow es el elemento diferenciador — anclarlo explícitamente.<br />
-              <Good>"The skull shadow it casts remains perfectly still throughout"</Good><br />
-              Sin el anchor, el AI lo distorsiona o lo borra al animar.
+            <Rule title={trText("SIEMPRE anchor para la sombra (LMP)")}>{trText("El skull shadow es el elemento diferenciador — anclarlo explícitamente.")}<br />
+              <Good>{trText("\"The skull shadow it casts remains perfectly still throughout\"")}</Good><br />{trText("Sin el anchor, el AI lo distorsiona o lo borra al animar.")}</Rule>
+
+            <Rule title={trText("SIEMPRE muted colors si hay riesgo de saturación")}>{trText("El AI satura colores al animar. Para los negros de ")}{trText(identity.name)}{":"}<br />
+              <Good>{trText("\"muted colors\"")}</Good>{trText(" o ")}<Good>{trText("\"desaturated palette\"")}</Good>
             </Rule>
 
-            <Rule title="SIEMPRE muted colors si hay riesgo de saturación">
-              El AI satura colores al animar. Para los negros de {identity.name}:<br />
-              <Good>"muted colors"</Good> o <Good>"desaturated palette"</Good>
-            </Rule>
+            <Rule title={trText("FP Spaces para hero — Higgsfield para motion reference")}>{trText("Higgsfield recomprime la imagen al subir como start frame → pierde calidad.")}<br />{trText("Hero con start frame de alta fidelidad → FP Spaces siempre.")}<br />{trText("Higgsfield → solo para motion reference transfer.")}</Rule>
 
-            <Rule title="FP Spaces para hero — Higgsfield para motion reference">
-              Higgsfield recomprime la imagen al subir como start frame → pierde calidad.<br />
-              Hero con start frame de alta fidelidad → FP Spaces siempre.<br />
-              Higgsfield → solo para motion reference transfer.
-            </Rule>
-
-            <Rule title="Describe la fuente de luz cuando el objeto puede confundirse con vela">
-              <Bad>"warm flicker"</Bad> → Kling interpreta lámpara como vela<br />
-              <Good>"steady warm electric light — no flicker, no pulse, no candle behavior, purely electric"</Good>
+            <Rule title={trText("Describe la fuente de luz cuando el objeto puede confundirse con vela")}>
+              <Bad>{trText("\"warm flicker\"")}</Bad>{trText(" → Kling interpreta lámpara como vela")}<br />
+              <Good>{trText("\"steady warm electric light — no flicker, no pulse, no candle behavior, purely electric\"")}</Good>
             </Rule>
           </section>
 
@@ -160,11 +153,11 @@ Final 5 seconds: slow dolly in toward the lamp.`}</Code>
 
           {/* ─── Corrientes ─── */}
           <section id="corrientes">
-            <H2>Guía por Corriente</H2>
+            <H2>{trText("Guía por Corriente")}</H2>
 
             <CorrienteBlock
               id="lmp"
-              title="LMP — Trad Goth"
+              title={trText("LMP — Trad Goth")}
               mood="Solemnidad. La sombra del cráneo como altar doméstico. Hora de medianoche."
               luz="Solo la lámpara. Sin fuente externa. Glow eléctrico cálido contra fondo negro."
               paleta="Negro profundo · Amber eléctrico · Gris de sombra"
@@ -183,7 +176,7 @@ Final 5 seconds: slow dolly in toward the lamp.`}</Code>
 
             <CorrienteBlock
               id="swd"
-              title="SWD — Victorian Gothic"
+              title={trText("SWD — Victorian Gothic")}
               mood="Arquitectura de duelo. Antigüedad institucionalizada. El cráneo como objeto de colección aristocrática."
               luz="Tungsteno cálido desde arriba-izquierda. Sombras largas hacia la derecha."
               paleta="Burdeos · Dorado oxidado · Negro profundo"
@@ -202,7 +195,7 @@ Final 5 seconds: slow dolly in toward the lamp.`}</Code>
 
             <CorrienteBlock
               id="cnd"
-              title="CND — Whimsigoth"
+              title={trText("CND — Whimsigoth")}
               mood="Altar doméstico. Ritual privado. La llama como invitación."
               luz="Solo la llama de las velas. 2400K. Sin luz adicional."
               paleta="Ámbar profundo · Ciruela · Negro · Toques de violeta"
@@ -224,64 +217,64 @@ Final 5 seconds: slow dolly in toward the lamp.`}</Code>
 
           {/* ─── Templates ─── */}
           <section id="templates">
-            <H2>Prompt Templates</H2>
+            <H2>{trText("Prompt Templates")}</H2>
 
-            <H3>Dolly in — cualquier corriente</H3>
-            <Code>{`The [PRODUCTO] on the [SUPERFICIE]. [DESCRIPCIÓN LUZ Y GLOW].
+            <H3>{trText("Dolly in — cualquier corriente")}</H3>
+            <Code>{trText(`The [PRODUCTO] on the [SUPERFICIE]. [DESCRIPCIÓN LUZ Y GLOW].
 Camera performs a slow dolly in, closing distance over the full 10 seconds in a measured, ceremonial pace.
 The [PRODUCTO] remains perfectly still throughout. [ANCHOR ELEMENTO ESPECIAL].
-[STYLE BIBLE DE LA CORRIENTE]`}</Code>
+[STYLE BIBLE DE LA CORRIENTE]`)}</Code>
 
-            <H3>Fixed lens — llama o sombra</H3>
-            <Code>{`The [PRODUCTO] on the [SUPERFICIE]. [DESCRIPCIÓN LUZ].
+            <H3>{trText("Fixed lens — llama o sombra")}</H3>
+            <Code>{trText(`The [PRODUCTO] on the [SUPERFICIE]. [DESCRIPCIÓN LUZ].
 Camera locked off — fixed lens. No camera movement.
 Only [LLAMA/SOMBRA] moves within the frame.
-[STYLE BIBLE DE LA CORRIENTE]`}</Code>
+[STYLE BIBLE DE LA CORRIENTE]`)}</Code>
 
-            <H3>Arc / orbit</H3>
-            <Code>{`The [PRODUCTO] on the [SUPERFICIE]. [DESCRIPCIÓN LUZ].
+            <H3>{trText("Arc / orbit")}</H3>
+            <Code>{trText(`The [PRODUCTO] on the [SUPERFICIE]. [DESCRIPCIÓN LUZ].
 Camera performs a slow cinematic arc from left, orbiting the [PRODUCTO] at a steady pace.
 [PRODUCTO] remains at center of frame throughout the movement.
-[STYLE BIBLE DE LA CORRIENTE]`}</Code>
+[STYLE BIBLE DE LA CORRIENTE]`)}</Code>
           </section>
 
           <hr className="copper-line" />
 
           {/* ─── Learnings ─── */}
           <section id="learnings">
-            <H2>Learnings de Producción</H2>
+            <H2>{trText("Learnings de Producción")}</H2>
 
             <Learning
               date="2026-05-26"
-              title='LMP hero — "warm flicker" generó llama de vela'
+              title={trText("LMP hero — \"warm flicker\" generó llama de vela")}
               bad='"pulses with a faint warm flicker"'
               fix='"steady warm electric light — no flicker, no pulse, no candle behavior, purely electric"'
               rule="Describir explícitamente la fuente como eléctrica cuando puede confundirse con vela."
             />
             <Learning
               date="2026-05-26"
-              title="Higgsfield recomprime el start frame → pérdida de calidad"
+              title={trText("Higgsfield recomprime el start frame → pérdida de calidad")}
               bad="Subir imagen de alta calidad como start frame a Higgsfield"
               fix="Correr el video directamente en FP Spaces con el start frame original"
               rule="Hero shots con start frame → FP Spaces siempre. Higgsfield solo para motion reference."
             />
             <Learning
               date="2026-07-31"
-              title="Seedance 2.0 resuelve un SBV entero de 15 s en UNA generación multishot"
+              title={trText("Seedance 2.0 resuelve un SBV entero de 15 s en UNA generación multishot")}
               bad="Generar cinco planos por separado y montarlos"
               fix="Un prompt con cinco brackets [Shot N, 3 seconds], la cámara declarada DENTRO de cada bracket, y estilo + restricciones FUERA al final"
               rule="Seedance corta solo y respeta el orden, el largo y el movimiento de cada plano. Lo que NO sostiene es la continuidad entre cortes: pierde la habitación y deriva el color de los objetos secundarios (el SWD arrancó negro y terminó dorado). Sirve para storyboard y ritmo; para pieza final el producto hay que fijarlo con referencias."
             />
             <Learning
               date="2026-07-31"
-              title="Seedance no acepta bloque negativo — las restricciones van en positivo"
+              title={trText("Seedance no acepta bloque negativo — las restricciones van en positivo")}
               bad="Negative: object deformation, camera shake, extra fingers"
               fix="Constraints: every object holds its exact shape; locked-off camera; natural anatomy with five properly formed fingers"
               rule="El bloque Negative es solo de Kling. En Seedance el texto se lee entero y nombrar el defecto lo invoca. Cerrar siempre con 'No music. No subtitles.'"
             />
             <Learning
               date="2026-05-27"
-              title='"No stabilization wobble" generó vibración'
+              title={trText("\"No stabilization wobble\" generó vibración")}
               bad='"No stabilization wobble" en el prompt'
               fix="Remover la línea. El AI lee el sustantivo, ignora la negación."
               rule="Para movimientos de cámara — NUNCA negativos. Solo descriptores positivos."
@@ -297,54 +290,72 @@ Camera performs a slow cinematic arc from left, orbiting the [PRODUCTO] at a ste
 // ─── Sub-components ────────────────────────────────────────────────
 
 function H2({ children }) {
-  return <h2 style={{ fontSize: '1.1rem', letterSpacing: '0.12em', color: 'var(--copper)', marginBottom: '1.5rem', marginTop: '0.5rem' }}>{children}</h2>
+  const { text: trText } = useTranslation()
+
+  return <h2 style={{ fontSize: '1.1rem', letterSpacing: '0.12em', color: 'var(--copper)', marginBottom: '1.5rem', marginTop: '0.5rem' }}>{trText(children)}</h2>
 }
 function H3({ children }) {
-  return <h3 style={{ fontSize: '0.85rem', letterSpacing: '0.1em', color: 'rgba(var(--fg-rgb),0.6)', margin: '2rem 0 0.75rem', textTransform: 'uppercase' }}>{children}</h3>
+  const { text: trText } = useTranslation()
+
+  return <h3 style={{ fontSize: '0.85rem', letterSpacing: '0.1em', color: 'rgba(var(--fg-rgb),0.6)', margin: '2rem 0 0.75rem', textTransform: 'uppercase' }}>{trText(children)}</h3>
 }
 function Code({ children }) {
+  const { text: trText } = useTranslation()
+
   return (
     <pre style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(var(--copper-rgb),0.2)', borderRadius: '4px', padding: '1.25rem', fontSize: '0.78rem', fontFamily: 'monospace', color: 'var(--fg)', whiteSpace: 'pre-wrap', lineHeight: 1.7, margin: '1rem 0 1.5rem' }}>
-      {children}
+      {trText(children)}
     </pre>
   )
 }
 function Tag({ children }) {
-  return <code style={{ background: 'rgba(var(--copper-rgb),0.15)', color: 'var(--copper)', padding: '0.15rem 0.4rem', borderRadius: '3px', fontSize: '0.8rem', fontFamily: 'monospace' }}>{children}</code>
+  const { text: trText } = useTranslation()
+
+  return <code style={{ background: 'rgba(var(--copper-rgb),0.15)', color: 'var(--copper)', padding: '0.15rem 0.4rem', borderRadius: '3px', fontSize: '0.8rem', fontFamily: 'monospace' }}>{trText(children)}</code>
 }
 function Good({ children }) {
-  return <code style={{ background: 'rgba(60,120,60,0.15)', color: '#7ecf7e', padding: '0.15rem 0.5rem', borderRadius: '3px', fontSize: '0.78rem', fontFamily: 'monospace', display: 'inline-block', margin: '0.2rem 0.3rem 0.2rem 0' }}>{children}</code>
+  const { text: trText } = useTranslation()
+
+  return <code style={{ background: 'rgba(60,120,60,0.15)', color: '#7ecf7e', padding: '0.15rem 0.5rem', borderRadius: '3px', fontSize: '0.78rem', fontFamily: 'monospace', display: 'inline-block', margin: '0.2rem 0.3rem 0.2rem 0' }}>{trText(children)}</code>
 }
 function Bad({ children }) {
-  return <code style={{ background: 'rgba(120,40,40,0.15)', color: '#cf7e7e', padding: '0.15rem 0.5rem', borderRadius: '3px', fontSize: '0.78rem', fontFamily: 'monospace', display: 'inline-block', margin: '0.2rem 0.3rem 0.2rem 0', textDecoration: 'line-through' }}>{children}</code>
+  const { text: trText } = useTranslation()
+
+  return <code style={{ background: 'rgba(120,40,40,0.15)', color: '#cf7e7e', padding: '0.15rem 0.5rem', borderRadius: '3px', fontSize: '0.78rem', fontFamily: 'monospace', display: 'inline-block', margin: '0.2rem 0.3rem 0.2rem 0', textDecoration: 'line-through' }}>{trText(children)}</code>
 }
 
 function StyleBible({ corriente, line }) {
+  const { text: trText } = useTranslation()
+
   return (
     <div style={{ marginBottom: '1.5rem', border: '1px solid rgba(var(--copper-rgb),0.25)', borderRadius: '4px', overflow: 'hidden' }}>
-      <div style={{ background: 'rgba(var(--copper-rgb),0.1)', padding: '0.6rem 1rem', fontSize: '0.78rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--copper)' }}>{corriente}</div>
-      <div style={{ padding: '0.9rem 1rem', fontFamily: 'monospace', fontSize: '0.8rem', color: 'var(--fg)', letterSpacing: '0.02em' }}>{line}</div>
+      <div style={{ background: 'rgba(var(--copper-rgb),0.1)', padding: '0.6rem 1rem', fontSize: '0.78rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--copper)' }}>{trText(corriente)}</div>
+      <div style={{ padding: '0.9rem 1rem', fontFamily: 'monospace', fontSize: '0.8rem', color: 'var(--fg)', letterSpacing: '0.02em' }}>{trText(line)}</div>
     </div>
   )
 }
 
 function Rule({ title, children }) {
+  const { text: trText } = useTranslation()
+
   return (
     <div style={{ margin: '1.5rem 0', paddingLeft: '1rem', borderLeft: '2px solid rgba(var(--copper-rgb),0.4)' }}>
-      <div style={{ fontSize: '0.8rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--copper)', marginBottom: '0.5rem' }}>{title}</div>
-      <div style={{ fontSize: '0.88rem', color: 'rgba(var(--fg-rgb),0.85)', lineHeight: 1.7, maxWidth: '70ch' }}>{children}</div>
+      <div style={{ fontSize: '0.8rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--copper)', marginBottom: '0.5rem' }}>{trText(title)}</div>
+      <div style={{ fontSize: '0.88rem', color: 'rgba(var(--fg-rgb),0.85)', lineHeight: 1.7, maxWidth: '70ch' }}>{trText(children)}</div>
     </div>
   )
 }
 
 function MovTable({ rows }) {
+  const { text: trText } = useTranslation()
+
   return (
     <div style={{ margin: '1rem 0 1.5rem' }}>
       {rows.map(([mov, kw, uso], i) => (
         <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr 2fr', gap: '1rem', padding: '0.6rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)', fontSize: '0.82rem', alignItems: 'start' }}>
-          <span style={{ color: 'var(--fg)' }}>{mov}</span>
-          <code style={{ color: 'var(--copper)', fontFamily: 'monospace', fontSize: '0.78rem' }}>{kw}</code>
-          <span style={{ color: 'rgba(var(--fg-rgb),0.6)' }}>{uso}</span>
+          <span style={{ color: 'var(--fg)' }}>{trText(mov)}</span>
+          <code style={{ color: 'var(--copper)', fontFamily: 'monospace', fontSize: '0.78rem' }}>{trText(kw)}</code>
+          <span style={{ color: 'rgba(var(--fg-rgb),0.6)' }}>{trText(uso)}</span>
         </div>
       ))}
     </div>
@@ -352,19 +363,21 @@ function MovTable({ rows }) {
 }
 
 function CorrienteBlock({ id, title, mood, luz, paleta, movimientos, refs }) {
+  const { text: trText } = useTranslation()
+
   return (
     <div id={id} style={{ margin: '2.5rem 0', padding: '1.5rem', border: '1px solid rgba(var(--copper-rgb),0.2)', borderRadius: '4px' }}>
-      <div style={{ fontSize: '0.78rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--copper)', marginBottom: '0.75rem' }}>{title}</div>
-      <p style={{ fontSize: '0.88rem', fontStyle: 'italic', color: 'rgba(var(--fg-rgb),0.75)', marginBottom: '1rem' }}>{mood}</p>
+      <div style={{ fontSize: '0.78rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--copper)', marginBottom: '0.75rem' }}>{trText(title)}</div>
+      <p style={{ fontSize: '0.88rem', fontStyle: 'italic', color: 'rgba(var(--fg-rgb),0.75)', marginBottom: '1rem' }}>{trText(mood)}</p>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem', fontSize: '0.82rem' }}>
-        <div><span style={{ color: 'var(--copper)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Iluminación</span><br />{luz}</div>
-        <div><span style={{ color: 'var(--copper)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Paleta</span><br />{paleta}</div>
+        <div><span style={{ color: 'var(--copper)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{trText("Iluminación")}</span><br />{trText(luz)}</div>
+        <div><span style={{ color: 'var(--copper)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{trText("Paleta")}</span><br />{trText(paleta)}</div>
       </div>
       <MovTable rows={movimientos} />
       <div style={{ marginTop: '1rem' }}>
-        <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--copper)', marginBottom: '0.5rem' }}>Referencias</div>
+        <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--copper)', marginBottom: '0.5rem' }}>{trText("Referencias")}</div>
         <ul style={{ ...listStyle, color: 'rgba(var(--fg-rgb),0.65)' }}>
-          {refs.map((r, i) => <li key={i}>{r}</li>)}
+          {refs.map((r, i) => <li key={i}>{trText(r)}</li>)}
         </ul>
       </div>
     </div>
@@ -372,13 +385,15 @@ function CorrienteBlock({ id, title, mood, luz, paleta, movimientos, refs }) {
 }
 
 function Learning({ date, title, bad, fix, rule }) {
+  const { text: trText } = useTranslation()
+
   return (
     <div style={{ margin: '1.5rem 0', padding: '1.25rem', background: 'rgba(255,255,255,0.02)', borderRadius: '4px', borderLeft: '3px solid rgba(var(--copper-rgb),0.5)' }}>
-      <div style={{ fontSize: '0.72rem', color: 'rgba(var(--fg-rgb),0.4)', marginBottom: '0.4rem' }}>{date}</div>
-      <div style={{ fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--fg)' }}>{title}</div>
-      <div style={{ fontSize: '0.8rem', marginBottom: '0.4rem' }}><Bad>{bad}</Bad></div>
-      <div style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}><Good>{fix}</Good></div>
-      <div style={{ fontSize: '0.78rem', color: 'rgba(var(--fg-rgb),0.55)', fontStyle: 'italic' }}>Regla: {rule}</div>
+      <div style={{ fontSize: '0.72rem', color: 'rgba(var(--fg-rgb),0.4)', marginBottom: '0.4rem' }}>{trText(date)}</div>
+      <div style={{ fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--fg)' }}>{trText(title)}</div>
+      <div style={{ fontSize: '0.8rem', marginBottom: '0.4rem' }}><Bad>{trText(bad)}</Bad></div>
+      <div style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}><Good>{trText(fix)}</Good></div>
+      <div style={{ fontSize: '0.78rem', color: 'rgba(var(--fg-rgb),0.55)', fontStyle: 'italic' }}>{trText("Regla: ")}{trText(rule)}</div>
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from '../i18n/TranslationProvider.jsx'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import brand from '../brand/brand.json'
 
@@ -56,6 +57,8 @@ function CampaignName({ s }) {
 }
 
 function KwRow({ k, campId, onRemove, onDragStart }) {
+  const { text: trText } = useTranslation()
+
   return (
     <li
       className="cmp-kw"
@@ -64,21 +67,23 @@ function KwRow({ k, campId, onRemove, onDragStart }) {
         e.dataTransfer.effectAllowed = 'move'
         onDragStart(campId, k.kw)
       }}
-      title={k.motivo || ''}
+      title={trText(k.motivo || '')}
     >
-      <span className="cmp-kw-grip" aria-hidden>⠿</span>
+      <span className="cmp-kw-grip" aria-hidden>{"⠿"}</span>
       <span className="cmp-kw-txt">{k.kw}</span>
-      <span className="cmp-kw-sv" title="Búsquedas mensuales reales del término (dato de mercado)">
-        {(k.sv || 0).toLocaleString('en-US')}
+      <span className="cmp-kw-sv" title={trText("Búsquedas mensuales reales del término (dato de mercado)")}>
+        {trText((k.sv || 0).toLocaleString('en-US'))}
       </span>
-      {k.bid != null && <span className="cmp-kw-bid" title="Puja sugerida por el dato de mercado">${k.bid}</span>}
-      {k.td != null && <span className="cmp-kw-td" title="Title density: cuántos competidores la tienen en el título. Cuanto más baja, más ownable.">td {k.td}</span>}
-      <button className="cmp-kw-x" onClick={() => onRemove(campId, k.kw)} title="Sacar del plan">×</button>
+      {trText(k.bid != null && <span className="cmp-kw-bid" title={trText("Puja sugerida por el dato de mercado")}>{"$"}{trText(k.bid)}</span>)}
+      {trText(k.td != null && <span className="cmp-kw-td" title={trText("Title density: cuántos competidores la tienen en el título. Cuanto más baja, más ownable.")}>{trText("td ")}{trText(k.td)}</span>)}
+      <button className="cmp-kw-x" onClick={() => onRemove(campId, k.kw)} title={trText("Sacar del plan")}>{"×"}</button>
     </li>
   )
 }
 
 function CampaignCard({ c, onRemove, onDragStart, onDrop, dragging }) {
+  const { text: trText } = useTranslation()
+
   const [over, setOver] = useState(false)
   const esSKW = c.seg.estructura === 'SKW'
   const exceso = esSKW && c.keywords.length > 1
@@ -92,53 +97,53 @@ function CampaignCard({ c, onRemove, onDragStart, onDrop, dragging }) {
       onDrop={(e) => { e.preventDefault(); setOver(false); onDrop(c.id) }}
     >
       <div className="cmp-card-head">
-        <span className={`cmp-match ${MATCH_CLS[c.seg.match] || ''}`} title={`Match ${c.seg.match}`}>
-          {MATCH_ABBR[c.seg.match] || '?'}
+        <span className={`cmp-match ${MATCH_CLS[c.seg.match] || ''}`} title={`${trText('Match')} ${c.seg.match}`}>
+          {trText(MATCH_ABBR[c.seg.match] || '?')}
         </span>
         <CampaignName s={c.seg} />
-        <span className={`cmp-estado cmp-estado-${c.estado}`}>{ESTADO_LBL[c.estado]}</span>
+        <span className={`cmp-estado cmp-estado-${c.estado}`}>{trText(ESTADO_LBL[c.estado])}</span>
       </div>
 
       <div className="cmp-meta">
-        {c.seg.tos > 0 && <span className="cmp-chip cmp-chip-tos" title="Top of search bid modifier">TOS +{c.seg.tos}%</span>}
-        {c.seg.pp > 0 && <span className="cmp-chip" title="Product pages bid modifier">PP +{c.seg.pp}%</span>}
-        {c.bid != null && <span className="cmp-chip">bid ${c.bid}{c.bidActual != null && c.bidActual !== c.bid && <em> (hoy ${c.bidActual})</em>}</span>}
-        {c.budget != null && <span className="cmp-chip">${c.budget}/día</span>}
-        <span className="cmp-chip cmp-chip-ag" title="El ad group se nombra igual que la campaña — así lo marca el AGTA Brain">ad group = campaña</span>
+        {trText(c.seg.tos > 0 && <span className="cmp-chip cmp-chip-tos" title={trText("Top of search bid modifier")}>{trText("TOS +")}{trText(c.seg.tos)}{"%"}</span>)}
+        {trText(c.seg.pp > 0 && <span className="cmp-chip" title={trText("Product pages bid modifier")}>{trText("PP +")}{trText(c.seg.pp)}{"%"}</span>)}
+        {trText(c.bid != null && <span className="cmp-chip">{trText("bid $")}{trText(c.bid)}{trText(c.bidActual != null && c.bidActual !== c.bid && <em>{trText(" (hoy $")}{trText(c.bidActual)}{")"}</em>)}</span>)}
+        {trText(c.budget != null && <span className="cmp-chip">{"$"}{trText(c.budget)}{trText("/día")}</span>)}
+        <span className="cmp-chip cmp-chip-ag" title={trText("El ad group se nombra igual que la campaña — así lo marca el AGTA Brain")}>{trText("ad group = campaña")}</span>
       </div>
 
-      {c.nota && <div className="cmp-nota">{c.nota}</div>}
+      {trText(c.nota && <div className="cmp-nota">{trText(c.nota)}</div>)}
 
-      {c.targets && (
+      {trText(c.targets && (
         <ul className="cmp-targets">
           {c.targets.map((t) => (
             <li key={t.asin}>
-              <code>{t.asin}</code>
-              <span>rankea en {t.kws_p1} kws de página 1 · {t.share}% del volumen del nicho</span>
+              <code>{trText(t.asin)}</code>
+              <span>{trText("rankea en ")}{trText(t.kws_p1)}{trText(" kws de página 1 · ")}{trText(t.share)}{trText("% del volumen del nicho")}</span>
             </li>
           ))}
         </ul>
-      )}
+      ))}
 
-      {(c.keywords.length > 0 || c.seg.estructura !== 'AUTO') && (
+      {trText((c.keywords.length > 0 || c.seg.estructura !== 'AUTO') && (
         <ul className="cmp-kws">
           {c.keywords.map((k) => (
             <KwRow key={k.kw} k={k} campId={c.id} onRemove={onRemove} onDragStart={onDragStart} />
           ))}
-          {c.keywords.length === 0 && <li className="cmp-kw-vacio">Sin keywords — arrastrá una acá.</li>}
+          {trText(c.keywords.length === 0 && <li className="cmp-kw-vacio">{trText("Sin keywords — arrastrá una acá.")}</li>)}
         </ul>
-      )}
+      ))}
 
-      {exceso && (
-        <div className="cmp-alerta">
-          Es una campaña SKW y tiene {c.keywords.length} keywords. Una SKW lleva una sola: sacá las demás o cambiala a otra estructura.
-        </div>
-      )}
+      {trText(exceso && (
+        <div className="cmp-alerta">{trText("Es una campaña SKW y tiene ")}{trText(c.keywords.length)}{trText(" keywords. Una SKW lleva una sola: sacá las demás o cambiala a otra estructura.")}</div>
+      ))}
     </div>
   )
 }
 
 export default function Campanas() {
+  const { text: trText, language: uiLanguage } = useTranslation()
+
   const [prod, setProd] = useState('SWD')
   const [plan, setPlan] = useState(() => {
     try {
@@ -204,7 +209,7 @@ export default function Campanas() {
   }
 
   const resetear = () => {
-    if (!confirm('Vuelve al plan original y se pierden los cambios de esta pantalla. ¿Seguimos?')) return
+    if (!confirm(trText('Vuelve al plan original y se pierden los cambios de esta pantalla. ¿Seguimos?'))) return
     localStorage.removeItem(STORE)
     setPlan(PLAN)
   }
@@ -214,11 +219,11 @@ export default function Campanas() {
       p.campaigns
         .map((c) => {
           const kws = c.keywords.map((k) => `    ${k.kw}  (SV ${k.sv})`).join('\n')
-          const head = `${campaignName(c.seg)}${c.bid != null ? `  · bid $${c.bid}` : ''}${c.budget != null ? ` · $${c.budget}/día` : ''}`
+          const head = `${campaignName(c.seg)}${c.bid != null ? `  · bid $${c.bid}` : ''}${c.budget != null ? ` · $${c.budget}/${uiLanguage === 'en' ? 'day' : 'día'}` : ''}`
           return kws ? `${head}\n${kws}` : head
         })
         .join('\n\n'),
-    [p],
+    [p, uiLanguage],
   )
 
   const copiar = () => navigator.clipboard?.writeText(texto)
@@ -229,12 +234,8 @@ export default function Campanas() {
   return (
     <div className="cmp-page">
       <header className="cmp-head">
-        <h1>Campañas</h1>
-        <p>
-          El plan de PPC como estructura editable. El nombre de cada campaña se arma por segmentos y se
-          recalcula solo; el ad group hereda ese nombre. Las keywords se sacan con la × o se arrastran de una
-          campaña a otra. Nada de esto está subido a Amazon: es el plan para revisar antes de ejecutar.
-        </p>
+        <h1>{trText("Campañas")}</h1>
+        <p>{trText("El plan de PPC como estructura editable. El nombre de cada campaña se arma por segmentos y se recalcula solo; el ad group hereda ese nombre. Las keywords se sacan con la × o se arrastran de una campaña a otra. Nada de esto está subido a Amazon: es el plan para revisar antes de ejecutar.")}</p>
       </header>
 
       <div className="cmp-tabs" role="tablist">
@@ -246,20 +247,20 @@ export default function Campanas() {
             className={`cmp-tab${prod === k ? ' active' : ''}`}
             onClick={() => setProd(k)}
           >
-            <span className="cmp-tab-sku">{identity.name}-{k}</span>
-            <span className="cmp-tab-name">{v.producto}</span>
+            <span className="cmp-tab-sku">{trText(identity.name)}{"-"}{trText(k)}</span>
+            <span className="cmp-tab-name">{trText(v.producto)}</span>
           </button>
         ))}
       </div>
 
       <div className="cmp-resumen">
-        <span><strong>{p.campaigns.length}</strong> campañas</span>
-        <span><strong>{totalKw}</strong> keywords</span>
-        <span><strong>${totalBudget}</strong>/día</span>
-        <span>veredicto del MKL: <strong>{p.veredicto}</strong></span>
-        <span>el líder se lleva <strong>{p.lider_share}%</strong> del volumen en página 1</span>
-        <button className="cmp-btn" onClick={copiar}>Copiar el plan</button>
-        <button className="cmp-btn cmp-btn-ghost" onClick={resetear}>Volver al original</button>
+        <span><strong>{trText(p.campaigns.length)}</strong>{trText(" campañas")}</span>
+        <span><strong>{trText(totalKw)}</strong>{trText(" keywords")}</span>
+        <span><strong>{"$"}{trText(totalBudget)}</strong>{trText("/día")}</span>
+        <span>{trText("veredicto del MKL: ")}<strong>{trText(p.veredicto)}</strong></span>
+        <span>{trText("el líder se lleva ")}<strong>{trText(p.lider_share)}{"%"}</strong>{trText(" del volumen en página 1")}</span>
+        <button className="cmp-btn" onClick={copiar}>{trText("Copiar el plan")}</button>
+        <button className="cmp-btn cmp-btn-ghost" onClick={resetear}>{trText("Volver al original")}</button>
       </div>
 
       <div className="cmp-grid">
@@ -278,11 +279,8 @@ export default function Campanas() {
 
         <aside className="cmp-banco">
           <div className="cmp-banco-head">
-            <h2>Banco</h2>
-            <p>
-              Las que sacaste, más la cabeza del nicho — que va a fase 2, cuando el producto tenga reseñas.
-              Arrastrá cualquiera a una campaña para meterla al plan.
-            </p>
+            <h2>{trText("Banco")}</h2>
+            <p>{trText("Las que sacaste, más la cabeza del nicho — que va a fase 2, cuando el producto tenga reseñas. Arrastrá cualquiera a una campaña para meterla al plan.")}</p>
           </div>
           <ul className="cmp-kws">
             {p.banco.map((k) => (
@@ -292,15 +290,15 @@ export default function Campanas() {
                 draggable
                 onDragStart={() => empezarDrag('__banco__', k.kw)}
                 onDragEnd={() => { dragRef.current = null; setDragging(false) }}
-                title={k.motivo || ''}
+                title={trText(k.motivo || '')}
               >
-                <span className="cmp-kw-grip" aria-hidden>⠿</span>
+                <span className="cmp-kw-grip" aria-hidden>{"⠿"}</span>
                 <span className="cmp-kw-txt">{k.kw}</span>
-                <span className="cmp-kw-sv">{(k.sv || 0).toLocaleString('en-US')}</span>
-                {k.td != null && <span className="cmp-kw-td">td {k.td}</span>}
+                <span className="cmp-kw-sv">{trText((k.sv || 0).toLocaleString('en-US'))}</span>
+                {trText(k.td != null && <span className="cmp-kw-td">{trText("td ")}{trText(k.td)}</span>)}
               </li>
             ))}
-            {p.banco.length === 0 && <li className="cmp-kw-vacio">Vacío.</li>}
+            {trText(p.banco.length === 0 && <li className="cmp-kw-vacio">{trText("Vacío.")}</li>)}
           </ul>
         </aside>
       </div>

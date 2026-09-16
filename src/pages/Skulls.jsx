@@ -1,3 +1,4 @@
+import { useTranslation } from '../i18n/TranslationProvider.jsx'
 import { Link } from 'react-router-dom'
 import brand from '../brand/brand.json'
 
@@ -5,30 +6,29 @@ const { products, identity } = brand
 import useReveal from '../components/useReveal.js'
 
 export default function Skulls() {
+  const { text: trText } = useTranslation()
+
   useReveal()
 
   return (
     <>
       <div className="page-header">
-        <h1>Productos {identity.name}</h1>
-        <p className="page-subtitle">La colección — Wall Skulls · Skull Candle Set · Skull Lamp</p>
+        <h1>{trText("Productos ")}{trText(identity.name)}</h1>
+        <p className="page-subtitle">{trText("La colección — Wall Skulls · Skull Candle Set · Skull Lamp")}</p>
       </div>
 
       <div style={pageStyle}>
 
         {/* ── Intro band ─────────────────────────────────────────────── */}
         <div className="reveal" style={introStyle}>
-          <div style={eyebrowStyle}>La colección · 3 piezas</div>
-          <p style={introBodyStyle}>
-            Tres objetos, un mismo idioma: la oscuridad como forma de maestría, no de miedo.
-            Decoración gótica permanente — hecha para los 365 días, nunca para una temporada.
-          </p>
+          <div style={eyebrowStyle}>{trText("La colección · 3 piezas")}</div>
+          <p style={introBodyStyle}>{trText("Tres objetos, un mismo idioma: la oscuridad como forma de maestría, no de miedo. Decoración gótica permanente — hecha para los 365 días, nunca para una temporada.")}</p>
           <div style={dividerStyle}>
             <span style={dividerLineStyle} />
-            <span style={diamondStyle}>◆</span>
+            <span style={diamondStyle}>{"◆"}</span>
             <span style={dividerLineStyle} />
           </div>
-          <p style={taglineStyle}>Inhabit your shadow.</p>
+          <p style={taglineStyle}>{trText("Inhabit your shadow.")}</p>
         </div>
 
         {/* ── Product cards ──────────────────────────────────────────── */}
@@ -38,44 +38,46 @@ export default function Skulls() {
 
         {/* ── Reference links ────────────────────────────────────────── */}
         <div className="reveal" style={refRowStyle}>
-          <Link to="/listings-briefs" className="skull-reflink" style={refLinkStyle}>Ver Listing Briefs</Link>
-          <Link to="/aplus-briefs" className="skull-reflink" style={refLinkStyle}>Ver A+ Content</Link>
-          <Link to="/scenography" className="skull-reflink" style={refLinkStyle}>Ver Escenografía</Link>
+          <Link to="/listings-briefs" className="skull-reflink" style={refLinkStyle}>{trText("Ver Listing Briefs")}</Link>
+          <Link to="/aplus-briefs" className="skull-reflink" style={refLinkStyle}>{trText("Ver A+ Content")}</Link>
+          <Link to="/scenography" className="skull-reflink" style={refLinkStyle}>{trText("Ver Escenografía")}</Link>
         </div>
 
       </div>
 
-      <div className="global-footer">{identity.name} — Productos · <a href="/">Home</a></div>
+      <div className="global-footer">{trText(identity.name)}{trText(" — Productos · ")}<a href="/">{trText("Home")}</a></div>
     </>
   )
 }
 
 // ── Product card ────────────────────────────────────────────────────────────
 function ProductCard({ prod }) {
+  const { text: trText } = useTranslation()
+
   return (
     <div className="reveal skull-card" style={cardStyle}>
-      <span style={ghostIndexStyle} aria-hidden="true">{prod.index}</span>
+      <span style={ghostIndexStyle} aria-hidden="true">{trText(prod.index)}</span>
 
       {/* header */}
       <div style={cardHeaderStyle}>
-        <div style={skuStyle}>{prod.sku}</div>
-        <h2 style={cardTitleStyle}>{prod.title}</h2>
-        <p style={conceptStyle}>{prod.concept}</p>
+        <div style={skuStyle}>{trText(prod.sku)}</div>
+        <h2 style={cardTitleStyle}>{trText(prod.title)}</h2>
+        <p style={conceptStyle}>{trText(prod.concept)}</p>
       </div>
 
       {/* differentiator */}
       <div style={diffStyle}>
-        <span style={diffLabelStyle}>El diferenciador</span>
-        <div style={diffHeadlineStyle}>{prod.diff.headline}</div>
-        <p style={diffSupportStyle}>{prod.diff.support}</p>
+        <span style={diffLabelStyle}>{trText("El diferenciador")}</span>
+        <div style={diffHeadlineStyle}>{trText(prod.diff.headline)}</div>
+        <p style={diffSupportStyle}>{trText(prod.diff.support)}</p>
       </div>
 
       {/* spec grid */}
       <div className="skull-spec-grid" style={{ marginTop: '1.75rem' }}>
         {prod.specs.map((s) => (
           <div key={s.label}>
-            <div style={fieldLabelStyle}>{s.label}</div>
-            <div style={fieldValueStyle}>{s.value}</div>
+            <div style={fieldLabelStyle}>{trText(s.label)}</div>
+            <div style={fieldValueStyle}>{trText(s.value)}</div>
           </div>
         ))}
       </div>
@@ -83,16 +85,16 @@ function ProductCard({ prod }) {
       {/* stat pills */}
       <div style={statRowStyle}>
         {prod.stats.map((st) => (
-          <span key={st} className="skull-stat" style={statStyle}>{st}</span>
+          <span key={st} className="skull-stat" style={statStyle}>{trText(st)}</span>
         ))}
       </div>
 
       {/* approved listing claims */}
       <div style={claimsBlockStyle}>
-        <span style={claimsLabelStyle}>En el listing</span>
+        <span style={claimsLabelStyle}>{trText("En el listing")}</span>
         <div style={claimsRowStyle}>
           {prod.claims.map((c) => (
-            <span key={c} style={claimStyle}>{c}</span>
+            <span key={c} style={claimStyle}>{trText(c)}</span>
           ))}
         </div>
       </div>

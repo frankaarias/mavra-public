@@ -1,3 +1,4 @@
+import { useTranslation } from '../i18n/TranslationProvider.jsx'
 import { useState } from 'react'
 import brand from '../brand/brand.json'
 
@@ -5,20 +6,20 @@ const { identity, visual, nav, productSetups } = brand
 import useReveal from '../components/useReveal.js'
 
 export default function Escenografia() {
+  const { text: trText } = useTranslation()
+
   useReveal()
 
   return (
     <div className="reading-surface">
       <div id="scenography-top" className="page-header">
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.8rem)', color: 'var(--fg)', marginBottom: '0.25rem' }}>
-          Guía de Escenografía
-        </h1>
-        <p className="page-subtitle">Ambientes, iluminación y composición de producto.</p>
+        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.8rem)', color: 'var(--fg)', marginBottom: '0.25rem' }}>{trText("Guía de Escenografía")}</h1>
+        <p className="page-subtitle">{trText("Ambientes, iluminación y composición de producto.")}</p>
       </div>
 
       <nav style={{ maxWidth: '1600px', margin: '0 auto', padding: '1.5rem clamp(1.25rem, 4vw, 3rem) 2rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
         {nav.escenografia.map((s) => (
-          <a key={s.id} href={`#${s.id}`} style={navItemStyle}>{s.label}</a>
+          <a key={s.id} href={`#${s.id}`} style={navItemStyle}>{trText(s.label)}</a>
         ))}
       </nav>
 
@@ -26,19 +27,15 @@ export default function Escenografia() {
 
       {/* Principios */}
       <div className="section-wrap" id="principios" style={sectionWrapStyle}>
-        <blockquote style={principleStyle}>
-          "La sombra no es el fondo. La sombra es el producto."
-        </blockquote>
-        <p style={{ fontFamily: "'Basilia',serif", fontSize: '0.9rem', color: 'rgba(var(--fg-rgb),0.6)', lineHeight: 1.8, marginBottom: '3rem', maxWidth: '700px' }}>
-          Todo asset visual de {identity.name} comunica una sola cosa: que la oscuridad es una forma de maestría, no de miedo. El fotógrafo no documenta un objeto — construye un santuario y lo captura.
-        </p>
-        <div className="section-label" style={sectionLabelStyle}>Las 5 Leyes</div>
+        <blockquote style={principleStyle}>{trText("\"La sombra no es el fondo. La sombra es el producto.\"")}</blockquote>
+        <p style={{ fontFamily: "'Basilia',serif", fontSize: '0.9rem', color: 'rgba(var(--fg-rgb),0.6)', lineHeight: 1.8, marginBottom: '3rem', maxWidth: '700px' }}>{trText("Todo asset visual de ")}{trText(identity.name)}{trText(" comunica una sola cosa: que la oscuridad es una forma de maestría, no de miedo. El fotógrafo no documenta un objeto — construye un santuario y lo captura.")}</p>
+        <div className="section-label" style={sectionLabelStyle}>{trText("Las 5 Leyes")}</div>
         {visual.laws.map((law, i) => (
           <div key={i} style={lawCardStyle}>
-            <div style={lawNumberStyle}>{visual.romanNumerals[i]}</div>
+            <div style={lawNumberStyle}>{trText(visual.romanNumerals[i])}</div>
             <div>
-              <h4 style={lawH4Style}>{law.title}</h4>
-              <p style={bodyTextStyle}>{law.body}</p>
+              <h4 style={lawH4Style}>{trText(law.title)}</h4>
+              <p style={bodyTextStyle}>{trText(law.body)}</p>
             </div>
           </div>
         ))}
@@ -48,22 +45,22 @@ export default function Escenografia() {
 
       {/* Fondos */}
       <div className="section-wrap" id="fondos" style={sectionWrapStyle}>
-        <div className="section-label" style={sectionLabelStyle}>2 — Paleta de Fondos y Superficies</div>
+        <div className="section-label" style={sectionLabelStyle}>{trText("2 — Paleta de Fondos y Superficies")}</div>
         <div style={twoColStyle}>
           <div style={listCardStyle}>
-            <h4 style={listCardH4Style}>✓ Fondos Aprobados — Paredes</h4>
+            <h4 style={listCardH4Style}>{trText("✓ Fondos Aprobados — Paredes")}</h4>
             <ul style={{ listStyle: 'none' }}>
-              {visual.photography.backgrounds.approved.map((f) => <ListItem key={f}>{f}</ListItem>)}
+              {visual.photography.backgrounds.approved.map((f) => <ListItem key={f}>{trText(f)}</ListItem>)}
             </ul>
-            <h4 style={{ ...listCardH4Style, marginTop: '1.5rem' }}>✓ Superficies</h4>
+            <h4 style={{ ...listCardH4Style, marginTop: '1.5rem' }}>{trText("✓ Superficies")}</h4>
             <ul style={{ listStyle: 'none' }}>
-              {visual.photography.surfaces.approved.map((f) => <ListItem key={f}>{f}</ListItem>)}
+              {visual.photography.surfaces.approved.map((f) => <ListItem key={f}>{trText(f)}</ListItem>)}
             </ul>
           </div>
           <div style={{ ...listCardStyle, ...listCardProhibitedStyle }}>
-            <h4 style={{ ...listCardH4Style, color: 'rgba(180,80,80,0.7)' }}>✕ Fondos Prohibidos</h4>
+            <h4 style={{ ...listCardH4Style, color: 'rgba(180,80,80,0.7)' }}>{trText("✕ Fondos Prohibidos")}</h4>
             <ul style={{ listStyle: 'none' }}>
-              {visual.photography.backgrounds.forbidden.map((f) => <ListItemX key={f}>{f}</ListItemX>)}
+              {visual.photography.backgrounds.forbidden.map((f) => <ListItemX key={f}>{trText(f)}</ListItemX>)}
             </ul>
           </div>
         </div>
@@ -73,18 +70,18 @@ export default function Escenografia() {
 
       {/* Iluminación */}
       <div className="section-wrap" id="iluminacion" style={sectionWrapStyle}>
-        <div className="section-label" style={sectionLabelStyle}>3 — Iluminación</div>
+        <div className="section-label" style={sectionLabelStyle}>{trText("3 — Iluminación")}</div>
         <div style={twoColStyle}>
           <div style={listCardStyle}>
-            <h4 style={listCardH4Style}>✓ Fuentes Aprobadas</h4>
+            <h4 style={listCardH4Style}>{trText("✓ Fuentes Aprobadas")}</h4>
             <ul style={{ listStyle: 'none' }}>
-              {visual.photography.lighting.approved.map((f) => <ListItem key={f}>{f}</ListItem>)}
+              {visual.photography.lighting.approved.map((f) => <ListItem key={f}>{trText(f)}</ListItem>)}
             </ul>
           </div>
           <div style={{ ...listCardStyle, ...listCardProhibitedStyle }}>
-            <h4 style={{ ...listCardH4Style, color: 'rgba(180,80,80,0.7)' }}>✕ Fuentes Prohibidas</h4>
+            <h4 style={{ ...listCardH4Style, color: 'rgba(180,80,80,0.7)' }}>{trText("✕ Fuentes Prohibidas")}</h4>
             <ul style={{ listStyle: 'none' }}>
-              {visual.photography.lighting.forbidden.map((f) => <ListItemX key={f}>{f}</ListItemX>)}
+              {visual.photography.lighting.forbidden.map((f) => <ListItemX key={f}>{trText(f)}</ListItemX>)}
             </ul>
           </div>
         </div>
@@ -94,30 +91,30 @@ export default function Escenografia() {
 
       {/* Props */}
       <div className="section-wrap" id="props" style={sectionWrapStyle}>
-        <div className="section-label" style={sectionLabelStyle}>4 — Props Aprobados</div>
+        <div className="section-label" style={sectionLabelStyle}>{trText("4 — Props Aprobados")}</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem', marginBottom: '2rem' }}>
           {visual.photography.props.approved.map((p) => (
             <div key={p.label} style={{ padding: '1.25rem', border: '1px solid rgba(var(--copper-rgb),0.2)', background: 'rgba(0,0,0,0.1)' }}>
-              <h4 style={{ fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.62rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--copper)', marginBottom: '0.75rem' }}>{p.label}</h4>
+              <h4 style={{ fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.62rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--copper)', marginBottom: '0.75rem' }}>{trText(p.label)}</h4>
               <ul style={{ listStyle: 'none' }}>
-                {p.items.map((i) => <li key={i} style={{ fontFamily: "'Basilia',serif", fontSize: '0.82rem', color: 'rgba(var(--fg-rgb),0.65)', padding: '0.25rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)' }}>{i}</li>)}
+                {p.items.map((i) => <li key={i} style={{ fontFamily: "'Basilia',serif", fontSize: '0.82rem', color: 'rgba(var(--fg-rgb),0.65)', padding: '0.25rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)' }}>{trText(i)}</li>)}
               </ul>
             </div>
           ))}
         </div>
 
-        <div className="section-label" style={{ ...sectionLabelStyle, marginTop: 0 }}>Props Prohibidos</div>
+        <div className="section-label" style={{ ...sectionLabelStyle, marginTop: 0 }}>{trText("Props Prohibidos")}</div>
         <div style={twoColStyle}>
           <div style={{ ...listCardStyle, ...listCardProhibitedStyle }}>
-            <h4 style={{ ...listCardH4Style, color: 'rgba(180,80,80,0.7)' }}>✕ Por Asociación Estacional</h4>
+            <h4 style={{ ...listCardH4Style, color: 'rgba(180,80,80,0.7)' }}>{trText("✕ Por Asociación Estacional")}</h4>
             <ul style={{ listStyle: 'none' }}>
-              {visual.photography.props.forbidden.seasonal.map((f) => <ListItemX key={f}>{f}</ListItemX>)}
+              {visual.photography.props.forbidden.seasonal.map((f) => <ListItemX key={f}>{trText(f)}</ListItemX>)}
             </ul>
           </div>
           <div style={{ ...listCardStyle, ...listCardProhibitedStyle }}>
-            <h4 style={{ ...listCardH4Style, color: 'rgba(180,80,80,0.7)' }}>✕ Por Material, Color o Concepto</h4>
+            <h4 style={{ ...listCardH4Style, color: 'rgba(180,80,80,0.7)' }}>{trText("✕ Por Material, Color o Concepto")}</h4>
             <ul style={{ listStyle: 'none' }}>
-              {visual.photography.props.forbidden.material.map((f) => <ListItemX key={f}>{f}</ListItemX>)}
+              {visual.photography.props.forbidden.material.map((f) => <ListItemX key={f}>{trText(f)}</ListItemX>)}
             </ul>
           </div>
         </div>
@@ -127,36 +124,32 @@ export default function Escenografia() {
 
       {/* Cámara */}
       <div className="section-wrap" id="camara" style={sectionWrapStyle}>
-        <div className="section-label" style={sectionLabelStyle}>5 — Lenguaje de Cámara</div>
-        <blockquote style={{ ...principleStyle, fontSize: '1rem' }}>
-          La cámara no registra la escena — la interpreta. El ángulo es el argumento.
-        </blockquote>
+        <div className="section-label" style={sectionLabelStyle}>{trText("5 — Lenguaje de Cámara")}</div>
+        <blockquote style={{ ...principleStyle, fontSize: '1rem' }}>{trText("La cámara no registra la escena — la interpreta. El ángulo es el argumento.")}</blockquote>
 
-        <h4 style={lawH4Style}>Tamaño de Encuadre</h4>
+        <h4 style={lawH4Style}>{trText("Tamaño de Encuadre")}</h4>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '0.75rem', marginBottom: '2rem' }}>
           {visual.cameraLanguage.shotSizes.map((s) => <CameraCard key={s.term} {...s} />)}
         </div>
 
-        <h4 style={{ ...lawH4Style, marginTop: '1.5rem' }}>Ángulo y Altura de Cámara</h4>
+        <h4 style={{ ...lawH4Style, marginTop: '1.5rem' }}>{trText("Ángulo y Altura de Cámara")}</h4>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '0.75rem', marginBottom: '2rem' }}>
           {visual.cameraLanguage.angles.map((s) => <CameraCard key={s.term} {...s} />)}
         </div>
 
-        <h4 style={{ ...lawH4Style, marginTop: '1.5rem' }}>Lente y Profundidad de Campo</h4>
+        <h4 style={{ ...lawH4Style, marginTop: '1.5rem' }}>{trText("Lente y Profundidad de Campo")}</h4>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '0.75rem', marginBottom: '2rem' }}>
           {visual.cameraLanguage.lensDepth.map((s) => <CameraCard key={s.term} {...s} />)}
         </div>
 
-        <h4 style={{ ...lawH4Style, marginTop: '1.5rem' }}>Composición</h4>
+        <h4 style={{ ...lawH4Style, marginTop: '1.5rem' }}>{trText("Composición")}</h4>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '0.75rem', marginBottom: '2.5rem' }}>
           {visual.cameraLanguage.composition.map((s) => <CameraCard key={s.term} {...s} />)}
         </div>
 
         <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-          <h4 style={{ ...lawH4Style, marginBottom: '0.5rem' }}>Cómo Dirigir a MavrO — Director's Brief</h4>
-          <p style={{ fontFamily: "'Basilia',serif", fontStyle: 'italic', fontSize: '0.82rem', color: 'rgba(var(--fg-rgb),0.4)', marginBottom: '1.25rem' }}>
-            No necesitas saber términos técnicos. Di esto → copia el prompt → pégalo en Freepik o Kling.
-          </p>
+          <h4 style={{ ...lawH4Style, marginBottom: '0.5rem' }}>{trText("Cómo Dirigir a MavrO — Director's Brief")}</h4>
+          <p style={{ fontFamily: "'Basilia',serif", fontStyle: 'italic', fontSize: '0.82rem', color: 'rgba(var(--fg-rgb),0.4)', marginBottom: '1.25rem' }}>{trText("No necesitas saber términos técnicos. Di esto → copia el prompt → pégalo en Freepik o Kling.")}</p>
           {visual.directorBrief.map((row, i) => (
             <BriefRow key={i} frank={row.frank} mavro={row.mavro} />
           ))}
@@ -167,21 +160,20 @@ export default function Escenografia() {
 
       {/* Setups */}
       <div className="section-wrap" id="setups" style={sectionWrapStyle}>
-        <div className="section-label" style={sectionLabelStyle}>6 — Escenografías por Línea de Producto</div>
+        <div className="section-label" style={sectionLabelStyle}>{trText("6 — Escenografías por Línea de Producto")}</div>
         {productSetups.map((prod) => (
           <div key={prod.title} style={{ border: '1px solid rgba(var(--copper-rgb),0.25)', marginBottom: '2rem' }}>
             <div style={{ padding: '1.25rem 1.75rem', borderBottom: '1px solid rgba(var(--copper-rgb),0.15)', background: 'rgba(var(--copper-rgb),0.05)' }}>
-              <h3 style={{ fontFamily: "'Cinzel',serif", fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--fg)', marginBottom: '0.25rem' }}>{prod.title}</h3>
-              <p style={{ fontFamily: "'IMFell',serif", fontStyle: 'italic', fontSize: '0.85rem', color: 'rgba(var(--fg-rgb),0.5)' }}>{prod.concept}</p>
+              <h3 style={{ fontFamily: "'Cinzel',serif", fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--fg)', marginBottom: '0.25rem' }}>{trText(prod.title)}</h3>
+              <p style={{ fontFamily: "'IMFell',serif", fontStyle: 'italic', fontSize: '0.85rem', color: 'rgba(var(--fg-rgb),0.5)' }}>{trText(prod.concept)}</p>
             </div>
             <div style={{ padding: '1.75rem' }}>
               {prod.sections.map((s) => (
                 <div key={s.label}>
-                  <h4 style={{ fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.65rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--copper)', margin: '1.5rem 0 0.75rem' }}>{s.label}</h4>
+                  <h4 style={{ fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.65rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--copper)', margin: '1.5rem 0 0.75rem' }}>{trText(s.label)}</h4>
                   <ul style={{ listStyle: 'none' }}>
                     {s.items.map((i) => (
-                      <li key={i} style={{ fontFamily: "'Basilia',serif", fontSize: '0.88rem', color: 'rgba(var(--fg-rgb),0.7)', padding: '0.3rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)', lineHeight: 1.5 }}>
-                        — {i}
+                      <li key={i} style={{ fontFamily: "'Basilia',serif", fontSize: '0.88rem', color: 'rgba(var(--fg-rgb),0.7)', padding: '0.3rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)', lineHeight: 1.5 }}>{"— "}{trText(i)}
                       </li>
                     ))}
                   </ul>
@@ -196,43 +188,43 @@ export default function Escenografia() {
 
       {/* Avatares */}
       <div className="section-wrap" id="avatares" style={sectionWrapStyle}>
-        <div className="section-label" style={sectionLabelStyle}>8 — Avatares en Escena</div>
-        <blockquote style={{ ...principleStyle, fontSize: '1rem' }}>
-          Los avatares no posan para {identity.name}. Los avatares evalúan, contemplan, cuidan.
-        </blockquote>
+        <div className="section-label" style={sectionLabelStyle}>{trText("8 — Avatares en Escena")}</div>
+        <blockquote style={{ ...principleStyle, fontSize: '1rem' }}>{trText("Los avatares no posan para ")}{trText(identity.name)}{trText(". Los avatares evalúan, contemplan, cuidan.")}</blockquote>
         <div style={twoColStyle}>
           <div style={listCardStyle}>
-            <h4 style={listCardH4Style}>✓ Posiciones Aprobadas</h4>
+            <h4 style={listCardH4Style}>{trText("✓ Posiciones Aprobadas")}</h4>
             <ul style={{ listStyle: 'none' }}>
-              {visual.photography.wardrobe.approved.map((f) => <ListItem key={f}>{f}</ListItem>)}
+              {visual.photography.wardrobe.approved.map((f) => <ListItem key={f}>{trText(f)}</ListItem>)}
             </ul>
           </div>
           <div style={{ ...listCardStyle, ...listCardProhibitedStyle }}>
-            <h4 style={{ ...listCardH4Style, color: 'rgba(180,80,80,0.7)' }}>✕ Posiciones Prohibidas</h4>
+            <h4 style={{ ...listCardH4Style, color: 'rgba(180,80,80,0.7)' }}>{trText("✕ Posiciones Prohibidas")}</h4>
             <ul style={{ listStyle: 'none' }}>
-              {visual.photography.wardrobe.forbidden.map((f) => <ListItemX key={f}>{f}</ListItemX>)}
+              {visual.photography.wardrobe.forbidden.map((f) => <ListItemX key={f}>{trText(f)}</ListItemX>)}
             </ul>
           </div>
         </div>
       </div>
 
-      <div className="global-footer">{identity.name} · Guía de Escenografía · <a href="/">Home</a></div>
+      <div className="global-footer">{trText(identity.name)}{trText(" · Guía de Escenografía · ")}<a href="/">{trText("Home")}</a></div>
     </div>
   )
 }
 
 function ListItem({ children }) {
+  const { text: trText } = useTranslation()
+
   return (
-    <li style={{ fontFamily: "'Basilia',serif", fontSize: '0.85rem', color: 'rgba(var(--fg-rgb),0.7)', padding: '0.3rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)', lineHeight: 1.5 }}>
-      ✓ {children}
+    <li style={{ fontFamily: "'Basilia',serif", fontSize: '0.85rem', color: 'rgba(var(--fg-rgb),0.7)', padding: '0.3rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)', lineHeight: 1.5 }}>{"✓ "}{trText(children)}
     </li>
   )
 }
 
 function ListItemX({ children }) {
+  const { text: trText } = useTranslation()
+
   return (
-    <li style={{ fontFamily: "'Basilia',serif", fontSize: '0.85rem', color: 'rgba(var(--fg-rgb),0.7)', padding: '0.3rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)', lineHeight: 1.5 }}>
-      ✕ {children}
+    <li style={{ fontFamily: "'Basilia',serif", fontSize: '0.85rem', color: 'rgba(var(--fg-rgb),0.7)', padding: '0.3rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)', lineHeight: 1.5 }}>{"✕ "}{trText(children)}
     </li>
   )
 }
@@ -253,6 +245,8 @@ const navItemStyle = { fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.65r
 
 
 function CameraCard({ term, desc, prompt }) {
+  const { text: trText } = useTranslation()
+
   const [copied, setCopied] = useState(false)
   function handleCopy() {
     navigator.clipboard.writeText(prompt)
@@ -261,14 +255,14 @@ function CameraCard({ term, desc, prompt }) {
   }
   return (
     <div style={{ padding: '1rem 1.25rem', border: '1px solid rgba(var(--copper-rgb),0.2)', background: 'rgba(0,0,0,0.1)' }}>
-      <span style={{ fontFamily: "'Cinzel',serif", fontSize: '0.78rem', color: 'var(--fg)', letterSpacing: '0.04em', display: 'block', marginBottom: '0.25rem' }}>{term}</span>
-      {desc && <p style={{ fontFamily: "'Basilia',serif", fontStyle: 'italic', fontSize: '0.72rem', color: 'rgba(var(--fg-rgb),0.35)', lineHeight: 1.4, marginBottom: '0.6rem' }}>{desc}</p>}
+      <span style={{ fontFamily: "'Cinzel',serif", fontSize: '0.78rem', color: 'var(--fg)', letterSpacing: '0.04em', display: 'block', marginBottom: '0.25rem' }}>{trText(term)}</span>
+      {trText(desc && <p style={{ fontFamily: "'Basilia',serif", fontStyle: 'italic', fontSize: '0.72rem', color: 'rgba(var(--fg-rgb),0.35)', lineHeight: 1.4, marginBottom: '0.6rem' }}>{trText(desc)}</p>)}
       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
         <code style={{ fontFamily: 'monospace', fontSize: '0.63rem', color: 'rgba(var(--fg-rgb),0.65)', background: 'rgba(var(--copper-rgb),0.07)', padding: '0.5rem 0.65rem', flex: 1, lineHeight: 1.6, border: '1px solid rgba(var(--copper-rgb),0.13)' }}>
-          {prompt}
+          {trText(prompt)}
         </code>
         <button onClick={handleCopy} style={{ background: copied ? 'rgba(var(--copper-rgb),0.25)' : 'transparent', border: '1px solid rgba(var(--copper-rgb),0.3)', color: copied ? 'var(--copper-bright)' : 'rgba(var(--copper-rgb),0.5)', fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.5rem', letterSpacing: '0.15em', padding: '4px 8px', cursor: 'pointer', textTransform: 'uppercase', flexShrink: 0, transition: 'all 0.2s', marginTop: '2px' }}>
-          {copied ? '✓' : 'copy'}
+          {trText(copied ? '✓' : 'copy')}
         </button>
       </div>
     </div>
@@ -276,6 +270,8 @@ function CameraCard({ term, desc, prompt }) {
 }
 
 function BriefRow({ frank, mavro }) {
+  const { text: trText } = useTranslation()
+
   const [copied, setCopied] = useState(false)
   function handleCopy() {
     navigator.clipboard.writeText(mavro)
@@ -284,13 +280,13 @@ function BriefRow({ frank, mavro }) {
   }
   return (
     <div style={{ padding: '0.85rem 1rem', border: '1px solid rgba(var(--copper-rgb),0.15)', background: 'rgba(0,0,0,0.08)', marginBottom: '0.5rem' }}>
-      <p style={{ fontFamily: "'IMFell',serif", fontStyle: 'italic', fontSize: '0.88rem', color: 'rgba(var(--fg-rgb),0.65)', marginBottom: '0.5rem' }}>"{frank}"</p>
+      <p style={{ fontFamily: "'IMFell',serif", fontStyle: 'italic', fontSize: '0.88rem', color: 'rgba(var(--fg-rgb),0.65)', marginBottom: '0.5rem' }}>{"\""}{trText(frank)}{"\""}</p>
       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
         <code style={{ fontFamily: 'monospace', fontSize: '0.63rem', color: 'rgba(var(--fg-rgb),0.6)', background: 'rgba(var(--copper-rgb),0.07)', padding: '0.45rem 0.65rem', flex: 1, lineHeight: 1.6, border: '1px solid rgba(var(--copper-rgb),0.13)' }}>
-          {mavro}
+          {trText(mavro)}
         </code>
         <button onClick={handleCopy} style={{ background: copied ? 'rgba(var(--copper-rgb),0.25)' : 'transparent', border: '1px solid rgba(var(--copper-rgb),0.3)', color: copied ? 'var(--copper-bright)' : 'rgba(var(--copper-rgb),0.5)', fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.5rem', letterSpacing: '0.15em', padding: '4px 8px', cursor: 'pointer', textTransform: 'uppercase', flexShrink: 0, transition: 'all 0.2s', marginTop: '2px' }}>
-          {copied ? '✓' : 'copy'}
+          {trText(copied ? '✓' : 'copy')}
         </button>
       </div>
     </div>

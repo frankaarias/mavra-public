@@ -1,3 +1,4 @@
+import { useTranslation } from '../../i18n/TranslationProvider.jsx'
 import { useEffect } from 'react'
 import brand from '../../brand/brand.json'
 
@@ -23,23 +24,25 @@ const s = {
 }
 
 export default function Influencers() {
+  const { text: trText } = useTranslation()
+
   useEffect(() => { document.title = `${identity.name} — Creator Operations` }, [])
   return (
     <main style={s.page}>
       <header>
-        <p style={s.eyebrow}>Case study evidence · Creator operations</p>
-        <h1 style={s.title}>Creator strategy is<br />a system of fit.</h1>
-        <p style={s.lead}>MAVRA’s creator program is designed around relevance and repeatability: matching the product world to audiences that can make it credible, then learning from each activation.</p>
+        <p style={s.eyebrow}>{trText("Case study evidence · Creator operations")}</p>
+        <h1 style={s.title}>{trText("Creator strategy is")}<br />{trText("a system of fit.")}</h1>
+        <p style={s.lead}>{trText("MAVRA’s creator program is designed around relevance and repeatability: matching the product world to audiences that can make it credible, then learning from each activation.")}</p>
       </header>
       <section style={{ marginTop: '64px' }}>
-        <p style={s.eyebrow}>Operating model</p>
+        <p style={s.eyebrow}>{trText("Operating model")}</p>
         <div style={s.grid}>
-          {stages.map(([title, text], index) => <article key={title} style={s.card}><span style={s.number}>0{index + 1}</span><h2 style={s.h3}>{title}</h2><p style={s.body}>{text}</p></article>)}
+          {stages.map(([title, text], index) => <article key={title} style={s.card}><span style={s.number}>{"0"}{trText(index + 1)}</span><h2 style={s.h3}>{trText(title)}</h2><p style={s.body}>{trText(text)}</p></article>)}
         </div>
       </section>
       <section style={{ marginTop: '72px', padding: '30px', border: '1px solid rgba(var(--copper-rgb),0.23)', background: 'rgba(var(--copper-rgb),0.04)' }}>
-        <p style={s.eyebrow}>Documented scope</p>
-        <p style={{ ...s.body, marginBottom: 0, maxWidth: '800px', fontSize: '0.98rem' }}>The MAVRA system mapped 126 potential creators, with 86 accounts manually verified and 41 qualified in the highest relevance tier. These are scope metrics, not campaign-performance claims. Individual creator records, contact details and outreach materials are not part of the public case study.</p>
+        <p style={s.eyebrow}>{trText("Documented scope")}</p>
+        <p style={{ ...s.body, marginBottom: 0, maxWidth: '800px', fontSize: '0.98rem' }}>{trText("The MAVRA system mapped 126 potential creators, with 86 accounts manually verified and 41 qualified in the highest relevance tier. These are scope metrics, not campaign-performance claims. Individual creator records, contact details and outreach materials are not part of the public case study.")}</p>
       </section>
     </main>
   )

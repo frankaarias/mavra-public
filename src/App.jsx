@@ -1,12 +1,13 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { lazy, Suspense } from 'react'
+import useMavraLanguage from './components/useMavraLanguage.js'
 
 // Las dos paginas del visor de research pesan 11,3 MB en datos — el 93% del
 // bundle. Van con carga diferida para que abrir el dashboard no las traiga.
 const CopyAds = lazy(() => import('./pages/CopyAds.jsx'))
 const Research = lazy(() => import('./pages/Research.jsx'))
-const Cargando = () => <div style={{ padding: '4rem 2rem', fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(var(--copper-rgb),0.6)' }}>Cargando…</div>
+const Cargando = () => { const [language] = useMavraLanguage(); return <div style={{ padding: '4rem 2rem', fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(var(--copper-rgb),0.6)' }}>{language === 'es' ? 'Cargando…' : 'Loading…'}</div> }
 import Navbar from './components/Navbar.jsx'
 import ScrollToRouteStart from './components/ScrollToRouteStart.jsx'
 import Home from './pages/Home.jsx'

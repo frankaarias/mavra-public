@@ -36,7 +36,7 @@ export default function AplusBriefs() {
  const [language] = useMavraLanguage(); const t=copy[language]||copy.en
  useEffect(()=>{document.title=`${identity.name} — ${t.document}`},[t.document])
  return <main style={s.page}><header><p style={s.eyebrow}>{t.eyebrow}</p><h1 style={s.title}>{t.title}</h1><p style={s.lead}>{t.lead}</p></header>
- <section style={s.intro} aria-label="A+ system principles">{t.principles.map(([label,text])=><div key={label} style={s.introItem}><span style={s.small}>{label}</span><span style={{color:'rgba(var(--fg-rgb),0.58)',fontSize:'0.82rem',lineHeight:1.5}}>{text}</span></div>)}</section>
+ <section style={s.intro} aria-label={language === 'es' ? 'Principios del sistema A+' : 'A+ system principles'}>{t.principles.map(([label,text])=><div key={label} style={s.introItem}><span style={s.small}>{label}</span><span style={{color:'rgba(var(--fg-rgb),0.58)',fontSize:'0.82rem',lineHeight:1.5}}>{text}</span></div>)}</section>
  <section><p style={s.eyebrow}>{t.moduleEyebrow}</p><h2 style={s.sectionTitle}>{t.journey}</h2><div style={s.grid}>{t.modules.map(([number,title,text])=><article key={number} style={s.card}><span style={s.cardNo}>{number}</span><h3 style={s.cardTitle}>{title}</h3><p style={s.body}>{text}</p></article>)}</div></section>
  <section style={{marginTop:'72px',paddingTop:'28px',borderTop:'1px solid rgba(var(--copper-rgb),0.2)'}}><p style={s.eyebrow}>{t.demonstrates}</p><p style={{...s.body,maxWidth:'780px',fontSize:'0.98rem'}}>{t.closing}</p></section></main>
 }

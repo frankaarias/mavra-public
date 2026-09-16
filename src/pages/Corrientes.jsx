@@ -1,3 +1,4 @@
+import { useTranslation } from '../i18n/TranslationProvider.jsx'
 import { useState } from 'react'
 import brand from '../brand/brand.json'
 
@@ -6,21 +7,23 @@ const { currents, identity } = brand
 
 
 export default function Corrientes() {
+  const { text: trText } = useTranslation()
+
   const [active, setActive] = useState(null)
 
   return (
     <>
       <div className="page-header">
-        <h1>Corrientes Góticas</h1>
-        <p className="page-subtitle">Las seis estéticas que definen el universo {identity.name} — la base de marca y las cinco corrientes de buyer persona, con su genealogía, psicología y aplicación al hogar.</p>
+        <h1>{trText("Corrientes Góticas")}</h1>
+        <p className="page-subtitle">{trText("Las seis estéticas que definen el universo ")}{trText(identity.name)}{trText(" — la base de marca y las cinco corrientes de buyer persona, con su genealogía, psicología y aplicación al hogar.")}</p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', maxWidth: '1600px', margin: '0 auto' }}>
         {/* Sidebar */}
         <div style={{ padding: '3rem 1.5rem 3rem 2rem', borderRight: '1px solid rgba(var(--copper-rgb),0.15)', position: 'sticky', top: '60px', height: 'fit-content' }}>
-          <div style={sidebarLabelStyle}>Corrientes</div>
+          <div style={sidebarLabelStyle}>{trText("Corrientes")}</div>
           {currents.map((c) => (
-            <a key={c.id} href={`#${c.id}`} style={sidebarLinkStyle}>{c.title}</a>
+            <a key={c.id} href={`#${c.id}`} style={sidebarLinkStyle}>{trText(c.title)}</a>
           ))}
         </div>
 
@@ -29,58 +32,56 @@ export default function Corrientes() {
           {currents.map((c) => (
             <div key={c.id} id={c.id} style={corrienteStyle}>
               <div style={corrienteTagStyle}>
-                {c.tag}
-                {c.badge && (
+                {trText(c.tag)}
+                {trText(c.badge && (
                   <span style={{
                     ...badgeStyle,
                     ...(c.badgeClass === 'popular' ? popularBadgeStyle : {}),
-                  }}>{c.badge}</span>
-                )}
+                  }}>{trText(c.badge)}</span>
+                ))}
               </div>
-              <h2 style={corrienteTitleStyle}>{c.title}</h2>
-              <p style={corrienteSubStyle}>{c.sub}</p>
+              <h2 style={corrienteTitleStyle}>{trText(c.title)}</h2>
+              <p style={corrienteSubStyle}>{trText(c.sub)}</p>
 
-              <h3 style={h3Style}>Identidad y Psicología</h3>
-              <p style={bodyStyle}>{c.identity}</p>
+              <h3 style={h3Style}>{trText("Identidad y Psicología")}</h3>
+              <p style={bodyStyle}>{trText(c.identity)}</p>
 
-              <h3 style={h3Style}>En el Hogar</h3>
+              <h3 style={h3Style}>{trText("En el Hogar")}</h3>
               <ul style={{ listStyle: 'none' }}>
                 {c.home.map((item) => (
-                  <li key={item} style={{ ...bodyStyle, padding: '0.25rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)' }}>
-                    — {item}
+                  <li key={item} style={{ ...bodyStyle, padding: '0.25rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)' }}>{"— "}{trText(item)}
                   </li>
                 ))}
               </ul>
 
-              <h3 style={h3Style}>Vestuario del Avatar</h3>
+              <h3 style={h3Style}>{trText("Vestuario del Avatar")}</h3>
               <ul style={{ listStyle: 'none' }}>
                 {c.wardrobe.map((item) => (
-                  <li key={item} style={{ ...bodyStyle, padding: '0.25rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)' }}>
-                    — {item}
+                  <li key={item} style={{ ...bodyStyle, padding: '0.25rem 0', borderBottom: '1px solid rgba(var(--copper-rgb),0.1)' }}>{"— "}{trText(item)}
                   </li>
                 ))}
               </ul>
 
-              <h3 style={h3Style}>Paleta</h3>
+              <h3 style={h3Style}>{trText("Paleta")}</h3>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', margin: '1rem 0' }}>
                 {c.palette.map((hex) => (
                   <div key={hex} style={{ textAlign: 'center' }}>
                     <div style={{ width: '32px', height: '32px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', background: hex }} />
-                    <div style={{ fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.6rem', color: 'rgba(var(--fg-rgb),0.4)', marginTop: '0.25rem', textAlign: 'center' }}>{hex}</div>
+                    <div style={{ fontFamily: "'Josefin Sans',sans-serif", fontSize: '0.6rem', color: 'rgba(var(--fg-rgb),0.4)', marginTop: '0.25rem', textAlign: 'center' }}>{trText(hex)}</div>
                   </div>
                 ))}
               </div>
 
               <div style={mavraNote}>
-                <div style={mavraNoteLabel}>Aplicación {identity.name}</div>
-                <p style={{ ...bodyStyle, margin: 0, fontSize: '0.82rem', color: 'rgba(var(--fg-rgb),0.6)' }}>{c.mavraNote}</p>
+                <div style={mavraNoteLabel}>{trText("Aplicación ")}{trText(identity.name)}</div>
+                <p style={{ ...bodyStyle, margin: 0, fontSize: '0.82rem', color: 'rgba(var(--fg-rgb),0.6)' }}>{trText(c.mavraNote)}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="global-footer">{identity.name} — Corrientes Góticas · <a href="/">Home</a></div>
+      <div className="global-footer">{trText(identity.name)}{trText(" — Corrientes Góticas · ")}<a href="/">{trText("Home")}</a></div>
     </>
   )
 }

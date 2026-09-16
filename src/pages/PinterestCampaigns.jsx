@@ -1,3 +1,4 @@
+import { useTranslation } from '../i18n/TranslationProvider.jsx'
 import brand from '../brand/brand.json'
 import useReveal from '../components/useReveal.js'
 
@@ -72,79 +73,61 @@ const GROUP_A = [
 ]
 
 export default function PinterestCampaigns() {
+  const { text: trText } = useTranslation()
+
   useReveal()
 
   return (
     <>
       <div className="page-header">
-        <h1>Campañas Pinterest — {identity.name}</h1>
-        <p className="page-subtitle">
-          Todo a Estados Unidos · objetivo Consideration · enlace directo · $35 por día · los tres productos
-        </p>
+        <h1>{trText("Campañas Pinterest — ")}{trText(identity.name)}</h1>
+        <p className="page-subtitle">{trText("Todo a Estados Unidos · objetivo Consideration · enlace directo · $35 por día · los tres productos")}</p>
       </div>
 
       <div style={page}>
 
         {/* ── Diagnóstico ───────────────────────────────────────────── */}
         <section className="reveal" style={band}>
-          <div style={eyebrow}>Punto de partida · medido el 4 de septiembre</div>
+          <div style={eyebrow}>{trText("Punto de partida · medido el 4 de septiembre")}</div>
           <div style={statRow}>
             {DIAGNOSIS.map(([k, v]) => (
               <div key={k} style={stat}>
-                <div style={statVal(k === 'Clics salientes')}>{v}</div>
-                <div style={statKey}>{k}</div>
+                <div style={statVal(k === 'Clics salientes')}>{trText(v)}</div>
+                <div style={statKey}>{trText(k)}</div>
               </div>
             ))}
           </div>
-          <p style={body}>
-            Noventa días, 44 pines. El alcance existe y es grande — <b>69.490 vistas al mes con un solo
-            seguidor</b>. Lo que no existe es la salida: de 2.290 personas que abrieron un pin,
-            <b> 24 llegaron a un sitio nuestro</b>.
-          </p>
-          <p style={note}>
-            En orgánico salir cuesta dos clics: uno abre el pin, otro lleva al destino. <b>Un pin
-            promocionado con enlace directo se salta ese paso</b>, así que el 1% de hoy no predice
-            lo que hará la pauta.
-          </p>
+          <p style={body}>{trText("Noventa días, 44 pines. El alcance existe y es grande — ")}<b>{trText("69.490 vistas al mes con un solo seguidor")}</b>{trText(". Lo que no existe es la salida: de 2.290 personas que abrieron un pin,")}<b>{trText(" 24 llegaron a un sitio nuestro")}</b>{"."}</p>
+          <p style={note}>{trText("En orgánico salir cuesta dos clics: uno abre el pin, otro lleva al destino. ")}<b>{trText("Un pin promocionado con enlace directo se salta ese paso")}</b>{trText(", así que el 1% de hoy no predice lo que hará la pauta.")}</p>
         </section>
 
         {/* ── Audiencia ─────────────────────────────────────────────── */}
         <section className="reveal" style={band}>
-          <div style={eyebrow}>Quién nos está viendo</div>
+          <div style={eyebrow}>{trText("Quién nos está viendo")}</div>
           <div style={statRow}>
             {AUDIENCE.map(([k, v]) => (
               <div key={k} style={stat}>
-                <div style={statVal(k === 'En Estados Unidos')}>{v}</div>
-                <div style={statKey}>{k}</div>
+                <div style={statVal(k === 'En Estados Unidos')}>{trText(v)}</div>
+                <div style={statKey}>{trText(k)}</div>
               </div>
             ))}
           </div>
-          <p style={body}>
-            Intereses dominantes: Art 87% · Home Decor 86% · Entertainment 86% · Education 84% ·
-            Design 83% · Beauty 82% · DIY 80%. Ciudades: Los Ángeles, Nueva York, Seattle, Chicago,
-            Phoenix.
-          </p>
-          <p style={warn}>
-            Solo tres de cada diez personas que nos ven están en Estados Unidos, y vendemos únicamente
-            en Amazon US. <b>Toda la pauta va segmentada a EE.UU.</b> — en orgánico ese 70% restante
-            es gratis; en pago sería tirar la plata.
-          </p>
+          <p style={body}>{trText("Intereses dominantes: Art 87% · Home Decor 86% · Entertainment 86% · Education 84% · Design 83% · Beauty 82% · DIY 80%. Ciudades: Los Ángeles, Nueva York, Seattle, Chicago, Phoenix.")}</p>
+          <p style={warn}>{trText("Solo tres de cada diez personas que nos ven están en Estados Unidos, y vendemos únicamente en Amazon US. ")}<b>{trText("Toda la pauta va segmentada a EE.UU.")}</b>{trText(" — en orgánico ese 70% restante es gratis; en pago sería tirar la plata.")}</p>
         </section>
 
         {/* ── Campañas ──────────────────────────────────────────────── */}
         <section className="reveal">
-          <h2 style={h2}>Las tres campañas</h2>
-          <p style={note}>
-            Sin campaña al blog: la prioridad es vender en Amazon, y el blog no vende. Los pines de un solo producto van a su listado; el de colección, al Store.
-          </p>
+          <h2 style={h2}>{trText("Las tres campañas")}</h2>
+          <p style={note}>{trText("Sin campaña al blog: la prioridad es vender en Amazon, y el blog no vende. Los pines de un solo producto van a su listado; el de colección, al Store.")}</p>
           <div style={campRow}>
             {CAMPAIGNS.map((c) => (
               <div key={c.id} style={campCard}>
-                <div style={campN}>Campaña {c.id} · Grupo {c.group}</div>
-                <div style={campName}>{c.name}</div>
-                <div style={campBudget}>{c.budget}</div>
-                <div style={campDest}>→ {c.dest}</div>
-                <p style={campWhy}>{c.why}</p>
+                <div style={campN}>{trText("Campaña ")}{trText(c.id)}{trText(" · Grupo ")}{trText(c.group)}</div>
+                <div style={campName}>{trText(c.name)}</div>
+                <div style={campBudget}>{trText(c.budget)}</div>
+                <div style={campDest}>{"→ "}{trText(c.dest)}</div>
+                <p style={campWhy}>{trText(c.why)}</p>
               </div>
             ))}
           </div>
@@ -152,25 +135,21 @@ export default function PinterestCampaigns() {
 
         {/* ── Grupo B ───────────────────────────────────────────────── */}
         <section className="reveal">
-          <h2 style={h2}>Campaña 1 · Grupo B — nunca publicados</h2>
-          <p style={note}>
-            Nueve pines nunca publicados donde el producto es el protagonista — seis de la Cuarta tanda (CND y LMP) y tres de SWD que quedaron sin subir de la Tercera
-            (tomas <code style={code}>detail</code>, <code style={code}>still</code> y{' '}
-            <code style={code}>gesture</code>). El texto va quemado sobre la imagen; abajo está
-            simulado en su posición.
-          </p>
+          <h2 style={h2}>{trText("Campaña 1 · Grupo B — nunca publicados")}</h2>
+          <p style={note}>{trText("Nueve pines nunca publicados donde el producto es el protagonista — seis de la Cuarta tanda (CND y LMP) y tres de SWD que quedaron sin subir de la Tercera (tomas ")}<code style={code}>{trText("detail")}</code>{", "}<code style={code}>{trText("still")}</code>{trText(" y")}{' '}
+            <code style={code}>{trText("gesture")}</code>{trText("). El texto va quemado sobre la imagen; abajo está simulado en su posición.")}</p>
           <div style={grid}>
             {GROUP_B.map((p) => (
               <article key={p.img} style={card}>
                 <div style={thumbWrap}>
-                  <img src={`/pinterest/${p.img}`} alt={p.text} style={thumb} />
-                  <div style={overlay}>{p.text}</div>
+                  <img src={`/pinterest/${p.img}`} alt={trText(p.text)} style={thumb} />
+                  <div style={overlay}>{trText(p.text)}</div>
                 </div>
                 <div style={cardBody}>
-                  <div style={cardTitle}>{p.text}</div>
-                  <div style={cardFile}>{p.file}.jpeg</div>
-                  <div style={pillAmazon}>Amazon · {p.prod}</div>
-                  <p style={cardWhy}>{p.why}</p>
+                  <div style={cardTitle}>{trText(p.text)}</div>
+                  <div style={cardFile}>{trText(p.file)}{trText(".jpeg")}</div>
+                  <div style={pillAmazon}>{trText("Amazon · ")}{trText(p.prod)}</div>
+                  <p style={cardWhy}>{trText(p.why)}</p>
                 </div>
               </article>
             ))}
@@ -179,25 +158,21 @@ export default function PinterestCampaigns() {
 
         {/* ── Grupo A ───────────────────────────────────────────────── */}
         <section className="reveal">
-          <h2 style={h2}>Campaña 2 · Grupo A — los que ya rinden</h2>
-          <p style={note}>
-            Los cinco más guardados de los últimos 90 días. No se les toca la imagen y ya apuntan a
-            la oferta: lo único que cambia es que en pauta el clic lleva directo, sin el paso
-            intermedio.
-          </p>
+          <h2 style={h2}>{trText("Campaña 2 · Grupo A — los que ya rinden")}</h2>
+          <p style={note}>{trText("Los cinco más guardados de los últimos 90 días. No se les toca la imagen y ya apuntan a la oferta: lo único que cambia es que en pauta el clic lleva directo, sin el paso intermedio.")}</p>
           <div style={grid}>
             {GROUP_A.map((p) => (
               <article key={p.img} style={card}>
                 <div style={thumbWrap}>
-                  <img src={`/pinterest/${p.img}`} alt={p.title} style={thumb} />
+                  <img src={`/pinterest/${p.img}`} alt={trText(p.title)} style={thumb} />
                 </div>
                 <div style={cardBody}>
-                  <div style={cardTitle}>{p.title}</div>
+                  <div style={cardTitle}>{trText(p.title)}</div>
                   <div style={cardNums}>
-                    <b>{p.save}</b> guardados · {p.pc} clics al pin · {p.imp} impresiones ·{' '}
-                    <span style={{ color: '#c9564f' }}>{p.out} salidas</span>
+                    <b>{trText(p.save)}</b>{trText(" guardados · ")}{trText(p.pc)}{trText(" clics al pin · ")}{trText(p.imp)}{trText(" impresiones ·")}{' '}
+                    <span style={{ color: '#c9564f' }}>{trText(p.out)}{trText(" salidas")}</span>
                   </div>
-                  <div style={pillOffer}>get.mavra.space/offer/</div>
+                  <div style={pillOffer}>{trText("get.mavra.space/offer/")}</div>
                 </div>
               </article>
             ))}
@@ -206,22 +181,19 @@ export default function PinterestCampaigns() {
 
         {/* ── Grupo C ───────────────────────────────────────────────── */}
         <section className="reveal">
-          <h2 style={h2}>Campaña 3 · Grupo C — el pin de colección</h2>
-          <p style={note}>
-            Tríptico de tres fotos de escena, una por producto, en 1000 × 1500 — el mismo lenguaje de la portada del grupo. <b>Es el único que va al Store</b>: muestra la colección entera, así que
-            mandarlo a un listado dejaría fuera dos de los tres.
-          </p>
+          <h2 style={h2}>{trText("Campaña 3 · Grupo C — el pin de colección")}</h2>
+          <p style={note}>{trText("Tríptico de tres fotos de escena, una por producto, en 1000 × 1500 — el mismo lenguaje de la portada del grupo. ")}<b>{trText("Es el único que va al Store")}</b>{trText(": muestra la colección entera, así que mandarlo a un listado dejaría fuera dos de los tres.")}</p>
           <div style={grid}>
             {GROUP_C.map((p) => (
               <article key={p.img} style={card}>
                 <div style={thumbWrap}>
-                  <img src={`/pinterest/${p.img}`} alt={p.text} style={thumb} />
+                  <img src={`/pinterest/${p.img}`} alt={trText(p.text)} style={thumb} />
                 </div>
                 <div style={cardBody}>
-                  <div style={cardTitle}>{p.text}</div>
-                  <div style={cardFile}>{p.file}</div>
-                  <div style={pillAmazon}>Store de Amazon</div>
-                  <p style={cardWhy}>{p.why}</p>
+                  <div style={cardTitle}>{trText(p.text)}</div>
+                  <div style={cardFile}>{trText(p.file)}</div>
+                  <div style={pillAmazon}>{trText("Store de Amazon")}</div>
+                  <p style={cardWhy}>{trText(p.why)}</p>
                 </div>
               </article>
             ))}
@@ -230,21 +202,14 @@ export default function PinterestCampaigns() {
 
         {/* ── Segmentación ──────────────────────────────────────────── */}
         <section className="reveal" style={band}>
-          <div style={eyebrow}>Segmentación · igual en las tres campañas</div>
-          <p style={body}>
-            Estados Unidos · mujeres y no especificado · 18–44 · todos los emplazamientos · intereses
-            Home&nbsp;Decor, Art, Design y DIY&nbsp;and&nbsp;Crafts, más 20–30 palabras clave por
-            campaña. Puja Performance+, sin tocar nada la primera semana.
-          </p>
+          <div style={eyebrow}>{trText("Segmentación · igual en las tres campañas")}</div>
+          <p style={body}>{trText("Estados Unidos · mujeres y no especificado · 18–44 · todos los emplazamientos · intereses Home Decor, Art, Design y DIY and Crafts, más 20–30 palabras clave por campaña. Puja Performance+, sin tocar nada la primera semana.")}</p>
           <p style={note}>
-            <b>Qué se mide:</b> A y B corren a la vez con el mismo objetivo. La diferencia
-            entre A y B es el texto sobre la imagen — a los diez días sabemos si el llamado quemado
-            es lo que faltaba.
-          </p>
+            <b>{trText("Qué se mide:")}</b>{trText(" A y B corren a la vez con el mismo objetivo. La diferencia entre A y B es el texto sobre la imagen — a los diez días sabemos si el llamado quemado es lo que faltaba.")}</p>
         </section>
 
         <div className="global-footer">
-          {identity.name} — Campañas Pinterest · <a href="/">Home</a>
+          {trText(identity.name)}{trText(" — Campañas Pinterest · ")}<a href="/">{trText("Home")}</a>
         </div>
       </div>
     </>
