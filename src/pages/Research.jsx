@@ -1353,7 +1353,9 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
     return sortRows(base, compSort, (c, k) => (row && row.sortVal ? row.sortVal(c) : c[k]))
   }, [comps, compHid, compQ, compSort])
   const compOpciones = [
-    { k: '__med', label: 'Mediana del nicho' },
+    // 🔴 EL LABEL PASA POR EL DICCIONARIO. Salia «Mediana del nicho» dentro del
+    // menu de columnas con la pagina en ingles — y solo se veia abriendolo.
+    { k: '__med', label: T('Mediana del nicho') },
     ...comps.map((c) => ({ k: c.asin, label: c.brand || c.asin, grupo: 'Competidores' })),
   ]
   const verMed = !compHid.has('__med')
