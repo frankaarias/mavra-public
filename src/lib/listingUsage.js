@@ -58,19 +58,13 @@ export const USAGE_COLOR = {
 export const USAGE_HUECO = new Set(['exact plural', 'broad plural'])
 
 export const USAGE_AYUDA =
-  'Dónde está usada la keyword dentro del listing, con la lectura de DataDive. ' +
-  'Verde = exact, la frase aparece tal cual. Naranja = broad, están todas las palabras pero separadas. ' +
-  'El anillo hueco marca que el match es por plural o singular. Gris = no está en ese campo. ' +
-  'Punteado = ese campo todavía no está escrito, así que no hay nada que medir. ' +
-  'El match es literal: Amazon no hace stemming, "goth" no cuenta como "gothic".'
+  'Dónde está usada la keyword. Verde: la frase aparece tal cual. Naranja: están todas las ' +
+  'palabras pero separadas. Gris: no está. Punteado: ese campo aún no está escrito.'
 
 // 🔑 La versión inglesa del mismo texto. Vive al lado del castellano a
 // propósito: si alguien cambia la lectura de un color, tiene las dos frases
 // delante y no se olvida de una — que es como una app queda diciendo cosas
 // distintas en cada idioma.
 export const USAGE_AYUDA_EN =
-  'Where the keyword is used inside the listing, read the DataDive way. ' +
-  'Green = exact, the phrase appears verbatim. Orange = broad, all the words are there but apart. ' +
-  'A hollow ring marks a plural or singular match. Grey = not in that field. ' +
-  'Dotted = that field is not written yet, so there is nothing to measure. ' +
-  'The match is literal: Amazon does no stemming, "goth" does not count as "gothic".'
+  'Where the keyword is used. Green: the phrase appears verbatim. Orange: every word is ' +
+  'there but apart. Grey: not there. Dotted: that field is not written yet.'
