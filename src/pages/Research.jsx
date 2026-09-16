@@ -808,7 +808,12 @@ function MenuColumnas({ etiqueta, fija, opciones, ocultas, setOcultas }) {
       <p className="rsch-cols-fija">{fija} &middot; siempre visible</p>
       {opciones.map((o, i) => (
         <Fragment key={o.k}>
-          {o.grupo && o.grupo !== (opciones[i - 1] || {}).grupo && <span className="rsch-cols-sep">{o.grupo}</span>}
+          {/* 🔴 EL SEPARADOR NO PASABA POR EL DICCIONARIO. Con la página en inglés
+              decía «COMPETIDORES» — lo vio Frank abriendo el menú (2026-09-16).
+              Y no se veía en ningún barrido: el contenido de un desplegable
+              CERRADO no está en la pantalla. Es el mismo escondite que el
+              placeholder del buscador y que los estados vacíos. */}
+          {o.grupo && o.grupo !== (opciones[i - 1] || {}).grupo && <span className="rsch-cols-sep">{tr(o.grupo)}</span>}
           <label className="rsch-cols-item">
             <input type="checkbox" checked={!ocultas.has(o.k)} onChange={() => alternar(o.k)} />
             {o.label}
@@ -1657,9 +1662,16 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
           <div className="mkl-scroll">
             <table className="mkl-table mkl-comp" style={{ width: 'auto', minWidth: '1100px' }}>
               <thead className="mkl-thead">
+                {/* ⛔ SIN AYUDAS EN ESTA TABLA (Frank, 2026-09-16: «los hover de los
+                    competidores no están traducidos, ni los traduzcas, quítalos»).
+                    Eran cuatro: las dos cabeceras de la izquierda, la de cada
+                    competidor y la de cada fila de métrica (`COMP_ROWS.info`).
+                    Las tres últimas estaban escritas solo en castellano y no
+                    pasaban por el diccionario, así que en inglés salían tal cual.
+                    Los textos siguen en `COMP_ROWS` e `INFO` por si vuelven. */}
                 <tr>
-                  <Th label={`${T('Competidores')} ${compVis.length}`} ayuda={INFO.comp_metrica} align="left" style={{ minWidth: 210 }} />
-                  {verMed && <Th label={T('Mediana del nicho')} ayuda={INFO.comp_med} align="left" style={{ minWidth: 140 }} />}
+                  <Th label={`${T('Competidores')} ${compVis.length}`} align="left" style={{ minWidth: 210 }} />
+                  {verMed && <Th label={T('Mediana del nicho')} align="left" style={{ minWidth: 140 }} />}
                   {compVis.map((c) => (
                     <Th
                       key={c.asin}
@@ -1675,7 +1687,6 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                           <span className="rsch-comp-marca">{(c.brand || c.asin).slice(0, 14)}</span>
                         </span>
                       )}
-                      ayuda={`${c.brand || c.asin} (${c.asin}) — ${c.titulo || (lang === 'en' ? 'no title in Keepa' : 'sin título en Keepa')}`}
                       style={{ minWidth: 118 }}
                     />
                   ))}
@@ -1700,7 +1711,6 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                             {activo ? (compSort.dir === 'desc' ? '▾' : '▴') : '⇅'}
                           </span>
                         </button>
-                        <Ayuda texto={row.info} />
                       </td>
                       {verMed && (
                         <td className="mkl-num-cell" style={{ opacity: 0.75 }}>
@@ -2162,7 +2172,6 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                       key={c.asin}
                       className="mkl-th-comp rsch-th-comp"
                       label={(c.brand || c.asin).slice(0, 8)}
-                      ayuda={`${c.brand || c.asin} (${c.asin}) — hoy cubre el ${c.share}% del volumen del MKL desde página 1. En la celda va el puesto en el que rankea esa keyword.`}
                       orden={`rank:${c.asin}`}
                       sort={sort}
                       onSort={onSort}
