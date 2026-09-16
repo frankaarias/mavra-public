@@ -1786,12 +1786,14 @@ a {
 
 .mkl-thead .mkl-sticky { z-index: 3; }
 .mkl-th {
-  font-size: 0.54rem;
+  /* La cabecera baja con la fila: si no, la tabla queda con el encabezado
+     desproporcionado sobre datos más chicos. */
+  font-size: 0.5rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(var(--copper-rgb),0.85);
   text-align: center;
-  padding: 0.34rem 0.28rem;
+  padding: 0.24rem 0.28rem;
   border-bottom: 1px solid rgba(var(--copper-rgb),0.35);
   background: var(--surface);
   vertical-align: bottom;
@@ -1848,17 +1850,30 @@ a {
 }
 
 
-.mkl-krow td {
-  padding: 0.16rem 0.4rem;
+/* 🔴 FILA MÁS BAJA Y UN PUNTO MENOS DE LETRA (Frank, 2026-09-16: «reduce el alto
+   de las filas en las tablas y un punto el tamaño de la tipografía»).
+   0,72rem ≈ 11,5px → 0,66rem ≈ 10,6px, que es el punto. El alto baja por las dos
+   vías que lo hacen, no solo por una: el relleno vertical (0,16 → 0,09rem) y el
+   interlineado (1,25 → 1,15). Tocar solo el `font-size` deja la fila igual de
+   alta y da la sensación de que no cambió nada. */
+/* 🔴 EL SELECTOR LLEVA `.mkl-table` DELANTE Y NO ES DECORACIÓN. La hoja del sitio
+   trae `main:not(.case-study) td { font-size: clamp(0.98rem…); line-height: 1.75 }`
+   para los textos de lectura, y ESO le gana a `.mkl-krow td` por especificidad
+   (una clase + dos elementos contra una clase + un elemento).
+   Medido: el `td` calculaba 15,68px de letra y 27,44px de interlineado — o sea
+   que el `font-size` de esta regla NUNCA se aplicó, y lo chico que se veía eran
+   los `span` de dentro. Con `.mkl-table` delante (dos clases) gana esta. */
+.mkl-table .mkl-krow td {
+  padding: 0.09rem 0.4rem;
   border-bottom: 1px solid rgba(var(--copper-rgb),0.08);
-  font-size: 0.72rem;
-  line-height: 1.25;
+  font-size: 0.66rem;
+  line-height: 1.15;
   text-align: center;
   vertical-align: middle;
 }
-.mkl-krow:hover td { background: rgba(var(--copper-rgb),0.06); }
+.mkl-table .mkl-krow:hover td { background: rgba(var(--copper-rgb),0.06); }
 .mkl-krow:hover .mkl-sticky { background: var(--surface); }
-.mkl-kw {
+.mkl-table .mkl-kw {
   font-family: var(--font-sans);
   text-align: left !important;
   padding-left: 0.8rem !important;
@@ -3050,6 +3065,28 @@ main:not(.case-study) h3 {
   font-size: clamp(0.98rem, 1.05vw, 1.14rem) !important;
   line-height: 1.35 !important;
 }
+/* 🔴 LA TABLA DEL MKL SE SALE DE LA ESCALA DE LECTURA, Y ESTO ES LO ÚNICO QUE LO
+   CONSIGUE. El bloque de arriba pone `font-size: clamp(0.98rem…) !important` a
+   TODO `main:not(.case-study) td` — está pensado para documentación larga, no
+   para una tabla de 26 columnas.
+   Medido el 2026-09-16: el `td` calculaba 15,68px de letra y 27,44px de
+   interlineado. O sea que el `font-size` de `.mkl-krow td` NUNCA se aplicó: lo
+   chico que se veía eran los `span` de dentro, y subir la especificidad tampoco
+   alcanzaba porque enfrente hay un `!important`.
+   Por eso esta regla también lo lleva: es la misma arma, con el alcance mínimo.
+   (Frank pidió filas más bajas y un punto menos de letra) */
+.mkl-table .mkl-krow td {
+  font-size: 0.66rem !important;
+  line-height: 1.15 !important;
+}
+.mkl-table .mkl-th {
+  font-size: 0.5rem !important;
+  line-height: 1.2 !important;
+}
+.mkl-table .mkl-kw {
+  font-size: 0.7rem !important;
+}
+
 .reading-surface code,
 main:not(.case-study) code {
   font-size: clamp(0.78rem, 0.88vw, 0.9rem) !important;

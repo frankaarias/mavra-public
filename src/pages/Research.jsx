@@ -1500,13 +1500,12 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
           </button>
         ))}
       </div>
-      {/* Alto fijo de dos renglones. Cada pestaña tiene una descripción de
-          largo distinto, así que la tabla arrancaba más arriba o más abajo según
-          dónde estuvieras — y al cambiar de pestaña saltaba. El texto completo
-          queda en el title. (Frank, 2026-07-31) */}
-      <p className="rsch-tabdesc rsch-tabdesc-fija" title={TAB_DESC[tab === 'Trash' ? 'Descartadas' : tab]}>
-        {TAB_DESC[tab === 'Trash' ? 'Descartadas' : tab]}
-      </p>
+      {/* 🔴 EL PÁRRAFO DE DESCRIPCIÓN DE LA PESTAÑA SALE DE LA PANTALLA (Frank,
+          2026-09-16: «quita los textos que están debajo del selector de tabla»).
+          Ocupaba dos renglones fijos encima de la tabla en todas las pestañas.
+          📌 El texto NO se borra: sigue en `TAB_DESC` y lo lleva la pestaña en su
+          `title`, así que se lee pasando el ratón por encima. Borrarlo habría
+          perdido la única explicación de qué es cada bucket. */}
 
       {/* 🔴 EL CARTEL DE «KEYWORDS MOVIDAS A MANO» SALE DE LA PANTALLA.
           Existía para que quien movía keywords viera que su trabajo quedaba
@@ -2024,18 +2023,10 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             {/* La explicación larga vive en el tooltip y no como párrafo debajo
                 de la barra: ocupaba cuatro renglones fijos para algo que solo
                 importa mientras se mira el modo apagado. (Frank, 2026-07-31) */}
-            <Boton
-              icono={verH10 ? Iconos.EyeOff : Iconos.Eye}
-              activo={!verH10}
-              onClick={() => setVerH10((v) => !v)}
-              titulo={verH10
-                ? T('Ver qué queda del análisis si el usuario no tiene Helium 10 conectado.')
-                : (lang === 'en'
-                  ? `This is how it looks with no Helium 10 connected. ${visCols.filter((c) => tapada(c)).length} of ${visCols.length} columns fall away: its own, and also the AGTA calculations fed by them — KW CVR comes from dividing two Helium 10 columns, and Relevancy and P1 come from its reverse-ASIN. What stays is everything that does not depend on the tool: the keyword, the fit with your product and the price.`
-                  : `Así se ve sin Helium 10 conectado. Se caen ${visCols.filter((c) => tapada(c)).length} de ${visCols.length} columnas: las suyas y también los cálculos de AGTA que se alimentan de ellas — KW CVR sale de dividir dos columnas de Helium 10, y Relevancia y P1 salen de su reverse-ASIN. Queda en pie lo que no depende de la herramienta: la keyword, el fit con tu producto y el precio.`)}
-            >
-              {verH10 ? T('Sin H10') : T('Con H10')}
-            </Boton>
+            {/* ⛔ El botón «Sin H10» salió de la barra (Frank, 2026-09-16). Era una
+                demo: enseñaba qué columnas se caen si el usuario no tiene Helium 10
+                conectado. El interruptor `verH10` se queda —lo usan las columnas y
+                el guardado— con su valor de siempre: TODO a la vista. */}
             <Boton
               icono={Iconos.Tag}
               activo={!verMarcas}
@@ -2052,16 +2043,10 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             >
               {T('Competidores')}
             </Boton>
-            {showComp && (
-              <Boton
-                icono={Iconos.ArrowUpDown}
-                activo={rankMode === 'sponsored'}
-                onClick={() => setRankMode((m) => (m === 'organic' ? 'sponsored' : 'organic'))}
-                titulo={T('Orgánico = dónde rankea gratis · Patrocinado = en qué puesto aparece pagando')}
-              >
-                {rankMode === 'organic' ? T('Orgánico') : T('Pagado')}
-              </Boton>
-            )}
+            {/* ⛔ El botón «Orgánico / Pagado» salió de la barra (Frank, 2026-09-16).
+                `rankMode` se queda en `organic`, que es dónde rankea cada competidor
+                sin pagar — que es la pregunta que responde esta tabla. Los ranks
+                patrocinados siguen en el dato (`sranks`) por si vuelve. */}
             {(kwOrden || kwHid.size > 0 || !verH10) && (
               <Boton
                 icono={Iconos.RotateCcw}
