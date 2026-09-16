@@ -2081,7 +2081,7 @@ a {
   .rsch-prodtab { min-width: 0; flex: 1; }
 }
 
-.rsch-tabs { display: inline-flex; border: 1px solid rgba(var(--copper-rgb),0.4); margin-bottom: 0.6rem; flex-wrap: wrap; }
+.rsch-tabs { display: inline-flex; border: 1px solid rgba(var(--copper-rgb),0.4); margin-bottom: 0.6rem; flex-wrap: wrap; vertical-align: middle; }
 .rsch-tab { font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 0.9rem; background: transparent; color: rgba(var(--fg-rgb),0.6); cursor: pointer; border: none; border-right: 1px solid rgba(var(--copper-rgb),0.3); }
 .rsch-tab:last-child { border-right: none; }
 .rsch-tab:hover { color: var(--fg); }
@@ -2116,7 +2116,16 @@ a {
 .rsch-foot-fold[open] > summary::before { content: '▾ '; }
 .rsch-foot-fold > summary:hover { color: var(--fg); }
 .rsch-foot-fold .rsch-foot { margin-top: 0.5rem; }
-.rsch-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem; }
+/* 🔑 LA BARRA VA EN LA MISMA LINEA QUE LAS PESTAÑAS (Frank, 2026-09-16: «esto a
+   una sola línea»). Las dos son `inline-flex` y en el DOM son hermanas
+   consecutivas —entre ellas no queda nada desde que salio el parrafo de
+   descripcion—, asi que con eso solo se acuestan juntas. Sin envolver nada, sin
+   mover la barra de sitio en el JSX: cada pestaña sigue renderizando la suya con
+   sus propios controles. */
+.rsch-bar {
+  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+  margin: 0 0 0.8rem 0.5rem; vertical-align: middle;
+}
 
 .rsch-bar > * { flex: 0 0 auto; }
 .rsch-bar .rsch-search { margin-bottom: 0; }
@@ -2605,7 +2614,9 @@ th .rsch-opts-btn { width: 100%; }
 
 
 .rsch-tabdesc { min-height: 3.4rem; }
-.rsch-bar { min-height: 2.4rem; }
+/* el min-height se quita: con la barra en la misma linea que las pestañas,
+   reservar 2,4rem dejaba un escalon debajo de la fila. */
+.rsch-bar { min-height: 0; }
 
 .rsch-tab-n { display: inline-block; min-width: 2.6em; text-align: right; }
 .rsch-tabs { min-height: 2.1rem; }
