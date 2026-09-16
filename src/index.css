@@ -1983,6 +1983,63 @@ a {
 .rsch-stat { border: 1px solid rgba(var(--copper-rgb),0.3); padding: 0.7rem 1.1rem; min-width: 110px; }
 .rsch-stat b { display: block; font-family: var(--font-sans); font-variant-numeric: tabular-nums; font-size: 1.4rem; color: rgba(var(--copper-bright-rgb),0.95); }
 .rsch-stat span { font-family: var(--font-sans); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(var(--fg-rgb),0.6); }
+/* ── Header de la sección: QUÉ producto se está mirando ───────────────────
+   Antes era una línea de 12px con el rótulo «Producto:», tres botones de tres
+   letras y el nombre al final, todo del mismo peso: para saber qué estabas
+   viendo había que traducir «LMP» de memoria. Ahora el nombre manda, el código
+   es una insignia y cada botón dice a qué producto lleva.
+   Frank, 2026-09-16: «mejora el header de esa sección, la selección del
+   producto con el nombre del mismo». */
+.rsch-prodbar {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  /* 🔴 Los 16px laterales son los MISMOS que `.rsch`: este header vive FUERA de
+     ese contenedor —es hermano del panel, no hijo— así que sin ellos arrancaba
+     pegado al borde izquierdo y el tercer botón se cortaba contra el derecho.
+     Con la barra vieja pasaba igual: el rótulo se leía «roduct:». */
+  gap: 1rem; padding: 0.9rem 1rem 0.8rem; margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(var(--copper-rgb),0.28);
+}
+.rsch-prodbar-rotulo {
+  display: block; font-family: var(--font-sans); font-size: 0.58rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--copper-rgb),0.9);
+}
+.rsch-prodbar-nombre {
+  display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap;
+  font-family: var(--font-sans); font-size: 1.5rem; font-weight: 600; line-height: 1.15;
+  color: var(--fg); margin: 0.28rem 0 0;
+  /* El h2 de la marca va en mayúsculas y con tracking; aquí adentro no: es la
+     misma regla que ya rige pestañas y cabeceras de esta página. */
+  text-transform: none; letter-spacing: normal;
+}
+.rsch-prodbar-sku {
+  font-size: 0.62rem; letter-spacing: 0.1em; padding: 0.2rem 0.45rem;
+  border: 1px solid rgba(var(--copper-rgb),0.5); color: rgba(var(--copper-bright-rgb),0.95);
+  font-variant-numeric: tabular-nums;
+}
+.rsch-prodbar-meta {
+  font-family: var(--font-sans); font-size: 0.75rem; color: rgba(var(--fg-rgb),0.62);
+  margin: 0.35rem 0 0; font-variant-numeric: tabular-nums;
+}
+.rsch-prodsel { display: inline-flex; flex-wrap: wrap; border: 1px solid rgba(var(--copper-rgb),0.4); }
+.rsch-prodtab {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0.1rem;
+  min-width: 7.5rem; padding: 0.45rem 0.8rem; text-align: left; cursor: pointer;
+  font-family: var(--font-sans); background: transparent; color: rgba(var(--fg-rgb),0.6);
+  border: none; border-right: 1px solid rgba(var(--copper-rgb),0.3);
+}
+.rsch-prodtab:last-child { border-right: none; }
+.rsch-prodtab:hover { color: var(--fg); }
+.rsch-prodtab.active { background: rgba(var(--copper-bright-rgb),0.18); color: var(--fg); }
+.rsch-prodtab-nombre { font-size: 0.8rem; }
+.rsch-prodtab-sku { font-size: 0.58rem; letter-spacing: 0.1em; color: rgba(var(--copper-rgb),0.9); }
+/* En móvil el nombre grande y tres botones de 7,5rem no entran en una fila. */
+@media (max-width: 680px) {
+  .rsch-prodbar { align-items: flex-start; }
+  .rsch-prodbar-nombre { font-size: 1.2rem; }
+  .rsch-prodsel { width: 100%; }
+  .rsch-prodtab { min-width: 0; flex: 1; }
+}
+
 .rsch-tabs { display: inline-flex; border: 1px solid rgba(var(--copper-rgb),0.4); margin-bottom: 0.6rem; flex-wrap: wrap; }
 .rsch-tab { font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 0.9rem; background: transparent; color: rgba(var(--fg-rgb),0.6); cursor: pointer; border: none; border-right: 1px solid rgba(var(--copper-rgb),0.3); }
 .rsch-tab:last-child { border-right: none; }

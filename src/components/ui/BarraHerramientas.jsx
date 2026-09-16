@@ -39,7 +39,13 @@ export function Boton({ icono: Icono, titulo, activo, onClick, children }) {
 // Ancho propio, no `flex-1`: la barra tiene `flex-wrap`, así que un buscador
 // elástico se comía la fila entera y empujaba todo lo demás abajo. Se lleva el
 // lugar más visible, pero no todo.
-export function Buscador({ valor, onChange }) {
+//
+// ⚠️ Los dos textos llegan por PROP, con el castellano de respaldo: este
+// componente es de `components/ui` y no conoce el idioma de la página. Estaban
+// clavados en castellano y se veían así con la página entera en inglés — un
+// placeholder no es un estado vacío, está siempre a la vista, y aun así pasó
+// nueve revisiones. (2026-09-16)
+export function Buscador({ valor, onChange, placeholder = 'Buscar keyword…', ayuda }) {
   return (
     <span className="relative flex w-[260px] max-w-full items-center">
       <Search size={13} strokeWidth={1.75} aria-hidden="true"
@@ -47,8 +53,9 @@ export function Buscador({ valor, onChange }) {
       <input
         type="search"
         className="rsch-search h-[26px] w-full !pl-[1.6rem]"
-        placeholder="Buscar keyword…"
-        title={'Varias palabras: coma = o, más = y, guion adelante = saca.\n\ngoth, decor\ngoth + decor\n-witch'}
+        placeholder={placeholder}
+        aria-label={placeholder}
+        title={ayuda ?? 'Varias palabras: coma = o, más = y, guion adelante = saca.\n\ngoth, decor\ngoth + decor\n-witch'}
         value={valor}
         onChange={(e) => onChange(e.target.value)}
       />

@@ -271,6 +271,34 @@ export const EN = {
   'orgánicos': 'organic',
   patrocinados: 'sponsored',
   Competidores: 'Competitors',
+
+  // ── Header de producto ─────────────────────────────────────────────
+  'Producto analizado': 'Product analysed',
+  'keywords analizadas': 'keywords analysed',
+  'Elegir producto': 'Choose product',
+
+  // ── Filtros y buscador ───────────────────────────────────────────
+  // El rótulo de un filtro SIN filtro puesto («Todos») está en pantalla todo el
+  // tiempo, en cada columna. Se quedó en castellano nueve revisiones porque
+  // nadie mira un desplegable cerrado. (2026-09-16)
+  Todos: 'All',
+  Todas: 'All',
+  Cualquiera: 'Any',
+  Sin: 'Without',
+  palabras: 'words',
+  'Ahora las saca. Clic para volver a pedirla.': 'It now excludes them. Click to ask for it again.',
+  'Ahora la pide. Clic para sacarla.': 'It now asks for it. Click to exclude it.',
+  'Basta con que tenga una de las palabras': 'Having one of the words is enough',
+  'Tiene que tenerlas todas': 'It has to have them all',
+  valores: 'values',
+  'Filtrar por': 'Filter by',
+  Desde: 'From',
+  Hasta: 'To',
+  'Mín': 'Min',
+  'Máx': 'Max',
+  'Buscar keyword…': 'Search keyword…',
+  'Varias palabras: coma = o, más = y, guion adelante = saca.\n\ngoth, decor\ngoth + decor\n-witch':
+    'Several words: comma = or, plus = and, leading dash = exclude.\n\ngoth, decor\ngoth + decor\n-witch',
 }
 
 

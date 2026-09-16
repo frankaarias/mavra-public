@@ -573,9 +573,11 @@ function FiltroOpciones({ campo, etiqueta, valor, onChange, opciones }) {
   const tr = (t) => traducir(t, lang)
   const sel = Array.isArray(valor) ? valor : []
   const alternar = (v) => onChange(campo, sel.includes(v) ? sel.filter((x) => x !== v) : [...sel, v])
-  const texto = sel.length === 0 ? 'Todos' : sel.length === 1 ? sel[0] : `${sel.length} valores`
+  // ⚠️ El rótulo del botón se ve SIEMPRE, con filtro o sin él: era lo primero
+  // que delataba la página en castellano estando en inglés. (2026-09-16)
+  const texto = sel.length === 0 ? tr('Todos') : sel.length === 1 ? sel[0] : `${sel.length} ${tr('valores')}`
   return (
-    <MenuRadix boton={<>{texto} <span aria-hidden="true">▾</span></>} etiqueta={`Filtrar por ${etiqueta}`} activo={sel.length > 0}>
+    <MenuRadix boton={<>{texto} <span aria-hidden="true">▾</span></>} etiqueta={`${tr('Filtrar por')} ${etiqueta}`} activo={sel.length > 0}>
       {opciones.map((o) => (
         <label key={o} className="rsch-opts-item">
           <input type="checkbox" checked={sel.includes(o)} onChange={() => alternar(o)} />
@@ -641,9 +643,9 @@ function FiltroPalabras({ campo, etiqueta, valor, onChange }) {
   const borrar = (s) => emitir({ modo, incluye: inc.filter((x) => x !== s), excluye: exc.filter((x) => x !== s) })
 
   const total = inc.length + exc.length
-  const boton = total === 0 ? 'Todas'
-    : total === 1 ? (inc[0] || `Sin ${exc[0]}`)
-    : `${total} palabras`
+  const boton = total === 0 ? tr('Todas')
+    : total === 1 ? (inc[0] || `${tr('Sin')} ${exc[0]}`)
+    : `${total} ${tr('palabras')}`
 
   /** Una palabra puesta. Se clickea para invertirla; la × solo aparece encima. */
   const Etiqueta = ({ s, saca }) => (
@@ -655,7 +657,7 @@ function FiltroPalabras({ campo, etiqueta, valor, onChange }) {
         type="button"
         onClick={() => alternar(s)}
         className={`bg-transparent p-0 text-inherit ${saca ? 'line-through' : ''}`}
-        title={saca ? 'Ahora las saca. Clic para volver a pedirla.' : 'Ahora la pide. Clic para sacarla.'}
+        title={saca ? tr('Ahora las saca. Clic para volver a pedirla.') : tr('Ahora la pide. Clic para sacarla.')}
       >
         {s}
       </button>
@@ -680,7 +682,7 @@ function FiltroPalabras({ campo, etiqueta, valor, onChange }) {
   )
 
   return (
-    <MenuRadix boton={<>{boton} <span aria-hidden="true">&#9662;</span></>} etiqueta={`Filtrar por ${etiqueta}`} activo={total > 0} ancho="min-w-[212px]">
+    <MenuRadix boton={<>{boton} <span aria-hidden="true">&#9662;</span></>} etiqueta={`${tr('Filtrar por')} ${etiqueta}`} activo={total > 0} ancho="min-w-[212px]">
       {/* Escribir y Enter. El signo + a la derecha está para que se entienda que
           suma una más y no reemplaza a la anterior. */}
       <div className="flex items-center border border-copper/40 bg-bg/60 focus-within:border-copper-bright/80">
@@ -705,12 +707,12 @@ function FiltroPalabras({ campo, etiqueta, valor, onChange }) {
 
       {inc.length > 1 && (
         <div className="mt-[0.45rem] flex overflow-hidden border border-copper/30 text-[0.6rem] normal-case tracking-normal">
-          {[['alguna', 'Cualquiera'], ['todas', 'Todas']].map(([k, rot]) => (
+          {[['alguna', tr('Cualquiera')], ['todas', tr('Todas')]].map(([k, rot]) => (
             <button
               key={k}
               type="button"
               onClick={() => emitir({ modo: k, incluye: inc, excluye: exc })}
-              title={k === 'alguna' ? 'Basta con que tenga una de las palabras' : 'Tiene que tenerlas todas'}
+              title={k === 'alguna' ? tr('Basta con que tenga una de las palabras') : tr('Tiene que tenerlas todas')}
               className={`flex-1 px-[0.3rem] py-[0.18rem] ${modo === k ? 'bg-copper-bright/20 text-fg' : 'bg-transparent text-fg/45 hover:text-fg/75'}`}
             >
               {rot}
@@ -751,11 +753,11 @@ function FiltroNumerico({ campo, etiqueta, valor, onChange }) {
   const texto = v.min !== undefined && v.max !== undefined ? `${miles(v.min)}–${miles(v.max)}`
     : v.min !== undefined ? `≥ ${miles(v.min)}`
     : v.max !== undefined ? `≤ ${miles(v.max)}`
-    : 'Todos'
+    : tr('Todos')
   return (
-    <MenuRadix boton={<>{texto} <span aria-hidden="true">▾</span></>} etiqueta={`Filtrar por ${etiqueta}`} activo={puesto}>
+    <MenuRadix boton={<>{texto} <span aria-hidden="true">▾</span></>} etiqueta={`${tr('Filtrar por')} ${etiqueta}`} activo={puesto}>
       <div className="flex gap-[0.45rem]">
-        {[['min', 'Desde', 'Mín'], ['max', 'Hasta', 'Máx']].map(([k, rot, ph]) => (
+        {[['min', tr('Desde'), tr('Mín')], ['max', tr('Hasta'), tr('Máx')]].map(([k, rot, ph]) => (
           <label key={k} className="flex flex-1 flex-col gap-[0.18rem] text-micro uppercase tracking-[0.08em] text-copper/85">
             <span>{rot}</span>
             <input
@@ -826,35 +828,62 @@ function useSorter(inicial) {
   return [sort, onSort, setSort]
 }
 
+/**
+ * El nombre del producto para leer, sin el prefijo de marca ni el código.
+ *
+ * El dataset lo trae como «MAVRA Skull Lamp (LMP)». La marca es la misma en los
+ * tres —no distingue— y el código ya va en su propia insignia al lado, así que
+ * repetirlo dentro del nombre lo hace más largo sin decir nada nuevo.
+ */
+const nombreDe = (p) => DATASETS[p].meta.product
+  .replace(/^MAVRA\s+/i, '')
+  .replace(/\s*\([A-Z]{2,4}\)\s*$/, '')
+
 // Selector de producto: cada MKL es un dive independiente, así que al cambiar de
 // producto se remonta el panel entero (key={prod}) y los buckets arrancan limpios.
 export default function Research() {
   const [lang] = useMavraLanguage()
   const tr = (t) => traducir(t, lang)
   const [prod, setProd] = useState('LMP')
+  const meta = DATASETS[prod].meta
   return (
     <>
-      <div className="rsch-prodbar" style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '10px 0' }}>
-        <span style={{ opacity: 0.6, fontSize: 12 }}>{tr('Producto:')}</span>
-        {Object.keys(DATASETS).map((p) => (
-          <button
-            key={p}
-            onClick={() => setProd(p)}
-            // `is-active` no existía en el CSS —la clase es `active`— así que el
-            // selector NUNCA se veía marcado. Frank trabajó 678 correcciones en
-            // CND creyendo que estaba en LMP. Un typo de una palabra.
-            // (2026-07-31)
-            className={p === prod ? 'rsch-tab active' : 'rsch-tab'}
-            title={DATASETS[p].meta.product}
-          >
-            {p}
-          </button>
-        ))}
-        <span className="ml-[0.4rem] text-[0.78rem] font-semibold text-fg">
-          {DATASETS[prod].meta.product}
-        </span>
-        <span style={{ opacity: 0.45, fontSize: 12 }}>· {DATASETS[prod].meta.n_comp} {tr('competidores')}</span>
-      </div>
+      {/* 🔴 El nombre del producto manda, y el código es una insignia.
+          Antes esto era una línea de 12px donde «MAVRA Skull Lamp (LMP)» iba al
+          final, del mismo tamaño que el resto, y los botones decían solo LMP /
+          CND / SWD: para saber qué estabas mirando había que traducir un código
+          de tres letras de memoria. Frank, 2026-09-16: «mejora el header de esa
+          sección, la selección del producto con el nombre del mismo». */}
+      <header className="rsch-prodbar">
+        <div className="rsch-prodbar-id">
+          <span className="rsch-prodbar-rotulo">{tr('Producto analizado')}</span>
+          <h2 className="rsch-prodbar-nombre">
+            {nombreDe(prod)}
+            <span className="rsch-prodbar-sku">{prod}</span>
+          </h2>
+          <p className="rsch-prodbar-meta">
+            {meta.n_comp} {tr('competidores')} · {miles(meta.total)} {tr('keywords analizadas')}
+          </p>
+        </div>
+        <div className="rsch-prodsel" role="group" aria-label={tr('Elegir producto')}>
+          {Object.keys(DATASETS).map((p) => (
+            <button
+              key={p}
+              onClick={() => setProd(p)}
+              // `is-active` no existía en el CSS —la clase es `active`— así que el
+              // selector NUNCA se veía marcado. Frank trabajó 678 correcciones en
+              // CND creyendo que estaba en LMP. Un typo de una palabra.
+              // (2026-07-31)
+              className={p === prod ? 'rsch-prodtab active' : 'rsch-prodtab'}
+              aria-pressed={p === prod}
+              title={DATASETS[p].meta.product}
+            >
+              <span className="rsch-prodtab-nombre">{nombreDe(p)}</span>
+              <span className="rsch-prodtab-sku">{p}</span>
+            </button>
+          ))}
+        </div>
+      </header>
       <ResearchPanel key={prod} prod={prod} data={DATASETS[prod]} ukl={UKL[prod]} />
     </>
   )
@@ -1982,7 +2011,12 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
       ) : (
         <>
           <div className="rsch-bar">
-            <Buscador valor={q} onChange={setQ} />
+            <Buscador
+              valor={q}
+              onChange={setQ}
+              placeholder={T('Buscar keyword…')}
+              ayuda={T('Varias palabras: coma = o, más = y, guion adelante = saca.\n\ngoth, decor\ngoth + decor\n-witch')}
+            />
             <MenuColumnas fija={T('Keyword')} opciones={kwOpciones} ocultas={kwHid} setOcultas={setKwHid} />
             {/* Los interruptores: mismo tamaño, solo ícono, y el estado se ve
                 encendido. Antes eran botones de texto corrido que competían con
