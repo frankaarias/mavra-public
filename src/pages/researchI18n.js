@@ -212,7 +212,7 @@ export const EN = {
   violeta: 'violet',
   'volver al MKL': 'back to the MKL',
   'ver descartadas': 'see discarded',
-  'sin H10': 'no H10',
+  'sin herramienta': 'no tool',
   'Este dato lo trae la herramienta de keywords: sin ella conectada, no está.':
     'This figure comes from the keyword tool: without it connected, it is not there.',
   'Sin dueño: 2 competidores o menos y es de tu producto':
@@ -264,8 +264,8 @@ export const EN = {
   UKL: 'UKL',
   Negatives: 'Negatives',
   Trash: 'Discarded',
-  'Sin herramienta': 'No H10',
-  'Con herramienta': 'With H10',
+  'Sin herramienta': 'Tool off',
+  'Con herramienta': 'Tool on',
   'Ver qué queda del análisis sin la herramienta de keywords conectada.':
     'See what is left of the analysis if the user has no keyword tool connected.',
   'orgánicos': 'organic',
@@ -273,7 +273,7 @@ export const EN = {
   Competidores: 'Competitors',
 
   // ── Header de producto ─────────────────────────────────────────────
-  'Producto analizado': 'Product analysed',
+  PRODUCTO: 'PRODUCT',
   'keywords analizadas': 'keywords analysed',
   'Elegir producto': 'Choose product',
 

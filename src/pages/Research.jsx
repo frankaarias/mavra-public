@@ -113,7 +113,7 @@ const INFO_I18N = {
   use_GK: `Generic Keywords, los search terms del backend — ${USAGE_AYUDA}`,
   use_IH: `Item Highlight, el campo de 125 caracteres que Amazon muestra bajo el título cuando el título baja de 75 — ${USAGE_AYUDA}`,
   kw: 'Keyword — el término tal como lo escribe el comprador en Amazon. · dato de mercado',
-  root: 'Root — la raíz que agrupa la familia de la keyword: goth y gothic caen en la misma. Sirve para no armar tres campañas de lo mismo. · cálculo AGTA',
+  root: 'Root — la raíz que agrupa una familia de keywords: las variantes de una misma palabra caen juntas. Evita armar tres campañas de lo mismo. · cálculo AGTA',
   vol: 'Vol — búsquedas mensuales del término. · dato de mercado',
   sales: 'Vtas — unidades que el mercado vende por ese término. Es la demanda que efectivamente se convierte en compra. · dato de mercado',
   rel: `Relevancy % — qué proporción de tus competidores está en página 1 de ese término. · cálculo AGTA`,
@@ -125,11 +125,11 @@ const INFO_I18N = {
   idn: 'IDN — demanda capturable: volumen × fit. Ordena por lo que te puedes llevar, no por lo que se busca. · cálculo AGTA',
   td: 'TD — cuántos del top usan la keyword en el TÍTULO. Bajo = título libre, más fácil de ganar. · dato de mercado',
   cp: 'CP — cuántos productos compiten por ese término. · dato de mercado',
-  tier: 'Tier — qué tan tuya es la keyword. CORE: nombra tu producto, la forma y el tipo. SECONDARY: es del tipo de producto pero no exactamente el tuyo. LONG-TAIL: el resto. El volumen ordena, no decide. · cálculo AGTA',
+  tier: 'Tier — qué tan tuya es la keyword. CORE nombra tu producto; SECONDARY es del tipo pero no el tuyo; LONG-TAIL, el resto. · cálculo AGTA',
   prio: 'Prio — P1, P2 o P3 por demanda capturable. Es el orden en que se atacan en el lanzamiento. · cálculo AGTA',
   match: 'Match sugerido para PPC. Si la keyword ya es específica va exact; si encabeza una familia grande, phrase; si es la cabecera con volumen, broad. · cálculo AGTA',
-  cuando: 'Cuándo se puede atacar, solo para las de la UKL. AHORA: el producto la satisface y el hueco está abierto (title density baja). DESPUES: la satisface pero el hueco está cerrado, o es estacional y no es el posicionamiento. NO: no se puja. · cálculo AGTA',
-  para: 'Para qué sirve, solo para las de la UKL. VENDER: este producto puede satisfacer esa búsqueda. TARGET: la satisface un hermano — no se puja, se targetea su página. CATALOGO: es decoración del nicho que MAVRA no fabrica con ninguno de los tres SKU; no se puja hoy, se lee como demanda para el próximo producto. AUDIENCIA: dice quién es el cliente, no qué comprar — ropa, joyería, cosplay. · cálculo AGTA',
+  cuando: 'Cuándo se puede atacar, solo en la UKL. AHORA: la satisfaces y el hueco está abierto. DESPUES: el hueco está cerrado o es de temporada. NO: no se puja. · cálculo AGTA',
+  para: 'Para qué sirve, solo en la UKL. VENDER: tu producto satisface esa búsqueda. TARGET: la satisface un hermano de tu catálogo — se targetea su página en vez de pujar. CATALOGO: demanda del nicho que hoy no fabricas. AUDIENCIA: dice quién es el cliente, no qué comprar. · cálculo AGTA',
   serp: 'SERP — flags de la página de resultados: SBV = Sponsored Brand Video · AC = Amazon’s Choice · SP = Sponsored Product. Se puede filtrar escribiendo SBV, AC o SP.',
   root_root: 'Root — palabra o frase que se repite en el núcleo. Si aparece en una sola keyword no es un root. Cada root es una campaña de PPC, y se ataca de a uno por vez. · cálculo AGTA',
   root_frec: 'Frecuencia — en cuántas keywords del MKL de ahora aparece este root. Se recalcula cuando mueves keywords entre buckets.',
@@ -142,10 +142,10 @@ const INFO_I18N = {
   comp_med: 'Mediana del nicho — la mitad de los competidores está por encima de este valor y la otra mitad por debajo. Es la vara para leer si un número es alto o bajo acá adentro.',
   // Las tres señales. Ninguna herramienta del mercado las trae: dicen si la
   // keyword se compra, si es de temporada y si ahí cobran lo que cobras tú.
-  compra_mil: 'KW CVR — qué porcentaje de las búsquedas de ese término termina en compra. Es del MERCADO, no tuyo: una keyword puede convertir mal y tu ficha estar perfecta. Sale de dividir las ventas del término por su volumen. Se lee contra la mediana del nicho. · cálculo AGTA sobre datos de mercado',
+  compra_mil: 'KW CVR — qué parte de las búsquedas de ese término termina en compra. Es del MERCADO, no tuyo: se lee contra la mediana del nicho. · cálculo AGTA sobre datos de mercado',
   trend: 'Tendencia — cómo se mueve el volumen. Arriba de +80% es una keyword de TEMPORADA: si tu producto es de año redondo, ese volumen no es tuyo aunque sea enorme.',
-  price_fit: 'Precio — precio POR UNIDAD mediano de los que rankean ahí ÷ el precio que tengas escrito arriba. Debajo de 60% ahí compran mucho más barato (otro comprador); arriba de 160% cobran más que tú y podrías subir.',
-  veredicto: 'Eval — las señales en una palabra, con el nombre del KPI que la disparó. ATACAR: precio y conversión en rango. PRECIO SUPERIOR / PRECIO INFERIOR: el precio promedio de quienes rankean el término está por encima o por debajo del tuyo. CVR BAJO: el KW CVR está muy por debajo de la mediana del nicho. ESTACIONAL: el volumen se dispara en una época. Pasa el mouse sobre el valor para ver el número.',
+  price_fit: 'Precio — precio mediano POR UNIDAD de quienes rankean ahí frente al tuyo. Debajo de 60% compran mucho más barato; arriba de 160% cobran más que tú.',
+  veredicto: 'Eval — la señal en una palabra: ATACAR, PRECIO SUPERIOR, PRECIO INFERIOR, CVR BAJO o ESTACIONAL. Pasa el ratón por el valor para ver el número que la disparó.',
   },
   en: {
     use_T: `Title — ${USAGE_AYUDA_EN}`,
@@ -154,7 +154,7 @@ const INFO_I18N = {
     use_GK: `Generic Keywords, the backend search terms — ${USAGE_AYUDA_EN}`,
     use_IH: `Item Highlight, the 125-character field Amazon shows under the title when the title drops below 75 — ${USAGE_AYUDA_EN}`,
     kw: 'Keyword — the term exactly as a shopper types it on Amazon. · market data',
-    root: 'Root — the stem that groups the keyword family: goth and gothic fall into the same one. It keeps you from building three campaigns for the same thing. · AGTA calculation',
+    root: 'Root — the stem that groups a keyword family: variants of the same word fall together. Keeps you from building three campaigns for one thing. · AGTA calculation',
     vol: 'Vol — monthly searches for the term. · market data',
     sales: 'Sales — units the market sells through that term. It is the demand that actually turns into a purchase. · market data',
     rel: `Relevancy % — what share of your competitors sits on page one for that term. · AGTA calculation`,
@@ -163,11 +163,11 @@ const INFO_I18N = {
     idn: 'IDN — capturable demand: volume × fit. It sorts by what you can take, not by what gets searched. · AGTA calculation',
     td: 'TD — how many of the top listings use the keyword in their TITLE. Low = the title is free, easier to win. · market data',
     cp: 'CP — how many products compete for that term. · market data',
-    tier: 'Tier — how much the keyword is yours. CORE: it names your product, its form and its type. SECONDARY: it is the product type but not exactly yours. LONG-TAIL: everything else. Volume sorts, it does not decide. · AGTA calculation',
+    tier: 'Tier — how much the keyword is yours. CORE names your product; SECONDARY is the type but not yours; LONG-TAIL, the rest. · AGTA calculation',
     prio: 'Prio — P1, P2 or P3 by capturable demand. It is the order you attack them in at launch. · AGTA calculation',
     match: 'Suggested PPC match type. If the keyword is already specific it goes exact; if it heads a large family, phrase; if it is the head term with volume, broad. · AGTA calculation',
-    cuando: 'When it can be attacked, UKL keywords only. NOW: the product satisfies it and the gap is open (low title density). LATER: it satisfies it but the gap is closed, or it is seasonal and not the positioning. NO: do not bid. · AGTA calculation',
-    para: 'What it is good for, UKL keywords only. SELL: this product can satisfy that search. TARGET: a sibling satisfies it — do not bid, target its page instead. CATALOG: it is niche decor MAVRA does not make with any of the three SKUs; no bidding today, read it as demand for the next product. AUDIENCE: it tells you who the customer is, not what to buy — clothing, jewellery, cosplay. · AGTA calculation',
+    cuando: 'When to attack it, UKL only. NOW: you satisfy it and the gap is open. LATER: the gap is closed or it is seasonal. NO: do not bid. · AGTA calculation',
+    para: 'What it is good for, UKL only. SELL: your product satisfies that search. TARGET: a sibling does — target its page instead of bidding. CATALOG: niche demand you do not make today. AUDIENCE: tells you who the buyer is, not what to sell. · AGTA calculation',
     serp: 'SERP — result-page flags: SBV = Sponsored Brand Video · AC = Amazon’s Choice · SP = Sponsored Product. You can filter by typing SBV, AC or SP.',
     root_root: 'Root — a word or phrase that repeats across the core. If it shows up in a single keyword it is not a root. Each root is a PPC campaign, and you attack them one at a time. · AGTA calculation',
     root_frec: 'Frequency — in how many keywords of the current MKL this root appears. It recalculates when you move keywords between buckets.',
@@ -178,10 +178,10 @@ const INFO_I18N = {
     norm_n: 'Variants — how many MKL keywords collapsed into this form. If it says 3, there are 3 ways of writing the same thing that in PPC bid against each other and push your CPC up: run one.',
     comp_metrica: 'Each row is one competitor metric. Click the row name to sort the columns by that metric.',
     comp_med: 'Niche median — half the competitors sit above this value and half below. It is the yardstick for reading whether a number is high or low in here.',
-    compra_mil: 'KW CVR — what percentage of searches for that term ends in a purchase. It belongs to the MARKET, not to you: a keyword can convert badly while your listing is perfect. It comes from dividing the term’s sales by its volume. Read it against the niche median. · AGTA calculation over market data',
+    compra_mil: 'KW CVR — how many of that term’s searches end in a purchase. It belongs to the MARKET, not to you: read it against the niche median. · AGTA calculation over market data',
     trend: 'Trend — how the volume moves. Above +80% it is a SEASONAL keyword: if your product sells year-round, that volume is not yours however large it looks.',
-    price_fit: 'Price — median PER-UNIT price of those ranking there ÷ the price you typed above. Below 60% they buy much cheaper there (a different shopper); above 160% they charge more than you and you could raise.',
-    veredicto: 'Eval — the signals in one word, with the name of the KPI that triggered it. ATTACK: price and conversion in range. PRICE ABOVE / PRICE BELOW: the average price of those ranking for the term sits above or below yours. LOW CVR: the KW CVR is far under the niche median. SEASONAL: volume spikes in one season. Hover the value to see the number.',
+    price_fit: 'Price — median PER-UNIT price of those ranking there against yours. Below 60% they buy far cheaper; above 160% they charge more than you.',
+    veredicto: 'Eval — the signal in one word: ATTACK, PRICE ABOVE, PRICE BELOW, LOW CVR or SEASONAL. Hover the value to see the number behind it.',
   },
 }
 
@@ -866,7 +866,7 @@ export default function Research() {
           sección, la selección del producto con el nombre del mismo». */}
       <header className="rsch-prodbar">
         <div className="rsch-prodbar-id">
-          <span className="rsch-prodbar-rotulo">{tr('Producto analizado')}</span>
+          <span className="rsch-prodbar-rotulo">{tr('PRODUCTO')}</span>
           <h2 className="rsch-prodbar-nombre">
             {nombreDe(prod)}
             <span className="rsch-prodbar-sku">{prod}</span>
@@ -2225,7 +2225,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                         title={typeof r[c.k] === 'string' ? r[c.k] : undefined}
                       >
                         {tapada(c) ? (
-                          <span className="mkl-tapada" title={T('Este dato lo trae la herramienta de keywords: sin ella conectada, no está.')}>{T('sin H10')}</span>
+                          <span className="mkl-tapada" title={T('Este dato lo trae la herramienta de keywords: sin ella conectada, no está.')}>{T('sin herramienta')}</span>
                         ) : c.k === 'kw' ? (
                           // el texto completo queda en el title: la celda puede cortar
                           <span title={r.kw}>{r.kw}</span>
