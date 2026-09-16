@@ -2617,15 +2617,15 @@ th .rsch-opts-btn { width: 100%; }
 
 
 .mkl-th[data-origen='agta'] { background: rgba(255,230,0,0.11); }
-.mkl-th[data-origen='h10'] { background: rgba(96,165,250,0.11); }
+.mkl-th[data-origen='mercado'] { background: rgba(96,165,250,0.11); }
 .mkl-krow td[data-origen='agta'] { background: rgba(255,230,0,0.035); }
-.mkl-krow td[data-origen='h10'] { background: rgba(96,165,250,0.035); }
+.mkl-krow td[data-origen='mercado'] { background: rgba(96,165,250,0.035); }
 
 .rsch-full .mkl-thead th[data-origen='agta'] {
   background-color: var(--surface);
   background-image: linear-gradient(rgba(255,230,0,0.13), rgba(255,230,0,0.13));
 }
-.rsch-full .mkl-thead th[data-origen='h10'] {
+.rsch-full .mkl-thead th[data-origen='mercado'] {
   background-color: var(--surface);
   background-image: linear-gradient(rgba(96,165,250,0.13), rgba(96,165,250,0.13));
 }

@@ -109,19 +109,19 @@ const INFO_I18N = {
   use_D: `Descripción — ${USAGE_AYUDA}`,
   use_GK: `Generic Keywords, los search terms del backend — ${USAGE_AYUDA}`,
   use_IH: `Item Highlight, el campo de 125 caracteres que Amazon muestra bajo el título cuando el título baja de 75 — ${USAGE_AYUDA}`,
-  kw: 'Keyword — el término tal como lo escribe el comprador en Amazon. · Helium 10',
+  kw: 'Keyword — el término tal como lo escribe el comprador en Amazon. · dato de mercado',
   root: 'Root — la raíz que agrupa la familia de la keyword: goth y gothic caen en la misma. Sirve para no armar tres campañas de lo mismo. · cálculo AGTA',
-  vol: 'Vol — búsquedas mensuales del término. · Helium 10',
-  sales: 'Vtas — unidades que el mercado vende por ese término. Es la demanda que efectivamente se convierte en compra. · Helium 10',
+  vol: 'Vol — búsquedas mensuales del término. · dato de mercado',
+  sales: 'Vtas — unidades que el mercado vende por ese término. Es la demanda que efectivamente se convierte en compra. · dato de mercado',
   rel: `Relevancy % — qué proporción de tus competidores está en página 1 de ese término. · cálculo AGTA`,
   // Había dos claves `p1` en este objeto: la segunda pisaba a la primera, así que
   // el texto corto ("Es la base del Relevancy") no se mostró nunca. Se conserva la
   // que se venía viendo y se le suma esa frase, que era lo único que aportaba.
-  p1: `P1 — cuántos de tus ${DATASETS.LMP.meta.n_comp} competidores están en la primera página de ese término (puesto ${S.p1_rank} o mejor). Es la base del Relevancy. Es un conteo y no un porcentaje a propósito: si mañana agregas o quitas competidores del dive, el umbral que elegiste sigue siendo el mismo. Desde ${S.min_comp} entra al núcleo. · cálculo AGTA sobre ranks de Helium 10`,
+  p1: `P1 — cuántos de tus ${DATASETS.LMP.meta.n_comp} competidores están en la primera página de ese término (puesto ${S.p1_rank} o mejor). Es la base del Relevancy. Es un conteo y no un porcentaje a propósito: si mañana agregas o quitas competidores del dive, el umbral que elegiste sigue siendo el mismo. Desde ${S.min_comp} entra al núcleo. · cálculo AGTA sobre ranks del mercado`,
   fit: 'Fit — qué tan de TU producto es la keyword. No es lo mismo que Relevancy: relevancy mide cuánto la dominan tus competidores, fit mide si te sirve a ti. · cálculo AGTA',
   idn: 'IDN — demanda capturable: volumen × fit. Ordena por lo que te puedes llevar, no por lo que se busca. · cálculo AGTA',
-  td: 'TD — cuántos del top usan la keyword en el TÍTULO. Bajo = título libre, más fácil de ganar. · Helium 10',
-  cp: 'CP — cuántos productos compiten por ese término. · Helium 10',
+  td: 'TD — cuántos del top usan la keyword en el TÍTULO. Bajo = título libre, más fácil de ganar. · dato de mercado',
+  cp: 'CP — cuántos productos compiten por ese término. · dato de mercado',
   tier: 'Tier — qué tan tuya es la keyword. CORE: nombra tu producto, la forma y el tipo. SECONDARY: es del tipo de producto pero no exactamente el tuyo. LONG-TAIL: el resto. El volumen ordena, no decide. · cálculo AGTA',
   prio: 'Prio — P1, P2 o P3 por demanda capturable. Es el orden en que se atacan en el lanzamiento. · cálculo AGTA',
   match: 'Match sugerido para PPC. Si la keyword ya es específica va exact; si encabeza una familia grande, phrase; si es la cabecera con volumen, broad. · cálculo AGTA',
@@ -139,7 +139,7 @@ const INFO_I18N = {
   comp_med: 'Mediana del nicho — la mitad de los competidores está por encima de este valor y la otra mitad por debajo. Es la vara para leer si un número es alto o bajo acá adentro.',
   // Las tres señales. Ninguna herramienta del mercado las trae: dicen si la
   // keyword se compra, si es de temporada y si ahí cobran lo que cobras tú.
-  compra_mil: 'KW CVR — qué porcentaje de las búsquedas de ese término termina en compra. Es del MERCADO, no tuyo: una keyword puede convertir mal y tu ficha estar perfecta. Sale de dividir las ventas del término por su volumen. Se lee contra la mediana del nicho. · cálculo AGTA sobre datos de Helium 10',
+  compra_mil: 'KW CVR — qué porcentaje de las búsquedas de ese término termina en compra. Es del MERCADO, no tuyo: una keyword puede convertir mal y tu ficha estar perfecta. Sale de dividir las ventas del término por su volumen. Se lee contra la mediana del nicho. · cálculo AGTA sobre datos de mercado',
   trend: 'Tendencia — cómo se mueve el volumen. Arriba de +80% es una keyword de TEMPORADA: si tu producto es de año redondo, ese volumen no es tuyo aunque sea enorme.',
   price_fit: 'Precio — precio POR UNIDAD mediano de los que rankean ahí ÷ el precio que tengas escrito arriba. Debajo de 60% ahí compran mucho más barato (otro comprador); arriba de 160% cobran más que tú y podrías subir.',
   veredicto: 'Eval — las señales en una palabra, con el nombre del KPI que la disparó. ATACAR: precio y conversión en rango. PRECIO SUPERIOR / PRECIO INFERIOR: el precio promedio de quienes rankean el término está por encima o por debajo del tuyo. CVR BAJO: el KW CVR está muy por debajo de la mediana del nicho. ESTACIONAL: el volumen se dispara en una época. Pasa el mouse sobre el valor para ver el número.',
@@ -150,16 +150,16 @@ const INFO_I18N = {
     use_D: `Description — ${USAGE_AYUDA_EN}`,
     use_GK: `Generic Keywords, the backend search terms — ${USAGE_AYUDA_EN}`,
     use_IH: `Item Highlight, the 125-character field Amazon shows under the title when the title drops below 75 — ${USAGE_AYUDA_EN}`,
-    kw: 'Keyword — the term exactly as a shopper types it on Amazon. · Helium 10',
+    kw: 'Keyword — the term exactly as a shopper types it on Amazon. · market data',
     root: 'Root — the stem that groups the keyword family: goth and gothic fall into the same one. It keeps you from building three campaigns for the same thing. · AGTA calculation',
-    vol: 'Vol — monthly searches for the term. · Helium 10',
-    sales: 'Sales — units the market sells through that term. It is the demand that actually turns into a purchase. · Helium 10',
+    vol: 'Vol — monthly searches for the term. · market data',
+    sales: 'Sales — units the market sells through that term. It is the demand that actually turns into a purchase. · market data',
     rel: `Relevancy % — what share of your competitors sits on page one for that term. · AGTA calculation`,
-    p1: `P1 — how many of your ${DATASETS.LMP.meta.n_comp} competitors are on page one for that term (position ${S.p1_rank} or better). It is the basis of Relevancy. It is a count and not a percentage on purpose: if tomorrow you add or drop competitors from the dive, the threshold you picked still means the same. From ${S.min_comp} up it enters the core. · AGTA calculation over Helium 10 ranks`,
+    p1: `P1 — how many of your ${DATASETS.LMP.meta.n_comp} competitors are on page one for that term (position ${S.p1_rank} or better). It is the basis of Relevancy. It is a count and not a percentage on purpose: if tomorrow you add or drop competitors from the dive, the threshold you picked still means the same. From ${S.min_comp} up it enters the core. · AGTA calculation over market ranks`,
     fit: 'Fit — how much the keyword is about YOUR product. Not the same as Relevancy: relevancy measures how much your competitors own it, fit measures whether it is any use to you. · AGTA calculation',
     idn: 'IDN — capturable demand: volume × fit. It sorts by what you can take, not by what gets searched. · AGTA calculation',
-    td: 'TD — how many of the top listings use the keyword in their TITLE. Low = the title is free, easier to win. · Helium 10',
-    cp: 'CP — how many products compete for that term. · Helium 10',
+    td: 'TD — how many of the top listings use the keyword in their TITLE. Low = the title is free, easier to win. · market data',
+    cp: 'CP — how many products compete for that term. · market data',
     tier: 'Tier — how much the keyword is yours. CORE: it names your product, its form and its type. SECONDARY: it is the product type but not exactly yours. LONG-TAIL: everything else. Volume sorts, it does not decide. · AGTA calculation',
     prio: 'Prio — P1, P2 or P3 by capturable demand. It is the order you attack them in at launch. · AGTA calculation',
     match: 'Suggested PPC match type. If the keyword is already specific it goes exact; if it heads a large family, phrase; if it is the head term with volume, broad. · AGTA calculation',
@@ -175,7 +175,7 @@ const INFO_I18N = {
     norm_n: 'Variants — how many MKL keywords collapsed into this form. If it says 3, there are 3 ways of writing the same thing that in PPC bid against each other and push your CPC up: run one.',
     comp_metrica: 'Each row is one competitor metric. Click the row name to sort the columns by that metric.',
     comp_med: 'Niche median — half the competitors sit above this value and half below. It is the yardstick for reading whether a number is high or low in here.',
-    compra_mil: 'KW CVR — what percentage of searches for that term ends in a purchase. It belongs to the MARKET, not to you: a keyword can convert badly while your listing is perfect. It comes from dividing the term’s sales by its volume. Read it against the niche median. · AGTA calculation over Helium 10 data',
+    compra_mil: 'KW CVR — what percentage of searches for that term ends in a purchase. It belongs to the MARKET, not to you: a keyword can convert badly while your listing is perfect. It comes from dividing the term’s sales by its volume. Read it against the niche median. · AGTA calculation over market data',
     trend: 'Trend — how the volume moves. Above +80% it is a SEASONAL keyword: if your product sells year-round, that volume is not yours however large it looks.',
     price_fit: 'Price — median PER-UNIT price of those ranking there ÷ the price you typed above. Below 60% they buy much cheaper there (a different shopper); above 160% they charge more than you and you could raise.',
     veredicto: 'Eval — the signals in one word, with the name of the KPI that triggered it. ATTACK: price and conversion in range. PRICE ABOVE / PRICE BELOW: the average price of those ranking for the term sits above or below yours. LOW CVR: the KW CVR is far under the niche median. SEASONAL: volume spikes in one season. Hover the value to see the number.',
@@ -187,21 +187,21 @@ const INFO_I18N = {
 // aceptan >100 / <50 / 100-500; el resto es texto que contiene.
 const COLS_BASE = [
   // Grupo 1 — de qué término estamos hablando
-  { k: 'kw', origen: 'h10', grupo: 'Término', label: 'Keyword', align: 'left', tipo: 'texto' },
+  { k: 'kw', origen: 'mercado', grupo: 'Término', label: 'Keyword', align: 'left', tipo: 'texto' },
   // Grupo 2 — cuánta demanda hay y de qué clase
-  { k: 'vol', origen: 'h10', grupo: 'Demanda', label: 'Vol', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
-  { k: 'sales', origen: 'h10', grupo: 'Demanda', label: 'Vtas', align: 'right', tipo: 'num' },
+  { k: 'vol', origen: 'mercado', grupo: 'Demanda', label: 'Vol', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
+  { k: 'sales', origen: 'mercado', grupo: 'Demanda', label: 'Vtas', align: 'right', tipo: 'num' },
   { k: 'compra_mil', origen: 'agta', necesitaH10: true, grupo: 'Demanda', label: 'KW CVR', align: 'right', tipo: 'num', fmt: (v) => (v == null ? '—' : `${(v / 10).toFixed(2)}%`) },
   // Grupo 3 — quién la está peleando
   // Conteo, no porcentaje: con % el umbral se mueve solo al agregar o quitar
   // competidores del dive. Es como lo hace DataDive. (2026-07-30)
   { k: 'p1', origen: 'agta', necesitaH10: true, grupo: 'Competencia', label: 'Relev.', align: 'right', tipo: 'num' },
-  { k: 'td', origen: 'h10', grupo: 'Competencia', label: 'TD', align: 'right', tipo: 'num' },
-  { k: 'cp', origen: 'h10', grupo: 'Competencia', label: 'CP', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
+  { k: 'td', origen: 'mercado', grupo: 'Competencia', label: 'TD', align: 'right', tipo: 'num' },
+  { k: 'cp', origen: 'mercado', grupo: 'Competencia', label: 'CP', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
   // La puja sugerida ya venía en el XLSX de Cerebro y no la leíamos. Es el dato
   // con el que se arman las campañas: sin esto la puja de cada término se pone
   // a ojo. (2026-07-31)
-  { k: 'bid', origen: 'h10', grupo: 'Competencia', label: 'Puja', align: 'right', tipo: 'num', fmt: (v) => (v == null ? '—' : `$${Number(v).toFixed(2)}`) },
+  { k: 'bid', origen: 'mercado', grupo: 'Competencia', label: 'Puja', align: 'right', tipo: 'num', fmt: (v) => (v == null ? '—' : `$${Number(v).toFixed(2)}`) },
   // Grupo 4 — qué tan tuya es
   { k: 'fit', origen: 'agta', grupo: 'Tu producto', label: 'Fit', align: 'right', tipo: 'num', fmt: (v) => Math.round((v || 0) * 100) },
   { k: 'idn', origen: 'agta', necesitaH10: true, grupo: 'Tu producto', label: 'IDN', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
@@ -1161,7 +1161,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
   // Tapar todo lo que NO existe sin Helium 10: sus datos crudos y también los
   // cálculos de AGTA que se alimentan de ellos (compras x 1.000 sale de dividir
   // dos columnas suyas; relevancy y P1 salen de su reverse-ASIN).
-  const tapada = (c) => !verH10 && c.k !== 'kw' && (c.origen === 'h10' || c.necesitaH10)
+  const tapada = (c) => !verH10 && c.k !== 'kw' && (c.origen === 'mercado' || c.necesitaH10)
   /** Suelta la columna arrastrada justo antes de aquella sobre la que cayó. */
   const moverCol = (desde, hasta) => setKwOrden(() => {
     const actual = (kwOrden || baseCols.map((c) => c.k)).filter((k) => k !== desde)
@@ -2023,7 +2023,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             {/* La explicación larga vive en el tooltip y no como párrafo debajo
                 de la barra: ocupaba cuatro renglones fijos para algo que solo
                 importa mientras se mira el modo apagado. (Frank, 2026-07-31) */}
-            {/* ⛔ El botón «Sin H10» salió de la barra (Frank, 2026-09-16). Era una
+            {/* ⛔ El botón «Sin herramienta» salió de la barra (Frank, 2026-09-16). Era una
                 demo: enseñaba qué columnas se caen si el usuario no tiene Helium 10
                 conectado. El interruptor `verH10` se queda —lo usan las columnas y
                 el guardado— con su valor de siempre: TODO a la vista. */}
@@ -2096,9 +2096,9 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             <div className="rsch-leyenda">
               <div className="rsch-ley-g">
                 <span className="rsch-ley-t">{T('De dónde sale el dato')}</span>
-                <span className="rsch-ley-i"><span className="rsch-ley-h10" /> {T('viene así de Helium 10')}</span>
+                <span className="rsch-ley-i"><span className="rsch-ley-h10" /> {T('viene así del dato de mercado')}</span>
                 <span className="rsch-ley-i"><span className="rsch-ley-agta" /> {T('lo calcula AGTA')}</span>
-                <span className="rsch-ley-i" style={{ opacity: 0.6 }}>{T('hay cálculos de AGTA que igual necesitan datos de Helium 10')}</span>
+                <span className="rsch-ley-i" style={{ opacity: 0.6 }}>{T('hay cálculos de AGTA que igual necesitan datos de mercado')}</span>
               </div>
               <div className="rsch-ley-g">
                 <span className="rsch-ley-t">{T('Dónde rankea')}</span>
@@ -2227,7 +2227,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                         title={typeof r[c.k] === 'string' ? r[c.k] : undefined}
                       >
                         {tapada(c) ? (
-                          <span className="mkl-tapada" title={T('Este dato lo trae Helium 10: sin la herramienta conectada, no está.')}>{T('sin H10')}</span>
+                          <span className="mkl-tapada" title={T('Este dato lo trae la herramienta de keywords: sin ella conectada, no está.')}>{T('sin H10')}</span>
                         ) : c.k === 'kw' ? (
                           // el texto completo queda en el title: la celda puede cortar
                           <span title={r.kw}>{r.kw}</span>
@@ -2296,7 +2296,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                   {' '}Match, Tier, Prio and Verdict are <b>picked from a list</b> (you can see exact only, or exact + phrase). With “Columns” you hide the
                   ones you are not looking at, and <b>by dragging the header</b> you reorder them.
                   Rank per competitor: <span className="mkl-rank-top">solid gold</span> = ≤3 · <b style={{ color: '#e0a94c' }}>gold</b> = ≤10 · grey = 11+ · · = does not rank (or outside the top {S.max_rank}).
-                  {' '}In <b style={{ color: '#a78bfa' }}>violet</b>, the <b>sponsored</b> ranks (where it shows up paying): they come from the Helium 10 reverse-ASIN, not from scraping the SERP.
+                  {' '}In <b style={{ color: '#a78bfa' }}>violet</b>, the <b>sponsored</b> ranks (where it shows up paying): they come from the reverse-ASIN, not from scraping the SERP.
                 </>
               ) : (
                 <>
@@ -2304,7 +2304,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                   {' '}Match, Tier, Prio y Veredicto se <b>marcan de una lista</b> (puedes ver solo exact, o exact + phrase). Con “Columnas” escondes las que no
                   estés mirando, y <b>arrastrando el encabezado</b> las reordenas.
                   Rank por competidor: <span className="mkl-rank-top">dorado sólido</span> = ≤3 · <b style={{ color: '#e0a94c' }}>dorado</b> = ≤10 · gris = 11+ · · = no rankea (o fuera del top {S.max_rank}).
-                  {' '}En <b style={{ color: '#a78bfa' }}>violeta</b>, los ranks <b>patrocinados</b> (dónde aparece pagando): salen del reverse-ASIN de Helium 10, no de scrapear el SERP.
+                  {' '}En <b style={{ color: '#a78bfa' }}>violeta</b>, los ranks <b>patrocinados</b> (dónde aparece pagando): salen del reverse-ASIN, no de scrapear el SERP.
                 </>
               )}
             </p>

@@ -68,10 +68,10 @@ function KwRow({ k, campId, onRemove, onDragStart }) {
     >
       <span className="cmp-kw-grip" aria-hidden>⠿</span>
       <span className="cmp-kw-txt">{k.kw}</span>
-      <span className="cmp-kw-sv" title="Search volume mensual real (Helium 10)">
+      <span className="cmp-kw-sv" title="Búsquedas mensuales reales del término (dato de mercado)">
         {(k.sv || 0).toLocaleString('en-US')}
       </span>
-      {k.bid != null && <span className="cmp-kw-bid" title="Suggested bid de Helium 10">${k.bid}</span>}
+      {k.bid != null && <span className="cmp-kw-bid" title="Puja sugerida por el dato de mercado">${k.bid}</span>}
       {k.td != null && <span className="cmp-kw-td" title="Title density: cuántos competidores la tienen en el título. Cuanto más baja, más ownable.">td {k.td}</span>}
       <button className="cmp-kw-x" onClick={() => onRemove(campId, k.kw)} title="Sacar del plan">×</button>
     </li>

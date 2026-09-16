@@ -182,10 +182,10 @@ export const EN = {
   // ── Leyenda «cómo leer esta tabla» ───────────────────────────────────────
   'cómo leer esta tabla': 'how to read this table',
   'De dónde sale el dato': 'Where the data comes from',
-  'viene así de Helium 10': 'comes straight from Helium 10',
+  'viene así del dato de mercado': 'comes straight from the market data',
   'lo calcula AGTA': 'calculated by AGTA',
-  'hay cálculos de AGTA que igual necesitan datos de Helium 10':
-    'some AGTA calculations still need Helium 10 data',
+  'hay cálculos de AGTA que igual necesitan datos de mercado':
+    'some AGTA calculations still need market data',
   'Dónde rankea': 'Where it ranks',
   'top 10 orgánico': 'organic top 10',
   'top 10 pago': 'paid top 10',
@@ -213,8 +213,8 @@ export const EN = {
   'volver al MKL': 'back to the MKL',
   'ver descartadas': 'see discarded',
   'sin H10': 'no H10',
-  'Este dato lo trae Helium 10: sin la herramienta conectada, no está.':
-    'This figure comes from Helium 10: without the tool connected, it is not there.',
+  'Este dato lo trae la herramienta de keywords: sin ella conectada, no está.':
+    'This figure comes from the keyword tool: without it connected, it is not there.',
   'Sin dueño: 2 competidores o menos y es de tu producto':
     'No owner: 2 competitors or fewer, and it belongs to your product',
   'Sponsored Brand Video presente': 'Sponsored Brand Video present',
@@ -264,10 +264,10 @@ export const EN = {
   UKL: 'UKL',
   Negatives: 'Negatives',
   Trash: 'Discarded',
-  'Sin H10': 'No H10',
-  'Con H10': 'With H10',
-  'Ver qué queda del análisis si el usuario no tiene Helium 10 conectado.':
-    'See what is left of the analysis if the user has no Helium 10 connected.',
+  'Sin herramienta': 'No H10',
+  'Con herramienta': 'With H10',
+  'Ver qué queda del análisis sin la herramienta de keywords conectada.':
+    'See what is left of the analysis if the user has no keyword tool connected.',
   'orgánicos': 'organic',
   patrocinados: 'sponsored',
   Competidores: 'Competitors',
