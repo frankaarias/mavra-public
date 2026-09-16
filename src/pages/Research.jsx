@@ -205,7 +205,9 @@ const COLS_BASE = [
   // Grupo 4 — qué tan tuya es
   { k: 'fit', origen: 'agta', grupo: 'Tu producto', label: 'Fit', align: 'right', tipo: 'num', fmt: (v) => Math.round((v || 0) * 100) },
   { k: 'idn', origen: 'agta', necesitaH10: true, grupo: 'Tu producto', label: 'IDN', align: 'right', tipo: 'num', fmt: (v) => (v || 0).toLocaleString('en-US') },
-  { k: 'price_fit', origen: 'agta', grupo: 'Tu producto', label: 'Precio', align: 'right', tipo: 'num', fmt: (v) => (v == null ? '—' : `${Math.round(v * 100)}%`) },
+  // ⛔ La columna «Precio» (price_fit) salio de la tabla el 2026-09-16 con el
+  //    campo «tu precio» de la barra: sin ese numero escrito la columna solo
+  //    podia mostrar rayitas. El calculo sigue en `kwsEval` por si vuelve.
   // Grupo 5 — qué hacer con ella
   // Las dos etiquetas propias de la UKL. Se venían calculando desde el día uno y
   // no se mostraban en ningún lado: la tabla traía las 324 filas sin decir qué
@@ -2027,14 +2029,8 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                 demo: enseñaba qué columnas se caen si el usuario no tiene Helium 10
                 conectado. El interruptor `verH10` se queda —lo usan las columnas y
                 el guardado— con su valor de siempre: TODO a la vista. */}
-            <Boton
-              icono={Iconos.Tag}
-              activo={!verMarcas}
-              onClick={() => setVerMarcas((v) => !v)}
-              titulo={`Keywords que nombran una marca ajena — Scentsy, Hocus Pocus, Harry Potter, IKEA. No van al listado; sirven para campañas de conquista. Hay ${data.kws.filter((k) => k.branded).length} en este producto.`}
-            >
-              {verMarcas ? T('Con marcas') : T('Sin marcas')}
-            </Boton>
+            {/* ⛔ El boton «Con marcas / Sin marcas» salio de la barra (Frank,
+                2026-09-16). `verMarcas` se queda en true: se ven todas. */}
             <Boton
               icono={Iconos.Users}
               activo={showComp}
@@ -2054,17 +2050,11 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                 titulo={T('Volver al orden y a las columnas de fábrica')}
               />
             )}
-            <label className="rsch-precio" title={T('A qué precio POR UNIDAD piensas vender. De acá salen la columna Precio y la Evaluación. Si lo dejas vacío, no se emiten los veredictos que dependen del precio.')}>
-              {T('tu precio')}
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={miPrecio}
-                placeholder={T('sin definir')}
-                onChange={(e) => setMiPrecio(e.target.value)}
-              />
-            </label>
+            {/* ⛔ «tu precio» salio de la barra (Frank, 2026-09-16: «tu precio
+                quitalo»). Alimentaba la columna Precio y la Evaluacion de cada
+                keyword — y la Evaluacion no se muestra en esta tabla, asi que el
+                campo pedia un dato para dos cosas que ya no se ven. `miPrecio`
+                se queda con su valor guardado. */}
             {filtroActivo && (
               <Boton icono={Iconos.FilterX} onClick={() => setColF({})} titulo={T('Quitar todos los filtros de columna')}>
                 {T('Limpiar filtros')}
@@ -2119,7 +2109,6 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                 <span className="rsch-ley-i"><span className="rsch-flag ch">AC</span> Amazon&apos;s Choice</span>
                 <span className="rsch-ley-i"><span className="rsch-flag sp">SP</span> {T('anuncio patrocinado')}</span>
                 <span className="rsch-ley-t" style={{ marginTop: '0.5rem' }}>{T('Al lado de la keyword')}</span>
-                <span className="rsch-ley-i"><span className="rsch-flag ch">{T('libre')}</span> {T('la rankean 2 competidores o menos')}</span>
               </div>
             </div>
           )}
@@ -2241,7 +2230,6 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                         ) : c.k.startsWith('use_') ? (
                           <UsoDot valor={r[c.k]} campo={c.label} />
                         ) : c.fmt ? c.fmt(r[c.k]) : r[c.k]}
-                        {c.k === 'kw' && r.opp_real && <span className="rsch-flag ch" title={T('Sin dueño: 2 competidores o menos y es de tu producto')} style={{ marginLeft: 6 }}>{T('libre')}</span>}
                       </td>
                     ))}
                     {verSerp && (
