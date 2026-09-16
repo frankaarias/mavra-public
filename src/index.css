@@ -1866,7 +1866,7 @@ a {
 .mkl-table .mkl-krow td {
   padding: 0.09rem 0.4rem;
   border-bottom: 1px solid rgba(var(--copper-rgb),0.08);
-  font-size: 0.66rem;
+  font-size: 0.72rem;
   line-height: 1.15;
   text-align: center;
   vertical-align: middle;
@@ -3076,15 +3076,17 @@ main:not(.case-study) h3 {
    Por eso esta regla también lo lleva: es la misma arma, con el alcance mínimo.
    (Frank pidió filas más bajas y un punto menos de letra) */
 .mkl-table .mkl-krow td {
-  font-size: 0.66rem !important;
+  /* 0,72rem = 11,5px. Se bajo a 0,66 y Frank pidio subir un punto: la fila
+     compacta se queda, la letra vuelve a leerse de un vistazo. */
+  font-size: 0.72rem !important;
   line-height: 1.15 !important;
 }
 .mkl-table .mkl-th {
-  font-size: 0.5rem !important;
+  font-size: 0.56rem !important;
   line-height: 1.2 !important;
 }
 .mkl-table .mkl-kw {
-  font-size: 0.7rem !important;
+  font-size: 0.76rem !important;
 }
 
 .reading-surface code,
