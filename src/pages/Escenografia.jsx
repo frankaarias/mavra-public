@@ -249,7 +249,7 @@ function CameraCard({ term, desc, prompt }) {
 
   const [copied, setCopied] = useState(false)
   function handleCopy() {
-    navigator.clipboard.writeText(prompt)
+    navigator.clipboard.writeText(trText(prompt))
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -274,7 +274,7 @@ function BriefRow({ frank, mavro }) {
 
   const [copied, setCopied] = useState(false)
   function handleCopy() {
-    navigator.clipboard.writeText(mavro)
+    navigator.clipboard.writeText(trText(mavro))
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
