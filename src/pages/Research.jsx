@@ -2012,12 +2012,11 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
       ) : (
         <>
           <div className="rsch-bar">
-            <Buscador
-              valor={q}
-              onChange={setQ}
-              placeholder={T('Buscar keyword…')}
-              ayuda={T('Varias palabras: coma = o, más = y, guion adelante = saca.\n\ngoth, decor\ngoth + decor\n-witch')}
-            />
+            {/* ⛔ El buscador salió de la barra (Frank, 2026-09-16: «puedes quitar
+                el filtro de búsqueda que ya está en la columna»). La columna
+                Keyword tiene su propio filtro de palabras —con incluir, sacar y
+                el modo «alguna / todas»—, que hace lo mismo y más. `q` se queda
+                vacío, así que no filtra nada. */}
             <MenuColumnas fija={T('Keyword')} opciones={kwOpciones} ocultas={kwHid} setOcultas={setKwHid} />
             {/* Los interruptores: mismo tamaño, solo ícono, y el estado se ve
                 encendido. Antes eran botones de texto corrido que competían con
@@ -2095,20 +2094,14 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                 <span className="rsch-ley-i"><b style={{ color: '#e0a94c' }}>9</b> {T('top 10 orgánico')}</span>
                 <span className="rsch-ley-i"><span style={{ color: '#a78bfa', fontWeight: 600 }}>4</span> {T('top 10 pago')}</span>
               </div>
-              <div className="rsch-ley-g">
-                <span className="rsch-ley-t">{T('Evaluación de la keyword')}</span>
-                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR.ATACAR }}>●</span> {T('ATACAR — precio y conversión en rango')}</span>
-                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['PRECIO SUPERIOR'] }}>●</span> {T('PRECIO SUPERIOR — el promedio del término está por encima del tuyo')}</span>
-                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['PRECIO INFERIOR'] }}>●</span> {T('PRECIO INFERIOR — el promedio del término está por debajo del tuyo')}</span>
-                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR['CVR BAJO'] }}>●</span> {T('CVR BAJO — el KW CVR está muy por debajo del nicho')}</span>
-                <span className="rsch-ley-i"><span style={{ color: VEREDICTO_COLOR.ESTACIONAL }}>●</span> {T('ESTACIONAL — el volumen se dispara en una época')}</span>
-              </div>
+              {/* ⛔ El bloque «Evaluación de la keyword» salió de esta leyenda el
+                  2026-09-16: explicaba cinco colores de una columna que ya no se
+                  muestra. Una leyenda de algo invisible es peor que no tenerla. */}
               <div className="rsch-ley-g">
                 <span className="rsch-ley-t">SERP</span>
                 <span className="rsch-ley-i"><span className="rsch-flag sbv">SBV</span> {T('video patrocinado')}</span>
                 <span className="rsch-ley-i"><span className="rsch-flag ch">AC</span> Amazon&apos;s Choice</span>
                 <span className="rsch-ley-i"><span className="rsch-flag sp">SP</span> {T('anuncio patrocinado')}</span>
-                <span className="rsch-ley-t" style={{ marginTop: '0.5rem' }}>{T('Al lado de la keyword')}</span>
               </div>
             </div>
           )}
