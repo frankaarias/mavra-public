@@ -1998,6 +1998,36 @@ a {
 .rsch-stat { border: 1px solid rgba(var(--copper-rgb),0.3); padding: 0.7rem 1.1rem; min-width: 110px; }
 .rsch-stat b { display: block; font-family: var(--font-sans); font-variant-numeric: tabular-nums; font-size: 1.4rem; color: rgba(var(--copper-bright-rgb),0.95); }
 .rsch-stat span { font-family: var(--font-sans); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(var(--fg-rgb),0.6); }
+/* ── Al desplazarse a la derecha, la COLUMNA FIJA tiene que quedar ENCIMA ──
+   🔴 EL BUG QUE FRANK VIO: al hacer scroll horizontal, sobre las keywords
+   aparecian rotulos de otras columnas —«Your product», «IDN»— y los filtros
+   salian cortados.
+
+   Medido en la pagina: en la fila de grupos, «Term» calculaba `z-index: 5` y
+   «Demand» y «Competition» calculaban `8`. Las tres son `sticky`, asi que al
+   solaparse gana la de z mayor: la que se desplaza pasaba POR ENCIMA de la que
+   se queda quieta. Estaba al reves de como tiene que ser.
+
+   🔑 Las dos primeras celdas de CADA fila de la cabecera —el checkbox y la
+   keyword— son las que se quedan fijas, asi que van por encima de todo lo que
+   pasa por detras, y con fondo opaco para taparlo. */
+.rsch-full .mkl-thead .mkl-grupos th:nth-child(-n+2),
+.rsch-full .mkl-thead tr:nth-child(2) th:nth-child(-n+2),
+.rsch-full .mkl-thead tr:nth-child(3) th:nth-child(-n+2) {
+  z-index: 12;
+  background: var(--surface);
+}
+/* Y en el cuerpo, la celda de la keyword sobre las que le pasan por detras. */
+.mkl-table .mkl-krow td.mkl-kw,
+.mkl-table .mkl-krow td.rsch-chk {
+  z-index: 4;
+  background: var(--bg);
+}
+.mkl-table .mkl-krow:hover td.mkl-kw,
+.mkl-table .mkl-krow:hover td.rsch-chk {
+  background: var(--surface);
+}
+
 /* ── La tabla de COMPETIDORES ─────────────────────────────────────────────
    Es la misma tabla transpuesta: cada FILA es una métrica y cada COLUMNA un
    competidor. Por eso necesita dos cosas propias.
