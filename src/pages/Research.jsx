@@ -59,7 +59,10 @@ const BUCKETS_OCULTOS = ['Negatives']
 // antes que Veredicto porque Roots se usa todos los días y el Veredicto se lee
 // una vez. `Normalizer` sale de la navegación (2026-09-15) — su lista sigue
 // calculándose, solo deja de tener pestaña.
-const TOOLS = ['Roots', 'Veredicto', 'Competidores']
+// 🔴 EL ORDEN LO FIJA FRANK (2026-09-16): UKL · MKL · Outliers · Residue ·
+// Roots · Competidores · VEREDICTO AL FINAL. El veredicto es la conclusion:
+// va despues de todo lo que la sostiene, no en medio.
+const TOOLS = ['Roots', 'Competidores', 'Veredicto']
 // Los umbrales son los mismos en los tres (son los de DataDive), así que los textos
 // de ayuda se arman una sola vez.
 const S = lmp.meta.settings
@@ -1483,16 +1486,23 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
     // veredicto) se limita solo, adentro, al ancho de lectura.
     <ProveedorAyuda>
     <main className="rsch rsch-full" ref={panelRef}>
+      {/* 🔑 UNA SOLA FILA (Frank, 2026-09-16: «esto a una sola línea»). Eran dos
+          tiras —los cuatro buckets arriba, las herramientas debajo— y ocupaban
+          dos renglones para siete botones. El corte entre «grupos de keywords» y
+          «herramientas» se sigue viendo, pero por el separador, no por la fila. */}
       <div className="rsch-tabs">
         {BUCKETS.map((t) => (
           <button key={t} type="button" className={`rsch-tab${tab === t ? ' active' : ''}`} onClick={() => { setTab(t); setSel(new Set()) }}>
             {T(t)} <span className="rsch-tab-n">{counts[t]}</span>
           </button>
         ))}
-      </div>
-      <div className="rsch-tabs" style={{ marginTop: 6, opacity: 0.92 }}>
-        {TOOLS.map((t) => (
-          <button key={t} type="button" className={`rsch-tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
+        {TOOLS.map((t, i) => (
+          <button
+            key={t}
+            type="button"
+            className={`rsch-tab${tab === t ? ' active' : ''}${i === 0 ? ' rsch-tab-corte' : ''}`}
+            onClick={() => setTab(t)}
+          >
             {T(t)}{' '}
             {t !== 'Veredicto' && (
               <span className="rsch-tab-n">
@@ -1592,7 +1602,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                     {ov.top_libres.map((k) => (
                       <tr key={k.kw}>
                         <td>{k.kw}</td>
-                        <td>{miles(k.vol)}<small>/mes</small></td>
+                        <td>{miles(k.vol)}<small>{lang === 'en' ? '/mo' : '/mes'}</small></td>
                         <td>{k.n}<small> {T('comp.')}</small></td>
                       </tr>
                     ))}
@@ -1629,14 +1639,9 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
       {tab === 'Competidores' && (
         <>
           <div className="rsch-bar">
-            <input
-              className="rsch-search"
-              type="search"
-              placeholder={T('Filtrar competidor (marca o ASIN)…')}
-              value={compQ}
-              onChange={(e) => setCompQ(e.target.value)}
-              style={{ width: 240 }}
-            />
+            {/* ⛔ El filtro de competidores salió de la barra (Frank, 2026-09-16).
+                Con nueve competidores en pantalla, un buscador sobra: se ven
+                todos de un vistazo. `compQ` se queda vacío. */}
             <MenuColumnas fija={T('Métrica')} opciones={compOpciones} ocultas={compHid} setOcultas={setCompHid} />
             {compSort.key && (
               <span className="rsch-bulk">
@@ -1650,7 +1655,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             )}
           </div>
           <div className="mkl-scroll">
-            <table className="mkl-table" style={{ width: 'auto', minWidth: '1100px' }}>
+            <table className="mkl-table mkl-comp" style={{ width: 'auto', minWidth: '1100px' }}>
               <thead className="mkl-thead">
                 <tr>
                   <Th label={`${T('Competidores')} ${compVis.length}`} ayuda={INFO.comp_metrica} align="left" style={{ minWidth: 210 }} />

@@ -1998,6 +1998,32 @@ a {
 .rsch-stat { border: 1px solid rgba(var(--copper-rgb),0.3); padding: 0.7rem 1.1rem; min-width: 110px; }
 .rsch-stat b { display: block; font-family: var(--font-sans); font-variant-numeric: tabular-nums; font-size: 1.4rem; color: rgba(var(--copper-bright-rgb),0.95); }
 .rsch-stat span { font-family: var(--font-sans); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(var(--fg-rgb),0.6); }
+/* ── La tabla de COMPETIDORES ─────────────────────────────────────────────
+   Es la misma tabla transpuesta: cada FILA es una métrica y cada COLUMNA un
+   competidor. Por eso necesita dos cosas propias.
+
+   🔴 LOS GUIONES ESTABAN A MEDIO ALINEAR, y Frank lo vio: en una MISMA columna,
+   unos «—» caían a la derecha y otros al centro. La causa es una línea del JSX
+   que pone `mkl-num-cell` solo a las filas numéricas: las de texto —marca,
+   ASIN, categoría, edad, título— se quedaban con el centrado por defecto, y su
+   hueco también. Medido: 31 a la derecha y 9 centrados.
+
+   Aquí se alinea TODA la columna de datos a la derecha. En una tabla que existe
+   para comparar competidor contra competidor, el borde derecho común es lo que
+   permite leer de un vistazo; y el hueco deja de bailar.
+
+   📌 La altura de fila sube un punto respecto de la tabla de keywords (Frank,
+   2026-09-16): son nueve filas de métricas, no doscientas de lista — aquí el
+   aire ayuda y no cuesta pantalla. */
+.mkl-table.mkl-comp .mkl-krow td {
+  padding: 0.2rem 0.45rem !important;
+  text-align: right;
+}
+/* La primera celda es el NOMBRE de la métrica: esa sí va a la izquierda. */
+.mkl-table.mkl-comp .mkl-krow td.mkl-kw {
+  text-align: left;
+}
+
 /* ── Header de la sección: QUÉ producto se está mirando ───────────────────
    Antes era una línea de 12px con el rótulo «Producto:», tres botones de tres
    letras y el nombre al final, todo del mismo peso: para saber qué estabas
