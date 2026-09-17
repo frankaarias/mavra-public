@@ -35,9 +35,9 @@ const COPY = {
     roleText: 'I led the strategic and operational work across the brand. When specialist production is involved, the work should be credited as production—not mistaken for the direction behind it.',
     contactKicker: 'Start a conversation',
     contactTitle: 'Need this level of brand infrastructure for your Amazon business?',
-    contactText: 'Tell me where your brand is today and what needs to become connected.',
+    contactText: 'Tell me where your brand is today and what still needs connecting.',
     form: ['Your name', 'Work email', 'Company / brand', 'What are you building?', 'Send inquiry'],
-    notice: 'Contact delivery is being configured.',
+    notice: "Message delivery isn't set up yet.",
     footer: 'MAVRA · A documented Amazon Brand Management case study by Frank Arias.',
   },
   es: {

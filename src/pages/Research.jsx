@@ -158,10 +158,10 @@ const INFO_I18N = {
     vol: 'Vol — monthly searches for the term. · market data',
     sales: 'Sales — units the market sells through that term. It is the demand that actually turns into a purchase. · market data',
     rel: `Relevancy % — what share of your competitors sits on page one for that term. · AGTA calculation`,
-    p1: `P1 — how many of your ${DATASETS.LMP.meta.n_comp} competitors are on page one for that term (position ${S.p1_rank} or better). From ${S.min_comp} up the keyword enters the core. · AGTA calculation over market ranks`,
+    p1: `P1 — how many of your ${DATASETS.LMP.meta.n_comp} competitors are on page one for that term (position ${S.p1_rank} or better). At ${S.min_comp} or more, the keyword enters the core. · AGTA calculation over market ranks`,
     fit: 'Fit — how much the keyword is about YOUR product. Not the same as Relevancy: relevancy measures how much your competitors own it, fit measures whether it is any use to you. · AGTA calculation',
     idn: 'IDN — capturable demand: volume × fit. It sorts by what you can take, not by what gets searched. · AGTA calculation',
-    td: 'TD — how many of the top listings use the keyword in their TITLE. Low = the title is free, easier to win. · market data',
+    td: 'TD — how many of the top listings use the keyword in their TITLE. Low = the title is uncontested, easier to win. · market data',
     cp: 'CP — how many products compete for that term. · market data',
     tier: 'Tier — how much the keyword is yours. CORE names your product; SECONDARY is the type but not yours; LONG-TAIL, the rest. · AGTA calculation',
     prio: 'Prio — P1, P2 or P3 by capturable demand. It is the order you attack them in at launch. · AGTA calculation',
@@ -170,7 +170,7 @@ const INFO_I18N = {
     para: 'What it is good for, UKL only. SELL: your product satisfies that search. TARGET: a sibling does — target its page instead of bidding. CATALOG: niche demand you do not make today. AUDIENCE: tells you who the buyer is, not what to sell. · AGTA calculation',
     serp: 'SERP — result-page flags: SBV = Sponsored Brand Video · AC = Amazon’s Choice · SP = Sponsored Product. You can filter by typing SBV, AC or SP.',
     root_root: 'Root — a word or phrase that repeats across the core. If it shows up in a single keyword it is not a root. Each root is a PPC campaign, and you attack them one at a time. · AGTA calculation',
-    root_frec: 'Frequency — in how many keywords of the current MKL this root appears. It recalculates when you move keywords between buckets.',
+    root_frec: 'Frequency — how many MKL keywords this root appears in. It recalculates when you move keywords between buckets.',
     root_sv: 'Broad volume — the summed SV of every MKL keyword containing the root. It is the traffic ceiling of the family, not what you will capture.',
     root_kws: 'The MKL keywords containing any of the ticked roots. Adding roots widens the coverage.',
     norm_kw: 'Normalised form — the keyword without plurals or conjunctions. The ones that end up identical collapse into a single row.',
@@ -1625,7 +1625,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
           <p className="rsch-foot">
             {lang === 'en' ? (
               <>
-                You read this <b>once</b>, before deciding whether to enter the niche. The MKL is what gets worked
+                Read this <b>once</b>, before you decide whether to enter the niche. The MKL is what you work on
                 every day: it is in the <b>MKL</b> tab, full screen.
                 {' '}Core from {S.min_comp} competitors on page 1 and {S.min_sv} searches · outliers from {miles(S.outlier_min_sv)}.
                 {' '}Source: {data.meta.source}.
@@ -1869,7 +1869,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                       vacíos son el sitio donde se esconde lo que no se tradujo.
                       Y de paso sale el voseo: «te indexás» no va para un cliente. */}
                   {lang === 'en'
-                    ? 'Tick one or more roots to see their keywords here. Adding roots widens your coverage: if you write both in the listing, you get indexed for the keywords of both.'
+                    ? 'Tick one or more roots to see their keywords here. Adding roots widens your coverage: write two of them into your listing and you get indexed for both sets of keywords.'
                     : 'Marca uno o varios roots para ver aquí sus keywords. Sumar roots amplía la cobertura: si escribes los dos en el listing, te indexas por las keywords de ambos.'}
                 </p>
               ) : (
@@ -2290,8 +2290,8 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
               {lang === 'en' ? (
                 <>
                   Each filter speaks the language of its column: numeric ones accept <code>&gt;100</code>, <code>&lt;50</code> or <code>100-500</code>;
-                  {' '}Match, Tier, Prio and Verdict are <b>picked from a list</b> (you can see exact only, or exact + phrase). With “Columns” you hide the
-                  ones you are not looking at, and <b>by dragging the header</b> you reorder them.
+                  {' '}Match, Tier, Prio and Verdict are <b>picked from a list</b> (you can see exact only, or exact + phrase). Use “Columns” to hide the
+                  ones you are not looking at, and <b>drag a header</b> to reorder them.
                   Rank per competitor: <span className="mkl-rank-top">solid gold</span> = ≤3 · <b style={{ color: '#e0a94c' }}>gold</b> = ≤10 · grey = 11+ · · = does not rank (or outside the top {S.max_rank}).
                   {' '}In <b style={{ color: '#a78bfa' }}>violet</b>, the <b>sponsored</b> ranks (where it shows up paying): they come from the reverse-ASIN, not from scraping the SERP.
                 </>

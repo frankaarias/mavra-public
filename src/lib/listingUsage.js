@@ -66,5 +66,5 @@ export const USAGE_AYUDA =
 // delante y no se olvida de una — que es como una app queda diciendo cosas
 // distintas en cada idioma.
 export const USAGE_AYUDA_EN =
-  'Where the keyword is used. Green: the phrase appears verbatim. Orange: every word is ' +
-  'there but apart. Grey: not there. Dotted: that field is not written yet.'
+  'Where the keyword is used. Green: the phrase appears verbatim. Orange: all the words ' +
+  'are there, but not together. Grey: not there. Dotted: that field is not written yet.'

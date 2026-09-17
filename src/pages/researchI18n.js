@@ -45,7 +45,7 @@ export const EN = {
   Demanda: 'Demand',
   Competencia: 'Competition',
   'Tu producto': 'Your product',
-  'Uso en el listing': 'Used in the listing',
+  'Uso en el listing': 'Listing usage',
 
   // ── COLS · etiquetas ─────────────────────────────────────────────────────
   Vtas: 'Sales',
@@ -120,8 +120,8 @@ export const EN = {
   'mayor a menor': 'high to low',
   'menor a mayor': 'low to high',
   'ordenado por': 'sorted by',
-  'Ahora las saca. Clic para volver a pedirla.': 'Now excluding it. Click to require it again.',
-  'Ahora la pide. Clic para sacarla.': 'Now requiring it. Click to exclude it.',
+  'Ahora las saca. Clic para volver a pedirla.': 'Excluded. Click to include it again.',
+  'Ahora la pide. Clic para sacarla.': 'Required. Click to exclude it.',
 
   // ── Estados vacíos ───────────────────────────────────────────────────────
   'Ningún competidor pasa el filtro.': 'No competitor matches the filter.',
@@ -148,7 +148,7 @@ export const EN = {
   'comp.': 'comp.',
   'una vez': 'once',
   'Términos del producto que rankean 2 competidores o menos. Son la puerta: ahí no hay con quién pelear.':
-    'Product terms ranked by 2 competitors or fewer. This is the door: there is nobody to fight there.',
+    'Product terms ranked by 2 competitors or fewer. This is the way in: there is nobody to beat.',
 
   // ── Roots ────────────────────────────────────────────────────────────────
   'Frec.': 'Freq.',
@@ -274,7 +274,7 @@ export const EN = {
 
   // ── Header de producto ─────────────────────────────────────────────
   PRODUCTO: 'PRODUCT',
-  'keywords analizadas': 'keywords analysed',
+  'keywords analizadas': 'keywords reviewed',
   'Elegir producto': 'Choose product',
 
   // ── Filtros y buscador ───────────────────────────────────────────
@@ -286,10 +286,8 @@ export const EN = {
   Cualquiera: 'Any',
   Sin: 'Without',
   palabras: 'words',
-  'Ahora las saca. Clic para volver a pedirla.': 'It now excludes them. Click to ask for it again.',
-  'Ahora la pide. Clic para sacarla.': 'It now asks for it. Click to exclude it.',
   'Basta con que tenga una de las palabras': 'Having one of the words is enough',
-  'Tiene que tenerlas todas': 'It has to have them all',
+  'Tiene que tenerlas todas': 'Must contain every word',
   valores: 'values',
   'Filtrar por': 'Filter by',
   Desde: 'From',
