@@ -317,23 +317,23 @@
    "board": [
     {
      "name": "Negro Cálido",
-     "hex": "var(--bg)",
+     "hex": "#0D0B0A",
      "main": true
     },
     {
      "name": "Hueso / Crema",
-     "hex": "var(--fg)",
+     "hex": "#F5F0E8",
      "main": true,
      "border": "1px solid rgba(var(--fg-rgb),0.3)"
     },
     {
      "name": "Cobre / Bronce",
-     "hex": "var(--copper)",
+     "hex": "#7A5C2E",
      "main": true
     },
     {
      "name": "Burdeos",
-     "hex": "var(--burgundy)",
+     "hex": "#3D0A1E",
      "main": true
     },
     {
@@ -342,7 +342,7 @@
     },
     {
      "name": "Cobre Vivo",
-     "hex": "var(--copper-bright)"
+     "hex": "#C4832A"
     },
     {
      "name": "Burdeos Intenso",
@@ -362,7 +362,7 @@
     },
     {
      "name": "Cobre Vivo",
-     "hex": "var(--copper-bright)"
+     "hex": "#C4832A"
     },
     {
      "name": "Burdeos Intenso",
@@ -413,7 +413,7 @@
   "photography": {
    "backgrounds": {
     "approved": [
-     "Estuco oscuro / hormigón pintado negro cálido (var(--bg))",
+     "Estuco oscuro / hormigón pintado negro cálido (#0D0B0A)",
      "Piedra vista natural o revestida",
      "Madera oscura panelada (roble, nogal, envejecida)",
      "Ladrillo visto oscuro o con veladura negra",
@@ -434,7 +434,7 @@
      "Madera oscura maciza — acabado mate o satinado, nunca brillante",
      "Piedra: mármol negro Marquina, pizarra, granito negro",
      "Metal: hierro fundido, bronce envejecido, cobre oxidado",
-     "Terciopelo: negro, borgoña (var(--burgundy)), verde botella muy oscuro"
+     "Terciopelo: negro, borgoña (#3D0A1E), verde botella muy oscuro"
     ]
    },
    "lighting": {
@@ -1140,9 +1140,9 @@
    ],
    "palette": [
     "#1a0a0a",
-    "var(--burgundy)",
-    "var(--copper)",
-    "var(--fg)",
+    "#3D0A1E",
+    "#7A5C2E",
+    "#F5F0E8",
     "#8B6914"
    ],
    "mavraNote": "Buyer persona: coleccionistas y curadores del hogar con sensibilidad histórica. Los tres productos (CND / LMP / SWD) encajan como piezas de gabinete de maravillas: el cráneo-vela como curiosidad de estudio, la lámpara como instrumento de ritual, el wall decor como reliquia escultórica. Copy: opulencia, permanencia, narrativa del objeto."
@@ -1166,7 +1166,7 @@
     "Sin brillo ni glamour artificial — la autenticidad es la prenda"
    ],
    "palette": [
-    "var(--bg)",
+    "#0D0B0A",
     "#1C1C1C",
     "#2D2D2D",
     "#C8C0B0"
@@ -1196,9 +1196,9 @@
    "palette": [
     "#1a0f1a",
     "#5B2D8E",
-    "var(--copper-bright)",
+    "#C4832A",
     "#8B4513",
-    "var(--fg)"
+    "#F5F0E8"
    ],
    "mavraNote": "Buyer persona más grande de los cinco. Hogar acogedor y oscuro, ritual de velas y cristales. Los tres productos encajan en este universo: el cráneo-vela como pieza central del altar, la lámpara como fuente de sombras acogedoras, el wall decor como focal point de la repisa. Copy: ritual, magia cotidiana, confort oscuro."
   },
@@ -1251,7 +1251,7 @@
     "#C9A6C0",
     "#A8D4C8",
     "#F2BFCD",
-    "var(--bg)"
+    "#0D0B0A"
    ],
    "mavraNote": "Buyer persona: compradores jóvenes y digitales, compradores de regalo, coleccionistas creepy-cute. El contraste oscuro-lúdico funciona con los tres productos presentados en entornos de color (lavanda, mint, rosa) con iconografía MAVRA como punto focal. Copy: irreverente, sin disculpa, juguetón. El gifting y el unboxing son momentos fotogénicos clave."
   },
@@ -1275,10 +1275,10 @@
     "Es la base neutra sobre la que se aplica vestuario específico al generar CRS por corriente"
    ],
    "palette": [
-    "var(--bg)",
-    "var(--burgundy)",
-    "var(--copper)",
-    "var(--fg)"
+    "#0D0B0A",
+    "#3D0A1E",
+    "#7A5C2E",
+    "#F5F0E8"
    ],
    "mavraNote": "Uso: listings de Amazon, hero images, y cualquier asset de marca donde se necesita un rostro/tono reconocible y universal en vez de un buyer persona específico. Women1 en esta corriente es el avatar oficial de marca — consistente en todo Amazon y contenido oficial, distinto de los avatares variados usados en UGC."
   }
