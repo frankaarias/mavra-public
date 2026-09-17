@@ -150,11 +150,13 @@ a {
 
 
 .case-study {
+  --case-bg: #0b0a09;
+  --case-surface: #15100d;
   --case-ink: #e9e1d5;
-  --case-muted: rgba(233, 225, 213, 0.62);
+  --case-muted: #b9b1a6;
   --case-line: rgba(196, 131, 42, 0.26);
   --case-bright: #d69d4c;
-  background: #0b0a09;
+  background: var(--case-bg);
   color: var(--case-ink);
   font-family: var(--font-sans);
 }
@@ -296,7 +298,7 @@ a {
 .case-decision p { max-width: 740px; margin-top: 0.4rem; color: var(--case-muted); font-size: 0.94rem; line-height: 1.7; }
 .case-decision > svg { color: var(--case-bright); }
 
-.case-proof { background: linear-gradient(100deg, rgba(61,10,30,0.22), transparent 72%); }
+.case-proof { background: var(--case-bg); }
 .case-all-evidence { justify-self: end; }
 .case-proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(2.5rem, 5vw, 4.5rem); border-top: 1px solid var(--case-line); }
 .case-proof-grid article { padding: 1.2rem 1rem 0 0; border-right: 1px solid var(--case-line); }
@@ -310,7 +312,7 @@ a {
 .case-role li { display: flex; align-items: center; gap: 0.5rem; color: var(--case-ink); font-size: 0.9rem; }
 .case-role li svg { color: var(--case-bright); flex: 0 0 auto; }
 
-.case-contact { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr); gap: clamp(2.5rem, 8vw, 10rem); padding-top: clamp(4rem, 9vw, 7rem); padding-bottom: clamp(4rem, 9vw, 7rem); background: #15100d; }
+.case-contact { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr); gap: clamp(2.5rem, 8vw, 10rem); padding-top: clamp(4rem, 9vw, 7rem); padding-bottom: clamp(4rem, 9vw, 7rem); background: var(--case-surface); }
 .case-contact h2 { font-size: clamp(2rem, 4.3vw, 3.75rem); }
 .case-contact-copy > p:last-child { max-width: 530px; margin-top: 1.3rem; color: var(--case-muted); line-height: 1.75; }
 .case-contact-form { display: grid; gap: 1.15rem; }
@@ -320,7 +322,7 @@ a {
 .case-form-trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .case-contact-form button[disabled] { opacity: 0.6; cursor: progress; }
 .case-contact-form label { display: grid; gap: 0.45rem; }
-.case-contact-form label span { color: rgba(233,225,213,0.55); font: 0.58rem var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.case-contact-form label span { color: var(--case-muted); font: 0.58rem var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; }
 .case-contact-form input, .case-contact-form textarea { width: 100%; border: 0; border-bottom: 1px solid var(--case-line); border-radius: 0; padding: 0.45rem 0; background: transparent; color: var(--case-ink); font: 0.94rem var(--font-sans); outline: none; resize: vertical; }
 .case-contact-form input:focus, .case-contact-form textarea:focus { border-color: var(--case-bright); }
 .case-contact-form button { justify-self: start; margin-top: 0.6rem; cursor: pointer; }
@@ -3229,7 +3231,7 @@ main.case-study.brand-os-index {
   max-width: none;
   margin: 0;
   padding: 0;
-  background: #0b0a09;
+  background: var(--case-bg);
 }
 .case-study .brand-os-hero {
   max-width: 1440px;
@@ -3327,3 +3329,22 @@ main.case-study.brand-os-index {
 @media (max-width: 700px) {
   .case-study .brand-os-card { border-right: 1px solid var(--case-line); }
 }
+
+/* Shared case-study / Brand OS theme: tokens live in the global stylesheet so
+   direct visits and client-side navigation resolve exactly the same colors. */
+:root[data-theme="light"] .case-study {
+  --case-bg: #f4efe7;
+  --case-surface: #e7ded1;
+  --case-ink: #211b16;
+  --case-muted: #62584e;
+  --case-line: rgba(123, 79, 30, .25);
+  --case-bright: #895115;
+}
+:root[data-theme="light"] .case-hero,
+:root[data-theme="light"] .case-chapter { background: var(--case-bg); }
+:root[data-theme="light"] .case-grid-noise { display: none; }
+:root[data-theme="light"] .case-button.secondary { background: var(--case-surface); }
+:root[data-theme="light"] .case-work-images a { background: var(--case-surface); }
+:root[data-theme="light"] .case-work-images em { background: #f4efe7; color: var(--case-ink); }
+.case-category, .case-scope-grid dt, .case-footer { color: var(--case-muted); }
+.case-footer { background: var(--case-bg); }

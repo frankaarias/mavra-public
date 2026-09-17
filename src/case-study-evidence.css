@@ -25,26 +25,6 @@
 .case-work-images a:hover img { opacity: 1; transform: scale(1.015); }
 .case-work-images em { position: absolute; right: 0.7rem; bottom: 0.7rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.5rem; background: rgba(11,10,9,0.86); color: var(--case-ink); font: 0.55rem var(--font-mono); font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; }
 
-[data-theme="light"] .case-study {
-  --case-ink: #211b16;
-  --case-muted: rgba(33, 27, 22, 0.66);
-  --case-line: rgba(123, 79, 30, 0.25);
-  --case-bright: #9a5e18;
-  background: #f4efe7;
-}
-[data-theme="light"] .case-hero {
-  background:
-    linear-gradient(105deg, rgba(244,239,231,0.96) 15%, rgba(244,239,231,0.52) 75%),
-    linear-gradient(0deg, rgba(244,239,231,0.76), transparent 60%),
-    url('/shots/home.jpg') center / cover;
-}
-[data-theme="light"] .case-button.secondary { background: rgba(244,239,231,0.58); }
-[data-theme="light"] .case-work-images a { background: #e7ded1; }
-[data-theme="light"] .case-work-images em { background: rgba(244,239,231,0.92); color: #211b16; }
-[data-theme="light"] .case-proof { background: linear-gradient(100deg, rgba(170,116,71,0.16), transparent 72%); }
-[data-theme="light"] .case-contact { background: #e7ded1; }
-[data-theme="light"] .case-footer { background: #f4efe7; }
-
 @media (max-width: 900px) {
   .case-hero { min-height: clamp(620px, 80svh, 700px); }
   .case-work-intro-copy, .case-work-item { grid-template-columns: 1fr; }
