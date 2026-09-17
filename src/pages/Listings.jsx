@@ -1,58 +1,12 @@
-import { useEffect } from 'react'
-import brand from '../brand/brand.json'
 import useMavraLanguage from '../components/useMavraLanguage.js'
-
-const { identity } = brand
-const copy = {
-  en: {
-    title: <>A listing is a<br />retail experience.</>,
-    document: 'Listing Architecture',
-    eyebrow: 'Case study evidence · Amazon PDP',
-    lead: 'MAVRA’s listing architecture is built around decision friction. Every image earns its place by making a product truth easier to see, understand or want.',
-    system: 'Image system',
-    cards: [
-      ['Main image', 'Establish material, silhouette and what is included in a single glance.'],
-      ['Proof images', 'Use every secondary frame to answer a distinct buyer question: scale, construction, use, presentation or setup.'],
-      ['Emotional context', 'Show the object inside a permanent interior so the product becomes a credible expression of the buyer’s identity.'],
-      ['Collection logic', 'Connect related products only after the individual product has earned understanding and trust.'],
-    ],
-    principle: 'The principle',
-    closing: 'The strongest PDPs do not make the customer decode a mood board. They connect a product attribute to a real buying decision while preserving the emotional world that makes the product memorable.'
-  },
-  es: {
-    title: <>Un listing es una<br />experiencia de retail.</>,
-    document: 'Arquitectura de Listing',
-    eyebrow: 'Evidencia del caso · PDP de Amazon',
-    lead: 'La arquitectura del listing de MAVRA se construye alrededor de la fricción de decisión. Cada imagen gana su lugar al hacer una verdad del producto más fácil de ver, entender o desear.',
-    system: 'Sistema de imágenes',
-    cards: [
-      ['Imagen principal', 'Establece material, silueta y lo que incluye el producto con una lectura inmediata.'],
-      ['Imágenes de prueba', 'Usa cada imagen secundaria para resolver una pregunta distinta: escala, construcción, uso, presentación o instalación.'],
-      ['Contexto emocional', 'Muestra el objeto dentro de un interior permanente para que el producto sea una expresión creíble de la identidad del comprador.'],
-      ['Lógica de colección', 'Conecta productos relacionados solo después de que el producto individual haya ganado comprensión y confianza.'],
-    ],
-    principle: 'El principio',
-    closing: 'Los PDP más sólidos no obligan al cliente a descifrar un moodboard. Conectan un atributo del producto con una decisión de compra real, preservando el mundo emocional que lo hace memorable.'
-  }
-}
-const s = {
-  page: { maxWidth: '1280px', margin: '0 auto', padding: '70px clamp(20px, 4vw, 52px)' },
-  eyebrow: { color: 'var(--copper)', fontSize: '0.67rem', letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0 },
-  title: { color: 'var(--fg)', fontFamily: 'var(--font-condensed)', fontSize: 'clamp(2.4rem, 6vw, 4.8rem)', fontWeight: 400, lineHeight: 1, letterSpacing: '0.04em', margin: '16px 0 0' },
-  lead: { color: 'rgba(var(--fg-rgb),0.62)', fontFamily: "'IM Fell English', Georgia, serif", fontStyle: 'italic', fontSize: '1.25rem', lineHeight: 1.55, maxWidth: '740px', margin: '22px 0 0' },
-  grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(250px,1fr))', gap: '14px', marginTop: '30px' },
-  card: { padding: '26px', minHeight: '175px', border: '1px solid rgba(var(--copper-rgb),0.23)', background: 'rgba(255,255,255,0.02)' },
-  number: { color: 'var(--copper)', fontSize: '0.65rem', letterSpacing: '0.18em' },
-  h3: { color: 'var(--fg)', fontFamily: 'var(--font-condensed)', fontWeight: 400, fontSize: '1.22rem', letterSpacing: '0.06em', margin: '15px 0 0' },
-  body: { color: 'rgba(var(--fg-rgb),0.58)', fontSize: '0.87rem', lineHeight: 1.7, margin: '12px 0 0' },
-}
-export default function Listings() {
-  const [language] = useMavraLanguage()
-  const t = copy[language] || copy.en
-  useEffect(() => { document.title = `${identity.name} — ${t.document}` }, [t.document])
-  return <main style={s.page}>
-    <header><p style={s.eyebrow}>{t.eyebrow}</p><h1 style={s.title}>{t.title}</h1><p style={s.lead}>{t.lead}</p></header>
-    <section style={{ marginTop: '64px' }}><p style={s.eyebrow}>{t.system}</p><div style={s.grid}>{t.cards.map(([title, text], index) => <article key={title} style={s.card}><span style={s.number}>0{index + 1}</span><h2 style={s.h3}>{title}</h2><p style={s.body}>{text}</p></article>)}</div></section>
-    <section style={{ marginTop: '72px', padding: '30px', border: '1px solid rgba(var(--copper-rgb),0.23)', background: 'rgba(var(--copper-rgb),0.04)' }}><p style={s.eyebrow}>{t.principle}</p><p style={{ ...s.body, marginBottom: 0, maxWidth: '800px', fontSize: '0.98rem' }}>{t.closing}</p></section>
-  </main>
+import { EvidenceLayout, VisualEvidence, AssetNote } from '../components/CaseEvidence.jsx'
+import { listingBriefs } from '../content/caseEvidence.js'
+import { Link } from 'react-router-dom'
+export default function Listings(){
+ const [lang]=useMavraLanguage();const es=lang==='es'
+ return <EvidenceLayout title={es?'Cada imagen responde una pregunta de compra.':'Every image answers a buying question.'} intro={es?'El listing es la ficha de producto en Amazon. Estos briefs definen qué debe mostrar cada imagen, qué duda resuelve y qué mensaje la acompaña, para las tres líneas de MAVRA.':'A listing is the product page on Amazon. These briefs define what each image should show, the question it answers and its message, across MAVRA’s three product lines.'}>
+ <section className="editorial-section"><p className="editorial-status">{es?'Entregable: brief de imágenes · 20 posiciones documentadas':'Deliverable: image brief · 20 documented slots'}</p><AssetNote/><nav className="editorial-jump" aria-label={es?'Elegir producto':'Choose a product'}>{listingBriefs.map(p=><a key={p.id} href={'#'+p.id}>{p.name}</a>)}</nav></section>
+ {listingBriefs.map((p,i)=><section className="editorial-section" id={p.id} key={p.id}><h2>{p.name}</h2><div className="brief-product"><VisualEvidence indices={[i]}/><div><p className="editorial-note">{es?'Secuencia recuperada del brief de producción. El texto destinado al comprador estadounidense se conserva en inglés. Las especificaciones y la elegibilidad de las imágenes deben verificarse antes de publicarlas.':'Sequence recovered from the production brief. Copy intended for US shoppers remains in English. Product specifications and image eligibility need verification before publication.'}</p>{p.slots.map((s,n)=><details className="brief-slot" key={s[0]} open={n===0||n===1}><summary><span>{String(n+1).padStart(2,'0')}</span> {s[es?1:0]}</summary><dl><dt>{es?'Pregunta del comprador':'Buyer question'}</dt><dd>{s[es?5:4]}</dd><dt>{es?'Decisión de imagen':'Image direction'}</dt><dd>{s[es?3:2]}</dd>{s[6]&&<><dt>{es?'Texto del brief · Amazon US':'Brief copy · Amazon US'}</dt><dd className="brief-copy">{s[6]}</dd></>}</dl></details>)}</div></div></section>)}
+ <section className="editorial-section"><h2>{es?'Del mensaje a la ficha completa':'From the message to the complete product page'}</h2><p>{es?'Las imágenes aclaran uso, escala y materiales. El texto desarrolla la información del producto; A+ organiza el recorrido visual de la marca.':'Images clarify use, scale and materials. Copy develops product information; A+ organises the brand’s visual story.'}</p><div className="editorial-links"><Link to="/copy">{es?'Ver textos de producto':'See product copy'} →</Link><Link to="/aplus-briefs">{es?'Ver el brief A+':'See the A+ brief'} →</Link></div></section>
+ </EvidenceLayout>
 }

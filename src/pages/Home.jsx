@@ -1,67 +1,16 @@
 import { Link } from 'react-router-dom'
 import useMavraLanguage from '../components/useMavraLanguage.js'
-
-const copy = {
-  en: {
-    eyebrow: 'MAVRA · BRAND OS',
-    title: 'The source library behind the case study.',
-    intro: 'A concise map of the systems used to build MAVRA. Start with the case study for the narrative; open a section only when you want to inspect the work behind it.',
-    note: 'This is an index, not a second Brand Book.',
-    groups: [
-      { number: '01', title: 'Brand foundation', body: 'Positioning, audience, verbal identity and the visual system that holds the brand together.', links: [['Brand Guidelines', '/brand-guidelines'], ['Typography', '/fonts']] },
-      { number: '02', title: 'Creative direction', body: 'The production language that turns strategy into scenes, motion and repeatable visual rules.', links: [['Creative Direction', '/briefing#briefing-top'], ['Scenography', '/scenography#scenography-top'], ['Filmography', '/filmografia'], ['Avatars', '/avatares']] },
-      { number: '03', title: 'Amazon retail', body: 'The product, listing and A+ surfaces where the brand is made legible at the moment of purchase.', links: [['Listings', '/listings'], ['A+ briefs', '/aplus-briefs'], ['Copy & Ads', '/copy']] },
-      { number: '04', title: 'Growth operations', body: 'Research, campaign architecture, launch control and creator systems. These are working tools, not a sales deck.', links: [['Research workspace', '/research'], ['Campaigns', '/campaigns'], ['Launch', '/launch'], ['Creators', '/creators']] }
-    ],
-    returnToCase: 'Return to Case Study',
-    footer: 'MAVRA · Brand OS'
-  },
-  es: {
-    eyebrow: 'MAVRA · BRAND OS',
-    title: 'La biblioteca fuente detrás del caso de estudio.',
-    intro: 'Un mapa conciso de los sistemas usados para construir MAVRA. Empieza por el caso de estudio para entender la narrativa; entra a una superficie solo cuando quieras inspeccionar el trabajo que la sostiene.',
-    note: 'Esto es un índice, no un segundo Brand Book.',
-    groups: [
-      { number: '01', title: 'Fundamentos de marca', body: 'Posicionamiento, audiencia, identidad verbal y el sistema visual que sostiene la marca.', links: [['Brand Guidelines', '/brand-guidelines'], ['Tipografía', '/fonts']] },
-      { number: '02', title: 'Dirección creativa', body: 'El lenguaje de producción que convierte la estrategia en escenas, movimiento y reglas visuales repetibles.', links: [['Dirección creativa', '/briefing#briefing-top'], ['Escenografía', '/scenography#scenography-top'], ['Filmografía', '/filmografia'], ['Avatares', '/avatares']] },
-      { number: '03', title: 'Retail en Amazon', body: 'Las superficies de producto, listing y A+ donde la marca se vuelve legible en el momento de compra.', links: [['Listings', '/listings'], ['Briefs A+', '/aplus-briefs'], ['Copy & Ads', '/copy']] },
-      { number: '04', title: 'Operaciones de crecimiento', body: 'Research, arquitectura de campañas, control de lanzamiento y sistemas de creators. Son superficies de trabajo, no una presentación comercial.', links: [['Workspace de research', '/research'], ['Campañas', '/campaigns'], ['Launch', '/launch'], ['Creators', '/creators']] }
-    ],
-    returnToCase: 'Volver al Caso de estudio',
-    footer: 'MAVRA · Brand OS'
-  }
+import '../case-editorial.css'
+const CONTENT={
+ es:{title:'Explora el trabajo detrás de MAVRA.',intro:'Brand OS es el archivo del caso: documentos de marca, briefs creativos y herramientas de planificación. Elige qué quieres examinar; cada enlace indica lo que encontrarás.',back:'Leer el caso primero',groups:[
+ ['Marca y dirección visual','Cómo definimos la marca y las reglas para producir imágenes coherentes.',[['Decisiones de marca','/brand-guidelines'],['Brand Book completo','/brand-guidelines/source'],['Referentes culturales','/corrientes'],['Tipografía','/fonts'],['Piezas y dirección creativa','/briefing#briefing-top'],['Guía de escenarios y luz','/scenography#scenography-top'],['Dirección de vídeo','/filmografia'],['Personas y vestuario','/avatares']]],
+ ['Contenido de producto','Qué contamos y mostramos para ayudar al comprador a elegir.',[['Los tres productos','/skulls'],['20 briefs de imagen','/listings-briefs'],['Secuencia y copy A+','/aplus-briefs'],['Textos y palabras clave de producto','/copy']]],
+ ['Investigación y lanzamiento','Las herramientas para estudiar oportunidades y organizar la ejecución.',[['Demanda y palabras clave','/research'],['Comparación de competidores','/competitors'],['Plan de publicidad en Amazon','/campaigns'],['Comprobaciones de lanzamiento','/launch'],['Piezas y plan de Pinterest','/pinterest'],['Estrategia de creadores','/influencers'],['Brief para colaboradores','/creators']]]
+ ],contact:'Hablemos de tu marca'},
+ en:{title:'Explore the work behind MAVRA.',intro:'Brand OS is the case archive: brand documents, creative briefs and planning tools. Choose what you want to inspect; each link tells you what you will find.',back:'Read the case first',groups:[
+ ['Brand and visual direction','How we defined the brand and the rules for producing consistent imagery.',[['Brand decisions','/brand-guidelines'],['Complete Brand Book','/brand-guidelines/source'],['Cultural references','/corrientes'],['Typography','/fonts'],['Creative pieces and direction','/briefing#briefing-top'],['Setting and lighting guide','/scenography#scenography-top'],['Video direction','/filmografia'],['People and wardrobe','/avatares']]],
+ ['Product content','What we explain and show to help shoppers choose.',[['The three products','/skulls'],['20 image briefs','/listings-briefs'],['A+ sequence and copy','/aplus-briefs'],['Product copy and keywords','/copy']]],
+ ['Research and launch','Tools for reviewing opportunities and organising execution.',[['Search demand and keywords','/research'],['Competitor comparison','/competitors'],['Amazon advertising plan','/campaigns'],['Launch checks','/launch'],['Pinterest creative and plan','/pinterest'],['Creator strategy','/influencers'],['Collaborator brief','/creators']]]
+ ],contact:'Let’s talk about your brand'}
 }
-
-export default function Home() {
-  const [language] = useMavraLanguage()
-  const t = copy[language] || copy.en
-
-  return (
-    <main className="case-study brand-os-index">
-      <header className="brand-os-hero">
-        <p className="section-label">{t.eyebrow}</p>
-        <h1>{t.title}</h1>
-        <p className="brand-os-intro">{t.intro}</p>
-        <p className="brand-os-note">{t.note}</p>
-      </header>
-
-      <section className="brand-os-grid" aria-label={t.eyebrow}>
-        {t.groups.map(group => (
-          <article className="brand-os-card" key={group.number}>
-            <p className="brand-os-number">{group.number}</p>
-            <h2>{group.title}</h2>
-            <p>{group.body}</p>
-            <nav aria-label={group.title}>
-              {group.links.map(([label, to]) => <Link key={to} to={to}>{label}<span aria-hidden="true">↗</span></Link>)}
-            </nav>
-          </article>
-        ))}
-      </section>
-
-      <footer className="brand-os-footer">
-        <Link to="/">{t.returnToCase} <span aria-hidden="true">↗</span></Link>
-        <span>{t.footer}</span>
-      </footer>
-    </main>
-  )
-}
+export default function Home(){const [lang]=useMavraLanguage();const t=CONTENT[lang];return <main className="case-study editorial-case"><header className="editorial-header"><p className="case-eyebrow">AGTA / MAVRA · Brand OS</p><h1>{t.title}</h1><p className="editorial-lead">{t.intro}</p><div className="editorial-links"><Link to="/">← {t.back}</Link></div></header><section className="editorial-section editorial-library-grid" aria-label="Brand OS">{t.groups.map(([title,body,links])=><article key={title}><h2>{title}</h2><p>{body}</p><nav className="editorial-links" aria-label={title}>{links.map(([label,to])=><Link key={to} to={to}>{label} →</Link>)}</nav></article>)}</section><footer className="editorial-footer"><Link to="/">← {t.back}</Link><Link to="/#contact">{t.contact} →</Link></footer></main>}

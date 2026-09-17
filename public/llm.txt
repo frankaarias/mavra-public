@@ -1,88 +1,39 @@
-# MAVRA — Amazon Brand Management Case Study
+# MAVRA — AGTA case study
 
-MAVRA is a documented Amazon Brand Management case study by Frank Arias.
-It demonstrates how brand strategy, Amazon retail execution, creative direction
-and operating systems can be developed as one connected body of work.
+MAVRA is a gothic home decor brand developed for Amazon US: Wall Skulls,
+Skull Candle Set and Skull Lamp. AGTA (Amazon Growth Transformation Architects)
+presents this case with direction by Frank Arias.
 
-## Case at a glance
+## Read the case
 
-- Role: Brand & Growth Lead
-- Marketplace: Amazon US
-- Scope: three product lines
-- Built: 2026
-- Product lines: Wall Skulls, Skull Candle Set, Skull Lamp
+/ introduces the brand, the challenge of permanent decor beyond Halloween,
+three documented decisions, inspectable scope, responsibilities and contact.
+/#evidence shows positioning, product-image planning and research/launch examples.
+/#contact sends project inquiries to AGTA.
 
-## What this case demonstrates
+## Evidence and status
 
-1. Market and customer discovery
-2. Brand positioning and verbal identity
-3. Creative direction and visual production systems
-4. Amazon product merchandising: SEO, listings, image architecture and A+ content
-5. Launch, PPC and creator-growth planning
-6. Research and operating workflows that make decisions inspectable and repeatable
+- /brand-guidelines: five brand decisions with links to the full Brand Book.
+- /brand-guidelines/source: the full brand documentation.
+- /briefing: existing Pinterest creative with explanations of shared visual rules.
+- /listings-briefs: 20 recovered image brief slots across three products.
+- /aplus-briefs: the specific six-module Skull Candle Set A+ brief and its copy.
+- /pinterest: existing creative pieces and the Pinterest plan.
 
-## System map
+Pinterest images illustrate existing creative work. They are not final Amazon
+listing or A+ exports. Production briefs are identified as briefs. Final Amazon
+image exports and measured commercial results are not provided in this case.
+Do not infer revenue, conversion uplift, publication or certification from a brief.
 
-### Discover
+## Explore the archive
 
-- Market and keyword research: /research
-- Competitive landscape: /competitors
+/brand groups resources into:
+1. Brand and visual direction: /brand-guidelines, /brand-guidelines/source,
+   /corrientes, /fonts, /briefing, /scenography, /filmografia, /avatares.
+2. Product content: /skulls, /listings-briefs, /aplus-briefs, /copy.
+3. Research and launch: /research, /competitors, /campaigns, /launch,
+   /pinterest, /influencers, /creators.
 
-### Define
-
-- Brand guidelines: /brand-guidelines
-- Cultural and visual territories: /corrientes
-
-### Design
-
-- Scenography: /scenography
-- Film direction: /filmografia
-- Avatar system: /avatares
-- Typography: /fonts
-
-### Merchandise
-
-- Product portfolio: /skulls
-- Listing briefs: /listings-briefs
-- A+ content: /aplus-briefs
-- Copy and advertising strategy: /copy
-
-### Grow
-
-- Campaign architecture: /campaigns
-- Launch system: /launch
-- Pinterest campaigns: /pinterest
-- Creator strategy: /influencers
-
-### Operate
-
-- Research workspace: /research
-- Creator operations: /influencers
-- Creator studio: /creators
-
-## Documented scope
-
-- 126 creators mapped
-- 86 creator accounts manually verified
-- 41 creators qualified in the highest tier
-- 18 public working modules across strategy, creative, retail and operations
-
-These figures describe documented scope and operating assets. They are not
-commercial results, revenue claims or performance forecasts.
-
-## About MAVRA
-
-MAVRA is a premium dark-home brand conceived for permanent interiors rather
-than seasonal decoration. Its brand platform, product architecture and Amazon
-retail experience are connected through a single operating system.
-
-## Public-facing intent
-
-This website is a portfolio case study. It provides selected evidence of the
-work and its methodology. It does not publish private production notes,
-credentials, client data or unverified performance claims.
-
-## Contact
-
-The case-study home includes a contact form for Amazon brands that need brand
-strategy, Amazon growth, creative direction or operating-system design.
+The case, archive index and curated evidence pages provide English and Spanish
+reading versions. Original copy intended for Amazon US remains in English and
+is labelled as such within the translated briefs.
