@@ -8,7 +8,7 @@ const COPY = {
  en: {
   eyebrow:'Amazon Growth Transformation Architects · Case Study',
   title:'Building MAVRA for Amazon.',
-  intro:'MAVRA makes gothic home decor: wall skulls, a candle set and a skull lamp. This case presents AGTA’s work on the brand, directed by Frank Arias, from positioning and product content to launch planning.',
+  intro:'MAVRA makes gothic home decor: wall skulls, a candle set and a skull lamp. This case presents AGTA’s work on the brand, directed by Frank Arias and Santi Rojas, from positioning and product content to launch planning.',
   primary:'See three decisions in practice', secondary:'Explore the work archive',
   caption:'MAVRA collection · Existing Pinterest creative',
   challenge:'01 / The challenge', challengeTitle:'Make dark decor relevant beyond Halloween.',
@@ -23,15 +23,15 @@ const COPY = {
   proof:'03 / Scope and status',proofTitle:'What you can inspect today.',
   scope:[['3','Product lines','Wall Skulls, Skull Candle Set and Skull Lamp.','/skulls'],['20','Image brief slots','A specific question, image direction and copy for each slot.','/listings-briefs'],['6','Candle A+ modules','Opening, video, details, rooms, collection and closing.','/aplus-briefs']],
   scopeLink:'Inspect the work',status:'The case brings together brand documentation, existing Pinterest creative and production and launch plans. Final Amazon image exports and measured commercial outcomes are not included here. Each example identifies the kind of evidence it shows.',
-  role:'04 / Our role',roleTitle:'We connect brand decisions to the work needed to sell.',roleText:'We led MAVRA’s brand strategy, Amazon content planning, creative direction and launch planning. AGTA presents this case with direction by Frank Arias.',
+  role:'04 / Our role',roleTitle:'We connect brand decisions to the work needed to sell.',roleText:'We led MAVRA’s brand strategy, Amazon content planning, creative direction and launch planning. AGTA presents this case with direction by Frank Arias and Santi Rojas.',
   responsibilities:['Brand positioning and customer understanding','Product-page copy and image briefs','Creative direction and production rules','Research, campaign structure and launch planning'],
   contactKicker:'05 / Build your Amazon growth system',contactTitle:'What does your brand need next?',contactText:'Tell us what you sell and where you need help: positioning, product content or launch planning.',next:'Your message reaches AGTA. We will reply by email to understand your priorities and discuss the next step.',
-  form:['Your name','Work email','Company / brand','What would you like to improve?','Send your project'], sending:'Sending…',sent:'Thanks, your message is in. We will reply to the email you gave us.',failed:'That did not go through. Try again, or write to info@agta.io.',footer:'AGTA · MAVRA case study · Direction: Frank Arias'
+  form:['Your name','Work email','Company / brand','What would you like to improve?','Send your project'], sending:'Sending…',sent:'Thanks, your message is in. We will reply to the email you gave us.',failed:'That did not go through. Try again, or write to info@agta.io.',footer:'AGTA · MAVRA case study'
  },
  es: {
   eyebrow:'Amazon Growth Transformation Architects · Caso de estudio',
   title:'Construir MAVRA para vender en Amazon.',
-  intro:'MAVRA es una marca de decoración gótica para el hogar: cráneos de pared, un set de velas y una lámpara. Este caso presenta el trabajo de AGTA, con dirección de Frank Arias, desde el posicionamiento y el contenido de producto hasta el plan de lanzamiento.',
+  intro:'MAVRA es una marca de decoración gótica para el hogar: cráneos de pared, un set de velas y una lámpara. Este caso presenta el trabajo de AGTA, con dirección de Frank Arias y Santi Rojas, desde el posicionamiento y el contenido de producto hasta el plan de lanzamiento.',
   primary:'Ver tres decisiones en práctica',secondary:'Explorar el archivo de trabajo',caption:'Colección MAVRA · Pieza existente de Pinterest',
   challenge:'01 / El reto',challengeTitle:'Dar a la decoración oscura un lugar más allá de Halloween.',
   challengeText:'La estrategia de marca sitúa los objetos góticos en hogares cotidianos. El reto era trasladar ese posicionamiento a las imágenes, la información de compra y la forma de presentar la colección.',
@@ -44,10 +44,10 @@ const COPY = {
   proof:'03 / Alcance y estado',proofTitle:'Lo que puedes examinar hoy.',
   scope:[['3','Líneas de producto','Wall Skulls, Skull Candle Set y Skull Lamp.','/skulls'],['20','Posiciones de imagen','Pregunta, dirección de imagen y texto específicos para cada posición.','/listings-briefs'],['6','Módulos A+ de velas','Apertura, vídeo, detalles, habitaciones, colección y cierre.','/aplus-briefs']],
   scopeLink:'Examinar el trabajo',status:'El caso reúne documentación de marca, piezas existentes de Pinterest y planes de producción y lanzamiento. No incluye los archivos finales de imágenes de Amazon ni resultados comerciales medidos. Cada ejemplo indica qué tipo de evidencia muestra.',
-  role:'04 / Nuestro rol',roleTitle:'Conectamos las decisiones de marca con el trabajo necesario para vender.',roleText:'Lideramos la estrategia de marca de MAVRA, la planificación de contenido para Amazon, la dirección creativa y el plan de lanzamiento. AGTA presenta este caso con dirección de Frank Arias.',
+  role:'04 / Nuestro rol',roleTitle:'Conectamos las decisiones de marca con el trabajo necesario para vender.',roleText:'Lideramos la estrategia de marca de MAVRA, la planificación de contenido para Amazon, la dirección creativa y el plan de lanzamiento. AGTA presenta este caso con dirección de Frank Arias y Santi Rojas.',
   responsibilities:['Posicionamiento y comprensión del comprador','Textos de la ficha de producto y briefs de imagen','Dirección creativa y reglas de producción','Investigación, estructura de campañas y plan de lanzamiento'],
   contactKicker:'05 / Construyamos tu sistema de crecimiento en Amazon',contactTitle:'¿Qué necesita tu marca ahora?',contactText:'Cuéntanos qué vendes y dónde necesitas ayuda: posicionamiento, contenido de producto o plan de lanzamiento.',next:'Tu mensaje llega a AGTA. Te responderemos por correo para entender tus prioridades y conversar sobre el siguiente paso.',
-  form:['Tu nombre','Email de trabajo','Empresa / marca','¿Qué te gustaría mejorar?','Enviar tu proyecto'],sending:'Enviando…',sent:'Gracias, tu mensaje ya llegó. Te respondemos al correo que dejaste.',failed:'No se pudo enviar. Vuelve a intentarlo o escribe a info@agta.io.',footer:'AGTA · Caso MAVRA · Dirección: Frank Arias'
+  form:['Tu nombre','Email de trabajo','Empresa / marca','¿Qué te gustaría mejorar?','Enviar tu proyecto'],sending:'Enviando…',sent:'Gracias, tu mensaje ya llegó. Te respondemos al correo que dejaste.',failed:'No se pudo enviar. Vuelve a intentarlo o escribe a info@agta.io.',footer:'AGTA · Caso MAVRA'
  }
 }
 
