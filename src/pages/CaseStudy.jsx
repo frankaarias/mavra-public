@@ -8,7 +8,6 @@ const COPY = {
   en: {
     language: 'ES',
     eyebrow: 'Amazon Growth Transformation Architects · Case Study',
-    category: 'Amazon Brand Management',
     title: 'One Amazon brand. One connected system.',
     intro: 'MAVRA is a proof-of-work case study: a dark-home brand developed from market understanding through Amazon retail execution and launch operations.',
     primary: 'Explore the system',
@@ -30,9 +29,9 @@ const COPY = {
     proofKicker: 'Scope & proof',
     proofTitle: 'Evidence over claims.',
     proofText: 'These are documented inputs and operating assets—not commercial results or projected outcomes.',
-    roleKicker: 'My role',
+    roleKicker: 'Our role',
     roleTitle: 'Strategy, retail execution and the systems between them.',
-    roleText: 'I led the strategic and operational work across the brand. When specialist production is involved, the work should be credited as production—not mistaken for the direction behind it.',
+    roleText: 'We led the strategic and operational work across the brand. When specialist production is involved, the work should be credited as production—not mistaken for the direction behind it.',
     contactKicker: 'Build your Amazon growth system',
     contactTitle: 'Need this level of brand infrastructure for your Amazon business?',
     contactText: 'Tell me where your brand is today and what still needs connecting.',
@@ -45,7 +44,6 @@ const COPY = {
   es: {
     language: 'EN',
     eyebrow: 'Amazon Growth Transformation Architects · Caso de estudio',
-    category: 'Brand Management para Amazon',
     title: 'Una marca de Amazon. Un sistema conectado.',
     intro: 'MAVRA es un caso de estudio con prueba documental: una marca de dark home desarrollada desde el entendimiento del mercado hasta la ejecución retail en Amazon y la operación de lanzamiento.',
     primary: 'Explorar el sistema',
@@ -67,9 +65,9 @@ const COPY = {
     proofKicker: 'Alcance y prueba',
     proofTitle: 'Evidencia antes que promesas.',
     proofText: 'Estos son inputs documentados y activos operativos; no resultados comerciales ni proyecciones.',
-    roleKicker: 'Mi rol',
+    roleKicker: 'Nuestro rol',
     roleTitle: 'Estrategia, ejecución retail y los sistemas que las conectan.',
-    roleText: 'Lideré el trabajo estratégico y operativo de la marca. Cuando interviene producción especializada, debe acreditarse como producción y no confundirse con la dirección que la guía.',
+    roleText: 'Lideramos el trabajo estratégico y operativo de la marca. Cuando interviene producción especializada, debe acreditarse como producción y no confundirse con la dirección que la guía.',
     contactKicker: 'Construyamos tu sistema de crecimiento en Amazon',
     contactTitle: '¿Necesitas este nivel de infraestructura de marca para tu negocio en Amazon?',
     contactText: 'Cuéntame dónde está tu marca hoy y qué piezas necesitan empezar a trabajar conectadas.',
@@ -234,7 +232,6 @@ export default function CaseStudy() {
         <div className="case-grid-noise" aria-hidden="true" />
         <div className="case-hero-copy">
           <p className="case-eyebrow">{copy.eyebrow}</p>
-          <p className="case-category">{copy.category}</p>
           <h1>{copy.title}</h1>
           <p className="case-intro">{copy.intro}</p>
           <div className="case-hero-actions">
