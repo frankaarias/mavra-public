@@ -18,7 +18,7 @@ const COPY = {
       ['05', 'Activation', 'The brand is not a static guideline. It is designed to become a retail experience—product story, creative system and moments of activation reinforcing one another.', 'Open activation evidence', '/brand-guidelines/source#d5'],
     ],
     closeTitle: 'Read the decisions first. Inspect the source when needed.',
-    closeBody: 'The public layer makes the logic legible in minutes. The underlying matrices, principles and working notes remain one click away for anyone who wants to audit the depth.',
+    closeBody: 'The public layer makes the logic legible in minutes. The underlying matrices, principles and working notes remain one click away for anyone who wants to check the depth of the work.',
   },
   es: {
     eyebrow: 'MAVRA · Brand book',

@@ -11,7 +11,7 @@ const copy = {
     lead: 'MAVRA’s listing architecture is built around decision friction. Every image earns its place by making a product truth easier to see, understand or want.',
     system: 'Image system',
     cards: [
-      ['Main image', 'Establish material, silhouette and what is included with one immediate product read.'],
+      ['Main image', 'Establish material, silhouette and what is included in a single glance.'],
       ['Proof images', 'Use every secondary frame to answer a distinct buyer question: scale, construction, use, presentation or setup.'],
       ['Emotional context', 'Show the object inside a permanent interior so the product becomes a credible expression of the buyer’s identity.'],
       ['Collection logic', 'Connect related products only after the individual product has earned understanding and trust.'],

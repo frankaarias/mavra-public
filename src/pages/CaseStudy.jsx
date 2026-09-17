@@ -17,7 +17,7 @@ const COPY = {
       ['Role', 'Brand & Growth Lead'],
       ['Marketplace', 'Amazon US'],
       ['Scope', '3 product lines'],
-      ['Built', '2026'],
+      ['Year', '2026'],
     ],
     challengeKicker: 'The challenge',
     challengeTitle: 'Make every customer-facing decision compound.',
@@ -231,7 +231,7 @@ export default function CaseStudy() {
         <div className="case-section-label">01 / {lang === 'en' ? 'Selected evidence' : 'Evidencia seleccionada'}</div>
         <div className="case-work-intro-copy">
           <h2>{lang === 'en' ? 'The system, visible before the explanation.' : 'El sistema visible antes de explicarlo.'}</h2>
-          <p>{lang === 'en' ? 'These are the actual working surfaces built for MAVRA. The case study gives them context; it does not replace them with a claim.' : 'Estas son las superficies de trabajo reales construidas para MAVRA. El caso de estudio les da contexto; no las reemplaza por una promesa.'}</p>
+          <p>{lang === 'en' ? 'These are the actual working tools built for MAVRA. The case study gives them context; it does not replace them with a claim.' : 'Estas son las superficies de trabajo reales construidas para MAVRA. El caso de estudio les da contexto; no las reemplaza por una promesa.'}</p>
         </div>
         <div className="case-featured-work">
           {featuredWork.map(work => (

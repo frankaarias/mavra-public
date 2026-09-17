@@ -81,21 +81,21 @@ export const EN = {
     'Those keywords over the current MKL total. A competitor can hold few keywords and a lot of volume: this number separates breadth from weight.',
   'Suma del SV de esas keywords en página 1.': 'Sum of search volume for those page-1 keywords.',
   'Cuántas keywords del bucket Outliers tiene en página 1. Si es 0, no está peleando lo uncontested.':
-    'How many Outlier-bucket keywords it holds on page 1. If it is 0, it is not contesting the open ground.',
+    'How many Outlier-bucket keywords it holds on page 1. If it is 0, it is not competing for the open ground.',
   'Volumen que el competidor ya cubre dentro del bucket Outliers de ahora. Si es 0, ese hueco sigue libre.':
     'Volume this competitor already covers inside the current Outliers bucket. If it is 0, that gap is still open.',
   'Precio de venta actual (Keepa). No depende del MKL.': 'Current selling price (Keepa). Independent of the MKL.',
   'Cuántas unidades trae (Keepa). Sin esto, un set de 4 parece caro al lado de una pieza suelta.':
     'How many units it contains (Keepa). Without this, a 4-pack looks expensive next to a single item.',
   'Precio ÷ piezas. Es el único precio comparable entre productos: es el que usa el price-fit de las keywords.':
-    'Price ÷ units. The only price comparable across products: it is what the keyword price-fit uses.',
+    'Price ÷ units. The only price that’s comparable across products: it is what the keyword price-fit uses.',
   'Promedio de estrellas (Keepa).': 'Average star rating (Keepa).',
   'Cantidad de reseñas acumuladas (Keepa). Es la barrera de entrada más dura del nicho.':
-    'Lifetime review count (Keepa). The hardest entry barrier in the niche.',
+    'Lifetime review count (Keepa). The hardest barrier to entry in the niche.',
   'Veces que le cayó el BSR en 30 días (evento de venta observado). NO son unidades vendidas.':
     'Times its BSR dropped in 30 days (observed sales event). These are NOT units sold.',
   'Actividad de venta × precio. Sirve para ordenar competidores por peso económico, no para leerlo como facturación: hereda la advertencia de la fila de arriba.':
-    'Sales activity × price. Use it to rank competitors by economic weight, not to read as revenue: it carries the caveat from the row above.',
+    'Sales activity × price. Use it to rank competitors by economic weight, not as a revenue figure: it carries the caveat from the row above.',
   'Cuántas variaciones tiene el listing (color, tamaño). Más variaciones = más reseñas compartidas.':
     'How many variations the listing has (colour, size). More variations = more shared reviews.',
   'Categoría principal del producto (Keepa).': 'Main product category (Keepa).',
@@ -116,7 +116,7 @@ export const EN = {
   'sin definir': 'not set',
   'Producto:': 'Product:',
   'Seleccionar todas': 'Select all',
-  'volver al orden original': 'back to the original order',
+  'volver al orden original': 'Reset order',
   'mayor a menor': 'high to low',
   'menor a mayor': 'low to high',
   'ordenado por': 'sorted by',
@@ -131,9 +131,9 @@ export const EN = {
 
   // ── Veredicto del nicho ──────────────────────────────────────────────────
   'Veredicto del nicho': 'Niche verdict',
-  'del nicho ya es del líder': 'of the niche already belongs to the leader',
+  'del nicho ya es del líder': 'of the niche is already the leader’s',
   'su parte en primera página — cuanto más alto, menos sitio queda':
-    'its page-1 share — the higher it is, the less room is left',
+    'its share of page 1 — the higher it goes, the less room there is for you',
   'búsquedas al mes sin dueño': 'monthly searches with no owner',
   'las rankean 2 competidores o menos — por ahí se entra':
     'ranked by 2 competitors or fewer — that is the way in',
@@ -142,7 +142,7 @@ export const EN = {
   'las que pelea el nicho': 'the ones the niche fights over',
   'volumen que nadie domina': 'volume nobody dominates',
   competidores: 'competitors',
-  'sobre los que se midió todo': 'everything was measured against these',
+  'sobre los que se midió todo': 'the benchmark for everything here',
   'Por qué': 'Why',
   'Por dónde se entra': 'Where to enter',
   'comp.': 'comp.',
@@ -225,26 +225,26 @@ export const EN = {
   'SIN VENTAS': 'NO SALES',
   suma: 'adds up to',
   // ── Barra de herramientas de la tabla de keywords ────────────────────────
-  'Cómo se lee': 'How to read it',
-  'Qué significa cada color y cada marca de la tabla': 'What each colour and each mark in the table means',
+  'Cómo se lee': 'How to read this table',
+  'Qué significa cada color y cada marca de la tabla': 'What each colour and mark in the table means',
   'seleccionadas → mover a': 'selected → move to',
   'Con marcas': 'With brands',
   'Sin marcas': 'No brands',
   'Mostrar u ocultar la columna de cada competidor con su puesto':
-    'Show or hide each competitor column with its rank',
+    'Show or hide the per-competitor rank columns',
   'Orgánico': 'Organic',
   Pagado: 'Paid',
   'Orgánico = dónde rankea gratis · Patrocinado = en qué puesto aparece pagando':
-    'Organic = where it ranks for free · Sponsored = at what position it shows up paying',
-  'Volver al orden y a las columnas de fábrica': 'Back to the default order and columns',
+    'Organic = where it ranks for free · Sponsored = where it ranks when paying',
+  'Volver al orden y a las columnas de fábrica': 'Reset order and columns',
   'Quitar todos los filtros de columna': 'Clear every column filter',
   'Limpiar filtros': 'Clear filters',
   'tu precio': 'your price',
   'A qué precio POR UNIDAD piensas vender. De acá salen la columna Precio y la Evaluación. Si lo dejas vacío, no se emiten los veredictos que dependen del precio.':
     'The price PER UNIT you plan to sell at. The Price column and the Assessment come from this. Leave it empty and the verdicts that depend on price are not issued.',
-  'Marca el checkbox y mueve varias de un bucket a otro.': 'Tick the checkbox and move several from one bucket to another.',
+  'Marca el checkbox y mueve varias de un bucket a otro.': 'Check the box to move several at once.',
   "Amazon's Choice en este término": "Amazon's Choice for this term",
-  'Puesto en el que aparece pagando (Sponsored Rank)': 'Position where it shows up paying (Sponsored Rank)',
+  'Puesto en el que aparece pagando (Sponsored Rank)': 'Where it ranks when paying (Sponsored Rank)',
   'Puesto orgánico': 'Organic position',
   'Que tengan': 'Must contain',
   'Que no tengan': 'Must not contain',
@@ -286,7 +286,7 @@ export const EN = {
   Cualquiera: 'Any',
   Sin: 'Without',
   palabras: 'words',
-  'Basta con que tenga una de las palabras': 'Having one of the words is enough',
+  'Basta con que tenga una de las palabras': 'Matches if any word is there',
   'Tiene que tenerlas todas': 'Must contain every word',
   valores: 'values',
   'Filtrar por': 'Filter by',

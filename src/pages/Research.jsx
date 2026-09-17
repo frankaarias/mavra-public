@@ -98,10 +98,10 @@ const TAB_DESC_I18N = {
     Negatives: 'Keywords that share vocabulary with the niche but describe a different product.',
     Descartadas: `Keywords where none of the competitors shows up, not even in the top ${S.max_rank}.`,
     UKL: 'The universe of the niche, not the world of your competitors. The MKL comes from reverse ASIN, so it can only return terms where one of them already ranks; this list comes from Magnet by roots and brings what the niche searches for even when none of them is there. That is why the relevancy column shows a dash: the absence is the finding. Each keyword carries two independent labels — when it can be attacked and what it is good for.',
-    Veredicto: 'Reading the niche before entering: whether it is worth it, why, and through where. This is the decision you make once; the rest of the tabs are the everyday work.',
-    Roots: 'The words that repeat across the core. Frequency says how many keywords each one appears in; broad volume, how much traffic the whole family moves. Each root is a PPC campaign, and you attack them one at a time. Tick one or several to see their keywords alongside.',
+    Veredicto: 'Reading the niche before entering: whether it’s worth it, why, and where you get in. This is the decision you make once; the rest of the tabs are the everyday work.',
+    Roots: 'The words that repeat across the core. Frequency says how many keywords each one appears in; broad volume, how much traffic the whole family moves. Each root is a PPC campaign, and you attack them one at a time. Select one or more to see their keywords next to them.',
     Normalizer: 'The core without plurals or conjunctions, grouped by form. It serves one concrete purpose: spotting when you are saying the same thing three different ways. In PPC those three variants bid against each other and push your cost per click up. Campaigns are not built from here: they are built by root.',
-    Competidores: 'Who is who in the niche, measured against the median. Coverage, share and strength recalculate with the current buckets: move keywords and these numbers move. Price, reviews, age and sales activity come from Keepa — observed data, not estimated.',
+    Competidores: 'Who’s who in the niche, measured against the median. Coverage, share and strength recalculate with the current buckets: move keywords and these numbers move. Price, reviews, age and sales activity come from Keepa — observed data, not estimated.',
   },
 }
 
@@ -160,10 +160,10 @@ const INFO_I18N = {
     rel: `Relevancy % — what share of your competitors sits on page one for that term. · AGTA calculation`,
     p1: `P1 — how many of your ${DATASETS.LMP.meta.n_comp} competitors are on page one for that term (position ${S.p1_rank} or better). At ${S.min_comp} or more, the keyword enters the core. · AGTA calculation over market ranks`,
     fit: 'Fit — how much the keyword is about YOUR product. Not the same as Relevancy: relevancy measures how much your competitors own it, fit measures whether it is any use to you. · AGTA calculation',
-    idn: 'IDN — capturable demand: volume × fit. It sorts by what you can take, not by what gets searched. · AGTA calculation',
+    idn: 'IDN — capturable demand: volume × fit. Sort by it to rank keywords by what you can take. · AGTA calculation',
     td: 'TD — how many of the top listings use the keyword in their TITLE. Low = the title is uncontested, easier to win. · market data',
     cp: 'CP — how many products compete for that term. · market data',
-    tier: 'Tier — how much the keyword is yours. CORE names your product; SECONDARY is the type but not yours; LONG-TAIL, the rest. · AGTA calculation',
+    tier: 'Tier — how closely the keyword matches your product. CORE names your product; SECONDARY is the type but not yours; LONG-TAIL, the rest. · AGTA calculation',
     prio: 'Prio — P1, P2 or P3 by capturable demand. It is the order you attack them in at launch. · AGTA calculation',
     match: 'Suggested PPC match type. If the keyword is already specific it goes exact; if it heads a large family, phrase; if it is the head term with volume, broad. · AGTA calculation',
     cuando: 'When to attack it, UKL only. NOW: you satisfy it and the gap is open. LATER: the gap is closed or it is seasonal. NO: do not bid. · AGTA calculation',
@@ -171,14 +171,14 @@ const INFO_I18N = {
     serp: 'SERP — result-page flags: SBV = Sponsored Brand Video · AC = Amazon’s Choice · SP = Sponsored Product. You can filter by typing SBV, AC or SP.',
     root_root: 'Root — a word or phrase that repeats across the core. If it shows up in a single keyword it is not a root. Each root is a PPC campaign, and you attack them one at a time. · AGTA calculation',
     root_frec: 'Frequency — how many MKL keywords this root appears in. It recalculates when you move keywords between buckets.',
-    root_sv: 'Broad volume — the summed SV of every MKL keyword containing the root. It is the traffic ceiling of the family, not what you will capture.',
-    root_kws: 'The MKL keywords containing any of the ticked roots. Adding roots widens the coverage.',
+    root_sv: 'Broad volume — the total SV of every MKL keyword containing the root. It is the traffic ceiling of the family, not what you will capture.',
+    root_kws: 'The MKL keywords containing any of the checked roots. Adding roots widens your coverage.',
     norm_kw: 'Normalised form — the keyword without plurals or conjunctions. The ones that end up identical collapse into a single row.',
     norm_sv: 'SV — the summed volume of every keyword that collapsed into this form. It is the real demand for the idea, not for one way of writing it.',
     norm_n: 'Variants — how many MKL keywords collapsed into this form. If it says 3, there are 3 ways of writing the same thing that in PPC bid against each other and push your CPC up: run one.',
     comp_metrica: 'Each row is one competitor metric. Click the row name to sort the columns by that metric.',
     comp_med: 'Niche median — half the competitors sit above this value and half below. It is the yardstick for reading whether a number is high or low in here.',
-    compra_mil: 'KW CVR — how many of that term’s searches end in a purchase. It belongs to the MARKET, not to you: read it against the niche median. · AGTA calculation over market data',
+    compra_mil: 'KW CVR — what share of that term’s searches ends in a purchase. It belongs to the MARKET, not to you: read it against the niche median. · AGTA calculation over market data',
     trend: 'Trend — how the volume moves. Above +80% it is a SEASONAL keyword: if your product sells year-round, that volume is not yours however large it looks.',
     price_fit: 'Price — median PER-UNIT price of those ranking there against yours. Below 60% they buy far cheaper; above 160% they charge more than you.',
     veredicto: 'Eval — the signal in one word: ATTACK, PRICE ABOVE, PRICE BELOW, LOW CVR or SEASONAL. Hover the value to see the number behind it.',
@@ -241,7 +241,7 @@ function UsoDot({ valor, campo }) {
       title={`${campo} — ${valor === NO_ESTA
         ? (lang === 'en' ? 'the keyword is not in this field' : 'la keyword no está en este campo')
         : sinCampo
-          ? (lang === 'en' ? 'not written yet, there is nothing to measure' : 'todavía no está escrito, no hay nada que medir')
+          ? (lang === 'en' ? 'not written yet — nothing to measure' : 'todavía no está escrito, no hay nada que medir')
           : valor}`}
       style={{
         display: 'inline-block', width: 10, height: 10, borderRadius: '50%',
@@ -1761,13 +1761,13 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             {lang === 'en' ? (
               <>
                 Coverage, share, strength and Outlier volume come from the <b>current MKL</b>: they recalculate
-                on their own when you move keywords between buckets, and so does the median of those three rows.
+                automatically when you move keywords between buckets, and so does the median of those three rows.
                 Price, rating, reviews, age, variations and category come from <b>Keepa</b> and do not depend on the MKL.
                 <br />
-                ⚠️ <b>“Sales activity 30d” are NOT units:</b> they are the number of times its BSR dropped in 30 days
+                ⚠️ <b>“Sales activity 30d” is NOT a unit count:</b> they are the number of times its BSR dropped in 30 days
                 (observed sales event). Other tools show <i>estimated</i> units from a curve; we prefer the hard number
                 until the BSR→sales curve is calibrated against real sales from connected accounts. Use it to compare
-                competitors with each other, not to read as “sold N”.
+                competitors with each other, not as a “sold N” figure.
               </>
             ) : (
               <>
@@ -1869,7 +1869,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
                       vacíos son el sitio donde se esconde lo que no se tradujo.
                       Y de paso sale el voseo: «te indexás» no va para un cliente. */}
                   {lang === 'en'
-                    ? 'Tick one or more roots to see their keywords here. Adding roots widens your coverage: write two of them into your listing and you get indexed for both sets of keywords.'
+                    ? 'Select one or more roots to see their keywords here. Adding roots widens your coverage: write two of them into your listing and you get indexed for both sets of keywords.'
                     : 'Marca uno o varios roots para ver aquí sus keywords. Sumar roots amplía la cobertura: si escribes los dos en el listing, te indexas por las keywords de ambos.'}
                 </p>
               ) : (
@@ -1911,7 +1911,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
               <>
                 Roots are built live from the <b>{miles(mklKws.length)} keywords currently in the MKL</b>:
                 phrases of 1 to 3 words, and anything appearing in a single keyword does not count as a root.
-                Move keywords between buckets and frequency and broad volume recalculate on their own.
+                Move keywords between buckets and frequency and broad volume recalculate automatically.
                 {' '}<b>This is how PPC gets built:</b> one campaign per root, one root at a time — not from the
                 Normalizer, which is text cleanup. Green background = 2- and 3-word roots, the ones that actually work.
               </>
@@ -2289,11 +2289,11 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
             <p className="rsch-foot">
               {lang === 'en' ? (
                 <>
-                  Each filter speaks the language of its column: numeric ones accept <code>&gt;100</code>, <code>&lt;50</code> or <code>100-500</code>;
+                  Each filter works the way its column does: numeric ones accept <code>&gt;100</code>, <code>&lt;50</code> or <code>100-500</code>;
                   {' '}Match, Tier, Prio and Verdict are <b>picked from a list</b> (you can see exact only, or exact + phrase). Use “Columns” to hide the
                   ones you are not looking at, and <b>drag a header</b> to reorder them.
                   Rank per competitor: <span className="mkl-rank-top">solid gold</span> = ≤3 · <b style={{ color: '#e0a94c' }}>gold</b> = ≤10 · grey = 11+ · · = does not rank (or outside the top {S.max_rank}).
-                  {' '}In <b style={{ color: '#a78bfa' }}>violet</b>, the <b>sponsored</b> ranks (where it shows up paying): they come from the reverse-ASIN, not from scraping the SERP.
+                  {' '}In <b style={{ color: '#a78bfa' }}>violet</b>, the <b>sponsored</b> ranks (where it ranks when paying): they come from the reverse-ASIN, not from scraping the SERP.
                 </>
               ) : (
                 <>

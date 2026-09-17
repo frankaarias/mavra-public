@@ -5,13 +5,13 @@ const copy = {
   en: {
     eyebrow: 'MAVRA · BRAND OS',
     title: 'The source library behind the case study.',
-    intro: 'A concise map of the systems used to build MAVRA. Start with the case study for the narrative; enter a surface only when you want to inspect the work behind it.',
+    intro: 'A concise map of the systems used to build MAVRA. Start with the case study for the narrative; open a section only when you want to inspect the work behind it.',
     note: 'This is an index, not a second Brand Book.',
     groups: [
       { number: '01', title: 'Brand foundation', body: 'Positioning, audience, verbal identity and the visual system that holds the brand together.', links: [['Brand Guidelines', '/brand-guidelines'], ['Typography', '/fonts']] },
       { number: '02', title: 'Creative direction', body: 'The production language that turns strategy into scenes, motion and repeatable visual rules.', links: [['Creative Direction', '/briefing#briefing-top'], ['Scenography', '/scenography#scenography-top'], ['Filmography', '/filmografia'], ['Avatars', '/avatares']] },
       { number: '03', title: 'Amazon retail', body: 'The product, listing and A+ surfaces where the brand is made legible at the moment of purchase.', links: [['Listings', '/listings'], ['A+ briefs', '/aplus-briefs'], ['Copy & Ads', '/copy']] },
-      { number: '04', title: 'Growth operations', body: 'Research, campaign architecture, launch control and creator systems. These are working surfaces, not a sales deck.', links: [['Research workspace', '/research'], ['Campaigns', '/campaigns'], ['Launch', '/launch'], ['Creators', '/creators']] }
+      { number: '04', title: 'Growth operations', body: 'Research, campaign architecture, launch control and creator systems. These are working tools, not a sales deck.', links: [['Research workspace', '/research'], ['Campaigns', '/campaigns'], ['Launch', '/launch'], ['Creators', '/creators']] }
     ],
     returnToCase: 'Return to Case Study',
     footer: 'MAVRA · Brand OS'
