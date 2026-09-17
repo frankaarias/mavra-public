@@ -37,7 +37,7 @@ const COPY = {
     contactText: 'Tell me where your brand is today and what still needs connecting.',
     form: ['Your name', 'Work email', 'Company / brand', 'What are you building?', 'Send inquiry'],
     sending: 'Sending…',
-    sent: "Thanks — your message is in. We'll reply to the email you gave us.",
+    sent: "Thanks, your message is in. We'll reply to the email you gave us.",
     failed: "That didn't go through. Try again, or write to info@agta.io.",
     footer: 'MAVRA · A documented Amazon Brand Management case study by Frank Arias.',
   },
