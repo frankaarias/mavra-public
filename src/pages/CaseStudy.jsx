@@ -37,7 +37,9 @@ const COPY = {
     contactTitle: 'Need this level of brand infrastructure for your Amazon business?',
     contactText: 'Tell me where your brand is today and what still needs connecting.',
     form: ['Your name', 'Work email', 'Company / brand', 'What are you building?', 'Send inquiry'],
-    notice: "Message delivery isn't set up yet.",
+    sending: 'Sending…',
+    sent: "Thanks — your message is in. We'll reply to the email you gave us.",
+    failed: "That didn't go through. Try again, or write to info@agta.io.",
     footer: 'MAVRA · A documented Amazon Brand Management case study by Frank Arias.',
   },
   es: {
@@ -72,7 +74,9 @@ const COPY = {
     contactTitle: '¿Necesitas este nivel de infraestructura de marca para tu negocio en Amazon?',
     contactText: 'Cuéntame dónde está tu marca hoy y qué piezas necesitan empezar a trabajar conectadas.',
     form: ['Tu nombre', 'Email de trabajo', 'Empresa / marca', '¿Qué estás construyendo?', 'Enviar consulta'],
-    notice: 'La entrega de mensajes está en configuración.',
+    sending: 'Enviando…',
+    sent: 'Gracias, tu mensaje ya llegó. Te respondemos al correo que dejaste.',
+    failed: 'No se pudo enviar. Vuelve a intentarlo o escribe a info@agta.io.',
     footer: 'MAVRA · Caso de estudio documentado de Brand Management para Amazon por Frank Arias.',
   },
 }
@@ -198,14 +202,30 @@ const FEATURED_WORK = {
 
 export default function CaseStudy() {
   const [lang, setLang] = useMavraLanguage()
-  const [submitted, setSubmitted] = useState(false)
+  // 'quieto' · 'enviando' · 'enviado' · 'error'
+  const [envio, setEnvio] = useState('quieto')
   const copy = COPY[lang]
   const chapters = useMemo(() => CHAPTERS[lang], [lang])
   const featuredWork = FEATURED_WORK[lang]
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    setSubmitted(true)
+    const datos = Object.fromEntries(new FormData(event.currentTarget))
+    setEnvio('enviando')
+    try {
+      const r = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos),
+      })
+      if (!r.ok) throw new Error(String(r.status))
+      event.target.reset()
+      setEnvio('enviado')
+    } catch {
+      // Se dice que no salió. Dar por bueno un envío que falló es el bug que
+      // este formulario tuvo desde el principio.
+      setEnvio('error')
+    }
   }
 
   return (
@@ -318,8 +338,15 @@ export default function CaseStudy() {
           <label><span>{copy.form[1]}</span><input type="email" name="email" required /></label>
           <label><span>{copy.form[2]}</span><input name="company" /></label>
           <label><span>{copy.form[3]}</span><textarea name="message" rows="4" required /></label>
-          <button type="submit" className="case-button primary"><Mail size={15} /> {copy.form[4]}</button>
-          {submitted && <p className="case-form-notice" role="status">{copy.notice}</p>}
+          <label className="case-form-trampa" aria-hidden="true">
+            <span>No rellenar</span>
+            <input name="website" tabIndex={-1} autoComplete="off" />
+          </label>
+          <button type="submit" className="case-button primary" disabled={envio === 'enviando'}>
+            <Mail size={15} /> {envio === 'enviando' ? copy.sending : copy.form[4]}
+          </button>
+          {envio === 'enviado' && <p className="case-form-notice" role="status">{copy.sent}</p>}
+          {envio === 'error' && <p className="case-form-notice" role="alert">{copy.failed}</p>}
         </form>
       </section>
 

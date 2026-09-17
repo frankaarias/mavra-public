@@ -314,6 +314,11 @@ a {
 .case-contact h2 { font-size: clamp(2rem, 4.3vw, 3.75rem); }
 .case-contact-copy > p:last-child { max-width: 530px; margin-top: 1.3rem; color: var(--case-muted); line-height: 1.75; }
 .case-contact-form { display: grid; gap: 1.15rem; }
+/* Campo señuelo del formulario de contacto: los bots rellenan todo lo que
+   encuentran, y una persona no lo ve. Fuera de pantalla en vez de display:none,
+   que algunos bots detectan. */
+.case-form-trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.case-contact-form button[disabled] { opacity: 0.6; cursor: progress; }
 .case-contact-form label { display: grid; gap: 0.45rem; }
 .case-contact-form label span { color: rgba(233,225,213,0.55); font: 0.58rem var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; }
 .case-contact-form input, .case-contact-form textarea { width: 100%; border: 0; border-bottom: 1px solid var(--case-line); border-radius: 0; padding: 0.45rem 0; background: transparent; color: var(--case-ink); font: 0.94rem var(--font-sans); outline: none; resize: vertical; }
