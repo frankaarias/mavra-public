@@ -39,6 +39,6 @@ try {
  assert.equal((outputs.Listings.en.match(/<details/g)||[]).length,20)
  assert.equal((outputs.CaseStudy.en.match(/<form/g)||[]).length,1)
  assert(outputs.CaseStudy.en.includes('name="website"'))
- assert(outputs.AplusBriefs.en.includes('not final listing or A+ exports'))
+ assert(outputs.AplusBriefs.en.includes('recovered deliverable on this page is the production brief'))
  console.log('PASS collective voice, primary CTA, 20 briefs, contact form and evidence status')
 } finally { delete globalThis.localStorage; console.error = originalError; await vite.close() }
