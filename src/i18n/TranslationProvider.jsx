@@ -28,7 +28,7 @@ export function TranslationProvider({ children, language: override }) {
     document.documentElement.lang = language
     const path = decodeURI(pathname).replace(/\/$/, '') || '/'
     const title = titles[aliases[path] || path]
-    if (title) document.title = `${title[language === 'es' ? 1 : 0]} — MAVRA`
+    document.title = path === '/' || !title ? 'AGTA - Brain Identity' : `${title[language === 'es' ? 1 : 0]} | AGTA - Brain Identity`
   }, [language, pathname])
   const value = useMemo(() => ({
     language,
