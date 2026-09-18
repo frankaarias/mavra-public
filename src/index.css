@@ -3348,3 +3348,19 @@ main.case-study.brand-os-index {
 :root[data-theme="light"] .case-work-images em { background: #f4efe7; color: var(--case-ink); }
 .case-category, .case-scope-grid dt, .case-footer { color: var(--case-muted); }
 .case-footer { background: var(--case-bg); }
+
+/* Shared navigation controls: restrained, interaction-only feedback. */
+.global-nav .nav-brand { font-family:'Cinzel',serif; font-size:1.2rem; letter-spacing:.2em; }
+.global-nav .nav-links a { font-size:.82rem; letter-spacing:0; text-transform:none; color:var(--fg); }
+.global-nav .nav-links a:hover,.global-nav .nav-links a.active { color:var(--copper-bright); }
+.global-nav .theme-toggle { width:40px; height:40px; }
+.global-nav .theme-toggle svg { transition:transform 150ms ease; }
+.global-nav .theme-toggle:hover svg { transform:rotate(12deg); }
+.language-toggle { position:relative; border-radius:7px; gap:0; padding:3px; }
+.language-toggle::before { content:''; position:absolute; inset:3px auto 3px 3px; width:calc((100% - 6px)/2); border-radius:4px; background:rgba(var(--copper-rgb),.25); transition:transform 150ms ease; pointer-events:none; }
+.language-toggle[data-language="es"]::before { transform:translateX(100%); }
+.language-toggle button { position:relative; z-index:1; min-width:34px; min-height:32px; border-radius:4px; font:600 .72rem/1 var(--font-sans); letter-spacing:0; color:var(--fg); }
+.language-toggle button.active { background:transparent; }
+.global-nav button:focus-visible,.global-nav a:focus-visible { outline:2px solid var(--copper-bright); outline-offset:4px; }
+@media(max-width:760px) { .global-nav { padding:1rem 1.2rem; } .global-nav .nav-right { gap:.7rem; } }
+@media(prefers-reduced-motion:reduce) { .global-nav *, .language-toggle::before { animation:none!important;transition:none!important; } .global-nav .theme-toggle:hover svg { transform:none; } }
