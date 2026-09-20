@@ -51,7 +51,9 @@ Balance headings and test Spanish text expansion rather than shrinking all type.
 The shared case-study editorial container is 1180px with fluid horizontal padding;
 Brand OS expands to 1380px while retaining the header and section alignment.
 Its guided journey pairs a vertical stage rail with one detail panel: a real
-preview, an explanation of the connection, a resource link and the next step.
+preview, an explanation of the connection and a resource link. Desktop preview
+height adapts to the viewport (140–300px) so the complete detail block remains
+visible on ordinary laptop screens; mobile uses a natural stacked flow.
 The full library uses the same rail-and-detail layout for five areas containing
 2, 4, 4, 4 and 5 resources respectively. Resource rows pair a thumbnail with
 the title, description and opening action, separated by quiet rules.
@@ -82,7 +84,8 @@ icon thumbnail. Opening actions identify guides, briefs, tools and visual pieces
 Desktop stage and area controls form vertical keyboard-operable tabs. The selected
 item uses the existing surface tone and an accent underline; mobile exposes the
 same selection through a labelled native select. The journey's primary action
-opens its resource, with a quieter next-step control and related-resource links.
+opens its resource, followed by related-resource links. Sequential “Continue with”
+controls are omitted; the rail/selector owns movement between stages and areas.
 The full-library view uses `#library`; stage and area query parameters preserve
 selection through navigation. Search matches all 19 resources across areas in
 Spanish and English without sensitivity to accents or case, with a result count,

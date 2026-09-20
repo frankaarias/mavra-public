@@ -105,8 +105,6 @@ export default function Home() {
   const catalog = hash.startsWith('#library') || !!legacyArea
   const stage = JOURNEY.find(item=>item.id===params.get('stage')) || JOURNEY[0]
   const area = AREAS.find(item=>item.id===(params.get('area') || legacyArea)) || AREAS[2]
-  const nextStage = JOURNEY[JOURNEY.indexOf(stage)+1]
-  const nextArea = AREAS[AREAS.indexOf(area)+1]
   const search = normalize(query.trim())
   const results = RESOURCES.map((resource,index)=>({resource,index})).filter(({resource,index})=>{
     const group=AREAS.find(item=>item.indices.includes(index))
@@ -134,12 +132,11 @@ export default function Home() {
         <p className="library-sr-only" role="status" aria-live="polite">{search?`${results.length} ${i===0?'resultados':'results'}`:`${area.indices.length} ${i===0?'recursos':'resources'}`}</p>
         {search && <p className="library-result-count">{results.length} {i===0?'resultados':'results'}</p>}
         {search && !results.length ? <div className="library-empty"><h3>{i===0?'No encontramos ese recurso.':'No matching resources.'}</h3><p>{i===0?'Prueba con «marca», «vídeo» o «Amazon», o vuelve a explorar por área.':'Try “brand”, “video” or “Amazon”, or browse by area.'}</p><button type="button" className="library-text-button" onClick={clearSearch}>{i===0?'Borrar búsqueda':'Clear search'}<ArrowRight size={16} aria-hidden="true"/></button></div> : <ul className="library-resource-list">{(search?results:area.indices).map(index=><Resource key={RESOURCES[index][0]} index={index} i={i}/>)}</ul>}
-        {!search && nextArea && <button className="library-next-area library-text-button" type="button" onClick={()=>choose('area',nextArea.id)}>{i===0?'Continuar con':'Continue with'} {nextArea.title[i]}<ArrowRight size={17} aria-hidden="true"/></button>}
       </div> : <div className="library-detail journey-detail" role="tabpanel" id="journey-panel" aria-labelledby={`journey-tab-${stage.id}`} tabIndex={0}>
         <div className="library-detail-heading"><h2>{stage.title[i]}</h2><p>{stage.description[i]}</p></div>
         <Link to={stage.to} className={`journey-preview${stage.type==='pieces'?' is-photo':''}`} aria-label={stage.action[i]}><img src={stage.image} alt={stage.alt[i]} width="800" height="400"/><span><ArrowUpRight size={18} aria-hidden="true"/></span></Link>
         <p className="journey-explanation">{stage.connection[i]}</p>
-        <div className="journey-actions"><Link className="case-button primary" to={stage.to}>{stage.action[i]}<ArrowUpRight size={16} aria-hidden="true"/></Link>{nextStage ? <button type="button" className="library-text-button" onClick={()=>choose('stage',nextStage.id)}>{i===0?'Continuar con':'Continue with'} {nextStage.title[i]}<ArrowRight size={17} aria-hidden="true"/></button> : <Link className="library-text-button" to="/brand?area=activation#library">{i===0?'Continuar con Activación':'Continue with Activation'}<ArrowRight size={17} aria-hidden="true"/></Link>}</div>
+        <div className="journey-actions"><Link className="case-button primary" to={stage.to}>{stage.action[i]}<ArrowUpRight size={16} aria-hidden="true"/></Link></div>
         <nav className="journey-connections" aria-label={i===0?'Recursos relacionados':'Related resources'}><span>{i===0?'Conecta con':'Connects to'}</span>{stage.related.map(([es,en,to])=><Link key={to} to={to}>{i===0?es:en}<ArrowUpRight size={14} aria-hidden="true"/></Link>)}</nav>
       </div>}
     </section>
