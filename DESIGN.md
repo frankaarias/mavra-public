@@ -48,11 +48,18 @@ Balance headings and test Spanish text expansion rather than shrinking all type.
 
 ## Layout
 
-The shared editorial container is 1180px with fluid horizontal padding. Follow
-the existing header and section alignment. Brand OS uses two editorial previews
-per row on wide screens, compact image-over-text previews at intermediate widths,
-and one column on phones. Its 19-resource catalog remains a grouped list.
-Home scope facts use separators rather than an additional row of boxed cards.
+The shared case-study editorial container is 1180px with fluid horizontal padding;
+Brand OS expands to 1380px while retaining the header and section alignment.
+Its guided journey pairs a vertical stage rail with one detail panel: a real
+preview, an explanation of the connection, a resource link and the next step.
+The full library uses the same rail-and-detail layout for five areas containing
+2, 4, 4, 4 and 5 resources respectively. Resource rows pair a thumbnail with
+the title, description and opening action, separated by quiet rules.
+
+At intermediate widths, resource actions sit beneath their descriptions. At
+760px and below, each rail becomes a labelled native selector above a single
+detail column, search fills the available width, and journey actions stack.
+Home scope facts retain separators rather than an additional row of boxed cards.
 
 ## Elevation & Depth
 
@@ -66,12 +73,24 @@ applying generic skill defaults for larger radii or pill-shaped controls.
 
 ## Components
 
-Previews link directly to full resources. Screenshots are English source captures;
-surrounding descriptions and labels follow the global language. Resource labels
-identify guides, briefs, tools and visual pieces without resembling buttons.
-Focus outlines use the accent. Touch links in featured connections are at least
-44px tall. Motion is limited to existing short hover/disclosure transitions and
-must respect `prefers-reduced-motion`.
+Journey previews and complete resource rows link directly to existing resources.
+Use actual source screenshots and existing creative; screenshots retain their
+English source content while surrounding descriptions and labels follow the
+global language. Resources without a corresponding source image use a simple
+icon thumbnail. Opening actions identify guides, briefs, tools and visual pieces.
+
+Desktop stage and area controls form vertical keyboard-operable tabs. The selected
+item uses the existing surface tone and an accent underline; mobile exposes the
+same selection through a labelled native select. The journey's primary action
+opens its resource, with a quieter next-step control and related-resource links.
+The full-library view uses `#library`; stage and area query parameters preserve
+selection through navigation. Search matches all 19 resources across areas in
+Spanish and English without sensitivity to accents or case, with a result count,
+an empty state and a clear action.
+
+Focus outlines use the accent. Related-resource links are at least 44px tall,
+and mobile selectors at least 48px. Motion is limited to existing short
+hover/disclosure transitions and must respect `prefers-reduced-motion`.
 
 ## Do's and Don'ts
 
