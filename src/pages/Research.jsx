@@ -107,45 +107,58 @@ const TAB_DESC_I18N = {
 
 const INFO_I18N = {
   es: {
-  use_T: `Título — ${USAGE_AYUDA}`,
-  use_B: `Viñetas — ${USAGE_AYUDA}`,
-  use_D: `Descripción — ${USAGE_AYUDA}`,
-  use_GK: `Generic Keywords, el backend — ${USAGE_AYUDA}`,
-  use_IH: `Item Highlight, bajo el título — ${USAGE_AYUDA}`,
-  kw: 'Keyword — el término tal como lo escribe el comprador en Amazon. · dato de mercado',
-  root: 'Root — la raíz que agrupa una familia de keywords: las variantes de una misma palabra caen juntas. Evita armar tres campañas de lo mismo. · cálculo AGTA',
-  vol: 'Vol — búsquedas mensuales del término. · dato de mercado',
-  sales: 'Vtas — unidades que el mercado vende por ese término. Es la demanda que efectivamente se convierte en compra. · dato de mercado',
-  rel: `Relevancy % — qué proporción de tus competidores está en página 1 de ese término. · cálculo AGTA`,
+  use_T: `Título: ${USAGE_AYUDA}`,
+  use_B: `Viñetas: ${USAGE_AYUDA}`,
+  use_D: `Descripción: ${USAGE_AYUDA}`,
+  use_GK: `Backend, los términos que el comprador no ve: ${USAGE_AYUDA}`,
+  use_IH: `Item Highlight, bajo el título: ${USAGE_AYUDA}`,
+  // 🔴 EL FORMATO DE ESTAS AYUDAS ES UNA REGLA, NO UN GUSTO. Frank, 2026-09-20:
+  // «Los hover estan muy mal presentados». Venian asi:
+  //
+  //     Vol — búsquedas mensuales del término. · dato de mercado
+  //
+  // Tres problemas en una linea: la abreviatura en vez del nombre, la raya
+  // separando ideas —que su regla dura prohibe— y la fuente colgando de un `·`
+  // en minuscula, como una nota al pie que no se lee. Asi queda:
+  //
+  //     Volumen: Búsquedas mensuales del término. Dato de mercado.
+  //
+  // El patron: NOMBRE COMPLETO + dos puntos + la frase + la fuente como frase
+  // aparte. Sin rayas, sin `·`, sin parentesis tecnicos.
+  kw: 'Keyword: el término tal como lo escribe el comprador en Amazon. Dato de mercado.',
+  root: 'Raíz: agrupa una familia de keywords, de modo que las variantes de una misma palabra caen juntas. Evita armar tres campañas de lo mismo. Cálculo AGTA.',
+  vol: 'Volumen: búsquedas mensuales del término. Dato de mercado.',
+  sales: 'Ventas: unidades que el mercado vende por ese término. Es la demanda que se convierte en compra. Dato de mercado.',
+  rel: 'Relevancia: qué proporción de los competidores está en página 1 de ese término. Cálculo AGTA.',
   // Había dos claves `p1` en este objeto: la segunda pisaba a la primera, así que
   // el texto corto ("Es la base del Relevancy") no se mostró nunca. Se conserva la
   // que se venía viendo y se le suma esa frase, que era lo único que aportaba.
-  p1: `P1 — cuántos de tus ${DATASETS.LMP.meta.n_comp} competidores están en la primera página de ese término (puesto ${S.p1_rank} o mejor). Desde ${S.min_comp} la keyword entra al núcleo. · cálculo AGTA sobre ranks del mercado`,
-  fit: 'Fit — qué tan de TU producto es la keyword. No es lo mismo que Relevancy: relevancy mide cuánto la dominan tus competidores, fit mide si te sirve a ti. · cálculo AGTA',
-  idn: 'IDN — demanda capturable: volumen × fit. Ordena por lo que te puedes llevar, no por lo que se busca. · cálculo AGTA',
-  td: 'TD — cuántos del top usan la keyword en el TÍTULO. Bajo = título libre, más fácil de ganar. · dato de mercado',
-  cp: 'CP — cuántos productos compiten por ese término. · dato de mercado',
-  tier: 'Tier — qué tan tuya es la keyword. CORE nombra tu producto; SECONDARY es del tipo pero no el tuyo; LONG-TAIL, el resto. · cálculo AGTA',
-  prio: 'Prio — P1, P2 o P3 por demanda capturable. Es el orden en que se atacan en el lanzamiento. · cálculo AGTA',
-  match: 'Match sugerido para PPC. Si la keyword ya es específica va exact; si encabeza una familia grande, phrase; si es la cabecera con volumen, broad. · cálculo AGTA',
-  cuando: 'Cuándo se puede atacar, solo en la UKL. AHORA: la satisfaces y el hueco está abierto. DESPUES: el hueco está cerrado o es de temporada. NO: no se puja. · cálculo AGTA',
-  para: 'Para qué sirve, solo en la UKL. VENDER: tu producto satisface esa búsqueda. TARGET: la satisface un hermano de tu catálogo — se targetea su página en vez de pujar. CATALOGO: demanda del nicho que hoy no fabricas. AUDIENCIA: dice quién es el cliente, no qué comprar. · cálculo AGTA',
-  serp: 'SERP — flags de la página de resultados: SBV = Sponsored Brand Video · AC = Amazon’s Choice · SP = Sponsored Product. Se puede filtrar escribiendo SBV, AC o SP.',
-  root_root: 'Root — palabra o frase que se repite en el núcleo. Si aparece en una sola keyword no es un root. Cada root es una campaña de PPC, y se ataca de a uno por vez. · cálculo AGTA',
-  root_frec: 'Frecuencia — en cuántas keywords del MKL de ahora aparece este root. Se recalcula cuando mueves keywords entre buckets.',
-  root_sv: 'Volumen broad — suma del SV de todas las keywords del MKL que contienen el root. Es el techo de tráfico de la familia, no lo que vas a captar.',
-  root_kws: 'Las keywords del MKL que contienen alguno de los roots tildados. Sumar roots amplía la cobertura.',
-  norm_kw: 'Forma normalizada — la keyword sin plurales ni conjunciones. Las que quedan iguales se agrupan en una sola fila.',
-  norm_sv: 'SV — suma del volumen de todas las keywords que colapsaron en esta forma. Es la demanda real de la idea, no la de una sola manera de escribirla.',
-  norm_n: 'Variantes — cuántas keywords colapsaron en esta forma. Son maneras de escribir lo mismo: en PPC se puja una sola, o compiten entre sí y te suben el CPC.',
+  p1: `Página 1: cuántos de los ${DATASETS.LMP.meta.n_comp} competidores están en la primera página de ese término. Desde ${S.min_comp} la keyword entra al núcleo. Cálculo AGTA.`,
+  fit: 'Encaje: qué tanto es tuya la keyword. No es lo mismo que la relevancia: la relevancia mide cuánto la dominan los competidores, el encaje mide si te sirve a ti. Cálculo AGTA.',
+  idn: 'Demanda capturable: volumen por encaje. Ordena por lo que te puedes llevar, no por lo que se busca. Cálculo AGTA.',
+  td: 'Títulos: cuántos del top usan la keyword en el título. Pocos significa título libre, más fácil de ganar. Dato de mercado.',
+  cp: 'Competencia: cuántos productos compiten por ese término. Dato de mercado.',
+  tier: 'Nivel: qué tanto es tuya la keyword. CORE nombra tu producto; SECONDARY es del tipo pero no el tuyo; LONG-TAIL, el resto. Cálculo AGTA.',
+  prio: 'Prioridad: P1, P2 o P3 por demanda capturable. Es el orden en que se atacan en el lanzamiento. Cálculo AGTA.',
+  match: 'Concordancia sugerida para PPC: si la keyword ya es específica va exact; si encabeza una familia grande, phrase; si es la cabecera con volumen, broad. Cálculo AGTA.',
+  cuando: 'Cuándo se puede atacar, solo en la UKL. AHORA: la satisfaces y el hueco está abierto. DESPUÉS: el hueco está cerrado o es de temporada. NO: no se puja. Cálculo AGTA.',
+  para: 'Para qué sirve, solo en la UKL. VENDER: tu producto satisface esa búsqueda. TARGET: la satisface un hermano de tu catálogo, así que se targetea su página en vez de pujar. CATÁLOGO: demanda del nicho que hoy no fabricas. AUDIENCIA: dice quién es el cliente, no qué comprar. Cálculo AGTA.',
+  serp: 'Resultados: qué aparece en la página de búsqueda. SBV es Sponsored Brand Video, AC es Amazon’s Choice y SP es Sponsored Product. Se puede filtrar escribiendo SBV, AC o SP.',
+  root_root: 'Raíz: palabra o frase que se repite en el núcleo. Si aparece en una sola keyword no es una raíz. Cada raíz es una campaña de PPC, y se ataca de a una por vez. Cálculo AGTA.',
+  root_frec: 'Frecuencia: en cuántas keywords del MKL de ahora aparece esta raíz. Se recalcula cuando mueves keywords entre buckets.',
+  root_sv: 'Volumen amplio: suma del volumen de todas las keywords del MKL que contienen la raíz. Es el techo de tráfico de la familia, no lo que vas a captar.',
+  root_kws: 'Las keywords del MKL que contienen alguna de las raíces marcadas. Sumar raíces amplía la cobertura.',
+  norm_kw: 'Forma normalizada: la keyword sin plurales ni conjunciones. Las que quedan iguales se agrupan en una sola fila.',
+  norm_sv: 'Volumen: suma del volumen de todas las keywords que colapsaron en esta forma. Es la demanda real de la idea, no la de una sola manera de escribirla.',
+  norm_n: 'Variantes: cuántas keywords colapsaron en esta forma. Son maneras de escribir lo mismo, y en PPC se puja una sola, o compiten entre sí y te suben el CPC.',
   comp_metrica: 'Cada fila es una métrica del competidor. Clic en el nombre de la fila para ordenar las columnas por esa métrica.',
-  comp_med: 'Mediana del nicho — la mitad de los competidores está por encima de este valor y la otra mitad por debajo. Es la vara para leer si un número es alto o bajo acá adentro.',
+  comp_med: 'Mediana del nicho: la mitad de los competidores está por encima de este valor y la otra mitad por debajo. Es la vara para leer si un número es alto o bajo aquí adentro.',
   // Las tres señales. Ninguna herramienta del mercado las trae: dicen si la
   // keyword se compra, si es de temporada y si ahí cobran lo que cobras tú.
-  compra_mil: 'KW CVR — qué parte de las búsquedas de ese término termina en compra. Es del MERCADO, no tuyo: se lee contra la mediana del nicho. · cálculo AGTA sobre datos de mercado',
-  trend: 'Tendencia — cómo se mueve el volumen. Arriba de +80% es una keyword de TEMPORADA: si tu producto es de año redondo, ese volumen no es tuyo aunque sea enorme.',
-  price_fit: 'Precio — precio mediano POR UNIDAD de quienes rankean ahí frente al tuyo. Debajo de 60% compran mucho más barato; arriba de 160% cobran más que tú.',
-  veredicto: 'Eval — la señal en una palabra: ATACAR, PRECIO SUPERIOR, PRECIO INFERIOR, CVR BAJO o ESTACIONAL. Pasa el ratón por el valor para ver el número que la disparó.',
+  compra_mil: 'Conversión de la keyword: qué parte de las búsquedas de ese término termina en compra. Es del mercado, no tuya, y se lee contra la mediana del nicho. Cálculo AGTA.',
+  trend: 'Tendencia: cómo se mueve el volumen. Por encima de +80% es una keyword de temporada, así que si tu producto es de año redondo ese volumen no es tuyo aunque sea enorme.',
+  price_fit: 'Precio: precio mediano por unidad de quienes rankean ahí frente al tuyo. Por debajo de 60% compran mucho más barato; por encima de 160% cobran más que tú.',
+  veredicto: 'Veredicto: la señal en una palabra, entre ATACAR, PRECIO SUPERIOR, PRECIO INFERIOR, CVR BAJO y ESTACIONAL. Pasa el ratón por el valor para ver el número que la disparó.',
   },
   en: {
     use_T: `Title — ${USAGE_AYUDA_EN}`,
