@@ -66,6 +66,17 @@ html {
 }
 
 :root {
+  /* 🔴 LA ALTURA DE LA NAV, EN UN SOLO SITIO. La barra es `position: fixed`, asi
+     que el contenido tiene que empezar por debajo de ella. Eso vivia en numeros
+     escritos a mano que podian divergir, y divergieron: la nav crecio a 81 px y
+     el `padding-top` del body se quedo en 60. Esos 21 px se comian lo primero de
+     la pagina — Frank, 2026-09-20, sobre el rotulo de la barra de producto: «la
+     palabra PRODUCTO sale cortada». Medido en pantalla: el rotulo empieza en
+     74,4 px y la nav llega a 81, asi que le tapaba el tercio de arriba.
+
+     🔑 Ahora la nav MIDE esta variable y el body reserva ESTA variable. No
+     pueden separarse porque son el mismo numero. */
+  --nav-h: 81px;
 
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -77,7 +88,7 @@ body {
   color: var(--fg);
   font-family: var(--font-sans);
   line-height: 1.6;
-  padding-top: 60px;
+  padding-top: var(--nav-h);
   transition: background-color .25s, color .25s;
 }
 
@@ -142,10 +153,14 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* La altura la fija la variable, no el padding: es lo que garantiza que el
+     hueco que reserva el body sea EXACTAMENTE el que ocupa esta barra. */
+  min-height: var(--nav-h);
   padding: 1.25rem 2.5rem;
   background: rgba(var(--bg-rgb),0.92);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(var(--copper-rgb),0.2);
+  box-sizing: border-box;
 }
 
 
@@ -512,6 +527,13 @@ a {
 }
 
 @media (max-width: 720px) {
+  /* La barra es mas baja aqui (menos padding), asi que la variable tambien.
+     Todo lo que dependa de ella —el hueco del body y el menu desplegable— se
+     ajusta solo. Medido: 73 px con este padding. */
+  :root {
+    --nav-h: 73px;
+  }
+
   .global-nav {
     padding: 1rem 1.25rem;
   }
@@ -523,7 +545,8 @@ a {
   .nav-links {
     display: none;
     position: fixed;
-    top: 56px;
+    /* Colgaba de un 56 escrito a mano que ya no correspondia con la barra. */
+    top: var(--nav-h);
     left: 0;
     right: 0;
     background: rgba(var(--bg-rgb),0.97);
