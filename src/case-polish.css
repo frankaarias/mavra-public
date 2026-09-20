@@ -1,0 +1,21 @@
+/* A restrained refinement of the existing case. Never affects research tables. */
+.case-overview h1,.case-overview h2,.case-overview h3 { text-wrap:balance; }
+.case-overview .case-role>p:not(.case-section-label),.case-overview #scope>.editorial-note { max-width:72ch; }
+.case-overview .editorial-facts { gap:2rem; }
+.case-overview .editorial-facts article { display:flex; flex-direction:column; border:0; border-top:1px solid var(--case-line); border-radius:0; padding:1.3rem 0 0; background:transparent; }
+.case-overview .editorial-facts .editorial-links { margin-top:auto; padding-top:.8rem; }
+.case-overview .editorial-links a { min-height:44px; }
+.case-overview .case-decision-grid { align-items:stretch; }
+.case-overview .case-decision-card { display:flex; flex-direction:column; }
+.case-overview .decision-card-body { display:flex; flex-direction:column; flex:1; }
+.case-overview .decision-card-body .editorial-links { margin-top:auto; padding-top:.5rem; }
+.case-overview .case-role ul { margin-top:1.25rem; padding-left:1.25rem; }
+.case-overview .case-role li+li { margin-top:.45rem; }
+.case-overview .case-contact-form input,.case-overview .case-contact-form textarea { caret-color:var(--case-bright); }
+.case-overview ::selection,.brand-library ::selection { background:var(--case-bright); color:var(--case-bg); }
+@media(max-width:760px) { .case-overview .editorial-facts { gap:1rem; } }
+@media(min-width:761px) {
+ .case-overview .case-decision-card h3.decision-category { min-height:3.2rem; }
+ .case-overview .decision-description { min-height:6rem; }
+ .case-overview .decision-card-body .editorial-links { min-height:9rem; }
+}

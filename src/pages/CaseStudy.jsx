@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowDown, ArrowUpRight, Mail, ChevronDown } from 'lucide-react'
 import useMavraLanguage from '../components/useMavraLanguage.js'
 import '../case-editorial.css'
+import '../case-polish.css'
 
 const COPY = {
  en: {
@@ -73,7 +74,7 @@ export default function CaseStudy(){
     }
   }
 
-  return <main className="case-study editorial-case">
+  return <main className="case-study editorial-case case-overview">
  <header className="editorial-header editorial-hero"><div><p className="case-eyebrow">{copy.eyebrow}</p><h1>{copy.title}</h1><p className="editorial-lead">{lang==='es'?'MAVRA es una marca de decoración gótica para el hogar. Un caso de AGTA que conecta posicionamiento, contenido de producto y planificación del lanzamiento en Amazon.':'MAVRA makes gothic home decor. An AGTA case connecting brand positioning, product content and Amazon launch planning.'}</p><div className="case-hero-actions"><a className="case-button primary" href="#evidence">{copy.primary} <ArrowDown size={16}/></a><Link className="case-button secondary" to="/brand">Brand OS <ArrowUpRight size={16}/></Link></div></div><figure className="hero-composition"><div className="hero-photo-grid">{[['/pinterest/b3.jpg',lang==='es'?'Lámpara MAVRA en un interior oscuro':'MAVRA lamp in a dark interior'],['/pinterest/b1.jpg',lang==='es'?'Set de velas MAVRA':'MAVRA candle set'],['/pinterest/s1.jpg',copy.decisions[1].alt]].map(([src,alt])=><a key={src} href={src} target="_blank" rel="noreferrer" aria-label={(lang==='es'?'Ampliar: ':'Enlarge: ')+alt}><img src={src} alt={alt}/></a>)}</div><figcaption>{copy.caption}</figcaption></figure></header>
  <section className="editorial-section case-challenge"><p className="case-section-label">{copy.challenge}</p><div><h2>{copy.challengeTitle}</h2><p>{copy.challengeText}</p></div></section>
  <section className="editorial-section" id="evidence"><span id="system"/><p className="case-section-label">{copy.evidence}</p><h2>{copy.evidenceTitle}</h2><div className="case-decision-grid">{copy.decisions.map((d,index)=><article className="case-decision-card" key={index}><Link className="decision-preview" to={d.links[0][1]} aria-label={d.links[0][0]}><img className={'decision-image'+(d.screen?' decision-screenshot':'')} src={d.image} alt={d.alt} loading="lazy"/><ArrowUpRight size={18} aria-hidden="true"/></Link><div className="decision-card-body"><h3 className="decision-category">{(lang==='es'?['Marca','Contenido Amazon','Lanzamiento']:['Brand','Amazon content','Launch'])[index]}</h3><p className="decision-description">{d.title}</p><details className="decision-details"><summary>{lang==='es'?'Ver la decisión completa':'Read the full decision'}<ChevronDown size={16} aria-hidden="true"/></summary><dl>{d.facts.map((f,i)=><div key={i}><dt>{copy.labels[i]}</dt><dd>{f}</dd></div>)}</dl><p className="editorial-note">{d.type}</p></details><div className="editorial-links">{d.links.map(([l,to])=><Link key={to} to={to}>{l} <ArrowUpRight size={14} aria-hidden="true"/></Link>)}</div></div></article>)}</div><aside className="case-next-step"><h3>{lang==='es'?'Construyamos el siguiente paso de tu marca.':'Let’s build your brand’s next step.'}</h3><a className="case-button primary" href="#contact">{lang==='es'?'Hablemos':'Let’s talk'}<ArrowUpRight size={16}/></a></aside></section>

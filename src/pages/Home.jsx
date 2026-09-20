@@ -64,7 +64,7 @@ export default function Home() {
     </section>
     <section className="editorial-section library-catalog" id="library" aria-labelledby="library-heading">
       <div className="library-catalog-heading"><h2 id="library-heading">{i===0?'Toda la biblioteca':'The full library'}</h2><p>{i===0?'Elige un recurso según lo que quieras examinar.':'Choose a resource based on what you want to examine.'}</p></div>
-      <nav className="library-jump" aria-label={i===0?'Áreas de la biblioteca':'Library areas'}>{GROUPS.map(group=><a href={'#'+group.id} key={group.id}>{group.title[i]}</a>)}</nav>
+      <nav className="library-jump" aria-label={i===0?'Áreas de la biblioteca':'Library areas'}>{GROUPS.map(group=><a href={'#'+group.id} key={group.id}>{group.title[i]}<ArrowDown size={14} aria-hidden="true"/></a>)}</nav>
       {GROUPS.map(group=><section className="library-group" id={group.id} key={group.id} aria-labelledby={group.id+'-title'}>
         <div className="library-group-heading"><h3 id={group.id+'-title'}>{group.title[i]}</h3><p>{group.intro[i]}</p></div>
         <ul className="library-resource-list">{group.resources.map(([to,type,es,en,descEs,descEn])=><li key={to}><Link className="library-resource" to={to}>
