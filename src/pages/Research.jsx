@@ -89,7 +89,7 @@ const TAB_DESC_I18N = {
     Veredicto: 'La lectura del nicho antes de entrar: si conviene, por qué, y por dónde. Es la decisión que se toma una vez; el resto de las pestañas es el trabajo de todos los días.',
     Roots: 'Las palabras que se repiten a lo largo del núcleo. La frecuencia dice en cuántas keywords aparece cada una; el volumen broad, cuánto tráfico mueve la familia entera. Cada root es una campaña de PPC, y se ataca de a uno por vez. Marca uno o varios para ver sus keywords al lado.',
     Normalizer: 'El núcleo sin plurales ni conjunciones, agrupado por forma. Sirve para una cosa concreta: detectar cuándo estás diciendo lo mismo de tres maneras distintas. En PPC esas tres variantes compiten entre sí y te suben el costo por clic. Las campañas no se arman desde acá: se arman por root.',
-    Competidores: 'Quién es quién en el nicho, medido contra la mediana. Cobertura, share y fuerza se recalculan con los buckets actuales: si mueves keywords, estos números se mueven. Precio, reseñas, edad y actividad de venta salen de Keepa — dato observado, no estimado.',
+    Competidores: 'Quién es quién en el nicho, medido contra la mediana. Cobertura, share y fuerza se recalculan con los buckets actuales: al mover keywords, estos números se mueven. Precio, reseñas, edad y actividad de venta salen de Keepa: dato observado, no estimado.',
   },
   en: {
     MKL: `Keywords taken from the selected competitors, filtered down to the ones at least ${S.min_comp} of them hold on page one, with a minimum of ${S.min_sv} searches a month.`,
@@ -101,7 +101,7 @@ const TAB_DESC_I18N = {
     Veredicto: 'Reading the niche before entering: whether it’s worth it, why, and where you get in. This is the decision you make once; the rest of the tabs are the everyday work.',
     Roots: 'The words that repeat across the core. Frequency says how many keywords each one appears in; broad volume, how much traffic the whole family moves. Each root is a PPC campaign, and you attack them one at a time. Select one or more to see their keywords next to them.',
     Normalizer: 'The core without plurals or conjunctions, grouped by form. It serves one concrete purpose: spotting when you are saying the same thing three different ways. In PPC those three variants bid against each other and push your cost per click up. Campaigns are not built from here: they are built by root.',
-    Competidores: 'Who’s who in the niche, measured against the median. Coverage, share and strength recalculate with the current buckets: move keywords and these numbers move. Price, reviews, age and sales activity come from Keepa — observed data, not estimated.',
+    Competidores: 'Who’s who in the niche, measured against the median. Coverage, share and strength recalculate with the current buckets: move keywords and these numbers move. Price, reviews, age and sales activity come from Keepa: observed data, not estimated.',
   },
 }
 
