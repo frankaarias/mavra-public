@@ -4,6 +4,10 @@ For frontend changes, read `PRODUCT.md`, `DESIGN.md`, and
 `.agents/skills/impeccable/SKILL.md`. Apply the relevant scoped Impeccable playbook.
 The user's confirmed brief and scope take priority over generic skill defaults.
 
+For layout exploration and redesign proposals, also read
+`.agents/skills/taste-skill/SKILL.md`. Preserve the project identity in `DESIGN.md`
+and apply task-specific guidance when generic skill defaults conflict.
+
 - `/` is the case study (`src/pages/CaseStudy.jsx`); `/brand` is the Brand OS
   resource index (`src/pages/Home.jsx`). Do not confuse the filename with its route.
 - Keep ES/EN content and link destinations equivalent. Preserve both themes.
