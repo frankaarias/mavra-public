@@ -4,29 +4,31 @@
  * Antes vivían solo en el `localStorage` del navegador: sobrevivían al reload
  * —que era lo que Frank había pedido— pero no salían de su máquina. Cuando dijo
  * *"mirá mis cambios hasta el momento"* no pude: su trabajo era invisible desde
- * afuera. Y después: *"¿ahora sí podés ver en vivo mis cambios?"*. Para eso
- * tienen que estar en un lugar compartido.
+ * afuera. Para eso tienen que estar en un lugar compartido.
  *
  * Se guarda POR KEYWORD y no por posición: los JSON del MKL se regeneran
- * seguido y el orden cambia entre corridas. Guardar el índice haría que después
- * de regenerar las correcciones cayeran sobre keywords distintas, y el error
- * sería mudo.
+ * seguido y el orden cambia entre corridas.
  *
  * El localStorage se mantiene como respaldo: si Supabase no responde, el
  * trabajo no se pierde y se sube en el próximo guardado que sí entre.
  *
+ * ── Leer y escribir van por caminos distintos (2026-09-29) ─────────────────
+ *
+ * LEER sigue siendo con la llave pública: la pestaña es pública y la lee
+ * cualquiera, igual que los scripts `correcciones.py`.
+ *
+ * ESCRIBIR ya no. Esta página no tiene login y la llave pública podía
+ * reescribir o borrar las 3.306 filas; la migración 041 de agta-app lo cerró.
+ * Ahora se escribe por `/api/correcciones` (vive en mavra.vercel.app, que es
+ * la web que tiene la llave de servicio) con el token de la sesión de Google
+ * de Supabase, y el servidor exige que el correo sea de un admin. Sin sesión,
+ * `guardarCorrecciones` no escribe y devuelve 'sin-sesion'.
+ *
  * ── Dos bugs arreglados el 2026-08-01 ──────────────────────────────────────
  *
- * 1. PostgREST devuelve 1.000 filas por consulta. `traerCorrecciones` no
- *    paginaba, así que en un producto con más correcciones que eso se leía una
- *    parte... y el guardado siguiente BORRABA el resto, porque su lista de
- *    "vivas" no las incluía. LMP tenía 1.509 correcciones: 509 se perdían en
- *    silencio cada vez que se tocaba una keyword. Ahora se pagina.
- *
- * 2. El guardado reescribía TODAS las filas en cada movimiento, con
- *    `updated_at` nuevo. Frank movía 4 keywords y la tabla decía que se habían
- *    tocado 726, así que no había forma de saber qué se movió y cuándo. Ahora
- *    se manda solo lo que cambió contra el último estado sincronizado.
+ * 1. PostgREST devuelve 1.000 filas por consulta: `traerCorrecciones` pagina.
+ * 2. Se manda solo lo que cambió contra el último estado sincronizado, no
+ *    todas las filas en cada movimiento.
  */
 import { createClient } from '@supabase/supabase-js'
 
@@ -35,11 +37,39 @@ const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const TABLA = 'mavra_mkl_correcciones'
 const PAGINA = 1000
 
+/** En mavra.vercel.app la ruta es propia; desde case.agta.io se cruza. */
+export function rutaGuardar(host = typeof location !== 'undefined' ? location.hostname : '') {
+  return host === 'mavra.vercel.app' || host === 'localhost' || host === '127.0.0.1'
+    ? '/api/correcciones'
+    : 'https://mavra.vercel.app/api/correcciones'
+}
+
 let cliente = null
 const db = () => (cliente ||= createClient(URL, ANON))
 
-/** Lo último que se leyó o escribió, por producto. Es contra esto que se
- *  calcula el delta: sin esta referencia habría que reescribir todo. */
+/** La sesión de Google de Supabase, o null. */
+export async function sesion() {
+  try {
+    const { data } = await db().auth.getSession()
+    return data?.session ?? null
+  } catch {
+    return null
+  }
+}
+
+export function alCambiarSesion(fn) {
+  const { data } = db().auth.onAuthStateChange((_e, s) => fn(s ?? null))
+  return () => data?.subscription?.unsubscribe()
+}
+
+export function entrarConGoogle() {
+  return db().auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.href },
+  })
+}
+
+/** Lo último que se leyó o escribió, por producto: contra esto va el delta. */
 const sincronizado = {}
 
 /** Lo que hay guardado para un producto: `{ [kw_lower]: bucket }`. */
@@ -67,43 +97,48 @@ export async function traerCorrecciones(producto) {
 
 /**
  * Sincroniza el estado. `movidas` es `{ kw_lower: bucket }` con SOLO las que
- * difieren del cálculo del motor.
+ * difieren del cálculo del motor. Devuelve:
+ *   'ok'          guardado (o no había nada que guardar)
+ *   'sin-sesion'  no hay sesión: no se escribe nada
+ *   'sin-permiso' la sesión no es de un admin
+ *   'error'       la red o el servidor fallaron; se reintenta en el próximo
  *
- * Manda únicamente lo que cambió y borra lo que dejó de estar: si una keyword
- * volvió a su bucket original, su fila tiene que desaparecer. Sin ese borrado,
- * deshacer un movimiento no se propagaría y la próxima carga lo resucitaría.
+ * Si no se guarda, el estado sincronizado no se mueve: el próximo guardado que
+ * sí entre manda todo lo pendiente.
  */
-export async function guardarCorrecciones(producto, movidas, meta = {}) {
+export async function guardarCorrecciones(producto, movidas, meta = {}, deps = {}) {
   const previo = sincronizado[producto] || {}
   const cambiadas = Object.entries(movidas).filter(([kw, b]) => previo[kw] !== b)
-  const borradas = Object.keys(previo).filter((kw) => !(kw in movidas))
-  // Nada que hacer: ni una escritura. Antes acá se reescribían las 726 filas.
-  if (!cambiadas.length && !borradas.length) return true
+  const borrar = Object.keys(previo).filter((kw) => !(kw in movidas))
+  if (!cambiadas.length && !borrar.length) return 'ok'
+
+  const s = await (deps.sesion || sesion)()
+  if (!s?.access_token) return 'sin-sesion'
 
   const filas = cambiadas.map(([kw_lower, bucket]) => ({
-    producto,
     kw_lower,
     bucket,
     bucket_orig: meta[kw_lower]?.orig ?? null,
-    vol: meta[kw_lower]?.vol ?? null,
-    updated_at: new Date().toISOString(),
+    vol: Number.isInteger(meta[kw_lower]?.vol) ? meta[kw_lower].vol : null,
   }))
   try {
-    if (filas.length) {
-      const { error } = await db().from(TABLA).upsert(filas, { onConflict: 'producto,kw_lower' })
-      if (error) throw error
-    }
-    // Se borra por lista explícita, no por "todo lo que no está en `movidas`":
-    // así un fallo de lectura no puede llevarse por delante lo que no se leyó.
-    for (let i = 0; i < borradas.length; i += 100) {
-      const lote = borradas.slice(i, i + 100)
-      const { error } = await db().from(TABLA).delete().eq('producto', producto).in('kw_lower', lote)
-      if (error) throw error
-    }
+    const r = await (deps.fetch || fetch)(rutaGuardar(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${s.access_token}` },
+      body: JSON.stringify({ producto, filas, borrar }),
+    })
+    if (r.status === 401) return 'sin-sesion'
+    if (r.status === 403) return 'sin-permiso'
+    if (!r.ok) throw new Error(`HTTP ${r.status}`)
     sincronizado[producto] = { ...movidas }
-    return true
+    return 'ok'
   } catch (e) {
-    console.warn('[correcciones] no se pudo guardar en Supabase:', e.message)
-    return false
+    console.warn('[correcciones] no se pudo guardar:', e.message)
+    return 'error'
   }
+}
+
+/** Solo para tests: fija el estado sincronizado de un producto. */
+export function _fijarSincronizado(producto, estado) {
+  sincronizado[producto] = { ...estado }
 }

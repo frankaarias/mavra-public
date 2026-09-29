@@ -3,6 +3,7 @@ import useMavraLanguage from '../components/useMavraLanguage.js'
 import { traducir } from './researchI18n.js'
 import { Ayuda as TooltipRadix, Menu as MenuRadix, ProveedorAyuda } from '../components/ui/Flotantes'
 import { traerCorrecciones, guardarCorrecciones } from '../lib/correcciones'
+import AvisoGuardar from '../components/AvisoGuardar'
 import { Boton, Buscador, Iconos } from '../components/ui/BarraHerramientas'
 import lmp from '../data/lmp_mkl_v3.json'
 import cnd from '../data/cnd_mkl_v3.json'
@@ -1409,6 +1410,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
    * El localStorage queda como respaldo para cuando la red no responde.
    */
   const [sincronizado, setSincronizado] = useState(false)
+  const [estadoGuardado, setEstadoGuardado] = useState('ok')
   useEffect(() => {
     let vivo = true
     traerCorrecciones(prod).then((remoto) => {
@@ -1451,7 +1453,8 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
     if (!sincronizado) return
     const meta = {}
     data.kws.forEach((k) => { if (movidas[k.kw_lower]) meta[k.kw_lower] = { orig: k.bucket, vol: k.vol } })
-    const t = setTimeout(() => { guardarCorrecciones(prod, movidas, meta) }, 500)
+    // Sin sesión de admin no se escribe: el estado lo pinta <AvisoGuardar>.
+    const t = setTimeout(() => { guardarCorrecciones(prod, movidas, meta).then(setEstadoGuardado) }, 500)
     return () => clearTimeout(t)
   }, [prod, movidas, sincronizado, data])
 
@@ -1513,6 +1516,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
     // veredicto) se limita solo, adentro, al ancho de lectura.
     <ProveedorAyuda>
     <main className="rsch rsch-full" ref={panelRef}>
+      <AvisoGuardar estado={estadoGuardado} />
       {/* 🔑 UNA SOLA FILA (Frank, 2026-09-16: «esto a una sola línea»). Eran dos
           tiras —los cuatro buckets arriba, las herramientas debajo— y ocupaban
           dos renglones para siete botones. El corte entre «grupos de keywords» y
