@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { entrarConGoogle, sesion, alCambiarSesion } from '../lib/correcciones'
+import { textoAviso } from '../lib/avisoGuardar'
 
 /**
  * Dónde antes se guardaba en silencio, ahora avisa si no se puede.
@@ -9,7 +10,7 @@ import { entrarConGoogle, sesion, alCambiarSesion } from '../lib/correcciones'
  * (ver lib/correcciones.js). Este aviso solo aparece cuando hay un movimiento
  * que no se pudo subir; con todo guardado no se ve nada, como hasta ahora.
  */
-export default function AvisoGuardar({ estado }) {
+export default function AvisoGuardar({ estado, lang = 'es' }) {
   const [conSesion, setConSesion] = useState(false)
   useEffect(() => {
     sesion().then((s) => setConSesion(!!s))
@@ -17,10 +18,7 @@ export default function AvisoGuardar({ estado }) {
   }, [])
 
   if (estado === 'ok') return null
-  const texto =
-    estado === 'sin-sesion' ? 'Inicia sesión para guardar'
-    : estado === 'sin-permiso' ? 'Esta cuenta no puede guardar'
-    : 'No se pudo guardar; se reintenta al próximo cambio'
+  const { texto, entrar } = textoAviso(estado, lang)
 
   return (
     <div
@@ -41,7 +39,7 @@ export default function AvisoGuardar({ estado }) {
           onClick={() => entrarConGoogle()}
           style={{ background: '#fff', color: '#111', border: 0, borderRadius: 6, padding: '4px 10px', font: 'inherit', cursor: 'pointer' }}
         >
-          Entrar con Google
+          {entrar}
         </button>
       )}
     </div>

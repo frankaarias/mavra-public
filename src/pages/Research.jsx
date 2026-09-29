@@ -1516,7 +1516,7 @@ function ResearchPanel({ prod, data: dataRaw, ukl }) {
     // veredicto) se limita solo, adentro, al ancho de lectura.
     <ProveedorAyuda>
     <main className="rsch rsch-full" ref={panelRef}>
-      <AvisoGuardar estado={estadoGuardado} />
+      <AvisoGuardar estado={estadoGuardado} lang={lang} />
       {/* 🔑 UNA SOLA FILA (Frank, 2026-09-16: «esto a una sola línea»). Eran dos
           tiras —los cuatro buckets arriba, las herramientas debajo— y ocupaban
           dos renglones para siete botones. El corte entre «grupos de keywords» y
