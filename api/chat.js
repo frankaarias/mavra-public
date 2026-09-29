@@ -19,7 +19,12 @@ export default async function handler(req, res) {
     const { sessionId } = req.query
     if (!sessionId) return res.status(400).json({ error: 'sessionId required' })
     try {
-      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON)
+      // La base solo devuelve las filas de la sesion que viene en esta
+      // cabecera (politica anon_select_su_sesion, migracion 041 de
+      // agta-app). Sin ella la lectura da [] aunque la consulta filtre.
+      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON, {
+        global: { headers: { 'x-session-id': String(sessionId) } },
+      })
       const { data } = await supabase
         .from('mavra_chat_influencers')
         .select('role, content, created_at')
