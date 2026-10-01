@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import brand from '../brand/brand.json'
+import { conBase } from '../lib/base.js'
 
 const { identity } = brand
 
@@ -25,7 +26,7 @@ export default function ChatWidget({ context }) {
   useEffect(() => {
     if (open && messages.length === 0) {
       setLoadingHistory(true)
-      fetch(`/api/chat?sessionId=${sessionId.current}`)
+      fetch(conBase(`/api/chat?sessionId=${sessionId.current}`))
         .then(r => r.json())
         .then(data => {
           if (data.messages?.length) {
@@ -55,7 +56,7 @@ export default function ChatWidget({ context }) {
     setMessages(newMessages)
     setLoading(true)
     try {
-      const res = await fetch('/api/chat', {
+      const res = await fetch(conBase('/api/chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: newMessages, sessionId: sessionId.current }),

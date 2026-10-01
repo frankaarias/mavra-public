@@ -1,6 +1,7 @@
 import { useTranslation } from '../i18n/TranslationProvider.jsx'
 import brand from '../brand/brand.json'
 import useReveal from '../components/useReveal.js'
+import { BASE } from '../lib/base.js'
 
 const { identity } = brand
 
@@ -142,7 +143,7 @@ export default function PinterestCampaigns() {
             {GROUP_B.map((p) => (
               <article key={p.img} style={card}>
                 <div style={thumbWrap}>
-                  <img src={`/pinterest/${p.img}`} alt={trText(p.text)} style={thumb} />
+                  <img src={`${BASE}pinterest/${p.img}`} alt={trText(p.text)} style={thumb} />
                   <div style={overlay}>{trText(p.text)}</div>
                 </div>
                 <div style={cardBody}>
@@ -164,7 +165,7 @@ export default function PinterestCampaigns() {
             {GROUP_A.map((p) => (
               <article key={p.img} style={card}>
                 <div style={thumbWrap}>
-                  <img src={`/pinterest/${p.img}`} alt={trText(p.title)} style={thumb} />
+                  <img src={`${BASE}pinterest/${p.img}`} alt={trText(p.title)} style={thumb} />
                 </div>
                 <div style={cardBody}>
                   <div style={cardTitle}>{trText(p.title)}</div>
@@ -187,7 +188,7 @@ export default function PinterestCampaigns() {
             {GROUP_C.map((p) => (
               <article key={p.img} style={card}>
                 <div style={thumbWrap}>
-                  <img src={`/pinterest/${p.img}`} alt={trText(p.text)} style={thumb} />
+                  <img src={`${BASE}pinterest/${p.img}`} alt={trText(p.text)} style={thumb} />
                 </div>
                 <div style={cardBody}>
                   <div style={cardTitle}>{trText(p.text)}</div>
@@ -209,7 +210,7 @@ export default function PinterestCampaigns() {
         </section>
 
         <div className="global-footer">
-          {trText(identity.name)}{trText(" — Campañas Pinterest · ")}<a href="/">{trText("Home")}</a>
+          {trText(identity.name)}{trText(" — Campañas Pinterest · ")}<a href={BASE}>{trText("Home")}</a>
         </div>
       </div>
     </>

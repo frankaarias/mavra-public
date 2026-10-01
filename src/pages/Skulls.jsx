@@ -4,6 +4,7 @@ import brand from '../brand/brand.json'
 
 const { products, identity } = brand
 import useReveal from '../components/useReveal.js'
+import { BASE } from '../lib/base.js'
 
 export default function Skulls() {
   const { text: trText } = useTranslation()
@@ -45,7 +46,7 @@ export default function Skulls() {
 
       </div>
 
-      <div className="global-footer">{trText(identity.name)}{trText(" — Productos · ")}<a href="/">{trText("Home")}</a></div>
+      <div className="global-footer">{trText(identity.name)}{trText(" — Productos · ")}<a href={BASE}>{trText("Home")}</a></div>
     </>
   )
 }

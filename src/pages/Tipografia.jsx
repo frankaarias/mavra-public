@@ -1,6 +1,7 @@
 import { useTranslation } from '../i18n/TranslationProvider.jsx'
 import useReveal from '../components/useReveal.js'
 import brand from '../brand/brand.json'
+import { BASE } from '../lib/base.js'
 
 const { identity, visual } = brand
 
@@ -80,7 +81,7 @@ export default function Tipografia() {
         </div>
       </div>
 
-      <div className="global-footer">{trText(identity.name)}{trText(" · Typography System · ")}<a href="/">{trText("Home")}</a></div>
+      <div className="global-footer">{trText(identity.name)}{trText(" · Typography System · ")}<a href={BASE}>{trText("Home")}</a></div>
     </>
   )
 }

@@ -4,6 +4,7 @@ import brand from '../brand/brand.json'
 import { NavLink } from 'react-router-dom'
 import LanguageToggle from './LanguageToggle.jsx'
 import useMavraLanguage from './useMavraLanguage.js'
+import { BASE } from '../lib/base.js'
 
 const { identity } = brand
 
@@ -45,7 +46,7 @@ export default function Navbar() {
       <div id="primary-navigation" className={`nav-links${mobileOpen ? ' open' : ''}`}>
         <NavLink to="/" end onClick={close}>{lang === 'es' ? 'Caso de estudio' : 'Case Study'}</NavLink>
         <NavLink to="/brand" onClick={close}>Brand OS</NavLink>
-        <a href="/#contact" onClick={close}>{lang === 'es' ? 'Contacto' : 'Contact'}</a>
+        <a href={BASE + '#contact'} onClick={close}>{lang === 'es' ? 'Contacto' : 'Contact'}</a>
       </div>
       <LanguageToggle />
       <button className="theme-toggle" onClick={toggleTheme} aria-label={t.tema} title={theme === 'light' ? t.oscuro : t.claro}>{theme === 'light' ? <Moon aria-hidden="true" /> : <Sun aria-hidden="true" />}</button>

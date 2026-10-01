@@ -4,6 +4,7 @@ import { ArrowUpRight, ArrowRight, ArrowLeft, Search, X, ChartNoAxesColumnIncrea
 import useMavraLanguage from '../components/useMavraLanguage.js'
 import '../case-editorial.css'
 import '../brand-library.css'
+import { conBase } from '../lib/base.js'
 
 // Destinations stay shared between languages; research and competitor data are external to this index.
 const RESOURCES = [
@@ -28,10 +29,10 @@ const RESOURCES = [
   ['/creators','brief','Brief para colaboradores','Collaborator brief','El encargo creativo para quienes producen contenido de la marca.','The creative brief for people producing brand content.'],
 ]
 const FEATURED = [
-  { id:'brand-book', title:['Brand Book','Brand Book'], type:'guide', image:'/shots/brand-board-en-20260920.jpg', alt:['Tagline y lenguaje sensorial del Brand Book de MAVRA, captura en inglés','MAVRA Brand Book tagline and sensory language, English capture'], to:'/brand-guidelines/source', action:['Consultar el Brand Book completo','Read the complete Brand Book'], description:['Consumidor, posicionamiento y reglas de identidad.','Customer, positioning and identity rules.'], connection:['Estas decisiones orientan las imágenes de producto.','These decisions guide the product imagery.'], related:[['Entender la estrategia','Understand the strategy','/brand-guidelines']] },
-  { id:'creative', title:['Dirección creativa','Creative direction'], type:'pieces', image:'/pinterest/b3.jpg', alt:['Lámpara MAVRA en una pieza existente del archivo Pinterest','MAVRA lamp in an existing Pinterest creative'], to:'/briefing#briefing-top', action:['Ver las piezas y sus reglas','See the pieces and their rules'], description:['Ejemplos reales de luz, detalle y ambientes de marca.','Real examples of lighting, detail and branded settings.'], connection:['Las reglas visuales se aplican en los briefs de producción.','The visual rules carry into the production briefs.'], related:[['Briefs de imagen','Image briefs','/listings-briefs'],['A+','A+','/aplus-briefs']] },
-  { id:'amazon-content', title:['Contenido Amazon','Amazon content'], type:'brief', image:'/shots/product-brief-en-20260920.jpg', alt:['Brief de imágenes Wall Skulls, captura en inglés','Wall Skulls image brief, English capture'], to:'/listings-briefs', action:['Explorar los 20 briefs','Explore the 20 image briefs'], description:['La pregunta de compra, la imagen y el mensaje de cada posición.','The buyer question, image direction and message for each slot.'], connection:['La ficha presenta el producto; A+ lo conecta con la colección.','The product page introduces the item; A+ connects the collection.'], related:[['Secuencia A+','A+ sequence','/aplus-briefs'],['Copy de producto','Product copy','/copy']] },
-  { id:'research', title:['Investigación','Research'], type:'tool', image:'/shots/research-en-20260917.jpg', alt:['Workspace de investigación, captura en inglés','Research workspace, English capture'], to:'/research', action:['Abrir el workspace','Open the workspace'], description:['Demanda, competencia y relevancia para los tres productos.','Demand, competition and relevance across the three products.'], connection:['El análisis orienta las prioridades de publicidad y lanzamiento.','The analysis informs advertising and launch priorities.'], related:[['Plan de campañas','Campaign plan','/campaigns'],['Lanzamiento','Launch','/launch']] },
+  { id:'brand-book', title:['Brand Book','Brand Book'], type:'guide', image:conBase('/shots/brand-board-en-20260920.jpg'), alt:['Tagline y lenguaje sensorial del Brand Book de MAVRA, captura en inglés','MAVRA Brand Book tagline and sensory language, English capture'], to:'/brand-guidelines/source', action:['Consultar el Brand Book completo','Read the complete Brand Book'], description:['Consumidor, posicionamiento y reglas de identidad.','Customer, positioning and identity rules.'], connection:['Estas decisiones orientan las imágenes de producto.','These decisions guide the product imagery.'], related:[['Entender la estrategia','Understand the strategy','/brand-guidelines']] },
+  { id:'creative', title:['Dirección creativa','Creative direction'], type:'pieces', image:conBase('/pinterest/b3.jpg'), alt:['Lámpara MAVRA en una pieza existente del archivo Pinterest','MAVRA lamp in an existing Pinterest creative'], to:'/briefing#briefing-top', action:['Ver las piezas y sus reglas','See the pieces and their rules'], description:['Ejemplos reales de luz, detalle y ambientes de marca.','Real examples of lighting, detail and branded settings.'], connection:['Las reglas visuales se aplican en los briefs de producción.','The visual rules carry into the production briefs.'], related:[['Briefs de imagen','Image briefs','/listings-briefs'],['A+','A+','/aplus-briefs']] },
+  { id:'amazon-content', title:['Contenido Amazon','Amazon content'], type:'brief', image:conBase('/shots/product-brief-en-20260920.jpg'), alt:['Brief de imágenes Wall Skulls, captura en inglés','Wall Skulls image brief, English capture'], to:'/listings-briefs', action:['Explorar los 20 briefs','Explore the 20 image briefs'], description:['La pregunta de compra, la imagen y el mensaje de cada posición.','The buyer question, image direction and message for each slot.'], connection:['La ficha presenta el producto; A+ lo conecta con la colección.','The product page introduces the item; A+ connects the collection.'], related:[['Secuencia A+','A+ sequence','/aplus-briefs'],['Copy de producto','Product copy','/copy']] },
+  { id:'research', title:['Investigación','Research'], type:'tool', image:conBase('/shots/research-en-20260917.jpg'), alt:['Workspace de investigación, captura en inglés','Research workspace, English capture'], to:'/research', action:['Abrir el workspace','Open the workspace'], description:['Demanda, competencia y relevancia para los tres productos.','Demand, competition and relevance across the three products.'], connection:['El análisis orienta las prioridades de publicidad y lanzamiento.','The analysis informs advertising and launch priorities.'], related:[['Plan de campañas','Campaign plan','/campaigns'],['Lanzamiento','Launch','/launch']] },
 ]
 const TYPES = { guide:['Guía','Guide'], brief:['Brief','Brief'], tool:['Herramienta','Tool'], pieces:['Piezas visuales','Visual pieces'] }
 
@@ -44,12 +45,12 @@ const AREAS = [
 ]
 const JOURNEY = AREAS.slice(0,4).map(area => ({ ...area, ...FEATURED.find(item=>item.id===area.id) }))
 const PREVIEWS = {
-  0:'/shots/brand-guidelines-en-20260917.jpg', 1:'/shots/brand-board-en-20260920.jpg',
-  2:'/shots/corrientes-en-20260917.jpg', 4:'/pinterest/b3.jpg',
-  5:'/shots/scenography-en-20260917.jpg', 9:'/shots/product-brief-en-20260920.jpg',
-  10:'/shots/aplus-briefs-en-20260917.jpg', 12:'/shots/research-en-20260917.jpg',
-  14:'/shots/campanas-en-20260917.jpg', 15:'/shots/launch-en-20260917.jpg',
-  16:'/pinterest/b3.jpg', 17:'/shots/influencers-en-20260917.jpg', 18:'/shots/creators-en-20260917.jpg',
+  0:conBase('/shots/brand-guidelines-en-20260917.jpg'), 1:conBase('/shots/brand-board-en-20260920.jpg'),
+  2:conBase('/shots/corrientes-en-20260917.jpg'), 4:conBase('/pinterest/b3.jpg'),
+  5:conBase('/shots/scenography-en-20260917.jpg'), 9:conBase('/shots/product-brief-en-20260920.jpg'),
+  10:conBase('/shots/aplus-briefs-en-20260917.jpg'), 12:conBase('/shots/research-en-20260917.jpg'),
+  14:conBase('/shots/campanas-en-20260917.jpg'), 15:conBase('/shots/launch-en-20260917.jpg'),
+  16:conBase('/pinterest/b3.jpg'), 17:conBase('/shots/influencers-en-20260917.jpg'), 18:conBase('/shots/creators-en-20260917.jpg'),
 }
 const RESOURCE_ICONS = {3:Type, 6:Clapperboard, 7:Users, 8:ImageIcon, 11:BookOpen, 13:ChartNoAxesColumnIncreasing}
 const OPEN = { guide:['Abrir guía','Open guide'], brief:['Abrir brief','Open brief'], tool:['Abrir herramienta','Open tool'], pieces:['Ver piezas','View creative'] }

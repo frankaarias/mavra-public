@@ -1,6 +1,7 @@
 import { useTranslation } from '../i18n/TranslationProvider.jsx'
 import { useState } from 'react'
 import brand from '../brand/brand.json'
+import { BASE } from '../lib/base.js'
 
 const { currents, identity } = brand
 
@@ -81,7 +82,7 @@ export default function Corrientes() {
         </div>
       </div>
 
-      <div className="global-footer">{trText(identity.name)}{trText(" — Corrientes Góticas · ")}<a href="/">{trText("Home")}</a></div>
+      <div className="global-footer">{trText(identity.name)}{trText(" — Corrientes Góticas · ")}<a href={BASE}>{trText("Home")}</a></div>
     </>
   )
 }

@@ -1,9 +1,10 @@
+import { conBase } from '../lib/base.js'
 // Curated from the original public production briefs (git 1aa8f51).
 // Image assets below belong to the Pinterest collection, not final Amazon A+ exports.
 export const visualAssets = [
-  { src: '/pinterest/s1.jpg', en: 'Wall skull: sculpted detail and depth', es: 'Cráneo de pared: detalle y relieve' },
-  { src: '/pinterest/b1.jpg', en: 'Candle set: black wax and warm light', es: 'Set de velas: cera negra y luz cálida' },
-  { src: '/pinterest/b3.jpg', en: 'Skull lamp: geometric shade and warm light', es: 'Lámpara: pantalla geométrica y luz cálida' },
+  { src: conBase('/pinterest/s1.jpg'), en: 'Wall skull: sculpted detail and depth', es: 'Cráneo de pared: detalle y relieve' },
+  { src: conBase('/pinterest/b1.jpg'), en: 'Candle set: black wax and warm light', es: 'Set de velas: cera negra y luz cálida' },
+  { src: conBase('/pinterest/b3.jpg'), en: 'Skull lamp: geometric shade and warm light', es: 'Lámpara: pantalla geométrica y luz cálida' },
 ]
 export const listingBriefs = [
   { id: 'wall-skulls', name: 'Wall Skulls', image: visualAssets[0], slots: [
