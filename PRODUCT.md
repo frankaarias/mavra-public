@@ -18,7 +18,7 @@ creative direction, market research and launch planning. Offer a contact path.
 
 ## Capabilities and Constraints
 
-- React/Vite site published at case.agta.io; repository frankaarias/mavra-public.
+- React/Vite site published at agta.io/case (rewritten from the agta-landing project); repository frankaarias/mavra-public.
 - Case study at `/`, resource library at `/brand`, with existing evidence routes.
 - All public case content must support Spanish and English, with a shared toggle.
 - Light and dark themes must remain legible and functional.
