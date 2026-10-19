@@ -1,5 +1,5 @@
 /**
- * El formulario de contacto de case.agta.io, que hasta hoy no mandaba nada.
+ * El formulario de contacto del caso (agta.io/case; antes case.agta.io), que hasta hoy no mandaba nada.
  *
  * 🔴 QUÉ PASABA. `handleSubmit` en CaseStudy.jsx hacía `setSubmitted(true)` y
  * nada más. El visitante escribía, le salía un aviso de confirmación y se iba
@@ -19,7 +19,7 @@
  *   CONTACTO_DESTINO opcional; si no está, va a info@agta.io
  */
 
-const REMITENTE = 'MAVRA · case.agta.io <no-reply@agta.io>'
+const REMITENTE = 'MAVRA · agta.io/case <no-reply@agta.io>'
 const DESTINO_POR_DEFECTO = 'info@agta.io'
 const LIMITE = { campo: 5000, nombre: 200, empresa: 200 }
 
@@ -78,14 +78,14 @@ export default async function handler(req, res) {
         from: REMITENTE,
         to: [process.env.CONTACTO_DESTINO || DESTINO_POR_DEFECTO],
         reply_to: email,
-        subject: `case.agta.io · ${nombre}${empresa ? ` (${empresa})` : ''}`,
+        subject: `agta.io/case · ${nombre}${empresa ? ` (${empresa})` : ''}`,
         html:
           `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.5">` +
           lineas +
           `<hr style="border:0;border-top:1px solid #e3e6ea;margin:14px 0">` +
           `<div style="white-space:pre-wrap">${escapar(mensaje)}</div>` +
           `<p style="margin-top:18px;color:#868e96;font-size:12px">` +
-          `Enviado desde el formulario de case.agta.io</p></div>`,
+          `Enviado desde el formulario de agta.io/case</p></div>`,
         text: `Nombre: ${nombre}\nEmail: ${email}\nEmpresa: ${empresa || '—'}\n\n${mensaje}`,
       }),
     })
